@@ -1,1 +1,4 @@
+User-agent: *
+Allow: /
 
+Sitemap: https://pvrajcmsgroup.github.io/pvrajcms-website/sitemap.xml
