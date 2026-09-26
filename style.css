@@ -1,12 +1,22 @@
 /* =========================================================
    PVRajCMS GROUP - Engineering Technology Website
-   Complete stylesheet for Home + existing pages
+   Complete stylesheet
    ========================================================= */
 
 *{box-sizing:border-box;margin:0;padding:0}
+
 html{scroll-behavior:smooth}
-body{font-family:Arial,Helvetica,sans-serif;background:#06111f;color:#eaf4ff;line-height:1.6;overflow-x:hidden}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#06111f;
+    color:#eaf4ff;
+    line-height:1.6;
+    overflow-x:hidden
+}
+
 a{text-decoration:none;color:inherit}
+
 img{max-width:100%}
 
 /* ================= HOME HEADER ================= */
@@ -42,17 +52,29 @@ img{max-width:100%}
     display:block
 }
 
-.brand-name-block{
-    border-left:1px solid rgba(125,211,252,.25);
-    padding-left:20px;
-    min-width:245px
-}
+/* PVRajCMS GROUP - metallic blue logo style */
 
 .brand-name{
     font-size:22px;
     font-weight:800;
     letter-spacing:2px;
-    color:#fff
+    background:linear-gradient(
+        90deg,
+        #ffffff 0%,
+        #dce7ed 30%,
+        #55c7f5 65%,
+        #168dcc 100%
+    );
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    color:transparent
+}
+
+.brand-name-block{
+    border-left:1px solid rgba(125,211,252,.25);
+    padding-left:20px;
+    min-width:245px
 }
 
 .brand-tagline{
@@ -98,7 +120,12 @@ img{max-width:100%}
     display:flex;
     align-items:center;
     overflow:hidden;
-    background:linear-gradient(120deg,#06111f,#071a2b 55%,#061321)
+    background:linear-gradient(
+        120deg,
+        #06111f,
+        #071a2b 55%,
+        #061321
+    )
 }
 
 .hero-grid{
@@ -106,8 +133,15 @@ img{max-width:100%}
     inset:0;
     opacity:.25;
     background-image:
-        linear-gradient(rgba(55,179,235,.14) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(55,179,235,.14) 1px,transparent 1px);
+        linear-gradient(
+            rgba(55,179,235,.14) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(55,179,235,.14) 1px,
+            transparent 1px
+        );
     background-size:55px 55px
 }
 
@@ -219,7 +253,11 @@ img{max-width:100%}
     gap:12px;
     padding:13px 21px;
     border-radius:6px;
-    background:linear-gradient(135deg,#1595d2,#36c1ef);
+    background:linear-gradient(
+        135deg,
+        #1595d2,
+        #36c1ef
+    );
     color:#fff;
     font-size:14px;
     font-weight:700;
@@ -232,9 +270,7 @@ img{max-width:100%}
     box-shadow:0 12px 30px rgba(18,159,219,.3)
 }
 
-.primary-button span{
-    font-size:18px
-}
+.primary-button span{font-size:18px}
 
 .secondary-button{
     display:inline-flex;
@@ -302,8 +338,15 @@ img{max-width:100%}
     inset:0;
     opacity:.35;
     background-image:
-        linear-gradient(rgba(75,180,225,.12) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(75,180,225,.12) 1px,transparent 1px);
+        linear-gradient(
+            rgba(75,180,225,.12) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(75,180,225,.12) 1px,
+            transparent 1px
+        );
     background-size:35px 35px
 }
 
@@ -533,7 +576,11 @@ img{max-width:100%}
 
 .moneyx-section{
     padding:100px 0;
-    background:linear-gradient(135deg,#06111e,#091c2d)
+    background:linear-gradient(
+        135deg,
+        #06111e,
+        #091c2d
+    )
 }
 
 .moneyx-container{
@@ -584,15 +631,26 @@ img{max-width:100%}
     border:1px solid rgba(77,193,239,.2);
     border-radius:10px;
     overflow:hidden;
-    background:linear-gradient(180deg,#071b2a,#06121f)
+    background:linear-gradient(
+        180deg,
+        #071b2a,
+        #06121f
+    )
 }
 
 .city-grid{
     position:absolute;
     inset:0;
     background-image:
-        linear-gradient(rgba(63,173,220,.1) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(63,173,220,.1) 1px,transparent 1px);
+        linear-gradient(
+            rgba(63,173,220,.1) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(63,173,220,.1) 1px,
+            transparent 1px
+        );
     background-size:28px 28px;
     transform:perspective(350px) rotateX(55deg) scale(1.6);
     transform-origin:bottom center;
