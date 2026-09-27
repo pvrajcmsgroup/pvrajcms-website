@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Commodity Scalping Analyzer | PVRajCMS Group</title>
+
+<meta name="description" content="Commodity Scalping Analyzer using EMA 9/21/50 and RSI 14 for 5-minute and 15-minute trading analysis.">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f6fa;
+    color:#172033;
+}
+
+.container{
+    max-width:1180px;
+    margin:auto;
+    padding:20px;
+}
+
+.header{
+    background:#071321;
+    color:white;
+    padding:22px 20px;
+    border-radius:14px;
+    margin-bottom:18px;
+}
+
+.header h1{
+    margin:0 0 7px;
+    font-size:26px;
+}
+
+.header p{
+    margin:0;
+    color:#9fc7e8;
+    font-size:14px;
+}
+
+.card{
+    background:#ffffff;
+    border:1px solid #e2e7ef;
+    border-radius:14px;
+    padding:20px;
+    margin-bottom:16px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.05);
+}
+
+.card h2{
+    margin-top:0;
+    font-size:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+}
+
+label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+input,
+select,
+button{
+    width:100%;
+    padding:11px;
+    border-radius:8px;
+    border:1px solid #ccd4df;
+    font-size:14px;
+}
+
+button{
+    background:#172033;
+    color:white;
+    border:none;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+.secondary{
+    background:#e9edf3;
+    color:#172033;
+}
+
+.actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:12px;
+}
+
+.note{
+    background:#fff7df;
+    border:1px solid #efd98b;
+    border-radius:9px;
+    padding:11px;
+    font-size:13px;
+    color:#5d4b16;
+    margin-top:12px;
+}
+
+.rules{
+    line-height:1.65;
+    font-size:14px;
+}
+
+.rule{
+    padding:13px;
+    border-radius:10px;
+    margin-top:9px;
+}
+
+.buy-rule{
+    background:#e8f8ef;
+}
+
+.sell-rule{
+    background:#fff0f0;
+}
+
+.no-trade{
+    background:#f1f3f6;
+}
+
+.kpis{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.kpi{
+    background:#f7f9fc;
+    border-radius:10px;
+    padding:14px;
+}
+
+.kpi span{
+    display:block;
+    color:#667085;
+    font-size:12px;
+}
+
+.kpi strong{
+    display:block;
+    font-size:22px;
+    margin-top:5px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:12px;
+}
+
+th,
+td{
+    padding:10px;
+    border-bottom:1px solid #e7eaf0;
+    text-align:left;
+    white-space:nowrap;
+}
+
+th{
+    background:#f1f4f8;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-weight:bold;
+    font-size:11px;
+}
+
+.buy{
+    background:#d9f7e5;
+    color:#08743b;
+}
+
+.sell{
+    background:#ffe0e0;
+    color:#a41414;
+}
+
+#status{
+    margin-top:10px;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.footer{
+    text-align:center;
+    color:#667085;
+    font-size:12px;
+    padding:20px 0;
+}
+
+@media(max-width:650px){
+
+    .kpis{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .actions{
+        grid-template-columns:1fr;
+    }
+
+    .header h1{
+        font-size:22px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>
+            Commodity Scalping Analyzer
+        </h1>
+
+        <p>
+            EMA 9/21/50 + RSI 14 • 5M / 15M
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>
+            Market &amp; Settings
+        </h2>
+
+        <div class="grid">
+
+            <div>
+                <label>
+                    Instrument
+                </label>
+
+                <select id="instrument">
+
+                    <option>
+                        MCX Crude Oil
+                    </option>
+
+                    <option>
+                        MCX Gold
+                    </option>
+
+                    <option>
+                        MCX Silver
+                    </option>
+
+                    <option>
+                        Other
+                    </option>
+
+                </select>
+            </div>
+
+
+            <div>
+
+                <label>
+                    Timeframe
+                </label>
+
+                <select id="timeframe">
+
+                    <option value="5">
+                        5 Minute
+                    </option>
+
+                    <option value="15">
+                        15 Minute
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    EMA Fast
+                </label>
+
+                <input
+                    id="emaFast"
+                    type="number"
+                    value="9"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    EMA Medium
+                </label>
+
+                <input
+                    id="emaMedium"
+                    type="number"
+                    value="21"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    EMA Slow
+                </label>
+
+                <input
+                    id="emaSlow"
+                    type="number"
+                    value="50"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    RSI Period
+                </label>
+
+                <input
+                    id="rsiPeriod"
+                    type="number"
+                    value="14"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    BUY RSI
+                </label>
+
+                <input
+                    id="buyRSI"
+                    type="number"
+                    value="55"
+                    step="0.1"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    SELL RSI
+                </label>
+
+                <input
+                    id="sellRSI"
+                    type="number"
+                    value="45"
+                    step="0.1"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="note">
+
+            Upload candle data already prepared in the selected
+            timeframe. CSV columns required:
+
+            <strong>
+                time, open, high, low, close
+            </strong>
+
+        </div>
+
+
+        <input
+            id="csvFile"
+            type="file"
+            accept=".csv"
+            style="margin-top:12px;"
+        >
+
+
+        <div class="actions">
+
+            <button id="analyzeButton">
+                Analyze CSV
+            </button>
+
+            <button
+                id="demoButton"
+                class="secondary"
+            >
+                Load Demo Data
+            </button>
+
+        </div>
+
+
+        <div id="status"></div>
+
+    </div>
+
+
+
+    <div class="card">
+
+        <h2>
+            Strategy Rules
+        </h2>
+
+
+        <div class="rules">
+
+            <div class="rule buy-rule">
+
+                <strong>
+                    BUY Rule
+                </strong>
+
+                <br>
+
+                EMA 9 bullish crossover of EMA 21,
+                bullish EMA structure above EMA 50,
+                and RSI above 55 on the same signal candle.
+
+                <br>
+
+                The next candle must break the
+                signal candle HIGH.
+
+                <br>
+
+                <strong>
+                    Entry = Signal Candle HIGH
+                </strong>
+
+                <br>
+
+                <strong>
+                    SL = Previous Candle LOW
+                </strong>
+
+            </div>
+
+
+            <div class="rule sell-rule">
+
+                <strong>
+                    SELL Rule
+                </strong>
+
+                <br>
+
+                EMA 9 bearish crossover of EMA 21,
+                bearish EMA structure below EMA 50,
+                and RSI below 45 on the same signal candle.
+
+                <br>
+
+                The next candle must break the
+                signal candle LOW.
+
+                <br>
+
+                <strong>
+                    Entry = Signal Candle LOW
+                </strong>
+
+                <br>
+
+                <strong>
+                    SL = Previous Candle HIGH
+                </strong>
+
+            </div>
+
+
+            <div class="rule no-trade">
+
+                <strong>
+                    NO TRADE
+                </strong>
+
+                <br>
+
+                RSI between 45 and 55 is treated as
+                the no-trade zone.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="card">
+
+        <h2>
+            Analysis Results
+        </h2>
+
+
+        <div class="kpis">
+
+            <div class="kpi">
+
+                <span>
+                    BUY Signals
+                </span>
+
+                <strong id="buyCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="kpi">
+
+                <span>
+                    SELL Signals
+                </span>
+
+                <strong id="sellCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="kpi">
+
+                <span>
+                    Total Signals
+                </span>
+
+                <strong id="totalSignals">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="kpi">
+
+                <span>
+                    Candles
+                </span>
+
+                <strong id="candleCount">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <br>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Signal Time
+                        </th>
+
+                        <th>
+                            Side
+                        </th>
+
+                        <th>
+                            RSI
+                        </th>
+
+                        <th>
+                            Entry
+                        </th>
+
+                        <th>
+                            SL
+                        </th>
+
+                        <th>
+                            Risk
+                        </th>
+
+                        <th>
+                            Trigger Time
+                        </th>
+
+                        <th>
+                            Trigger Price
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="resultsBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="footer">
+
+        PVRajCMS Group • Financial Markets Technology
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+function calculateEMA(values, period){
+
+    const result = new Array(values.length).fill(null);
+
+    if(values.length < period){
+        return result;
+    }
+
+    let sum = 0;
+
+    for(let i = 0; i < period; i++){
+
+        sum += values[i];
+
+    }
+
+    result[period - 1] = sum / period;
+
+    const multiplier = 2 / (period + 1);
+
+    for(let i = period; i < values.length; i++){
+
+        result[i] =
+            (values[i] - result[i - 1]) *
+            multiplier +
+            result[i - 1];
+
+    }
+
+    return result;
+
+}
+
+
+
+function calculateRSI(values, period){
+
+    const result = new Array(values.length).fill(null);
+
+    if(values.length <= period){
+        return result;
+    }
+
+    let gain = 0;
+    let loss = 0;
+
+    for(let i = 1; i <= period; i++){
+
+        const difference =
+            values[i] - values[i - 1];
+
+        if(difference >= 0){
+
+            gain += difference;
+
+        }else{
+
+            loss += Math.abs(difference);
+
+        }
+
+    }
+
+    let averageGain = gain / period;
+    let averageLoss = loss / period;
+
+    if(averageLoss === 0){
+
+        result[period] = 100;
+
+    }else{
+
+        const rs =
+            averageGain / averageLoss;
+
+        result[period] =
+            100 - (100 / (1 + rs));
+
+    }
+
+
+    for(let i = period + 1; i < values.length; i++){
+
+        const difference =
+            values[i] - values[i - 1];
+
+        const currentGain =
+            difference > 0 ? difference : 0;
+
+        const currentLoss =
+            difference < 0
+            ? Math.abs(difference)
+            : 0;
+
+        averageGain =
+            ((averageGain * (period - 1)) +
+            currentGain) / period;
+
+        averageLoss =
+            ((averageLoss * (period - 1)) +
+            currentLoss) / period;
+
+
+        if(averageLoss === 0){
+
+            result[i] = 100;
+
+        }else{
+
+            const rs =
+                averageGain / averageLoss;
+
+            result[i] =
+                100 - (100 / (1 + rs));
+
+        }
+
+    }
+
+    return result;
+
+}
+
+
+
+function parseCSV(text){
+
+    const lines =
+        text
+        .trim()
+        .split(/\r?\n/)
+        .filter(Boolean);
+
+
+    if(lines.length < 3){
+
+        throw new Error(
+            "CSV needs at least 3 candle rows."
+        );
+
+    }
+
+
+    const headers =
+        lines[0]
+        .split(",")
+        .map(value =>
+            value.trim().toLowerCase()
+        );
+
+
+    const timeIndex =
+        headers.indexOf("time");
+
+    const openIndex =
+        headers.indexOf("open");
+
+    const highIndex =
+        headers.indexOf("high");
+
+    const lowIndex =
+        headers.indexOf("low");
+
+    const closeIndex =
+        headers.indexOf("close");
+
+
+    if(
+        openIndex < 0 ||
+        highIndex < 0 ||
+        lowIndex < 0 ||
+        closeIndex < 0
+    ){
+
+        throw new Error(
+            "CSV must contain: time, open, high, low, close"
+        );
+
+    }
+
+
+    const data = [];
+
+
+    for(let i = 1; i < lines.length; i++){
+
+        const values =
+            lines[i].split(",");
+
+
+        const candle = {
+
+            time:
+                timeIndex >= 0
+                ? values[timeIndex]
+                : "",
+
+            open:
+                Number(values[openIndex]),
+
+            high:
+                Number(values[highIndex]),
+
+            low:
+                Number(values[lowIndex]),
+
+            close:
+                Number(values[closeIndex])
+
+        };
+
+
+        if(
+            Number.isFinite(candle.open) &&
+            Number.isFinite(candle.high) &&
+            Number.isFinite(candle.low) &&
+            Number.isFinite(candle.close)
+        ){
+
+            data.push(candle);
+
+        }
+
+    }
+
+
+    return data;
+
+}
+
+
+
+function analyzeStrategy(data){
+
+    const fastPeriod =
+        Number(
+            document.getElementById("emaFast").value
+        );
+
+    const mediumPeriod =
+        Number(
+            document.getElementById("emaMedium").value
+        );
+
+    const slowPeriod =
+        Number(
+            document.getElementById("emaSlow").value
+        );
+
+    const rsiPeriod =
+        Number(
+            document.getElementById("rsiPeriod").value
+        );
+
+    const buyRSI =
+        Number(
+            document.getElementById("buyRSI").value
+        );
+
+    const sellRSI =
+        Number(
+            document.getElementById("sellRSI").value
+        );
+
+
+    const closes =
+        data.map(candle => candle.close);
+
+
+    const emaFast =
+        calculateEMA(
+            closes,
+            fastPeriod
+        );
+
+    const emaMedium =
+        calculateEMA(
+            closes,
+            mediumPeriod
+        );
+
+    const emaSlow =
+        calculateEMA(
+            closes,
+            slowPeriod
+        );
+
+    const rsi =
+        calculateRSI(
+            closes,
+            rsiPeriod
+        );
+
+
+    const signals = [];
+
+
+    for(
+        let i = 1;
+        i < data.length - 1;
+        i++
+    ){
+
+        if(
+            emaFast[i - 1] === null ||
+            emaMedium[i - 1] === null ||
+            emaFast[i] === null ||
+            emaMedium[i] === null ||
+            emaSlow[i] === null ||
+            rsi[i] === null
+        ){
+
+            continue;
+
+        }
+
+
+        /*
+            BUY signal candle
+        */
+
+        const bullishCross =
+            emaFast[i - 1] <= emaMedium[i - 1] &&
+            emaFast[i] > emaMedium[i];
+
+
+        const bullishStructure =
+            emaFast[i] >
+            emaMedium[i] &&
+            emaMedium[i] >
+            emaSlow[i];
+
+
+        const buyCondition =
+            bullishCross &&
+            bullishStructure &&
+            rsi[i] > buyRSI;
+
+
+        /*
+            SELL signal candle
+        */
+
+        const bearishCross =
+            emaFast[i - 1] >= emaMedium[i - 1] &&
+            emaFast[i] < emaMedium[i];
+
+
+        const bearishStructure =
+            emaFast[i] <
+            emaMedium[i] &&
+            emaMedium[i] <
+            emaSlow[i];
+
+
+        const sellCondition =
+            bearishCross &&
+            bearishStructure &&
+            rsi[i] < sellRSI;
+
+
+        /*
+            Next candle confirmation
+        */
+
+        const previousCandle =
+            data[i - 1];
+
+        const signalCandle =
+            data[i];
+
+        const nextCandle =
+            data[i + 1];
+
+
+        if(
+            buyCondition &&
+            nextCandle.high >=
+            signalCandle.high
+        ){
+
+            signals.push({
+
+                side:"BUY",
+
+                time:
+                    signalCandle.time,
+
+                rsi:
+                    rsi[i],
+
+                entry:
+                    signalCandle.high,
+
+                sl:
+                    previousCandle.low,
+
+                risk:
+                    signalCandle.high -
+                    previousCandle.low,
+
+                triggerTime:
+                    nextCandle.time,
+
+                triggerPrice:
+                    nextCandle.high
+
+            });
+
+        }
+
+
+        if(
+            sellCondition &&
+            nextCandle.low <=
+            signalCandle.low
+        ){
+
+            signals.push({
+
+                side:"SELL",
+
+                time:
+                    signalCandle.time,
+
+                rsi:
+                    rsi[i],
+
+                entry:
+                    signalCandle.low,
+
+                sl:
+                    previousCandle.high,
+
+                risk:
+                    previousCandle.high -
+                    signalCandle.low,
+
+                triggerTime:
+                    nextCandle.time,
+
+                triggerPrice:
+                    nextCandle.low
+
+            });
+
+        }
+
+    }
+
+
+    return signals;
+
+}
+
+
+
+function displayResults(
+    signals,
+    candleCount
+){
+
+    const body =
+        document.getElementById(
+            "resultsBody"
+        );
+
+
+    body.innerHTML = "";
+
+
+    signals.forEach(
+        (signal,index) => {
+
+            const row =
+                document.createElement("tr");
+
+
+            const badgeClass =
+                signal.side === "BUY"
+                ? "buy"
+                : "sell";
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    ${signal.time || "-"}
+                </td>
+
+                <td>
+
+                    <span class="badge ${badgeClass}">
+                        ${signal.side}
+                    </span>
+
+                </td>
+
+                <td>
+                    ${signal.rsi.toFixed(2)}
+                </td>
+
+                <td>
+                    ${signal.entry.toFixed(2)}
+                </td>
+
+                <td>
+                    ${signal.sl.toFixed(2)}
+                </td>
+
+                <td>
+                    ${signal.risk.toFixed(2)}
+                </td>
+
+                <td>
+                    ${signal.triggerTime || "-"}
+                </td>
+
+                <td>
+                    ${signal.triggerPrice.toFixed(2)}
+                </td>
+
+            `;
+
+
+            body.appendChild(row);
+
+        }
+    );
+
+
+    const buySignals =
+        signals.filter(
+            signal =>
+                signal.side === "BUY"
+        ).length;
+
+
+    const sellSignals =
+        signals.filter(
+            signal =>
+                signal.side === "SELL"
+        ).length;
+
+
+    document.getElementById(
+        "buyCount"
+    ).textContent =
+        buySignals;
+
+
+    document.getElementById(
+        "sellCount"
+    ).textContent =
+        sellSignals;
+
+
+    document.getElementById(
+        "totalSignals"
+    ).textContent =
+        signals.length;
+
+
+    document.getElementById(
+        "candleCount"
+    ).textContent =
+        candleCount;
+
+}
+
+
+
+document
+.getElementById("analyzeButton")
+.addEventListener(
+    "click",
+    async function(){
+
+        try{
+
+            const file =
+                document.getElementById(
+                    "csvFile"
+                ).files[0];
+
+
+            if(!file){
+
+                throw new Error(
+                    "Please select a CSV file first."
+                );
+
+            }
+
+
+            const text =
+                await file.text();
+
+
+            const data =
+                parseCSV(text);
+
+
+            const signals =
+                analyzeStrategy(data);
+
+
+            displayResults(
+                signals,
+                data.length
+            );
+
+
+            const timeframe =
+                document.getElementById(
+                    "timeframe"
+                ).value;
+
+
+            document.getElementById(
+                "status"
+            ).textContent =
+                `${data.length} candles analyzed on ${timeframe}M. ${signals.length} confirmed signal(s) found.`;
+
+        }
+        catch(error){
+
+            document.getElementById(
+                "status"
+            ).textContent =
+                error.message;
+
+        }
+
+    }
+);
+
+
+
+document
+.getElementById("demoButton")
+.addEventListener(
+    "click",
+    function(){
+
+        const demoData = [];
+
+
+        let price = 8900;
+
+
+        for(
+            let i = 0;
+            i < 100;
+            i++
+        ){
+
+            const close =
+                price +
+                (i * 0.25) +
+                (i > 55
+                    ? (i - 55) * 1
+                    : 0);
+
+
+            const open =
+                close +
+                (i % 4 === 0
+                    ? 3
+                    : -2);
+
+
+            const high =
+                Math.max(
+                    open,
+                    close
+                ) + 3;
+
+
+            const low =
+                Math.min(
+                    open,
+                    close
+                ) - 3;
+
+
+            demoData.push({
+
+                time:
+                    "Demo " +
+                    (i + 1),
+
+                open:open,
+
+                high:high,
+
+                low:low,
+
+                close:close
+
+            });
+
+        }
+
+
+        const signals =
+            analyzeStrategy(
+                demoData
+            );
+
+
+        displayResults(
+            signals,
+            demoData.length
+        );
+
+
+        document.getElementById(
+            "status"
+        ).textContent =
+            "Demo data loaded. Use real 5M or 15M CSV data for actual testing.";
+
+    }
+);
+
+</script>
+
+</body>
+</html>
