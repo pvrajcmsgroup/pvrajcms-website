@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101d3a">
+<title>Crude Oil Scalp Calculator | PVRajCMS</title>
+<meta name="description" content="PVRajCMS Crude Oil Scalp Calculator — automatic target and stop-loss levels.">
+<style>
+:root{color-scheme:light;--navy:#101d3a;--navy2:#193d73;--blue:#2463eb;--bg:#f2f5fb;--ink:#17233b;--muted:#68758d;--line:#dbe3f0;--green:#087443;--red:#b42318;--gold:#f5c451}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,Helvetica,sans-serif;line-height:1.5}
+.site-header{background:linear-gradient(130deg,#0a1429 0%,#132e5a 52%,#1e4c8c 100%);color:#fff;padding:16px 12px 14px;text-align:center;border-bottom:4px solid var(--gold)}
+.brand{display:inline-block;font-size:clamp(24px,5vw,32px);font-weight:900;letter-spacing:1.5px;line-height:1.15;background:linear-gradient(90deg,#fff 0%,#f8d778 45%,#fff 75%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 5px 24px #0003}
+.brand-sub{margin:4px 0 0;color:#d9e7ff;font-size:clamp(12px,2.5vw,15px);letter-spacing:2px;text-transform:uppercase}
+.header-line{width:72px;height:3px;background:var(--gold);border-radius:9px;margin:18px auto 14px}
+.site-header h1{margin:0;font-size:clamp(20px,4vw,28px);font-weight:750}
+.site-header .tagline{margin:7px 0 0;color:#e4edff;font-size:14px}
+main{width:min(100% - 24px,620px);margin:12px auto 18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 8px 26px #15294b0a;min-width:0}
+h2{font-size:clamp(18px,3.5vw,22px);margin:0 0 6px;line-height:1.3}
+.intro{font-size:14px;color:var(--muted);margin:0 0 10px}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+label{display:block;font-size:14px;font-weight:750;margin:0 0 7px}
+input,select{display:block;width:100%;min-width:0;min-height:40px;padding:8px 10px;border:1px solid #cbd5e1;border-radius:11px;background:#fff;color:var(--ink);font:inherit;font-size:16px}
+input:focus,select:focus,button:focus-visible{outline:3px solid #93b4ff;outline-offset:2px}
+button{width:100%;min-height:40px;border:0;border-radius:11px;background:linear-gradient(100deg,#1d4ed8,#2875ed);color:white;font:inherit;font-weight:800;cursor:pointer;padding:9px 12px;margin-top:10px;box-shadow:0 5px 12px #175cd326}
+button:active{transform:translateY(1px)}
+.results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}
+.result{min-width:0;border:1px solid var(--line);background:#f8faff;border-radius:9px;padding:9px}
+.result-label{display:block;font-size:11px;line-height:1.3;color:var(--muted);margin-bottom:4px}
+.result-value{display:block;font-size:clamp(17px,4vw,22px);font-weight:850;line-height:1.2;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.target{color:var(--green)}.stop{color:var(--red)}
+.result-entry{background:#f3f6fc}
+.status{font-size:13px;min-height:20px;margin:10px 0 0;color:var(--red)}
+.note-box{background:#fff8e6;border:1px solid #f0d58e;border-radius:13px;padding:10px;color:#4d3b12;font-size:13px;line-height:1.5}
+.note-box strong{color:#342607}
+.disclaimer{font-size:12px;color:var(--muted);line-height:1.6;margin:12px 0 0}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 24px}
+@media(max-width:420px){main{width:calc(100% - 16px);margin-top:8px}.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.results{grid-template-columns:repeat(2,minmax(0,1fr))}.result{padding:8px}.result-value{font-size:17px}.card{border-radius:10px;padding:11px}.site-header .tagline{font-size:12px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="brand">PVRajCMS</div>
+  <p class="brand-sub">Group · Financial Technology</p>
+  <div class="header-line"></div>
+  <h1>Crude Oil Scalp Calculator</h1>
+  <p class="tagline">Crude Oil only · Plan targets and stop loss</p>
+</header>
+<main>
+  <section class="card" aria-labelledby="calc-title">
+    <h2 id="calc-title">Crude Oil Levels</h2>
+    <p class="intro">Enter Crude Oil entry price and select BUY or SELL.</p>
+    <div class="form-grid">
+      <div>
+        <label for="direction">Trade Type</label>
+        <select id="direction">
+          <option value="BUY">BUY</option>
+          <option value="SELL">SELL</option>
+        </select>
+      </div>
+      <div>
+        <label for="entry">Entry Price</label>
+        <input id="entry" type="number" inputmode="decimal" min="0" step="any" placeholder="Enter entry price" autocomplete="off">
+      </div>
+    </div>
+    <button id="calculate" type="button">Calculate Levels</button>
+    <p id="error" class="status" role="status" aria-live="polite"></p>
+    <div id="results" hidden aria-live="polite">
+      <div class="results">
+        <div class="result result-entry"><span class="result-label">Entry Price</span><strong class="result-value" id="entryOut">—</strong></div>
+        <div class="result"><span class="result-label">Stop Loss · 11 points</span><strong class="result-value stop" id="slOut">—</strong></div>
+        <div class="result"><span class="result-label">T1 · 8 points</span><strong class="result-value target" id="t1Out">—</strong></div>
+        <div class="result"><span class="result-label">T2 · 18 points cumulative</span><strong class="result-value target" id="t2Out">—</strong></div>
+        <div class="result"><span class="result-label">T3 · 25 points cumulative</span><strong class="result-value target" id="t3Out">—</strong></div>
+        <div class="result"><span class="result-label">Planned target distance</span><strong class="result-value">25 pts</strong></div>
+      </div>
+      <button id="copy" type="button">Copy Results</button>
+    </div>
+  </section>
+  <section class="card" aria-labelledby="note-title">
+    <h2 id="note-title">Important Note — Crude Oil Only</h2>
+    <div class="note-box">
+      <strong>Use only for Crude Oil.</strong> Do not use this calculator for Silver or other commodities because their price movement and stop-loss needs may differ.
+      <br><strong>Stop Loss:</strong> 11 points.
+      <br><strong>Targets:</strong> T1 = 8, T2 = 18 cumulative, T3 = 25 cumulative points.
+      <br>Monitor market conditions at every target; do not wait blindly for T3. Manage risk and protect your capital.
+    </div>
+    <p class="disclaimer">Trading involves risk. No calculator or strategy can guarantee profits or prevent all losses. This tool calculates price levels only; it does not provide trading signals or place orders.</p>
+  </section>
+</main>
+<footer>© PVRajCMS Group</footer>
+<script>
+(() => {
+  const byId = id => document.getElementById(id);
+  const format = value => Number(value).toLocaleString('en-IN', { maximumFractionDigits: 8 });
+  let copiedText = '';
+
+  function calculate() {
+    const raw = byId('entry').value.trim();
+    const entry = Number(raw);
+    const direction = byId('direction').value;
+
+    if (!raw || !Number.isFinite(entry) || entry <= 0) {
+      byId('error').textContent = 'Please enter a valid entry price greater than zero.';
+      byId('results').hidden = true;
+      copiedText = '';
+      return;
+    }
+
+    // The user's rules: T1 +8, then +10 more, then +7 more = 25 cumulative; SL 11.
+    const sign = direction === 'BUY' ? 1 : -1;
+    const t1 = entry + sign * 8;
+    const t2 = entry + sign * 18;
+    const t3 = entry + sign * 25;
+    const sl = entry - sign * 11;
+
+    byId('entryOut').textContent = format(entry);
+    byId('t1Out').textContent = format(t1);
+    byId('t2Out').textContent = format(t2);
+    byId('t3Out').textContent = format(t3);
+    byId('slOut').textContent = format(sl);
+    byId('error').textContent = '';
+    byId('results').hidden = false;
+
+    copiedText = `PVRajCMS Group - Crude Oil Scalp Calculator\nTrade: ${direction}\nEntry: ${format(entry)}\nT1 (8 points): ${format(t1)}\nT2 (18 points cumulative): ${format(t2)}\nT3 (25 points cumulative): ${format(t3)}\nSL (11 points): ${format(sl)}`;
+  }
+
+  byId('calculate').addEventListener('click', calculate);
+  byId('entry').addEventListener('keydown', event => {
+    if (event.key === 'Enter') calculate();
+  });
+  byId('direction').addEventListener('change', () => {
+    if (!byId('results').hidden) calculate();
+  });
+  byId('copy').addEventListener('click', async () => {
+    if (!copiedText) return;
+    try {
+      await navigator.clipboard.writeText(copiedText);
+      byId('copy').textContent = 'Copied!';
+      window.setTimeout(() => { byId('copy').textContent = 'Copy Results'; }, 1500);
+    } catch {
+      byId('error').textContent = 'Copy is unavailable in this browser. Please copy the results manually.';
+    }
+  });
+})();
+</script>
+</body>
+</html>
