@@ -1,308 +1,296 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="FRR Calculator subscription by PVrajCMS Group">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FRR Calculator | PVrajCMS Group</title>
+<meta name="description" content="FRR Calculator registration and payment page">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: #0b1220;
-  color: #f1f5f9;
-  line-height: 1.6;
-}
-
-.container {
-  max-width: 850px;
-  width: 100%;
-  margin: auto;
-  padding: 24px 16px 40px;
-}
-
-.brand {
-  color: #58d6b0;
-  font-size: 13px;
-  font-weight: bold;
-  letter-spacing: 2px;
-}
-
-h1 {
-  font-size: 34px;
-  margin-bottom: 8px;
-}
-
-h2 {
-  margin-top: 0;
-}
-
-h3 {
-  font-size: 18px;
-}
-
-.muted {
-  color: #aabbd0;
-}
-
-.card {
-  background: #121d30;
-  border: 1px solid #293952;
-  border-radius: 15px;
-  padding: 22px;
-  margin-top: 20px;
-}
-
-.price {
-  font-size: 36px;
-  font-weight: bold;
-  color: #58d6b0;
-}
-
-.price small {
-  font-size: 15px;
-  color: #d1dbea;
-}
-
-label {
-  display: block;
-  margin-top: 14px;
-  font-size: 14px;
-}
-
-input {
-  width: 100%;
-  padding: 13px;
-  margin-top: 6px;
-  border-radius: 8px;
-  border: 1px solid #354862;
-  background: #0b1424;
-  color: white;
-  font-size: 16px;
-}
-
-button, .btn {
-  display: block;
-  width: 100%;
-  border: none;
-  border-radius: 9px;
-  padding: 14px;
-  margin-top: 16px;
-  background: #58d6b0;
-  color: #082019;
-  font-weight: bold;
-  font-size: 16px;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.secondary {
-  background: #26364d;
-  color: white;
-}
-
-.notice {
-  padding: 14px;
-  background: #1c2c40;
-  border-radius: 9px;
-  margin-top: 15px;
-  overflow-wrap: anywhere;
-}
-
-.qr-area {
-  text-align: center;
-  padding: 15px 0;
-}
-
-.qr-image {
-  display: block;
-  width: 230px;
-  max-width: 100%;
-  height: auto;
-  min-height: 100px;
-  object-fit: contain;
-  background: white;
-  padding: 10px;
-  border-radius: 12px;
-  margin: 15px auto;
-}
-
-.hidden {
-  display: none;
-}
-
-footer {
-  text-align: center;
-  margin-top: 25px;
-  color: #8fa1b8;
-  font-size: 13px;
-}
-
-@media (max-width: 600px) {
-  .container {
-    padding: 16px 12px 30px;
-  }
-
-  h1 {
-    font-size: 28px;
-  }
-
-  .card {
-    padding: 16px;
-  }
-}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172033}
+header{background:linear-gradient(120deg,#0d1b32,#173e75);color:white;padding:25px 15px;text-align:center}
+header h1{margin:0 0 7px}
+header p{margin:0;color:#d9e7ff}
+main{width:min(100% - 28px,650px);margin:24px auto}
+.card{background:white;border:1px solid #d9e1ee;border-radius:15px;padding:22px;margin-bottom:18px;box-shadow:0 5px 20px #10213b0d}
+h2{font-size:20px;margin-top:0}
+.note{color:#667085;font-size:14px;line-height:1.5}
+.price{font-size:30px;font-weight:bold;color:#10213b;margin:15px 0}
+label{display:block;font-size:14px;font-weight:bold;margin:13px 0 6px}
+input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:16px}
+button{width:100%;padding:12px;border:0;border-radius:8px;background:#175cd3;color:white;font-size:16px;font-weight:bold;cursor:pointer;margin-top:12px}
+button.secondary{background:#e8eef8;color:#183153}
+button:disabled{opacity:.6}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qr{display:block;width:min(100%,250px);height:auto;margin:15px auto;border:1px solid #ddd;padding:8px}
+.status{display:none;padding:12px;border-radius:8px;margin-top:14px;font-size:14px;line-height:1.5;white-space:pre-wrap}
+.status.show{display:block}
+.ok{background:#e9f8ef;color:#075e35}
+.err{background:#fff0f0;color:#9b1c1c}
+.info{background:#eef4ff;color:#194185}
+.small{font-size:12px;color:#667085;line-height:1.5}
+.hidden{display:none!important}
+footer{text-align:center;padding:20px;color:#667085;font-size:13px}
+@media(max-width:520px){.card{padding:17px}.row{grid-template-columns:1fr}}
 </style>
 </head>
 
 <body>
-
-<main class="container">
-
-<div class="brand">PVRAJCMS GROUP · TRADING TOOLS</div>
-
+<header>
 <h1>FRR Calculator</h1>
+<p>PVrajCMS Group</p>
+</header>
 
-<p class="muted">
-Fixed Risk–Reward Calculator subscription for trade planning.
-</p>
-
+<main>
 <section class="card">
-  <h2>Monthly Subscription</h2>
-  <div class="price">₹199 <small>/ 30 days</small></div>
-  <p class="muted">
-    Register below and proceed to payment.
-  </p>
-  <a class="btn" href="#register">Register Now — ₹199</a>
+<h2>Calculator Access</h2>
+<p class="note">FRR Calculator access price: one-time payment of ₹399. After payment, submit your transaction reference for verification.</p>
+<div class="price">₹399</div>
+<p class="small">Scan the QR code below to pay. Never share your UPI PIN or OTP.</p>
+<img class="qr" src="GooglePay_QR.png" alt="Payment QR Code" onerror="this.style.display='none'">
+<p class="small">Keep GooglePay_QR.png in the same GitHub folder as this HTML file.</p>
 </section>
 
-<section class="card" id="register">
-  <h2>Create Your Account</h2>
+<section class="card" id="authCard">
+<h2>Create Account / Sign In</h2>
+<p class="note">New users can register. Existing users can sign in with their email and password.</p>
 
-  <form id="registrationForm">
-    <label for="name">Full Name</label>
-    <input id="name" name="name" type="text"
-      placeholder="Enter your full name" required>
+<label for="fullName">Full Name</label>
+<input id="fullName" autocomplete="name" placeholder="Enter full name">
 
-    <label for="phone">Mobile Number</label>
-    <input id="phone" name="phone" type="tel"
-      placeholder="Enter mobile number"
-      pattern="[0-9+ ()-]{8,18}" required>
+<label for="phone">Mobile Number</label>
+<input id="phone" autocomplete="tel" inputmode="tel" placeholder="Enter mobile number">
 
-    <label for="email">Email Address</label>
-    <input id="email" name="email" type="email"
-      placeholder="Enter your email" required>
+<label for="email">Email Address</label>
+<input id="email" type="email" autocomplete="email" placeholder="Enter email">
 
-    <button type="submit">Continue to Payment — ₹199</button>
-  </form>
+<label for="password">Password</label>
+<input id="password" type="password" autocomplete="current-password" minlength="8" placeholder="At least 8 characters">
 
-  <p class="muted" style="font-size:13px">
-    This is a demonstration registration form. Your details are not
-    saved to a server.
-  </p>
+<div class="row">
+<button id="signupBtn" type="button">Create Account</button>
+<button id="loginBtn" type="button" class="secondary">Sign In</button>
+</div>
+
+<div id="authMsg" class="status" role="status"></div>
 </section>
 
-<section class="card hidden" id="payment">
-  <h2>Pay ₹199 Using UPI</h2>
+<section class="card hidden" id="paymentCard">
+<h2>Submit Payment Reference</h2>
+<p class="note">Signed in as <b id="signedEmail"></b>. After paying ₹399, enter your UPI transaction ID or UTR number below.</p>
 
-  <p>Please scan the QR code or use the UPI payment button below.</p>
+<label for="paymentReference">Transaction ID / UTR</label>
+<input id="paymentReference" maxlength="100" placeholder="Enter transaction reference">
 
-  <div class="notice">
-    <strong>Subscription:</strong> ₹199<br>
-    <strong>Duration:</strong> 30 days<br>
-    <strong>UPI ID:</strong> ajayku6698@okaxis
-  </div>
+<button id="submitPaymentBtn" type="button">Submit for Verification</button>
+<button id="logoutBtn" type="button" class="secondary">Sign Out</button>
 
-  <h3>Option 1: Scan Google Pay QR Code</h3>
-
-  <div class="qr-area">
-    <img
-      class="qr-image"
-      src="./GooglePay_QR.png"
-      alt="Google Pay QR Code"
-    >
-    <p class="muted">Scan with any supported UPI app.</p>
-  </div>
-
-  <h3>Option 2: Pay Directly Using UPI</h3>
-
-  <a
-    class="btn"
-    href="upi://pay?pa=ajayku6698@okaxis&amp;pn=PVrajCMS%20Group&amp;am=199&amp;cu=INR"
-  >
-    Pay ₹199 with UPI
-  </a>
-
-  <p class="muted" style="font-size:13px">
-    Check the recipient name and amount in your UPI app before paying.
-  </p>
-
-  <div class="notice">
-    <strong>Important:</strong> Payment is not automatically verified.
-    Keep your transaction reference number and contact the seller
-    for manual verification.
-  </div>
-
-  <button class="secondary" type="button" id="backButton">
-    Back to Registration
-  </button>
+<div id="paymentMsg" class="status" role="status"></div>
 </section>
 
-<section class="card">
-  <h2>Subscription Terms</h2>
-  <p>
-    The subscription period is 30 days after payment verification.
-    Renewal is required after expiry.
-  </p>
-  <p class="muted" style="font-size:13px">
-    Calculator results are for educational and trade-planning purposes.
-    Brokerage, taxes and slippage may affect actual results.
-    This tool does not provide investment advice.
-  </p>
-</section>
-
-<footer>
-  © <span id="year"></span> PVrajCMS Group
-</footer>
-
+<p class="small">Payment references are subject to manual verification. Do not place a Supabase secret/service-role key in this HTML file.</p>
 </main>
 
+<footer>© PVrajCMS Group</footer>
+
 <script>
-document.getElementById("year").textContent =
-  new Date().getFullYear();
+(() => {
+  const SUPABASE_URL =
+    'https://spfqiniuwgeqqkygsytg.supabase.co';
 
-const form = document.getElementById("registrationForm");
-const payment = document.getElementById("payment");
+  const SUPABASE_PUBLISHABLE_KEY =
+    'sb_publishable_Ctn5FwSwD4FHtYTfgVQ8aw_LHVMTkKv';
 
-form.addEventListener("submit", function(event) {
-  event.preventDefault();
+  let client;
 
-  if (!form.reportValidity()) return;
+  const authCard = document.getElementById('authCard');
+  const paymentCard = document.getElementById('paymentCard');
+  const authMsg = document.getElementById('authMsg');
+  const paymentMsg = document.getElementById('paymentMsg');
 
-  payment.classList.remove("hidden");
+  function db() {
+    if (!window.supabase || !window.supabase.createClient) {
+      throw new Error('Supabase load nahi hui. Internet check karke refresh karein.');
+    }
 
-  payment.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
+    if (!client) {
+      client = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+    }
+
+    return client;
+  }
+
+  function message(element, text, type) {
+    element.textContent = text;
+    element.className = 'status show ' + type;
+  }
+
+  function busy(button, state, label) {
+    if (!button.dataset.originalText) {
+      button.dataset.originalText = button.textContent;
+    }
+
+    button.disabled = state;
+    button.textContent = state ? label : button.dataset.originalText;
+  }
+
+  async function refreshSession() {
+    try {
+      const { data, error } = await db().auth.getSession();
+      if (error) throw error;
+
+      const user = data.session && data.session.user;
+
+      if (user) {
+        authCard.classList.add('hidden');
+        paymentCard.classList.remove('hidden');
+        document.getElementById('signedEmail').textContent =
+          user.email || 'Account';
+      } else {
+        paymentCard.classList.add('hidden');
+        authCard.classList.remove('hidden');
+      }
+    } catch (error) {
+      message(authMsg, error.message, 'err');
+    }
+  }
+
+  document.getElementById('signupBtn').addEventListener('click', async function() {
+    busy(this, true, 'Creating Account...');
+
+    try {
+      const fullName = document.getElementById('fullName').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!fullName || !phone || !email || password.length < 8) {
+        throw new Error('Full name, mobile, email aur kam se kam 8-character password bhariye.');
+      }
+
+      const { data, error } = await db().auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            full_name: fullName,
+            phone: phone
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      if (data.session) {
+        message(authMsg, 'Account created successfully.', 'ok');
+        await refreshSession();
+      } else {
+        message(
+          authMsg,
+          'Registration request submitted. Email confirmation link check karein, phir sign in karein.',
+          'ok'
+        );
+      }
+    } catch (error) {
+      message(authMsg, error.message || 'Registration failed.', 'err');
+    } finally {
+      busy(this, false);
+    }
   });
-});
 
-document.getElementById("backButton").addEventListener("click", function() {
-  payment.classList.add("hidden");
+  document.getElementById('loginBtn').addEventListener('click', async function() {
+    busy(this, true, 'Signing In...');
 
-  document.getElementById("register").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
+    try {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        throw new Error('Email aur password bhariye.');
+      }
+
+      const { error } = await db().auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+      if (error) throw error;
+
+      message(authMsg, 'Sign in successful.', 'ok');
+      await refreshSession();
+    } catch (error) {
+      message(authMsg, error.message || 'Sign in failed.', 'err');
+    } finally {
+      busy(this, false);
+    }
   });
-});
+
+  document.getElementById('submitPaymentBtn').addEventListener('click', async function() {
+    busy(this, true, 'Submitting...');
+
+    try {
+      const reference =
+        document.getElementById('paymentReference').value.trim();
+
+      if (reference.length < 6) {
+        throw new Error('Valid transaction ID / UTR enter karein.');
+      }
+
+      const { data, error: userError } = await db().auth.getUser();
+
+      if (userError) throw userError;
+      if (!data.user) throw new Error('Please sign in again.');
+
+      const { error } = await db()
+        .from('frr_payment_submissions')
+        .insert({
+          user_id: data.user.id,
+          payment_reference: reference,
+          amount: 399,
+          status: 'pending'
+        });
+
+      if (error) throw error;
+
+      document.getElementById('paymentReference').value = '';
+
+      message(
+        paymentMsg,
+        'Payment reference submitted. Status: PENDING. Admin ko payment verify karke access approve karna hoga.',
+        'ok'
+      );
+    } catch (error) {
+      let text = error.message || 'Submission failed.';
+
+      if (/row-level security|permission/i.test(text)) {
+        text += ' Supabase table ki INSERT policy check karein.';
+      }
+
+      message(paymentMsg, text, 'err');
+    } finally {
+      busy(this, false);
+    }
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', async function() {
+    try {
+      const { error } = await db().auth.signOut();
+      if (error) throw error;
+      message(paymentMsg, 'Signed out.', 'info');
+      await refreshSession();
+    } catch (error) {
+      message(paymentMsg, error.message || 'Sign out failed.', 'err');
+    }
+  });
+
+  refreshSession();
+})();
 </script>
-
 </body>
 </html>
