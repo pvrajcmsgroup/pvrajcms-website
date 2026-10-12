@@ -1,193 +1,8 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="FRR Calculator monthly subscription by PVrajCMS Group.">
-<title>FRR Calculator | PVrajCMS Group</title>
-
-<style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b1220;
-  color: #f1f5f9;
-  line-height: 1.6;
-}
-
-.container {
-  width: 100%;
-  max-width: 850px;
-  margin: auto;
-  padding: 20px 15px 40px;
-}
-
-.back {
-  display: inline-block;
-  margin-bottom: 20px;
-  padding: 9px 15px;
-  background: #26364d;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-}
-
-.brand {
-  color: #58d6b0;
-  font-weight: bold;
-  letter-spacing: 2px;
-  font-size: 13px;
-}
-
-h1 {
-  font-size: clamp(27px, 5vw, 38px);
-  line-height: 1.2;
-  margin-bottom: 10px;
-}
-
-.muted {
-  color: #aabbd0;
-}
-
-.card {
-  background: #121d30;
-  border: 1px solid #293952;
-  border-radius: 15px;
-  padding: 20px;
-  margin-top: 18px;
-}
-
-.price {
-  color: #58d6b0;
-  font-size: 35px;
-  font-weight: bold;
-}
-
-button,
-.btn {
-  display: inline-block;
-  width: 100%;
-  padding: 13px 16px;
-  margin-top: 15px;
-  border: none;
-  border-radius: 9px;
-  background: #58d6b0;
-  color: #082019;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.secondary {
-  background: #26364d;
-  color: white;
-}
-
-input {
-  display: block;
-  width: 100%;
-  margin: 7px 0 15px;
-  padding: 12px;
-  border: 1px solid #354862;
-  border-radius: 8px;
-  background: #0b1424;
-  color: white;
-  font-size: 16px;
-}
-
-label {
-  color: #d6e2f1;
-  font-size: 14px;
-}
-
-.hidden {
-  display: none;
-}
-
-.notice {
-  background: #1c2c40;
-  border-radius: 9px;
-  padding: 12px;
-  font-size: 14px;
-}
-
-footer {
-  text-align: center;
-  color: #8fa1b8;
-  font-size: 13px;
-  margin-top: 25px;
-}
-
-@media (max-width: 600px) {
-  .container {
-    padding: 15px 12px 30px;
-  }
-
-  .card {
-    padding: 16px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<a class="back" href="index.html">← Back to Home</a>
-
-<div class="brand">PVRAJCMS GROUP · TRADING TOOLS</div>
-
-<h1>Fixed Risk–Reward Calculator</h1>
-
-<p class="muted">
-Plan your trades by calculating risk points, target points,
-risk-to-reward ratio, and estimated profit or loss.
-</p>
-
-<section class="card">
-  <h2>Monthly Subscription</h2>
-  <div class="price">₹199 <span style="font-size:16px">/ month</span></div>
-  <p class="muted">Subscription period: 30 days after payment verification.</p>
-  <a class="btn" href="#register">Register Now — ₹199</a>
-</section>
-
-<section class="card" id="register">
-  <h2>Create Your Account</h2>
-
-  <form id="registrationForm">
-    <label for="name">Full Name</label>
-    <input id="name" name="name" type="text"
-      placeholder="Enter your full name" required maxlength="100">
-
-    <label for="phone">Mobile Number</label>
-    <input id="phone" name="phone" type="tel"
-      placeholder="Enter mobile number" required
-      pattern="[0-9+ ()-]{8,18}">
-
-    <label for="email">Email Address</label>
-    <input id="email" name="email" type="email"
-      placeholder="Enter email address" required>
-
-    <button type="submit">Continue to Payment — ₹199</button>
-  </form>
-
-  <p class="muted" style="font-size:13px">
-    This registration form is a demo. Details are not saved to a server.
-  </p>
-</section>
-
 <section class="card hidden" id="payment">
   <h2>Pay ₹199 Using UPI</h2>
 
-  <p>Please confirm the recipient and amount in your UPI app before paying.</p>
+  <p>Please scan the QR code or use the UPI payment button below.</p>
 
   <div class="notice">
     <strong>Subscription:</strong> ₹199<br>
@@ -195,14 +10,29 @@ risk-to-reward ratio, and estimated profit or loss.
     <strong>UPI ID:</strong> ajayku6698@okaxis
   </div>
 
-  <a class="btn"
-     href="upi://pay?pa=ajayku6698@okaxis&amp;pn=PVrajCMS%20Group&amp;am=199&amp;cu=INR">
-     Pay ₹199 with UPI
+  <h3>Option 1: Scan Google Pay QR Code</h3>
+
+  <div style="text-align:center; padding:15px;">
+    <img
+      src="./GooglePay_QR.png"
+      alt="Google Pay QR Code"
+      style="width:230px; max-width:100%; height:auto;
+      background:#fff; padding:10px; border-radius:12px;"
+    >
+    <p class="muted">Scan with any supported UPI app</p>
+  </div>
+
+  <h3>Option 2: Pay Directly Using UPI</h3>
+
+  <a
+    class="btn"
+    href="upi://pay?pa=ajayku6698@okaxis&amp;pn=PVrajCMS%20Group&amp;am=199&amp;cu=INR"
+  >
+    Pay ₹199 with UPI
   </a>
 
-  <p class="muted" style="font-size:13px">
-    If the button does not open your UPI app, open your UPI app
-    manually and pay using the UPI ID shown above.
+  <p class="muted" style="font-size:13px;">
+    Please verify the recipient name and amount in your UPI app.
   </p>
 
   <div class="notice">
@@ -215,57 +45,3 @@ risk-to-reward ratio, and estimated profit or loss.
     Back to Registration
   </button>
 </section>
-
-<section class="card">
-  <h2>Subscription Terms</h2>
-  <p>
-    Subscription access is intended for 30 days after verified payment.
-    Renewal is required after expiry.
-  </p>
-  <p class="muted" style="font-size:13px">
-    Calculator results are estimates for educational and trade-planning
-    purposes. Brokerage, taxes, slippage, and other charges may apply.
-    This tool does not provide investment advice.
-  </p>
-</section>
-
-<footer>
-  © <span id="year"></span> PVrajCMS Group · Trading Tools
-</footer>
-
-</div>
-
-<script>
-document.getElementById("year").textContent =
-  new Date().getFullYear();
-
-const form = document.getElementById("registrationForm");
-const payment = document.getElementById("payment");
-
-form.addEventListener("submit", function(event) {
-  event.preventDefault();
-
-  if (!form.reportValidity()) {
-    return;
-  }
-
-  payment.classList.remove("hidden");
-
-  payment.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-});
-
-document.getElementById("backButton").addEventListener("click", function() {
-  payment.classList.add("hidden");
-
-  document.getElementById("register").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-});
-</script>
-
-</body>
-</html>
