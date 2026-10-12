@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Free Fixed Risk–Reward (FRR) calculator for planning a trade's risk, reward and risk/reward ratio.">
+<title>FRR Calculator | PVrajCMS Group</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1220;--panel:#121d30;--line:#293952;--text:#edf4ff;--muted:#9eafc7;--accent:#58d6b0;--bad:#ff8585;--good:#75e0ad}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#172b43 0,#0b1220 55%);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}.wrap{width:min(920px,100%);margin:auto;padding:24px 16px 40px}.brand{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:800}.hero{margin:12px 0 22px}.hero h1{font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.1;margin:0 0 10px}.hero p{margin:0;color:var(--muted);max-width:650px}.card{background:rgba(18,29,48,.96);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 18px 45px #0002}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.field label{display:block;color:#c8d6e9;font-size:.9rem;margin-bottom:7px}.field input,.field select{width:100%;min-width:0;background:#0b1424;border:1px solid #354862;border-radius:10px;padding:12px;color:var(--text);font:inherit;outline:none}.field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px #58d6b022}.full{grid-column:1/-1}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:750;cursor:pointer}.primary{background:var(--accent);color:#082019}.secondary{background:#26364d;color:var(--text)}.results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}.metric{background:#0b1424;border:1px solid var(--line);border-radius:13px;padding:14px}.metric small{display:block;color:var(--muted);font-size:.8rem;margin-bottom:5px}.metric strong{font-size:1.35rem;overflow-wrap:anywhere}.status{margin-top:16px;border-radius:10px;padding:12px 14px;background:#1c2c40;color:#d9e7f7}.status.error{background:#3a2029;color:#ffd3d3}.status.good{background:#15372f;color:#c7ffe4}.note{color:var(--muted);font-size:.85rem;margin:16px 2px 0}.footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:22px}.hidden{display:none}@media(max-width:600px){.wrap{padding:18px 12px 30px}.card{padding:15px}.formgrid{grid-template-columns:1fr;gap:13px}.full{grid-column:auto}.results{grid-template-columns:1fr}.metric{display:flex;align-items:center;justify-content:space-between;gap:12px}.metric small{margin:0}.metric strong{text-align:right}.hero h1{font-size:2rem}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="brand">PVrajCMS Group · Trading Tools</div>
+  <header class="hero"><h1>Fixed Risk–Reward (FRR) Calculator</h1><p>Plan a trade before entering. Calculate risk points, reward points, risk/reward ratio, and estimated rupee risk and reward.</p></header>
+  <section class="card" aria-label="FRR calculator">
+    <div class="formgrid">
+      <div class="field"><label for="side">Trade direction</label><select id="side"><option value="long">Buy / Long</option><option value="short">Sell / Short</option></select></div>
+      <div class="field"><label for="entry">Entry price</label><input id="entry" type="number" step="any" placeholder="e.g. 8450" inputmode="decimal"></div>
+      <div class="field"><label for="sl">Stop-loss price</label><input id="sl" type="number" step="any" placeholder="e.g. 8430" inputmode="decimal"></div>
+      <div class="field"><label for="target">Target price</label><input id="target" type="number" step="any" placeholder="e.g. 8490" inputmode="decimal"></div>
+      <div class="field"><label for="qty">Quantity / lots</label><input id="qty" type="number" min="0.000001" step="any" value="1" inputmode="decimal"></div>
+      <div class="field"><label for="value">₹ value per 1 price point, per quantity unit</label><input id="value" type="number" min="0" step="any" value="1" inputmode="decimal"></div>
+    </div>
+    <div class="actions"><button class="btn primary" id="calculate" type="button">Calculate Risk & Reward</button><button class="btn secondary" id="reset" type="button">Reset</button></div>
+    <div id="status" class="status" role="status" aria-live="polite">Enter your entry, stop-loss and target prices, then calculate.</div>
+    <div id="results" class="results hidden" aria-live="polite">
+      <div class="metric"><small>Risk (points)</small><strong id="riskPts">—</strong></div>
+      <div class="metric"><small>Reward (points)</small><strong id="rewardPts">—</strong></div>
+      <div class="metric"><small>Risk : Reward</small><strong id="ratio">—</strong></div>
+      <div class="metric"><small>Estimated risk</small><strong id="riskCash">—</strong></div>
+      <div class="metric"><small>Estimated reward</small><strong id="rewardCash">—</strong></div>
+      <div class="metric"><small>Reward / risk</small><strong id="multiple">—</strong></div>
+    </div>
+    <p class="note">Estimates exclude brokerage, taxes, slippage and other charges. Confirm the instrument's actual point value and lot size before using this result. This calculator is for planning and education, not a trade recommendation.</p>
+  </section>
+  <footer class="footer">© <span id="year"></span> PVrajCMS Group · Trading Tools</footer>
+</main>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);const money=n=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:2}).format(n);const num=n=>new Intl.NumberFormat('en-IN',{maximumFractionDigits:4}).format(n);
+function calc(){const side=$('side').value,entry=Number($('entry').value),sl=Number($('sl').value),target=Number($('target').value),qty=Number($('qty').value),pointValue=Number($('value').value);const status=$('status'),results=$('results');results.classList.add('hidden');status.className='status';
+if(['entry','sl','target'].some(id=>$(id).value.trim()==='')||![entry,sl,target,qty,pointValue].every(Number.isFinite)||qty<=0||pointValue<0){status.textContent='Please enter valid prices, a quantity greater than zero, and a non-negative point value.';status.classList.add('error');return;}
+let risk,reward;if(side==='long'){risk=entry-sl;reward=target-entry;}else{risk=sl-entry;reward=entry-target;}
+if(risk<=0||reward<=0){status.textContent=side==='long'?'For Buy/Long, Stop-loss must be below entry and target must be above entry.':'For Sell/Short, Stop-loss must be above entry and target must be below entry.';status.classList.add('error');return;}
+const ratio=reward/risk;$('riskPts').textContent=num(risk);$('rewardPts').textContent=num(reward);$('ratio').textContent='1 : '+num(ratio);$('riskCash').textContent=money(risk*qty*pointValue);$('rewardCash').textContent=money(reward*qty*pointValue);$('multiple').textContent=num(ratio)+'×';results.classList.remove('hidden');status.textContent='Calculation complete. Review the risk before placing any trade.';status.classList.add('good');}
+$('calculate').addEventListener('click',calc);$('reset').addEventListener('click',()=>{['entry','sl','target'].forEach(id=>$(id).value='');$('side').value='long';$('qty').value='1';$('value').value='1';$('results').classList.add('hidden');$('status').className='status';$('status').textContent='Enter your entry, stop-loss and target prices, then calculate.';});$('year').textContent=new Date().getFullYear();
+})();
+</script>
+</body></html>
