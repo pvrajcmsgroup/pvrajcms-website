@@ -47,8 +47,8 @@ footer{text-align:center;padding:20px;color:#667085;font-size:13px}
 <main>
 <section class="card">
 <h2>Calculator Access</h2>
-<p class="note">FRR Calculator access price: one-time payment of ₹399. After payment, submit your transaction reference for verification.</p>
-<div class="price">₹399</div>
+<p class="note">FRR Calculator access price: one-time payment of ₹199. After payment, submit your transaction reference for verification.</p>
+<div class="price">₹199</div>
 <p class="small">Scan the QR code below to pay. Never share your UPI PIN or OTP.</p>
 <img class="qr" src="GooglePay_QR.png" alt="Payment QR Code" onerror="this.style.display='none'">
 <p class="small">Keep GooglePay_QR.png in the same GitHub folder as this HTML file.</p>
@@ -80,7 +80,7 @@ footer{text-align:center;padding:20px;color:#667085;font-size:13px}
 
 <section class="card hidden" id="paymentCard">
 <h2>Submit Payment Reference</h2>
-<p class="note">Signed in as <b id="signedEmail"></b>. After paying ₹399, enter your UPI transaction ID or UTR number below.</p>
+<p class="note">Signed in as <b id="signedEmail"></b>. After paying ₹199, enter your UPI transaction ID or UTR number below.</p>
 
 <label for="paymentReference">Transaction ID / UTR</label>
 <input id="paymentReference" maxlength="100" placeholder="Enter transaction reference">
@@ -252,7 +252,7 @@ footer{text-align:center;padding:20px;color:#667085;font-size:13px}
         .insert({
           user_id: data.user.id,
           payment_reference: reference,
-          amount: 399,
+          amount: 199,
           status: 'pending'
         });
 
