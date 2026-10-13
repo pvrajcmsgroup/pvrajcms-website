@@ -69,7 +69,6 @@ button, .link-button {
 }
 
 button:disabled { opacity: .6; cursor: wait; }
-
 .secondary { background: #16804a; }
 .payment { background: #e88b12; }
 .logout { background: #64748b; }
@@ -160,7 +159,7 @@ import { createClient } from
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
 const SUPABASE_URL = 'https://wgspejflgnjeikrytfob.supabase.co';
-const SUPABASE_KEY = 'PASTE_YOUR_PUBLISHABLE_OR_ANON_KEY_HERE';
+const SUPABASE_KEY = 'sb_publishable_B7_Of7lmeqKD980ik_-P6A_2JZbN8yc';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -304,11 +303,6 @@ $('logoutBtn').addEventListener('click', async () => {
 });
 
 async function initialise() {
-  if (SUPABASE_KEY === 'PASTE_YOUR_PUBLISHABLE_OR_ANON_KEY_HERE') {
-    message('Setup required: add your Supabase Publishable key in the code.');
-    return;
-  }
-
   const { data, error } = await supabase.auth.getSession();
 
   if (error) {
