@@ -27,9 +27,25 @@ header {
 header h1 { margin: 0 0 8px; font-size: 25px; }
 header p { margin: 0; color: #dbe7f7; }
 
+.back-container {
+  max-width: 440px;
+  margin: 16px auto 0;
+  padding: 0 15px;
+}
+
+.back-button {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: #e2e8f0;
+  color: #102747;
+  text-decoration: none;
+  font-weight: bold;
+}
+
 .container {
   max-width: 440px;
-  margin: 35px auto;
+  margin: 20px auto 35px;
   padding: 25px;
   background: white;
   border-radius: 14px;
@@ -96,16 +112,35 @@ footer {
   font-size: 13px;
   color: #64748b;
 }
+
+@media (max-width: 480px) {
+  .container {
+    margin: 20px 12px 30px;
+    padding: 20px;
+  }
+
+  .back-container {
+    margin-top: 14px;
+  }
+}
 </style>
 </head>
 
 <body>
+
 <header>
   <h1>PVRajCMS Group</h1>
   <p>Crude Oil Scalp Calculator</p>
 </header>
 
+<div class="back-container">
+  <a class="back-button" href="services.html">
+    &larr; Back to Services
+  </a>
+</div>
+
 <main class="container">
+
   <section id="authSection">
     <h2>Create Account / Login</h2>
 
@@ -150,6 +185,7 @@ footer {
     verification. The service provides calculated price levels only and does
     not guarantee profit or provide personalized investment advice.
   </div>
+
 </main>
 
 <footer>© PVRajCMS Group</footer>
@@ -179,6 +215,7 @@ function setBusy(busy) {
 async function showAccount(user) {
   authSection.classList.add('hidden');
   accountSection.classList.remove('hidden');
+
   $('accountEmail').textContent = 'Logged in as: ' + user.email;
   $('subscriptionStatus').textContent = 'Checking subscription...';
   $('calculatorBtn').classList.add('hidden');
@@ -317,6 +354,7 @@ async function initialise() {
 
 initialise();
 </script>
+
 </body>
 </html>
 ```
