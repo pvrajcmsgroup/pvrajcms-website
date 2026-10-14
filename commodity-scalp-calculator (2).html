@@ -19,158 +19,397 @@
   --red: #b42318;
   --gold: #f5c451;
 }
+
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-body {
-  margin: 0; background: var(--bg); color: var(--ink);
-  font-family: Inter, Arial, Helvetica, sans-serif; line-height: 1.4;
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
 .site-header {
-  position: relative; overflow: hidden;
-  background: linear-gradient(130deg,#0a1429 0%,#132e5a 52%,#1e4c8c 100%);
-  color: #fff; padding: 70px 12px 9px; text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(130deg, #0a1429 0%, #132e5a 52%, #1e4c8c 100%);
+  color: #fff;
+  padding: 115px 16px 16px;
+  text-align: center;
   border-bottom: 3px solid var(--gold);
 }
+
 .top-nav {
-  position: absolute; top: 10px; right: 12px; display: flex;
-  justify-content: flex-end; align-items: center; flex-wrap: wrap;
-  gap: 6px; z-index: 3;
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  z-index: 3;
 }
+
 .top-nav a {
-  display: inline-block; padding: 6px 9px; border: 1px solid #ffffff35;
-  border-radius: 7px; background: #ffffff12; color: #fff;
-  text-decoration: none; font-size: 11px; font-weight: 700;
+  display: inline-block;
+  padding: 6px 10px;
+  border: 1px solid #ffffff35;
+  border-radius: 7px;
+  background: #ffffff12;
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
 }
-.top-nav a:last-child { background: #087443; }
+
+.top-nav a:last-child {
+  background: #087443;
+  border-color: #087443;
+}
+
+.top-nav a:hover { background: #ffffff25; }
+
 .brand-logo {
-  position: absolute; top: 7px; left: 10px; display: block; z-index: 2;
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
 }
+
 .brand-logo img {
-  width: 235px; height: 70px; object-fit: contain;
-  object-position: left top; display: block;
+  width: 330px;
+  height: 100px;
+  object-fit: contain;
+  object-position: left center;
+  display: block;
 }
+
 .brand {
-  display: inline-block; font-size: clamp(23px,4vw,30px);
-  font-weight: 900; letter-spacing: 1.5px; line-height: 1.1;
-  background: linear-gradient(90deg,#fff 0%,#f8d778 45%,#fff 75%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  display: inline-block;
+  font-size: clamp(24px, 5vw, 32px);
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  line-height: 1.15;
+  background: linear-gradient(90deg, #fff 0%, #f8d778 45%, #fff 75%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
+
 .brand-sub {
-  margin: 3px 0 0; color: #d9e7ff; font-size: 11px;
-  letter-spacing: 1.2px; text-transform: uppercase;
+  margin: 4px 0 0;
+  color: #d9e7ff;
+  font-size: clamp(11px, 2.5vw, 14px);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
+
 .header-line {
-  width: 42px; height: 3px; background: var(--gold);
-  border-radius: 9px; margin: 6px auto 5px;
+  width: 54px;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 9px;
+  margin: 10px auto 8px;
 }
+
 .site-header h1 {
-  margin: 0; font-size: clamp(19px,4vw,25px); font-weight: 750; line-height: 1.2;
+  margin: 0;
+  font-size: clamp(20px, 4vw, 27px);
+  font-weight: 750;
+  line-height: 1.3;
 }
-.site-header .tagline { margin: 3px 0 0; color: #e4edff; font-size: 12px; }
-main { width: min(100% - 18px,680px); margin: 8px auto 10px; }
+
+.site-header .tagline {
+  margin: 5px 0 0;
+  color: #e4edff;
+  font-size: 13px;
+}
+
+main {
+  width: min(100% - 24px, 540px);
+  margin: 14px auto 20px;
+}
+
 .card {
-  min-width: 0; padding: 10px; margin-bottom: 7px; background: #fff;
-  border: 1px solid var(--line); border-radius: 10px;
-  box-shadow: 0 4px 14px #15294b0a;
+  min-width: 0;
+  padding: 15px;
+  margin-bottom: 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 8px 26px #15294b0a;
 }
-h2 { font-size: 19px; margin: 0 0 4px; line-height: 1.25; }
-.intro { font-size: 12px; color: var(--muted); margin: 0 0 8px; }
+
+h2 {
+  font-size: clamp(18px, 3.5vw, 21px);
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.intro {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+
 .form-grid {
-  display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
-label { display: block; font-size: 12px; font-weight: 750; margin: 0 0 4px; }
-input,select {
-  display: block; width: 100%; min-width: 0; min-height: 36px;
-  padding: 7px 9px; border: 1px solid #cbd5e1; border-radius: 8px;
-  background: #fff; color: var(--ink); font: inherit; font-size: 16px;
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 750;
+  margin: 0 0 6px;
 }
-input:focus,select:focus,button:focus-visible,a:focus-visible {
-  outline: 3px solid #93b4ff; outline-offset: 2px;
+
+input, select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 43px;
+  padding: 9px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
 }
+
+input:focus, select:focus, button:focus-visible, a:focus-visible {
+  outline: 3px solid #93b4ff;
+  outline-offset: 2px;
+}
+
 button {
-  width: 100%; min-height: 36px; border: 0; border-radius: 8px;
-  background: linear-gradient(100deg,#1d4ed8,#2875ed); color: #fff;
-  font: inherit; font-weight: 800; cursor: pointer; padding: 7px 10px;
-  margin-top: 7px;
+  width: 100%;
+  min-height: 42px;
+  border: 0;
+  border-radius: 9px;
+  background: linear-gradient(100deg, #1d4ed8, #2875ed);
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  padding: 10px 12px;
+  margin-top: 12px;
+  box-shadow: 0 5px 12px #175cd326;
 }
+
+button:active { transform: translateY(1px); }
 button:disabled { opacity: .65; cursor: not-allowed; }
+
 .results {
-  display: grid; grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 6px; margin-top: 7px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
 }
+
 .result {
-  min-width: 0; border: 1px solid var(--line); background: #f8faff;
-  border-radius: 8px; padding: 7px;
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: #f8faff;
+  border-radius: 9px;
+  padding: 10px;
 }
-.result-label { display: block; font-size: 10px; line-height: 1.3; color: var(--muted); margin-bottom: 3px; }
+
+.result-label {
+  display: block;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+
 .result-value {
-  display: block; font-size: clamp(16px,3.5vw,20px); font-weight: 850;
-  line-height: 1.2; overflow-wrap: anywhere; font-variant-numeric: tabular-nums;
+  display: block;
+  font-size: clamp(17px, 4vw, 21px);
+  font-weight: 850;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
 }
+
 .target { color: var(--green); }
 .stop { color: var(--red); }
 .result-entry { background: #f3f6fc; }
-.status { font-size: 12px; margin: 6px 0 0; color: var(--red); overflow-wrap: anywhere; }
-.note-box {
-  background: #fff8e6; border: 1px solid #f0d58e; border-radius: 8px;
-  padding: 7px; color: #4d3b12; font-size: 11px; line-height: 1.35;
+
+.status {
+  font-size: 13px;
+  margin: 8px 0 0;
+  color: var(--red);
   overflow-wrap: anywhere;
 }
-.note-box strong { color: #342607; }
-.disclaimer { font-size: 10px; color: var(--muted); line-height: 1.35; margin: 6px 0 0; }
-footer { text-align: center; color: var(--muted); font-size: 11px; padding: 0 12px 8px; }
-[hidden] { display: none !important; }
 
+.note-box {
+  background: #fff8e6;
+  border: 1px solid #f0d58e;
+  border-radius: 10px;
+  padding: 12px;
+  color: #4d3b12;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.note-box strong { color: #342607; }
+
+.disclaimer {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 12px 0 0;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 0 16px 24px;
+}
+
+/* Mobile and tablet */
 @media (max-width: 600px) {
-  .site-header { padding: 53px 8px 8px; }
-  .brand-logo { top: 5px; left: 6px; }
-  .brand-logo img { width: 125px; height: 45px; }
-  .top-nav { top: 8px; right: 7px; gap: 5px; }
-  .top-nav a { padding: 5px 7px; font-size: 10px; }
-  .site-header h1 { font-size: clamp(18px,5vw,22px); }
-  .site-header .tagline { font-size: 11px; }
-  main { width: calc(100% - 14px); margin: 7px auto 9px; }
-  .card { padding: 9px; border-radius: 9px; margin-bottom: 6px; }
-  .form-grid { gap: 7px; }
+  .site-header {
+    padding: 82px 10px 14px;
+  }
+
+  .brand-logo {
+    top: 4px;
+    left: 6px;
+  }
+
+  .brand-logo img {
+    width: 190px;
+    height: 62px;
+  }
+
+  .top-nav {
+    top: 8px;
+    right: 7px;
+    gap: 5px;
+  }
+
+  .top-nav a {
+    padding: 5px 7px;
+    font-size: 10px;
+  }
+
+  .brand { font-size: 24px; }
+  .brand-sub { font-size: 10px; letter-spacing: 1px; }
+
+  .header-line {
+    margin: 8px auto 7px;
+  }
+
+  .site-header h1 {
+    font-size: clamp(19px, 5vw, 23px);
+  }
+
+  .site-header .tagline { font-size: 12px; }
+
+  main {
+    width: calc(100% - 18px);
+    margin: 10px auto 16px;
+  }
+
+  .card {
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  .form-grid, .results {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .result { padding: 9px; }
+  .result-value { font-size: 17px; }
+}
+
+/* Very small phones */
+@media (max-width: 350px) {
+  .site-header {
+    padding: 72px 8px 12px;
+  }
+
+  .brand-logo {
+    top: 4px;
+    left: 5px;
+  }
+
+  .brand-logo img {
+    width: 130px;
+    height: 48px;
+  }
+
+  .top-nav {
+    right: 5px;
+    gap: 4px;
+  }
+
+  .top-nav a {
+    padding: 4px 5px;
+    font-size: 9px;
+  }
+
+  .brand { font-size: 21px; }
+  .site-header h1 { font-size: 18px; }
+  .form-grid { grid-template-columns: 1fr; }
   .result { padding: 7px; }
   .result-value { font-size: 16px; }
 }
-@media (max-width: 350px) {
-  .site-header { padding: 48px 7px 7px; }
-  .brand-logo img { width: 96px; height: 38px; }
-  .top-nav { right: 5px; gap: 4px; }
-  .top-nav a { padding: 4px 5px; font-size: 9px; }
-  .brand { font-size: 22px; }
-  .site-header h1 { font-size: 18px; }
-  .form-grid { grid-template-columns: 1fr 1fr; }
-  .result { padding: 6px; }
-  .result-value { font-size: 15px; }
-}
+
 @media (prefers-reduced-motion: reduce) {
-  *,*::before,*::after { scroll-behavior: auto !important; transition: none !important; }
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
 }
 </style>
 </head>
+
 <body>
 <header class="site-header">
+
   <nav class="top-nav" aria-label="Main navigation">
     <a href="index.html">← Main Website</a>
     <a href="services.html">Our Services</a>
   </nav>
+
   <div class="brand-logo">
-    <img src="logo.png" alt="PVRajCMS Group logo" width="235" height="70">
+    <img src="logo.png" alt="PVRajCMS Group logo" width="330" height="100">
   </div>
+
   <div class="brand">PVRajCMS</div>
   <p class="brand-sub">Group · Financial Technology</p>
   <div class="header-line"></div>
   <h1>Crude Oil Scalp Calculator</h1>
   <p class="tagline">Crude Oil only · Plan targets and stop loss</p>
+
 </header>
 
 <main>
   <section class="card" aria-labelledby="calc-title">
     <h2 id="calc-title">Crude Oil Levels</h2>
     <p class="intro">Enter Crude Oil entry price and select BUY or SELL.</p>
+
     <div class="form-grid">
       <div>
         <label for="direction">Trade Type</label>
@@ -179,47 +418,58 @@ footer { text-align: center; color: var(--muted); font-size: 11px; padding: 0 12
           <option value="SELL">SELL</option>
         </select>
       </div>
+
       <div>
         <label for="entry">Entry Price</label>
-        <input id="entry" type="number" inputmode="decimal" min="0" step="any"
-               placeholder="Enter entry price" autocomplete="off">
+        <input id="entry" type="number" inputmode="decimal"
+               min="0" step="any" placeholder="Enter entry price"
+               autocomplete="off">
       </div>
     </div>
+
     <button id="calculate" type="button">Calculate Levels</button>
     <p id="error" class="status" role="status" aria-live="polite"></p>
+
     <div id="results" hidden aria-live="polite">
       <div class="results">
         <div class="result result-entry">
           <span class="result-label">Entry Price</span>
           <strong class="result-value" id="entryOut">—</strong>
         </div>
+
         <div class="result">
           <span class="result-label">Stop Loss · 11 points</span>
           <strong class="result-value stop" id="slOut">—</strong>
         </div>
+
         <div class="result">
           <span class="result-label">T1 · 8 points</span>
           <strong class="result-value target" id="t1Out">—</strong>
         </div>
+
         <div class="result">
           <span class="result-label">T2 · 18 points cumulative</span>
           <strong class="result-value target" id="t2Out">—</strong>
         </div>
+
         <div class="result">
           <span class="result-label">T3 · 25 points cumulative</span>
           <strong class="result-value target" id="t3Out">—</strong>
         </div>
+
         <div class="result">
           <span class="result-label">Planned target distance</span>
           <strong class="result-value">25 pts</strong>
         </div>
       </div>
+
       <button id="copy" type="button">Copy Results</button>
     </div>
   </section>
 
   <section class="card" aria-labelledby="note-title">
     <h2 id="note-title">Important Note — Crude Oil Only</h2>
+
     <div class="note-box">
       <strong>Use only for Crude Oil.</strong>
       Do not use this calculator for Silver or other commodities because their price movement and stop-loss needs may differ.
@@ -227,18 +477,25 @@ footer { text-align: center; color: var(--muted); font-size: 11px; padding: 0 12
       <br><strong>Targets:</strong> T1 = 8, T2 = 18 cumulative, T3 = 25 cumulative points.
       <br>Monitor market conditions at every target; do not wait blindly for T3. Manage risk and protect your capital.
     </div>
+
     <p class="disclaimer">
       Trading involves risk. No calculator or strategy can guarantee profits or prevent all losses.
       This tool calculates price levels only; it does not provide trading signals or place orders.
     </p>
   </section>
 </main>
+
 <footer>© PVRajCMS Group</footer>
 
 <script>
 (() => {
   const byId = id => document.getElementById(id);
-  const format = value => Number(value).toLocaleString("en-IN", { maximumFractionDigits: 8 });
+
+  const format = value =>
+    Number(value).toLocaleString("en-IN", {
+      maximumFractionDigits: 8
+    });
+
   let copiedText = "";
 
   function calculate() {
@@ -247,7 +504,8 @@ footer { text-align: center; color: var(--muted); font-size: 11px; padding: 0 12
     const direction = byId("direction").value;
 
     if (!raw || !Number.isFinite(entry) || entry <= 0) {
-      byId("error").textContent = "Please enter a valid entry price greater than zero.";
+      byId("error").textContent =
+        "Please enter a valid entry price greater than zero.";
       byId("results").hidden = true;
       copiedText = "";
       return;
@@ -264,6 +522,7 @@ footer { text-align: center; color: var(--muted); font-size: 11px; padding: 0 12
     byId("t2Out").textContent = format(t2);
     byId("t3Out").textContent = format(t3);
     byId("slOut").textContent = format(sl);
+
     byId("error").textContent = "";
     byId("results").hidden = false;
 
@@ -278,18 +537,25 @@ footer { text-align: center; color: var(--muted); font-size: 11px; padding: 0 12
   }
 
   byId("calculate").addEventListener("click", calculate);
+
   byId("entry").addEventListener("keydown", event => {
     if (event.key === "Enter") calculate();
   });
+
   byId("direction").addEventListener("change", () => {
     if (!byId("results").hidden) calculate();
   });
+
   byId("copy").addEventListener("click", async () => {
     if (!copiedText) return;
+
     try {
       await navigator.clipboard.writeText(copiedText);
       byId("copy").textContent = "Copied!";
-      window.setTimeout(() => { byId("copy").textContent = "Copy Results"; }, 1500);
+
+      window.setTimeout(() => {
+        byId("copy").textContent = "Copy Results";
+      }, 1500);
     } catch {
       byId("error").textContent =
         "Copy is unavailable in this browser. Please copy the results manually.";
