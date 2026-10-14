@@ -1,87 +1,59 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101d3a">
-<title>Crude Oil Scalp Calculator | PVRajCMS</title>
-<meta name="description" content="PVRajCMS Crude Oil Scalp Calculator — calculate targets and stop-loss levels.">
+<title>Crude Oil Scalp Calculator | PVRajCMS Group</title>
+<meta name="description" content="Crude Oil Scalp Calculator by PVRajCMS Group">
 
 <style>
 :root {
-  color-scheme: light;
+  --blue: #132e5a;
+  --dark: #0a1429;
+  --gold: #f5c451;
   --bg: #f2f5fb;
-  --ink: #17233b;
+  --text: #17233b;
   --muted: #68758d;
-  --line: #dbe3f0;
+  --border: #dbe3f0;
   --green: #087443;
   --red: #b42318;
-  --gold: #f5c451;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   background: var(--bg);
-  color: var(--ink);
-  font-family: Inter, Arial, Helvetica, sans-serif;
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
   line-height: 1.5;
 }
 
+/* HEADER: thin blue background */
 .site-header {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(130deg, #0a1429 0%, #132e5a 52%, #1e4c8c 100%);
-  color: #fff;
-  padding: 115px 16px 16px;
+  background: linear-gradient(130deg, var(--dark), var(--blue), #1e4c8c);
+  color: white;
   text-align: center;
+  padding: 78px 12px 12px;
   border-bottom: 3px solid var(--gold);
 }
 
-.top-nav {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 7px;
-  z-index: 3;
-}
-
-.top-nav a {
-  display: inline-block;
-  padding: 6px 10px;
-  border: 1px solid #ffffff35;
-  border-radius: 7px;
-  background: #ffffff12;
-  color: #fff;
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-.top-nav a:last-child {
-  background: #087443;
-  border-color: #087443;
-}
-
-.top-nav a:hover { background: #ffffff25; }
-
+/* Large logo, positioned independently */
 .brand-logo {
   position: absolute;
-  top: 5px;
-  left: 10px;
+  top: 1px;
+  left: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,78 +61,104 @@ body {
 }
 
 .brand-logo img {
-  width: 330px;
-  height: 100px;
+  display: block;
+  width: 230px;
+  height: 68px;
   object-fit: contain;
   object-position: left center;
-  display: block;
+}
+
+/* Navigation */
+.top-nav {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.top-nav a {
+  display: inline-block;
+  color: white;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 5px 8px;
+  border: 1px solid #ffffff40;
+  border-radius: 6px;
+  background: #ffffff12;
+}
+
+.top-nav a:hover {
+  background: #ffffff28;
 }
 
 .brand {
-  display: inline-block;
-  font-size: clamp(24px, 5vw, 32px);
+  margin: 0;
+  font-size: clamp(23px, 4vw, 30px);
   font-weight: 900;
-  letter-spacing: 1.5px;
-  line-height: 1.15;
-  background: linear-gradient(90deg, #fff 0%, #f8d778 45%, #fff 75%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  color: white;
 }
 
 .brand-sub {
-  margin: 4px 0 0;
+  margin: 2px 0 0;
   color: #d9e7ff;
-  font-size: clamp(11px, 2.5vw, 14px);
-  letter-spacing: 1.5px;
+  font-size: 11px;
+  letter-spacing: 1px;
   text-transform: uppercase;
 }
 
 .header-line {
-  width: 54px;
+  width: 45px;
   height: 3px;
+  margin: 7px auto;
   background: var(--gold);
-  border-radius: 9px;
-  margin: 10px auto 8px;
+  border-radius: 4px;
 }
 
 .site-header h1 {
   margin: 0;
-  font-size: clamp(20px, 4vw, 27px);
-  font-weight: 750;
+  font-size: clamp(19px, 3.5vw, 26px);
   line-height: 1.3;
 }
 
-.site-header .tagline {
-  margin: 5px 0 0;
+.tagline {
+  margin: 4px 0 0;
   color: #e4edff;
-  font-size: 13px;
+  font-size: 12px;
 }
 
+/* Main layout */
 main {
-  width: min(100% - 24px, 540px);
+  width: calc(100% - 24px);
+  max-width: 540px;
   margin: 14px auto 20px;
 }
 
 .card {
-  min-width: 0;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
   padding: 15px;
   margin-bottom: 12px;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  box-shadow: 0 8px 26px #15294b0a;
+  box-shadow: 0 6px 22px #15294b0a;
 }
 
 h2 {
-  font-size: clamp(18px, 3.5vw, 21px);
-  margin: 0 0 6px;
+  font-size: 20px;
   line-height: 1.3;
+  margin: 0 0 6px;
 }
 
 .intro {
-  font-size: 13px;
   color: var(--muted);
+  font-size: 13px;
   margin: 0 0 12px;
 }
 
@@ -172,26 +170,29 @@ h2 {
 
 label {
   display: block;
+  margin-bottom: 5px;
   font-size: 13px;
-  font-weight: 750;
-  margin: 0 0 6px;
+  font-weight: bold;
 }
 
-input, select {
-  display: block;
+input,
+select {
   width: 100%;
   min-width: 0;
   min-height: 43px;
   padding: 9px 10px;
   border: 1px solid #cbd5e1;
-  border-radius: 9px;
-  background: #fff;
-  color: var(--ink);
-  font: inherit;
+  border-radius: 8px;
+  background: white;
+  color: var(--text);
+  font-family: inherit;
   font-size: 16px;
 }
 
-input:focus, select:focus, button:focus-visible, a:focus-visible {
+input:focus,
+select:focus,
+button:focus-visible,
+a:focus-visible {
   outline: 3px solid #93b4ff;
   outline-offset: 2px;
 }
@@ -199,20 +200,20 @@ input:focus, select:focus, button:focus-visible, a:focus-visible {
 button {
   width: 100%;
   min-height: 42px;
-  border: 0;
-  border-radius: 9px;
-  background: linear-gradient(100deg, #1d4ed8, #2875ed);
-  color: #fff;
-  font: inherit;
-  font-weight: 800;
-  cursor: pointer;
-  padding: 10px 12px;
   margin-top: 12px;
-  box-shadow: 0 5px 12px #175cd326;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(100deg, #1d4ed8, #2875ed);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-button:active { transform: translateY(1px); }
-button:disabled { opacity: .65; cursor: not-allowed; }
+button:active {
+  transform: translateY(1px);
+}
 
 .results {
   display: grid;
@@ -223,106 +224,114 @@ button:disabled { opacity: .65; cursor: not-allowed; }
 
 .result {
   min-width: 0;
-  border: 1px solid var(--line);
-  background: #f8faff;
-  border-radius: 9px;
   padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #f8faff;
 }
 
 .result-label {
   display: block;
+  margin-bottom: 5px;
+  color: var(--muted);
   font-size: 11px;
   line-height: 1.4;
-  color: var(--muted);
-  margin-bottom: 5px;
 }
 
 .result-value {
   display: block;
   font-size: clamp(17px, 4vw, 21px);
-  font-weight: 850;
-  line-height: 1.25;
+  line-height: 1.3;
+  font-weight: 800;
   overflow-wrap: anywhere;
-  font-variant-numeric: tabular-nums;
 }
 
-.target { color: var(--green); }
-.stop { color: var(--red); }
-.result-entry { background: #f3f6fc; }
+.target {
+  color: var(--green);
+}
+
+.stop {
+  color: var(--red);
+}
 
 .status {
-  font-size: 13px;
   margin: 8px 0 0;
   color: var(--red);
+  font-size: 13px;
   overflow-wrap: anywhere;
 }
 
 .note-box {
-  background: #fff8e6;
-  border: 1px solid #f0d58e;
-  border-radius: 10px;
   padding: 12px;
+  border: 1px solid #f0d58e;
+  border-radius: 9px;
+  background: #fff8e6;
   color: #4d3b12;
   font-size: 13px;
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
 
-.note-box strong { color: #342607; }
+.note-box strong {
+  color: #342607;
+}
 
 .disclaimer {
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.6;
   margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
 }
 
 footer {
+  padding: 0 12px 22px;
   text-align: center;
   color: var(--muted);
   font-size: 12px;
-  padding: 0 16px 24px;
 }
 
-/* Mobile and tablet */
+/* Mobile: thinner blue header, large logo */
 @media (max-width: 600px) {
   .site-header {
-    padding: 82px 10px 14px;
+    padding: 65px 8px 10px;
   }
 
   .brand-logo {
-    top: 4px;
-    left: 6px;
+    top: 1px;
+    left: 5px;
   }
 
   .brand-logo img {
-    width: 190px;
-    height: 62px;
+    width: 175px;
+    height: 53px;
   }
 
   .top-nav {
-    top: 8px;
-    right: 7px;
-    gap: 5px;
+    top: 6px;
+    right: 6px;
+    gap: 4px;
   }
 
   .top-nav a {
-    padding: 5px 7px;
+    padding: 4px 6px;
+    font-size: 9px;
+  }
+
+  .brand {
+    font-size: 23px;
+  }
+
+  .brand-sub {
     font-size: 10px;
   }
 
-  .brand { font-size: 24px; }
-  .brand-sub { font-size: 10px; letter-spacing: 1px; }
-
-  .header-line {
-    margin: 8px auto 7px;
-  }
-
   .site-header h1 {
-    font-size: clamp(19px, 5vw, 23px);
+    font-size: 20px;
   }
 
-  .site-header .tagline { font-size: 12px; }
+  .tagline {
+    font-size: 11px;
+  }
 
   main {
     width: calc(100% - 18px);
@@ -331,84 +340,95 @@ footer {
 
   .card {
     padding: 12px;
-    border-radius: 10px;
     margin-bottom: 10px;
   }
 
-  .form-grid, .results {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .result {
+    padding: 9px;
   }
 
-  .result { padding: 9px; }
-  .result-value { font-size: 17px; }
+  .result-value {
+    font-size: 17px;
+  }
 }
 
-/* Very small phones */
+/* Very small mobile screens */
 @media (max-width: 350px) {
   .site-header {
-    padding: 72px 8px 12px;
+    padding: 58px 6px 8px;
   }
 
   .brand-logo {
-    top: 4px;
-    left: 5px;
+    top: 1px;
+    left: 4px;
   }
 
   .brand-logo img {
     width: 130px;
-    height: 48px;
+    height: 42px;
   }
 
   .top-nav {
-    right: 5px;
-    gap: 4px;
+    top: 5px;
+    right: 4px;
+    gap: 3px;
   }
 
   .top-nav a {
-    padding: 4px 5px;
-    font-size: 9px;
+    padding: 4px;
+    font-size: 8px;
   }
 
-  .brand { font-size: 21px; }
-  .site-header h1 { font-size: 18px; }
-  .form-grid { grid-template-columns: 1fr; }
-  .result { padding: 7px; }
-  .result-value { font-size: 16px; }
-}
+  .brand {
+    font-size: 20px;
+  }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    scroll-behavior: auto !important;
-    transition: none !important;
+  .site-header h1 {
+    font-size: 18px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .result {
+    padding: 7px;
+  }
+
+  .result-value {
+    font-size: 16px;
   }
 }
 </style>
 </head>
 
 <body>
+
 <header class="site-header">
+
+  <div class="brand-logo">
+    <img src="logo.png" alt="PVRajCMS Group Logo">
+  </div>
 
   <nav class="top-nav" aria-label="Main navigation">
     <a href="index.html">← Main Website</a>
     <a href="services.html">Our Services</a>
   </nav>
 
-  <div class="brand-logo">
-    <img src="logo.png" alt="PVRajCMS Group logo" width="330" height="100">
-  </div>
-
   <div class="brand">PVRajCMS</div>
   <p class="brand-sub">Group · Financial Technology</p>
   <div class="header-line"></div>
+
   <h1>Crude Oil Scalp Calculator</h1>
-  <p class="tagline">Crude Oil only · Plan targets and stop loss</p>
+  <p class="tagline">Crude Oil only · Calculate targets and stop loss</p>
 
 </header>
 
 <main>
-  <section class="card" aria-labelledby="calc-title">
-    <h2 id="calc-title">Crude Oil Levels</h2>
-    <p class="intro">Enter Crude Oil entry price and select BUY or SELL.</p>
+
+  <section class="card">
+    <h2>Crude Oil Levels</h2>
+    <p class="intro">Enter your entry price and select BUY or SELL.</p>
 
     <div class="form-grid">
       <div>
@@ -421,18 +441,24 @@ footer {
 
       <div>
         <label for="entry">Entry Price</label>
-        <input id="entry" type="number" inputmode="decimal"
-               min="0" step="any" placeholder="Enter entry price"
-               autocomplete="off">
+        <input
+          id="entry"
+          type="number"
+          inputmode="decimal"
+          min="0"
+          step="any"
+          placeholder="Enter entry price"
+        >
       </div>
     </div>
 
     <button id="calculate" type="button">Calculate Levels</button>
     <p id="error" class="status" role="status" aria-live="polite"></p>
 
-    <div id="results" hidden aria-live="polite">
+    <div id="results" hidden>
       <div class="results">
-        <div class="result result-entry">
+
+        <div class="result">
           <span class="result-label">Entry Price</span>
           <strong class="result-value" id="entryOut">—</strong>
         </div>
@@ -448,120 +474,128 @@ footer {
         </div>
 
         <div class="result">
-          <span class="result-label">T2 · 18 points cumulative</span>
+          <span class="result-label">T2 · 18 cumulative points</span>
           <strong class="result-value target" id="t2Out">—</strong>
         </div>
 
         <div class="result">
-          <span class="result-label">T3 · 25 points cumulative</span>
+          <span class="result-label">T3 · 25 cumulative points</span>
           <strong class="result-value target" id="t3Out">—</strong>
         </div>
 
-        <div class="result">
-          <span class="result-label">Planned target distance</span>
-          <strong class="result-value">25 pts</strong>
-        </div>
       </div>
 
       <button id="copy" type="button">Copy Results</button>
     </div>
   </section>
 
-  <section class="card" aria-labelledby="note-title">
-    <h2 id="note-title">Important Note — Crude Oil Only</h2>
+  <section class="card">
+    <h2>Important Note — Crude Oil Only</h2>
 
     <div class="note-box">
-      <strong>Use only for Crude Oil.</strong>
-      Do not use this calculator for Silver or other commodities because their price movement and stop-loss needs may differ.
-      <br><strong>Stop Loss:</strong> 11 points.
-      <br><strong>Targets:</strong> T1 = 8, T2 = 18 cumulative, T3 = 25 cumulative points.
-      <br>Monitor market conditions at every target; do not wait blindly for T3. Manage risk and protect your capital.
+      <strong>Use this calculator for Crude Oil only.</strong>
+      Do not use it for Silver or other commodities.
+      <br>
+      <strong>Stop Loss:</strong> 11 points.
+      <br>
+      <strong>T1:</strong> 8 points.
+      <br>
+      <strong>T2:</strong> 18 cumulative points.
+      <br>
+      <strong>T3:</strong> 25 cumulative points.
+      <br>
+      Manage your risk and never assume that any target is guaranteed.
     </div>
 
     <p class="disclaimer">
-      Trading involves risk. No calculator or strategy can guarantee profits or prevent all losses.
-      This tool calculates price levels only; it does not provide trading signals or place orders.
+      Trading involves risk. This calculator only calculates price levels.
+      It does not guarantee profits, provide guaranteed trading signals, or
+      place orders for you.
     </p>
   </section>
+
 </main>
 
 <footer>© PVRajCMS Group</footer>
 
 <script>
 (() => {
-  const byId = id => document.getElementById(id);
+  const $ = id => document.getElementById(id);
 
-  const format = value =>
-    Number(value).toLocaleString("en-IN", {
-      maximumFractionDigits: 8
-    });
+  const format = value => Number(value).toLocaleString("en-IN", {
+    maximumFractionDigits: 8
+  });
 
-  let copiedText = "";
+  let resultsText = "";
 
   function calculate() {
-    const raw = byId("entry").value.trim();
+    const raw = $("entry").value.trim();
     const entry = Number(raw);
-    const direction = byId("direction").value;
+    const direction = $("direction").value;
 
     if (!raw || !Number.isFinite(entry) || entry <= 0) {
-      byId("error").textContent =
+      $("error").textContent =
         "Please enter a valid entry price greater than zero.";
-      byId("results").hidden = true;
-      copiedText = "";
+      $("results").hidden = true;
+      resultsText = "";
       return;
     }
 
     const sign = direction === "BUY" ? 1 : -1;
+
     const t1 = entry + sign * 8;
     const t2 = entry + sign * 18;
     const t3 = entry + sign * 25;
     const sl = entry - sign * 11;
 
-    byId("entryOut").textContent = format(entry);
-    byId("t1Out").textContent = format(t1);
-    byId("t2Out").textContent = format(t2);
-    byId("t3Out").textContent = format(t3);
-    byId("slOut").textContent = format(sl);
+    $("entryOut").textContent = format(entry);
+    $("t1Out").textContent = format(t1);
+    $("t2Out").textContent = format(t2);
+    $("t3Out").textContent = format(t3);
+    $("slOut").textContent = format(sl);
 
-    byId("error").textContent = "";
-    byId("results").hidden = false;
+    $("error").textContent = "";
+    $("results").hidden = false;
 
-    copiedText =
-      `PVRajCMS Group - Crude Oil Scalp Calculator\n` +
-      `Trade: ${direction}\n` +
-      `Entry: ${format(entry)}\n` +
-      `T1 (8 points): ${format(t1)}\n` +
-      `T2 (18 points cumulative): ${format(t2)}\n` +
-      `T3 (25 points cumulative): ${format(t3)}\n` +
-      `SL (11 points): ${format(sl)}`;
+    resultsText =
+      "PVRajCMS Group - Crude Oil Scalp Calculator\n" +
+      "Trade Type: " + direction + "\n" +
+      "Entry Price: " + format(entry) + "\n" +
+      "T1 (8 points): " + format(t1) + "\n" +
+      "T2 (18 cumulative points): " + format(t2) + "\n" +
+      "T3 (25 cumulative points): " + format(t3) + "\n" +
+      "Stop Loss (11 points): " + format(sl);
   }
 
-  byId("calculate").addEventListener("click", calculate);
+  $("calculate").addEventListener("click", calculate);
 
-  byId("entry").addEventListener("keydown", event => {
-    if (event.key === "Enter") calculate();
+  $("entry").addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      calculate();
+    }
   });
 
-  byId("direction").addEventListener("change", () => {
-    if (!byId("results").hidden) calculate();
+  $("direction").addEventListener("change", () => {
+    if (!$("results").hidden) calculate();
   });
 
-  byId("copy").addEventListener("click", async () => {
-    if (!copiedText) return;
+  $("copy").addEventListener("click", async () => {
+    if (!resultsText) return;
 
     try {
-      await navigator.clipboard.writeText(copiedText);
-      byId("copy").textContent = "Copied!";
+      await navigator.clipboard.writeText(resultsText);
+      $("copy").textContent = "Copied!";
 
-      window.setTimeout(() => {
-        byId("copy").textContent = "Copy Results";
+      setTimeout(() => {
+        $("copy").textContent = "Copy Results";
       }, 1500);
-    } catch {
-      byId("error").textContent =
-        "Copy is unavailable in this browser. Please copy the results manually.";
+    } catch (error) {
+      $("error").textContent =
+        "Copy unavailable. Please select and copy the results manually.";
     }
   });
 })();
 </script>
+
 </body>
 </html>
