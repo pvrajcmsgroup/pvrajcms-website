@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -12,7 +11,6 @@
 :root {
   color-scheme: light;
   --navy: #101d3a;
-  --navy2: #193d73;
   --blue: #2463eb;
   --bg: #f2f5fb;
   --ink: #17233b;
@@ -23,9 +21,7 @@
   --gold: #f5c451;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 html {
   -webkit-text-size-adjust: 100%;
@@ -41,7 +37,6 @@ body {
   line-height: 1.5;
 }
 
-/* Compact top navigation */
 .site-header {
   position: relative;
   overflow: hidden;
@@ -81,8 +76,22 @@ body {
   border-color: #087443;
 }
 
-.top-nav a:hover {
-  background: #ffffff25;
+.top-nav a:hover { background: #ffffff25; }
+
+.brand-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.brand-logo img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  display: block;
+  border-radius: 8px;
 }
 
 .brand {
@@ -126,7 +135,6 @@ body {
   font-size: 13px;
 }
 
-/* Narrower calculator */
 main {
   width: min(100% - 24px, 540px);
   margin: 14px auto 20px;
@@ -167,8 +175,7 @@ label {
   margin: 0 0 6px;
 }
 
-input,
-select {
+input, select {
   display: block;
   width: 100%;
   min-width: 0;
@@ -182,10 +189,7 @@ select {
   font-size: 16px;
 }
 
-input:focus,
-select:focus,
-button:focus-visible,
-a:focus-visible {
+input:focus, select:focus, button:focus-visible, a:focus-visible {
   outline: 3px solid #93b4ff;
   outline-offset: 2px;
 }
@@ -205,14 +209,8 @@ button {
   box-shadow: 0 5px 12px #175cd326;
 }
 
-button:active {
-  transform: translateY(1px);
-}
-
-button:disabled {
-  opacity: .65;
-  cursor: not-allowed;
-}
+button:active { transform: translateY(1px); }
+button:disabled { opacity: .65; cursor: not-allowed; }
 
 .results {
   display: grid;
@@ -246,17 +244,9 @@ button:disabled {
   font-variant-numeric: tabular-nums;
 }
 
-.target {
-  color: var(--green);
-}
-
-.stop {
-  color: var(--red);
-}
-
-.result-entry {
-  background: #f3f6fc;
-}
+.target { color: var(--green); }
+.stop { color: var(--red); }
+.result-entry { background: #f3f6fc; }
 
 .status {
   font-size: 13px;
@@ -277,9 +267,7 @@ button:disabled {
   overflow-wrap: anywhere;
 }
 
-.note-box strong {
-  color: #342607;
-}
+.note-box strong { color: #342607; }
 
 .disclaimer {
   font-size: 12px;
@@ -295,11 +283,8 @@ footer {
   padding: 0 16px 24px;
 }
 
-/* Tablet and mobile */
 @media (max-width: 600px) {
-  .site-header {
-    padding: 65px 12px 16px;
-  }
+  .site-header { padding: 65px 12px 16px; }
 
   .top-nav {
     top: 10px;
@@ -312,13 +297,8 @@ footer {
     font-size: 11px;
   }
 
-  .site-header h1 {
-    font-size: clamp(19px, 5vw, 23px);
-  }
-
-  .site-header .tagline {
-    font-size: 12px;
-  }
+  .site-header h1 { font-size: clamp(19px, 5vw, 23px); }
+  .site-header .tagline { font-size: 12px; }
 
   main {
     width: calc(100% - 18px);
@@ -331,61 +311,33 @@ footer {
     margin-bottom: 10px;
   }
 
-  .form-grid,
-  .results {
+  .form-grid, .results {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .result {
-    padding: 9px;
-  }
-
-  .result-value {
-    font-size: 17px;
-  }
+  .result { padding: 9px; }
+  .result-value { font-size: 17px; }
 }
 
-/* Very small phones */
 @media (max-width: 350px) {
-  .site-header {
-    padding: 62px 8px 14px;
-  }
-
-  .top-nav {
-    right: 7px;
-    gap: 5px;
-  }
+  .site-header { padding: 62px 8px 14px; }
+  .top-nav { right: 7px; gap: 5px; }
 
   .top-nav a {
     padding: 5px 6px;
     font-size: 10px;
   }
 
-  .brand {
-    font-size: 23px;
-  }
-
-  .site-header h1 {
-    font-size: 19px;
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .result {
-    padding: 7px;
-  }
-
-  .result-value {
-    font-size: 16px;
-  }
+  .brand { font-size: 23px; }
+  .brand-logo img { width: 40px; height: 40px; }
+  .site-header h1 { font-size: 19px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .result { padding: 7px; }
+  .result-value { font-size: 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     scroll-behavior: auto !important;
     transition: none !important;
   }
@@ -394,24 +346,24 @@ footer {
 </head>
 
 <body>
-
 <header class="site-header">
-
   <nav class="top-nav" aria-label="Main navigation">
     <a href="index.html">← Main Website</a>
     <a href="services.html">Our Services</a>
   </nav>
 
-  <div class="brand">PVRajCMS</div>
+  <div class="brand-logo">
+    <img src="logo.png" alt="PVRajCMS Group logo" width="48" height="48">
+    <div class="brand">PVRajCMS</div>
+  </div>
+
   <p class="brand-sub">Group · Financial Technology</p>
   <div class="header-line"></div>
   <h1>Crude Oil Scalp Calculator</h1>
   <p class="tagline">Crude Oil only · Plan targets and stop loss</p>
-
 </header>
 
 <main>
-
   <section class="card" aria-labelledby="calc-title">
     <h2 id="calc-title">Crude Oil Levels</h2>
     <p class="intro">Enter Crude Oil entry price and select BUY or SELL.</p>
@@ -427,25 +379,15 @@ footer {
 
       <div>
         <label for="entry">Entry Price</label>
-        <input
-          id="entry"
-          type="number"
-          inputmode="decimal"
-          min="0"
-          step="any"
-          placeholder="Enter entry price"
-          autocomplete="off"
-        >
+        <input id="entry" type="number" inputmode="decimal" min="0" step="any" placeholder="Enter entry price" autocomplete="off">
       </div>
     </div>
 
     <button id="calculate" type="button">Calculate Levels</button>
-
     <p id="error" class="status" role="status" aria-live="polite"></p>
 
     <div id="results" hidden aria-live="polite">
       <div class="results">
-
         <div class="result result-entry">
           <span class="result-label">Entry Price</span>
           <strong class="result-value" id="entryOut">—</strong>
@@ -475,7 +417,6 @@ footer {
           <span class="result-label">Planned target distance</span>
           <strong class="result-value">25 pts</strong>
         </div>
-
       </div>
 
       <button id="copy" type="button">Copy Results</button>
@@ -488,7 +429,6 @@ footer {
     <div class="note-box">
       <strong>Use only for Crude Oil.</strong>
       Do not use this calculator for Silver or other commodities because their price movement and stop-loss needs may differ.
-
       <br><strong>Stop Loss:</strong> 11 points.
       <br><strong>Targets:</strong> T1 = 8, T2 = 18 cumulative, T3 = 25 cumulative points.
       <br>Monitor market conditions at every target; do not wait blindly for T3. Manage risk and protect your capital.
@@ -499,7 +439,6 @@ footer {
       This tool calculates price levels only; it does not provide trading signals or place orders.
     </p>
   </section>
-
 </main>
 
 <footer>© PVRajCMS Group</footer>
@@ -523,15 +462,12 @@ footer {
     if (!raw || !Number.isFinite(entry) || entry <= 0) {
       byId("error").textContent =
         "Please enter a valid entry price greater than zero.";
-
       byId("results").hidden = true;
       copiedText = "";
       return;
     }
 
-    // Existing rules: SL 11, T1 8, T2 18, T3 25 points.
     const sign = direction === "BUY" ? 1 : -1;
-
     const t1 = entry + sign * 8;
     const t2 = entry + sign * 18;
     const t3 = entry + sign * 25;
@@ -559,15 +495,11 @@ footer {
   byId("calculate").addEventListener("click", calculate);
 
   byId("entry").addEventListener("keydown", event => {
-    if (event.key === "Enter") {
-      calculate();
-    }
+    if (event.key === "Enter") calculate();
   });
 
   byId("direction").addEventListener("change", () => {
-    if (!byId("results").hidden) {
-      calculate();
-    }
+    if (!byId("results").hidden) calculate();
   });
 
   byId("copy").addEventListener("click", async () => {
@@ -575,13 +507,10 @@ footer {
 
     try {
       await navigator.clipboard.writeText(copiedText);
-
       byId("copy").textContent = "Copied!";
-
       window.setTimeout(() => {
         byId("copy").textContent = "Copy Results";
       }, 1500);
-
     } catch {
       byId("error").textContent =
         "Copy is unavailable in this browser. Please copy the results manually.";
@@ -589,6 +518,5 @@ footer {
   });
 })();
 </script>
-
 </body>
 </html>
