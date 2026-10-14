@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -147,6 +147,10 @@ footer {
     <button id="signupBtn" type="button">Create Account</button>
     <button id="loginBtn" type="button" class="secondary">Login</button>
 
+    <button id="forgotPasswordBtn" type="button" class="logout">
+      Forgot Password?
+    </button>
+
     <a class="link-button payment" href="crude-oil-payment.html">
       Subscribe — ₹499 / 30 Days
     </a>
@@ -187,12 +191,15 @@ footer {
 import { createClient } from
   'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-const SUPABASE_URL = 'https://wgspejflgnjeikrytfob.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_B7_Of7lmeqKD980ik_-P6A_2JZbN8yc';
+const SUPABASE_URL =
+  'https://wgspejflgnjeikrytfob.supabase.co';
+
+const SUPABASE_KEY =
+  'sb_publishable_B7_Of7lmeqKD980ik_-P6A_2JZbN8yc';
 
 const $ = id => document.getElementById(id);
-
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
 const authSection = $('authSection');
 const accountSection = $('accountSection');
 
@@ -203,6 +210,7 @@ function message(text) {
 function setBusy(busy) {
   $('signupBtn').disabled = busy;
   $('loginBtn').disabled = busy;
+  $('forgotPasswordBtn').disabled = busy;
 }
 
 async function showAccount(user) {
@@ -221,7 +229,8 @@ async function showAccount(user) {
     .maybeSingle();
 
   if (error) {
-    $('subscriptionStatus').textContent = 'Could not check access.';
+    $('subscriptionStatus').textContent =
+      'Could not check access.';
     message('Subscription check error: ' + error.message);
     $('paymentBtn').classList.remove('hidden');
     return;
@@ -241,7 +250,9 @@ async function showAccount(user) {
     $('calculatorBtn').classList.remove('hidden');
     message('Your subscription is active.');
   } else {
-    $('subscriptionStatus').textContent = 'No active subscription found.';
+    $('subscriptionStatus').textContent =
+      'No active subscription found.';
+
     $('paymentBtn').classList.remove('hidden');
 
     message(
@@ -255,7 +266,9 @@ $('signupBtn').addEventListener('click', async () => {
   const password = $('password').value;
 
   if (!email || password.length < 6) {
-    message('Enter a valid email and a password of at least 6 characters.');
+    message(
+      'Enter a valid email and a password of at least 6 characters.'
+    );
     return;
   }
 
@@ -267,7 +280,8 @@ $('signupBtn').addEventListener('click', async () => {
       email,
       password,
       options: {
-        emailRedirectTo: window.location.origin + window.location.pathname
+        emailRedirectTo:
+          window.location.origin + window.location.pathname
       }
     });
 
@@ -301,16 +315,56 @@ $('loginBtn').addEventListener('click', async () => {
   message('Logging in...');
 
   try {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
+    const { data, error } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
 
     if (error) throw error;
 
     await showAccount(data.user);
   } catch (error) {
     message(error.message || 'Login failed.');
+  } finally {
+    setBusy(false);
+  }
+});
+
+$('forgotPasswordBtn').addEventListener('click', async () => {
+  const email = $('email').value.trim();
+
+  if (!email) {
+    message('Enter your registered email address first.');
+    $('email').focus();
+    return;
+  }
+
+  setBusy(true);
+  message('Sending password reset email...');
+
+  try {
+    const resetUrl =
+      window.location.origin +
+      window.location.pathname.replace(
+        'crude-oil-login.html',
+        'reset-password.html'
+      );
+
+    const { error } =
+      await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: resetUrl
+      });
+
+    if (error) throw error;
+
+    message(
+      'If this email is registered, a password reset link has been requested. Check your inbox and spam folder.'
+    );
+  } catch (error) {
+    message(
+      error.message || 'Could not request password reset.'
+    );
   } finally {
     setBusy(false);
   }
@@ -339,6 +393,7 @@ $('logoutBtn').addEventListener('click', async () => {
 
   accountSection.classList.add('hidden');
   authSection.classList.remove('hidden');
+  $('password').value = '';
   message('You have logged out.');
 });
 
@@ -352,7 +407,9 @@ async function initialise() {
       await showAccount(data.session.user);
     }
   } catch (error) {
-    message('Supabase error: ' + (error.message || 'Please try again.'));
+    message(
+      'Supabase error: ' + (error.message || 'Please try again.')
+    );
   }
 }
 
@@ -361,4 +418,3 @@ initialise();
 
 </body>
 </html>
-```
