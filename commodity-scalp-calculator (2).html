@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#101d3a">
+<meta name="theme-color" content="#102a50">
 <title>Crude Oil Scalp Calculator | PVRajCMS Group</title>
 <meta name="description" content="Crude Oil Scalp Calculator by PVRajCMS Group">
 
@@ -36,61 +36,70 @@ body {
   line-height: 1.5;
 }
 
-/* HEADER: thin blue background */
-.site-header {
-  position: relative;
-  background: linear-gradient(120deg, var(--dark), var(--blue), #204b82);
-  color: white;
-  text-align: center;
-  padding: 75px 10px 9px;
-  border-bottom: 3px solid var(--gold);
+/* LOGO AREA: white background, independent of blue header */
+.logo-area {
+  min-height: 76px;
+  padding: 3px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
 }
 
-/* LARGE LOGO: independent of header height */
 .brand-logo {
-  position: absolute;
-  top: 1px;
-  left: 8px;
-  z-index: 2;
-  line-height: 0;
+  display: flex;
+  align-items: center;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .brand-logo img {
   display: block;
   width: 230px;
   height: 68px;
+  max-width: 100%;
   object-fit: contain;
   object-position: left center;
 }
 
-/* Navigation */
 .top-nav {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  z-index: 3;
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   flex-wrap: wrap;
   gap: 6px;
 }
 
 .top-nav a {
-  color: white;
+  display: inline-block;
+  color: #173968;
   text-decoration: none;
   font-size: 11px;
   font-weight: bold;
-  padding: 5px 8px;
-  border: 1px solid #ffffff40;
+  padding: 6px 9px;
+  border: 1px solid #cbd5e1;
   border-radius: 6px;
-  background: #ffffff12;
+  background: #f8faff;
 }
 
-.top-nav a:hover { background: #ffffff28; }
+.top-nav a:hover {
+  background: #eaf1ff;
+}
+
+/* Thin blue title header */
+.site-header {
+  background: linear-gradient(120deg, var(--dark), var(--blue), #204b82);
+  color: white;
+  text-align: center;
+  padding: 8px 10px 9px;
+  border-bottom: 3px solid var(--gold);
+}
 
 .brand {
   margin: 0;
-  font-size: 29px;
+  font-size: 25px;
   font-weight: 900;
   letter-spacing: 1px;
   line-height: 1.2;
@@ -99,32 +108,32 @@ body {
 .brand-sub {
   margin: 2px 0 0;
   color: #d9e7ff;
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
 .header-line {
-  width: 44px;
+  width: 40px;
   height: 3px;
-  margin: 7px auto;
+  margin: 5px auto;
   border-radius: 4px;
   background: var(--gold);
 }
 
 .site-header h1 {
   margin: 0;
-  font-size: clamp(20px, 3.5vw, 26px);
+  font-size: clamp(19px, 3.5vw, 25px);
   line-height: 1.25;
 }
 
 .tagline {
-  margin: 4px 0 0;
-  font-size: 12px;
+  margin: 3px 0 0;
   color: #e4edff;
+  font-size: 12px;
 }
 
-/* Calculator layout */
+/* Calculator */
 main {
   width: calc(100% - 24px);
   max-width: 540px;
@@ -134,7 +143,7 @@ main {
 .card {
   padding: 15px;
   margin-bottom: 12px;
-  background: #fff;
+  background: white;
   border: 1px solid var(--border);
   border-radius: 12px;
   box-shadow: 0 6px 22px #15294b0a;
@@ -200,7 +209,9 @@ button {
   cursor: pointer;
 }
 
-button:active { transform: translateY(1px); }
+button:active {
+  transform: translateY(1px);
+}
 
 .results {
   display: grid;
@@ -267,15 +278,12 @@ footer {
   font-size: 12px;
 }
 
-/* MOBILE: keep logo large and blue header short */
+/* Mobile */
 @media (max-width: 600px) {
-  .site-header {
-    padding: 62px 8px 8px;
-  }
-
-  .brand-logo {
-    top: 1px;
-    left: 5px;
+  .logo-area {
+    min-height: 60px;
+    padding: 3px 7px;
+    gap: 5px;
   }
 
   .brand-logo img {
@@ -284,23 +292,37 @@ footer {
   }
 
   .top-nav {
-    top: 6px;
-    right: 5px;
     gap: 4px;
   }
 
   .top-nav a {
-    padding: 4px 6px;
+    padding: 5px 6px;
     font-size: 9px;
   }
 
-  .brand { font-size: 23px; }
-  .brand-sub { font-size: 10px; }
+  .site-header {
+    padding: 7px 8px 8px;
+  }
 
-  .header-line { margin: 6px auto; }
+  .brand {
+    font-size: 22px;
+  }
 
-  .site-header h1 { font-size: 20px; }
-  .tagline { font-size: 11px; }
+  .brand-sub {
+    font-size: 9px;
+  }
+
+  .header-line {
+    margin: 5px auto;
+  }
+
+  .site-header h1 {
+    font-size: 19px;
+  }
+
+  .tagline {
+    font-size: 11px;
+  }
 
   main {
     width: calc(100% - 18px);
@@ -312,28 +334,29 @@ footer {
     margin-bottom: 10px;
   }
 
-  .result { padding: 9px; }
-  .result-value { font-size: 17px; }
-}
-
-@media (max-width: 350px) {
-  .site-header {
-    padding: 56px 6px 8px;
+  .result {
+    padding: 9px;
   }
 
-  .brand-logo {
-    top: 1px;
-    left: 4px;
+  .result-value {
+    font-size: 17px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 350px) {
+  .logo-area {
+    min-height: 52px;
+    padding: 3px 5px;
+    gap: 3px;
   }
 
   .brand-logo img {
-    width: 130px;
-    height: 40px;
+    width: 125px;
+    height: 42px;
   }
 
   .top-nav {
-    top: 4px;
-    right: 4px;
     gap: 3px;
   }
 
@@ -342,37 +365,44 @@ footer {
     font-size: 8px;
   }
 
-  .brand { font-size: 20px; }
-  .site-header h1 { font-size: 18px; }
+  .brand {
+    font-size: 20px;
+  }
 
-  .form-grid { grid-template-columns: 1fr; }
+  .site-header h1 {
+    font-size: 18px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header class="site-header">
-
-  <div class="brand-logo">
+<!-- Logo and navigation are now outside the blue header -->
+<div class="logo-area">
+  <a class="brand-logo" href="index.html" aria-label="PVRajCMS Group home">
     <img src="logo.png" alt="PVRajCMS Group Logo">
-  </div>
+  </a>
 
   <nav class="top-nav" aria-label="Main navigation">
     <a href="index.html">← Main Website</a>
     <a href="services.html">Our Services</a>
   </nav>
+</div>
 
+<header class="site-header">
   <div class="brand">PVRajCMS</div>
   <p class="brand-sub">Group · Financial Technology</p>
   <div class="header-line"></div>
   <h1>Crude Oil Scalp Calculator</h1>
   <p class="tagline">Crude Oil only · Calculate targets and stop loss</p>
-
 </header>
 
 <main>
-
   <section class="card">
     <h2>Crude Oil Levels</h2>
     <p class="intro">Enter your entry price and select BUY or SELL.</p>
@@ -398,7 +428,6 @@ footer {
 
     <div id="results" hidden>
       <div class="results">
-
         <div class="result">
           <span class="result-label">Entry Price</span>
           <strong class="result-value" id="entryOut">—</strong>
@@ -423,7 +452,6 @@ footer {
           <span class="result-label">T3 · 25 cumulative points</span>
           <strong class="result-value target" id="t3Out">—</strong>
         </div>
-
       </div>
 
       <button id="copy" type="button">Copy Results</button>
@@ -448,7 +476,6 @@ footer {
       It does not guarantee profits or place orders.
     </p>
   </section>
-
 </main>
 
 <footer>© PVRajCMS Group</footer>
