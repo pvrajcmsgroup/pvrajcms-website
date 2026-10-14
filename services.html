@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +14,107 @@
     <meta name="author" content="PVRajCMS Group">
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        .product-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 18px 0;
+            padding: 18px;
+            border: 1px solid #dce3ec;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+        }
+
+        .product-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: #edf4ff;
+            color: #174ea6;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .product-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .product-info h3 {
+            margin: 0 0 7px;
+            font-size: 18px;
+        }
+
+        .product-info p {
+            margin: 0 0 9px;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: #166534;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .product-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            max-width: 100%;
+            padding: 9px 13px;
+            border-radius: 7px;
+            background: #174ea6;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.3;
+            text-align: center;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .product-button:hover {
+            background: #123c80;
+        }
+
+        @media (max-width: 480px) {
+            .product-card {
+                gap: 10px;
+                padding: 13px;
+            }
+
+            .product-number {
+                width: 34px;
+                height: 34px;
+                font-size: 14px;
+            }
+
+            .product-info h3 {
+                font-size: 16px;
+                line-height: 1.4;
+            }
+
+            .product-info p {
+                font-size: 14px;
+            }
+
+            .product-button {
+                padding: 8px 10px;
+                font-size: 12px;
+                white-space: normal;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -45,7 +146,6 @@
 </header>
 
 <main>
-
 <section class="services">
 
     <span class="section-label">OUR SERVICES</span>
@@ -106,17 +206,27 @@
         </p>
     </div>
 
-    <div class="service-card">
-        <h3>Crude Oil Scalping Calculator</h3>
-        <p>
-            A Crude Oil trading calculator to calculate entry
-            price, target levels and stop loss. Access requires
-            an account and an active subscription.
-        </p>
+    <!-- Paid Products -->
 
-        <a href="crude-oil-login.html" class="header-cta">
-            Login / Subscribe to Crude Oil Calculator
-        </a>
+    <div class="product-card">
+        <div class="product-number">01</div>
+
+        <div class="product-info">
+            <h3>Crude Oil Scalping Calculator</h3>
+
+            <p>
+                Calculate entry price, stop loss and target levels
+                with a dedicated crude oil trading calculator.
+                An active subscription is required.
+            </p>
+
+            <div class="product-price">₹499 / 30 Days</div>
+            <br>
+
+            <a href="crude-oil-login.html" class="product-button">
+                Login / Subscribe →
+            </a>
+        </div>
     </div>
 
     <div class="service-card">
@@ -225,7 +335,6 @@
     </p>
 
 </section>
-
 </main>
 
 <footer class="site-footer">
@@ -256,3 +365,4 @@
 
 </body>
 </html>
+```
