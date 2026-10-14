@@ -23,7 +23,9 @@
   --gold: #f5c451;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 html {
   -webkit-text-size-adjust: 100%;
@@ -79,13 +81,15 @@ body {
   border-color: #087443;
 }
 
-.top-nav a:hover { background: #ffffff25; }
+.top-nav a:hover {
+  background: #ffffff25;
+}
 
-/* Large logo in the top-left corner */
+/* Large logo at the upper-left corner */
 .brand-logo {
   position: absolute;
-  top: 14px;
-  left: 18px;
+  top: 8px;
+  left: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -93,11 +97,10 @@ body {
 }
 
 .brand-logo img {
-  width: 120px;
-  height: 120px;
+  width: 165px;
+  height: 115px;
   object-fit: contain;
   display: block;
-  border-radius: 8px;
 }
 
 /* Centered brand name */
@@ -182,7 +185,8 @@ label {
   margin: 0 0 6px;
 }
 
-input, select {
+input,
+select {
   display: block;
   width: 100%;
   min-width: 0;
@@ -196,7 +200,10 @@ input, select {
   font-size: 16px;
 }
 
-input:focus, select:focus, button:focus-visible, a:focus-visible {
+input:focus,
+select:focus,
+button:focus-visible,
+a:focus-visible {
   outline: 3px solid #93b4ff;
   outline-offset: 2px;
 }
@@ -216,8 +223,14 @@ button {
   box-shadow: 0 5px 12px #175cd326;
 }
 
-button:active { transform: translateY(1px); }
-button:disabled { opacity: .65; cursor: not-allowed; }
+button:active {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: .65;
+  cursor: not-allowed;
+}
 
 .results {
   display: grid;
@@ -251,9 +264,17 @@ button:disabled { opacity: .65; cursor: not-allowed; }
   font-variant-numeric: tabular-nums;
 }
 
-.target { color: var(--green); }
-.stop { color: var(--red); }
-.result-entry { background: #f3f6fc; }
+.target {
+  color: var(--green);
+}
+
+.stop {
+  color: var(--red);
+}
+
+.result-entry {
+  background: #f3f6fc;
+}
 
 .status {
   font-size: 13px;
@@ -274,7 +295,9 @@ button:disabled { opacity: .65; cursor: not-allowed; }
   overflow-wrap: anywhere;
 }
 
-.note-box strong { color: #342607; }
+.note-box strong {
+  color: #342607;
+}
 
 .disclaimer {
   font-size: 12px;
@@ -290,16 +313,19 @@ footer {
   padding: 0 16px 24px;
 }
 
+/* Mobile and tablet */
 @media (max-width: 600px) {
-  .site-header { padding: 65px 12px 16px; }
+  .site-header {
+    padding: 65px 12px 16px;
+  }
 
   .brand-logo {
-    top: 12px;
-    left: 10px;
+    top: 8px;
+    left: 8px;
   }
 
   .brand-logo img {
-    width: 70px;
+    width: 90px;
     height: 70px;
   }
 
@@ -314,8 +340,13 @@ footer {
     font-size: 11px;
   }
 
-  .site-header h1 { font-size: clamp(19px, 5vw, 23px); }
-  .site-header .tagline { font-size: 12px; }
+  .site-header h1 {
+    font-size: clamp(19px, 5vw, 23px);
+  }
+
+  .site-header .tagline {
+    font-size: 12px;
+  }
 
   main {
     width: calc(100% - 18px);
@@ -328,43 +359,71 @@ footer {
     margin-bottom: 10px;
   }
 
-  .form-grid, .results {
+  .form-grid,
+  .results {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .result { padding: 9px; }
-  .result-value { font-size: 17px; }
+  .result {
+    padding: 9px;
+  }
+
+  .result-value {
+    font-size: 17px;
+  }
 }
 
+/* Very small phones */
 @media (max-width: 350px) {
-  .site-header { padding: 62px 8px 14px; }
+  .site-header {
+    padding: 62px 8px 14px;
+  }
 
   .brand-logo {
-    top: 12px;
-    left: 7px;
+    top: 8px;
+    left: 6px;
   }
 
   .brand-logo img {
-    width: 55px;
+    width: 65px;
     height: 55px;
   }
 
-  .top-nav { right: 7px; gap: 5px; }
+  .top-nav {
+    right: 7px;
+    gap: 5px;
+  }
 
   .top-nav a {
     padding: 5px 6px;
     font-size: 10px;
   }
 
-  .brand { font-size: 23px; }
-  .site-header h1 { font-size: 19px; }
-  .form-grid { grid-template-columns: 1fr; }
-  .result { padding: 7px; }
-  .result-value { font-size: 16px; }
+  .brand {
+    font-size: 23px;
+  }
+
+  .site-header h1 {
+    font-size: 19px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .result {
+    padding: 7px;
+  }
+
+  .result-value {
+    font-size: 16px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     scroll-behavior: auto !important;
     transition: none !important;
   }
@@ -381,7 +440,7 @@ footer {
   </nav>
 
   <div class="brand-logo">
-    <img src="logo.png" alt="PVRajCMS Group logo" width="120" height="120">
+    <img src="logo.png" alt="PVRajCMS Group logo" width="165" height="115">
   </div>
 
   <div class="brand">PVRajCMS</div>
@@ -389,6 +448,7 @@ footer {
   <div class="header-line"></div>
   <h1>Crude Oil Scalp Calculator</h1>
   <p class="tagline">Crude Oil only · Plan targets and stop loss</p>
+
 </header>
 
 <main>
@@ -407,7 +467,15 @@ footer {
 
       <div>
         <label for="entry">Entry Price</label>
-        <input id="entry" type="number" inputmode="decimal" min="0" step="any" placeholder="Enter entry price" autocomplete="off">
+        <input
+          id="entry"
+          type="number"
+          inputmode="decimal"
+          min="0"
+          step="any"
+          placeholder="Enter entry price"
+          autocomplete="off"
+        >
       </div>
     </div>
 
@@ -523,11 +591,15 @@ footer {
   byId("calculate").addEventListener("click", calculate);
 
   byId("entry").addEventListener("keydown", event => {
-    if (event.key === "Enter") calculate();
+    if (event.key === "Enter") {
+      calculate();
+    }
   });
 
   byId("direction").addEventListener("change", () => {
-    if (!byId("results").hidden) calculate();
+    if (!byId("results").hidden) {
+      calculate();
+    }
   });
 
   byId("copy").addEventListener("click", async () => {
@@ -535,6 +607,7 @@ footer {
 
     try {
       await navigator.clipboard.writeText(copiedText);
+
       byId("copy").textContent = "Copied!";
 
       window.setTimeout(() => {
