@@ -21,7 +21,9 @@
   --red: #b42318;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 html {
   -webkit-text-size-adjust: 100%;
@@ -36,35 +38,44 @@ body {
   line-height: 1.5;
 }
 
-/* LOGO AREA: white background, independent of blue header */
-.logo-area {
-  min-height: 76px;
-  padding: 3px 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  background: #ffffff;
-  border-bottom: 1px solid var(--border);
+/* BLUE HEADER: no white strip */
+.site-header {
+  position: relative;
+  background: linear-gradient(120deg, var(--dark), var(--blue), #204b82);
+  color: white;
+  text-align: center;
+  padding: 75px 10px 9px;
+  border-bottom: 3px solid var(--gold);
 }
 
+/* LARGE LOGO ON BLUE BACKGROUND */
 .brand-logo {
-  display: flex;
-  align-items: center;
-  flex: 0 1 auto;
-  min-width: 0;
+  position: absolute;
+  top: 2px;
+  left: 8px;
+  z-index: 5;
+  display: block;
+  line-height: 0;
+}
+
+.brand-logo a {
+  display: block;
 }
 
 .brand-logo img {
   display: block;
   width: 230px;
   height: 68px;
-  max-width: 100%;
   object-fit: contain;
   object-position: left center;
 }
 
+/* NAVIGATION BUTTONS ON BLUE BACKGROUND */
 .top-nav {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 6;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -74,32 +85,23 @@ body {
 
 .top-nav a {
   display: inline-block;
-  color: #173968;
+  color: #fff;
   text-decoration: none;
   font-size: 11px;
   font-weight: bold;
-  padding: 6px 9px;
-  border: 1px solid #cbd5e1;
+  padding: 5px 8px;
+  border: 1px solid #ffffff55;
   border-radius: 6px;
-  background: #f8faff;
+  background: #ffffff15;
 }
 
 .top-nav a:hover {
-  background: #eaf1ff;
-}
-
-/* Thin blue title header */
-.site-header {
-  background: linear-gradient(120deg, var(--dark), var(--blue), #204b82);
-  color: white;
-  text-align: center;
-  padding: 8px 10px 9px;
-  border-bottom: 3px solid var(--gold);
+  background: #ffffff30;
 }
 
 .brand {
   margin: 0;
-  font-size: 25px;
+  font-size: 27px;
   font-weight: 900;
   letter-spacing: 1px;
   line-height: 1.2;
@@ -133,7 +135,7 @@ body {
   font-size: 12px;
 }
 
-/* Calculator */
+/* MAIN CALCULATOR */
 main {
   width: calc(100% - 24px);
   max-width: 540px;
@@ -143,7 +145,7 @@ main {
 .card {
   padding: 15px;
   margin-bottom: 12px;
-  background: white;
+  background: #fff;
   border: 1px solid var(--border);
   border-radius: 12px;
   box-shadow: 0 6px 22px #15294b0a;
@@ -174,14 +176,15 @@ label {
   font-weight: bold;
 }
 
-input, select {
+input,
+select {
   width: 100%;
   min-width: 0;
   min-height: 43px;
   padding: 9px 10px;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
-  background: white;
+  background: #fff;
   color: var(--text);
   font: inherit;
   font-size: 16px;
@@ -244,8 +247,13 @@ button:active {
   overflow-wrap: anywhere;
 }
 
-.target { color: var(--green); }
-.stop { color: var(--red); }
+.target {
+  color: var(--green);
+}
+
+.stop {
+  color: var(--red);
+}
 
 .status {
   margin: 8px 0 0;
@@ -278,12 +286,15 @@ footer {
   font-size: 12px;
 }
 
-/* Mobile */
+/* MOBILE LAYOUT */
 @media (max-width: 600px) {
-  .logo-area {
-    min-height: 60px;
-    padding: 3px 7px;
-    gap: 5px;
+  .site-header {
+    padding: 62px 8px 8px;
+  }
+
+  .brand-logo {
+    top: 2px;
+    left: 5px;
   }
 
   .brand-logo img {
@@ -292,16 +303,14 @@ footer {
   }
 
   .top-nav {
+    top: 6px;
+    right: 5px;
     gap: 4px;
   }
 
   .top-nav a {
-    padding: 5px 6px;
+    padding: 4px 6px;
     font-size: 9px;
-  }
-
-  .site-header {
-    padding: 7px 8px 8px;
   }
 
   .brand {
@@ -343,20 +352,25 @@ footer {
   }
 }
 
-/* Very small phones */
+/* VERY SMALL PHONES */
 @media (max-width: 350px) {
-  .logo-area {
-    min-height: 52px;
-    padding: 3px 5px;
-    gap: 3px;
+  .site-header {
+    padding: 56px 6px 8px;
+  }
+
+  .brand-logo {
+    top: 1px;
+    left: 4px;
   }
 
   .brand-logo img {
     width: 125px;
-    height: 42px;
+    height: 40px;
   }
 
   .top-nav {
+    top: 4px;
+    right: 4px;
     gap: 3px;
   }
 
@@ -382,27 +396,29 @@ footer {
 
 <body>
 
-<!-- Logo and navigation are now outside the blue header -->
-<div class="logo-area">
-  <a class="brand-logo" href="index.html" aria-label="PVRajCMS Group home">
-    <img src="logo.png" alt="PVRajCMS Group Logo">
-  </a>
+<header class="site-header">
+
+  <div class="brand-logo">
+    <a href="index.html" aria-label="PVRajCMS Group Home">
+      <img src="logo.png" alt="PVRajCMS Group Logo">
+    </a>
+  </div>
 
   <nav class="top-nav" aria-label="Main navigation">
     <a href="index.html">← Main Website</a>
     <a href="services.html">Our Services</a>
   </nav>
-</div>
 
-<header class="site-header">
   <div class="brand">PVRajCMS</div>
   <p class="brand-sub">Group · Financial Technology</p>
   <div class="header-line"></div>
   <h1>Crude Oil Scalp Calculator</h1>
   <p class="tagline">Crude Oil only · Calculate targets and stop loss</p>
+
 </header>
 
 <main>
+
   <section class="card">
     <h2>Crude Oil Levels</h2>
     <p class="intro">Enter your entry price and select BUY or SELL.</p>
@@ -418,8 +434,14 @@ footer {
 
       <div>
         <label for="entry">Entry Price</label>
-        <input id="entry" type="number" inputmode="decimal"
-               min="0" step="any" placeholder="Enter entry price">
+        <input
+          id="entry"
+          type="number"
+          inputmode="decimal"
+          min="0"
+          step="any"
+          placeholder="Enter entry price"
+        >
       </div>
     </div>
 
@@ -428,6 +450,7 @@ footer {
 
     <div id="results" hidden>
       <div class="results">
+
         <div class="result">
           <span class="result-label">Entry Price</span>
           <strong class="result-value" id="entryOut">—</strong>
@@ -452,6 +475,7 @@ footer {
           <span class="result-label">T3 · 25 cumulative points</span>
           <strong class="result-value target" id="t3Out">—</strong>
         </div>
+
       </div>
 
       <button id="copy" type="button">Copy Results</button>
@@ -464,11 +488,16 @@ footer {
     <div class="note-box">
       <strong>Use this calculator for Crude Oil only.</strong>
       Do not use it for Silver or other commodities.
-      <br><strong>Stop Loss:</strong> 11 points.
-      <br><strong>T1:</strong> 8 points.
-      <br><strong>T2:</strong> 18 cumulative points.
-      <br><strong>T3:</strong> 25 cumulative points.
-      <br>Trading targets are not guaranteed. Manage risk carefully.
+      <br>
+      <strong>Stop Loss:</strong> 11 points.
+      <br>
+      <strong>T1:</strong> 8 points.
+      <br>
+      <strong>T2:</strong> 18 cumulative points.
+      <br>
+      <strong>T3:</strong> 25 cumulative points.
+      <br>
+      Trading targets are not guaranteed. Manage risk carefully.
     </div>
 
     <p class="disclaimer">
@@ -476,6 +505,7 @@ footer {
       It does not guarantee profits or place orders.
     </p>
   </section>
+
 </main>
 
 <footer>© PVRajCMS Group</footer>
@@ -504,6 +534,7 @@ footer {
     }
 
     const sign = direction === "BUY" ? 1 : -1;
+
     const t1 = entry + sign * 8;
     const t2 = entry + sign * 18;
     const t3 = entry + sign * 25;
@@ -531,11 +562,15 @@ footer {
   $("calculate").addEventListener("click", calculate);
 
   $("entry").addEventListener("keydown", event => {
-    if (event.key === "Enter") calculate();
+    if (event.key === "Enter") {
+      calculate();
+    }
   });
 
   $("direction").addEventListener("change", () => {
-    if (!$("results").hidden) calculate();
+    if (!$("results").hidden) {
+      calculate();
+    }
   });
 
   $("copy").addEventListener("click", async () => {
