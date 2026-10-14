@@ -1183,3 +1183,36 @@ footer:not(.site-footer){
         height:280px
     }
 }
+
+/* Calculator background and text fix */
+.calculator,
+.calculator-box,
+.crude-calculator,
+#calculator {
+    background: #0a1b2b !important;
+    color: #ffffff !important;
+    border: 1px solid #2d5875;
+}
+
+.calculator h1,
+.calculator h2,
+.calculator h3,
+.calculator p,
+.calculator label,
+.calculator span,
+.calculator-box h1,
+.calculator-box h2,
+.calculator-box h3,
+.calculator-box p,
+.calculator-box label {
+    color: #ffffff !important;
+}
+
+.calculator input,
+.calculator select,
+.calculator-box input,
+.calculator-box select {
+    background: #ffffff !important;
+    color: #111827 !important;
+}
+
