@@ -1173,3 +1173,7 @@ footer:not(.site-footer) {
     background: #142c45 !important;
     color: #ffffff !important;
 }
+html::before {
+    content: none !important;
+    display: none !important;
+}
