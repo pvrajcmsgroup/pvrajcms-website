@@ -1,120 +1,104 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PVRAJCMS MART | Online Shopping</title>
-<meta name="description" content="PVRAJCMS MART - Ghar Ka Samaan, Aapke Dwaar Pe!">
+<meta name="description" content="PVRAJCMS MART par ghar ki grocery, daily essentials aur pashu aahar dekhein.">
 <style>
-:root{--navy:#071729;--green:#0b8eaa;--gold:#ffcf58;--ink:#eef7ff;--muted:#a8c0d2;--line:#20435a;--bg:#061322}
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:#071729;color:#fff;padding:18px 16px;border-bottom:1px solid #20435a}
-.wrap{max-width:1250px;margin:auto}
-.brand{display:flex;align-items:center;gap:18px;min-width:0}
-.logo{width:min(34vw,440px);height:auto;object-fit:contain;display:block;flex-shrink:0}
-.brand-title{border-left:1px solid #20435a;padding-left:18px}
-.brand-title h1{font-size:30px;letter-spacing:2px;margin:0;color:#eaf7ff}
-.brand .tag{font-size:12px;font-weight:600;margin:6px 0 0;color:#55d8ff;letter-spacing:.8px}
-.selected-banner{margin:18px 0 8px;border-radius:16px;overflow:hidden;background:#071729;width:100%}
-.selected-banner img{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
-.shop-nav{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}
-.shop-nav a{display:inline-flex;align-items:center;gap:6px;text-decoration:none;background:#f5fbff;color:#10243a;border:1px solid #43c5f5;border-radius:999px;padding:9px 12px;font-size:13px;font-weight:700}
-.shop-nav a.back{background:#087eae;color:#fff}
-.shop-nav a.current{background:#ffcf58;color:#0d2545}
-main{max-width:1250px;margin:22px auto;padding:0 16px 40px;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(290px,.8fr);gap:20px}
-.panel{background:#0b1e31;border:1px solid var(--line);border-radius:18px;padding:18px}
-h3{margin:0 0 14px;font-size:19px;color:#f4fbff}
-.tools{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}
-input,textarea,select{width:100%;border:1px solid #2b5068;border-radius:10px;padding:12px;font:inherit;background:#071729;color:#eef7ff}
-.categories{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 15px}
-.cat{border:1px solid #2b5068;background:#102a40;color:#dceeff;border-radius:999px;padding:8px 12px;font-size:12px}
-.cat.active{background:#087eae;color:#fff;border-color:#43c5f5}
-.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.product{border:1px solid var(--line);background:#0a1a2b;border-radius:13px;padding:12px;display:flex;flex-direction:column;gap:7px;min-width:0}
-.emoji{font-size:26px;background:#12334a;border-radius:10px;height:48px;display:grid;place-items:center}
-.product h4{margin:0;font-size:14px;line-height:1.35}
-.small{font-size:11px;color:var(--muted)}
-.price{font-size:17px;font-weight:800;color:#55d8ff}
-button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:10px 11px;font-weight:700}
-.add,.primary{background:linear-gradient(135deg,#147eaf,#0b5f91);color:#fff;border:1px solid #43c5f5}
-.add{margin-top:auto}
-.cart-empty{color:var(--muted);font-size:14px;padding:10px 0}
-.cart-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:11px 0;border-bottom:1px solid var(--line)}
-.cart-name{font-weight:700;font-size:13px}
-.qty{display:flex;align-items:center;gap:8px;margin-top:6px}
-.qty button{padding:3px 9px;background:#17364c;color:#fff}
-.cart-price{font-size:13px;font-weight:700;text-align:right}
-.total{display:flex;justify-content:space-between;align-items:center;padding:15px 0;font-size:18px;font-weight:800}
-label{display:block;font-size:13px;font-weight:700;margin:12px 0 6px}
-textarea{resize:vertical;min-height:72px}
-.payment-options{display:grid;gap:8px}
-.payment-option{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:11px;font-size:13px;background:#0a1a2b}
-.payment-option input{width:auto;margin-top:3px}
-.payment-option strong{display:block;margin-bottom:3px}
-.primary,.secondary{width:100%;margin-top:14px}
-.secondary{background:#17364c;color:#eef7ff;border:1px solid #2b5068;margin-top:9px}
-.note{font-size:12px;line-height:1.55;color:var(--muted);margin-top:12px}
-.warning{background:#302b1b;border:1px solid #806a2d;padding:11px;border-radius:10px;color:#ffe7a1;font-size:12px;line-height:1.5;margin-top:12px}
-#status{display:none;margin-top:12px;padding:12px;border-radius:10px;background:#123d50;color:#d8f7ff;font-size:13px;line-height:1.5}
-footer{text-align:center;padding:22px 16px;background:#071729;color:#a8c0d2;border-top:1px solid #20435a;font-size:12px;line-height:1.7}
+:root{--navy:#0d2545;--green:#13865c;--mint:#e9f8f0;--gold:#ffcf58;--ink:#172536;--muted:#667487;--line:#e5eaf0;--bg:#f5f8fb}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,#0d2545,#16466a);color:#fff;padding:22px 16px}.wrap{max-width:1150px;margin:auto}
+.brand-copy-unused{display:none}.brand .tag{font-size:16px;font-weight:700;margin:0;color:#fff}.brand{display:flex;align-items:center;gap:12px}.logo{width:54px;height:54px;border-radius:16px;background:var(--gold);color:var(--navy);display:grid;place-items:center;font-size:25px;font-weight:900}
+h1{margin:0;font-size:clamp(23px,4vw,35px)}.tag{margin:6px 0 0;color:#d9e9f5;font-size:14px}
+.selected-banner{margin:18px 0 8px;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 4px 18px #00000018}.selected-banner img{display:block;width:100%;height:auto;max-height:330px;object-fit:contain}.hero{padding:18px 0 4px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}.hero h2{margin:0 0 6px;font-size:23px}.hero p{margin:0;color:#d9e9f5;line-height:1.5}.pill{background:#ffffff1c;border:1px solid #ffffff35;border-radius:999px;padding:9px 13px;font-size:13px}
+main{max-width:1150px;margin:22px auto;padding:0 16px 40px;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(290px,.8fr);gap:20px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 4px 18px #122b4208}h3{margin:0 0 14px;font-size:19px}
+.tools{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}input,textarea,select{width:100%;border:1px solid #d7e0e8;border-radius:10px;padding:12px;font:inherit;background:#fff;color:var(--ink)}.tools input{flex:1;min-width:180px}
+.categories{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 15px}.cat{border:1px solid #dce5ec;background:#f6f9fb;color:#30445b;border-radius:999px;padding:8px 12px;font-size:12px}.cat.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.product{border:1px solid var(--line);border-radius:13px;padding:12px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.emoji{font-size:26px;background:#f0f8f3;border-radius:10px;height:48px;display:grid;place-items:center}.product h4{margin:0;font-size:14px;line-height:1.35}.small{font-size:11px;color:var(--muted)}.price{font-size:17px;font-weight:800;color:var(--green)}button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:10px 11px;font-weight:700}.add{background:var(--navy);color:#fff;margin-top:auto}.add:hover,.primary:hover{opacity:.92}
+.cart-empty{color:var(--muted);font-size:14px;padding:10px 0}.cart-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:11px 0;border-bottom:1px solid var(--line)}.cart-name{font-weight:700;font-size:13px}.qty{display:flex;align-items:center;gap:8px;margin-top:6px}.qty button{padding:3px 9px;background:#edf2f6;color:var(--navy)}.cart-price{font-size:13px;font-weight:700;text-align:right}.total{display:flex;justify-content:space-between;align-items:center;padding:15px 0;font-size:18px;font-weight:800}
+label{display:block;font-size:13px;font-weight:700;margin:12px 0 6px}textarea{resize:vertical;min-height:72px}.payment-options{display:grid;gap:8px}.payment-option{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:11px;font-size:13px}.payment-option input{width:auto;margin-top:3px;accent-color:var(--green)}.payment-option strong{display:block;margin-bottom:3px}
+.primary{width:100%;background:var(--green);color:white;margin-top:14px}.secondary{width:100%;background:#edf3f7;color:var(--navy);margin-top:9px}.note{font-size:12px;line-height:1.55;color:var(--muted);margin-top:12px}.warning{background:#fff8df;border:1px solid #f1dda0;padding:11px;border-radius:10px;color:#604b12;font-size:12px;line-height:1.5;margin-top:12px}
+#status{display:none;margin-top:12px;padding:12px;border-radius:10px;background:var(--mint);color:#14563d;font-size:13px;line-height:1.5}
+footer{text-align:center;padding:22px 16px;background:#eaf0f5;color:#5b6a7b;font-size:12px;line-height:1.7}
 @media(max-width:900px){main{grid-template-columns:1fr}.products{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:700px){.brand{gap:10px}.logo{width:46%;max-width:210px}.brand-title{padding-left:10px}.brand-title h1{font-size:23px}.brand .tag{font-size:9px;letter-spacing:.3px;line-height:1.5}.selected-banner{margin-top:14px}.shop-nav{gap:7px}.shop-nav a{font-size:12px;padding:8px 10px}}
-@media(max-width:560px){.products{grid-template-columns:repeat(2,minmax(0,1fr))}.panel{padding:13px}}
-@media(max-width:420px){.brand-title h1{font-size:20px}.brand .tag{font-size:8px}.logo{width:43%}}
+@media(max-width:560px){.products{grid-template-columns:repeat(2,minmax(0,1fr))}.panel{padding:13px}.logo{width:46px;height:46px}}
+
+/* PVRAJCMS MART category navigation */
+.shop-nav{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}
+.shop-nav a{display:inline-flex;align-items:center;gap:6px;text-decoration:none;background:#fff;color:#17324e;border:1px solid #ffffff70;border-radius:999px;padding:9px 12px;font-size:13px;font-weight:700}
+.shop-nav a.back{background:#13865c;color:#fff;border-color:#13865c}
+.shop-nav a.current{background:#ffcf58;color:#0d2545;border-color:#ffcf58}
+.shop-categories{max-width:1150px;margin:20px auto 0;padding:0 16px}
+.shop-categories h2{margin:0 0 12px;font-size:22px}
+.shop-category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.shop-category{display:block;background:#fff;border:1px solid #e5eaf0;border-radius:16px;padding:16px;text-decoration:none;color:#172536;box-shadow:0 4px 18px #122b4208}
+.shop-category .symbol{font-size:30px;margin-bottom:8px}.shop-category strong{display:block;font-size:15px}.shop-category span{display:block;font-size:12px;color:#667487;margin-top:5px}
+@media(max-width:650px){.shop-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.shop-category{padding:13px}}
+
+
+/* Unified PVrajCMS Group header: logo left, navigation right, banner below */
+header{background:#071729;color:#fff;padding:18px 16px;border-bottom:1px solid #20435a}
+.wrap{max-width:1400px;margin:0 auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:22px}
+.brand{display:flex;align-items:center;gap:16px;min-width:0;flex:0 1 auto;text-decoration:none;color:#fff}
+.group-logo{display:block;width:min(33vw,430px);height:auto;max-height:145px;object-fit:contain;flex-shrink:0}
+.brand-text{display:flex;flex-direction:column;gap:6px;border-left:1px solid #20435a;padding-left:16px;min-width:0}
+.brand-text strong{font-size:30px;line-height:1;color:#f5fbff;letter-spacing:1px}
+.brand-text small{font-size:11px;line-height:1.5;color:#55d8ff;font-weight:700;letter-spacing:.5px;max-width:290px}
+.main-nav{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:7px}
+.main-nav a{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;white-space:nowrap;background:#12334b;color:#f5fbff;border:1px solid #28516a;border-radius:999px;padding:10px 12px;font-size:12px;font-weight:700}
+.main-nav a:hover{background:#195071}
+.main-nav a.mart-link{background:#ffcf58;color:#071729;border-color:#ffcf58}
+.selected-banner{margin:16px 0 0;border-radius:15px;overflow:hidden;background:#071729;box-shadow:none;width:100%}
+.selected-banner img{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+.shop-nav{display:none}
+@media(max-width:1050px){.topbar{align-items:flex-start;flex-direction:column;gap:14px}.main-nav{justify-content:flex-start}.group-logo{width:min(42vw,360px);max-height:120px}}
+@media(max-width:600px){header{padding:12px}.brand{width:100%;gap:10px}.group-logo{width:40%;max-height:none}.brand-text{padding-left:10px}.brand-text strong{font-size:23px}.brand-text small{font-size:8px;letter-spacing:.2px}.main-nav{gap:6px}.main-nav a{font-size:11px;padding:8px 10px}.selected-banner{margin-top:12px}}
+
 </style>
 </head>
 <body>
 <header>
-<div class="wrap">
-  <div class="brand">
-    <img class="logo" src="logo.png" alt="PVrajCMS Group company logo">
-    <div class="brand-title">
-      <h1>CMS</h1>
-      <p class="tag">ENGINEERING • TECHNOLOGY • DIGITAL INNOVATION</p>
+  <div class="wrap">
+    <div class="topbar">
+      <a class="brand" href="index.html" aria-label="PVrajCMS Group Home">
+        <img class="group-logo" src="logo.png" alt="PVrajCMS Group logo">
+        <span class="brand-text"><strong>CMS</strong><small>ENGINEERING • TECHNOLOGY • DIGITAL INNOVATION</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+        <a class="mart-link" href="kirana.html">PV MART</a>
+      </nav>
+    </div>
+    <div class="selected-banner">
+      <img src="pvmart-banner.jpg" alt="PVrajCMS MART — Ghar Ka Samaan, Aapke Dwaar Pe!">
     </div>
   </div>
-  <div class="selected-banner">
-    <img src="pvmart-banner.jpg" alt="PVRAJCMS MART - Ghar Ka Samaan, Aapke Dwaar Pe!">
-  </div>
-  <nav class="shop-nav" aria-label="Shop navigation">
-    <a class="back" href="index.html">← Main Website</a>
-    <a class="current" href="kirana.html">🛒 Kirana Store</a>
-    <a href="clothes.html">👕 Clothing Store</a>
-    <a href="beauty.html">💄 Beauty & Cosmetics</a>
-    <a href="household.html">🏠 Home Essentials</a>
-    <a href="electronics.html">💻 Electronics</a>
-    <a href="animal-feed.html">🐄 Animal Feed</a>
-  </nav>
-</div>
 </header>
-
 <main>
 <section class="panel">
   <h3>🛍️ Dukaan ke Samaan</h3>
-  <div class="tools">
-    <input id="search" placeholder="Samaan khojein, jaise aata, sabun, khal..." aria-label="Product search">
-  </div>
+  <div class="tools"><input id="search" placeholder="Samaan khojein, jaise aata, sabun, khal..." aria-label="Product search"></div>
   <div class="categories" id="categories"></div>
   <div class="products" id="products"></div>
-  <p class="note">Demo catalog: products aur prices sample hain. Live karne se pehle apni dukaan ke actual brand, pack size, rate aur stock update karein.</p>
+  <p class="note">Demo catalog: products aur prices sample hain. Live karne se pehle apni dukaan ke actual brand, pack size, rate aur stock update karein. Kuch cheezein local availability ke hisaab se rakhein.</p>
 </section>
-
 <aside class="panel">
-  <h3>🧺 Aapka Cart</h3>
-  <div id="cart"><div class="cart-empty">Abhi cart khaali hai. Product add karein.</div></div>
+  <h3>🧺 Aapka Cart</h3><div id="cart"><div class="cart-empty">Abhi cart khaali hai. Product add karein.</div></div>
   <div class="total"><span>Total</span><span id="total">₹0</span></div>
   <h3 style="margin-top:8px">📍 Delivery Details</h3>
   <form id="orderForm">
-    <label for="customer">Aapka naam *</label>
-    <input id="customer" required autocomplete="name" placeholder="Naam likhein">
-    <label for="phone">Mobile number *</label>
-    <input id="phone" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10 digit mobile number">
-    <label for="address">Poora delivery address *</label>
-    <textarea id="address" required placeholder="Gaon, mohalla, ghar ka pata"></textarea>
-    <label for="landmark">Paas ki pehchaan (optional)</label>
-    <input id="landmark" placeholder="Jaise school ke paas">
+    <label for="customer">Aapka naam *</label><input id="customer" required autocomplete="name" placeholder="Naam likhein">
+    <label for="phone">Mobile number *</label><input id="phone" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10 digit mobile number">
+    <label for="address">Poora delivery address *</label><textarea id="address" required placeholder="Gaon, mohalla, ghar ka pata"></textarea>
+    <label for="landmark">Paas ki pehchaan (optional)</label><input id="landmark" placeholder="Jaise school ke paas">
     <label>Payment ka tareeka *</label>
     <div class="payment-options">
       <label class="payment-option"><input type="radio" name="payment" value="upi" checked><span><strong>UPI — PhonePe / Google Pay</strong>Payment ko bank/UPI app mein verify kiya jayega.</span></label>
@@ -122,21 +106,20 @@ footer{text-align:center;padding:22px 16px;background:#071729;color:#a8c0d2;bord
     </div>
     <button type="submit" class="primary">Order Details Taiyar Karein</button>
   </form>
-  <div id="status" role="status"></div>
-  <button id="payButton" class="primary" style="display:none" type="button">UPI App se Payment Karein</button>
-  <button id="sendButton" class="secondary" style="display:none" type="button">WhatsApp par Order Bhejein</button>
-  <div class="warning"><strong>Live karne se pehle:</strong> code mein apni asli UPI ID aur dukaan ka WhatsApp number set karein. UPI payment bank/UPI app mein verify karein.</div>
-  <p class="note">Yeh starter version order database mein save nahi karta. Order shop tak bhejne ke liye configured WhatsApp button use karna hoga.</p>
+  <div id="status" role="status"></div><button id="payButton" class="primary" style="display:none" type="button">UPI App se Payment Karein</button><button id="sendButton" class="secondary" style="display:none" type="button">WhatsApp par Order Bhejein</button>
+  <div class="warning"><strong>Live karne se pehle:</strong> code mein apni asli UPI ID aur dukaan ka WhatsApp number set karein. UPI screenshot ko payment confirmation na maanein—bank/UPI app mein payment verify karein.</div>
+  <p class="note">Yeh starter version order database mein save nahi karta. Customer ko order shop tak bhejne ke liye configured WhatsApp button use karna hoga.</p>
 </aside>
 </main>
-
-<footer><strong>PVRAJCMS MART</strong> · Aapki Apni Online Dukaan<br>Grocery • Clothing • Beauty • Electronics • Home Essentials • Pashu Aahar<br>PVrajCMS Group</footer>
-
+<footer><strong>PVRAJCMS MART</strong> · Aapki Apni Online Dukaan<br>Grocery • Household Essentials • Pashu Aahar<br>PVrajCMS Group</footer>
 <script>
+/* SETUP: Replace these with your real shop details before publishing. */
 const SHOP_UPI_ID = "YOUR-UPI-ID@bank";
 const SHOP_WHATSAPP = "91XXXXXXXXXX";
 const SHOP_NAME = "PVRAJCMS MART";
-
+/* SIMPLE STARTER CATALOG: one simple pack size per listing for now.
+   Later, edit/add pack sizes, product names, prices, and stock here.
+   Demo prices only: replace with your actual selling prices and local stock. */
 const productsData = [
 {id:1,name:"Aata",detail:"5 kg bag",price:152,emoji:"🌾",cat:"Anaj & Daal"},
 {id:2,name:"Aata",detail:"10 kg bag",price:300,emoji:"🌾",cat:"Anaj & Daal"},
@@ -185,16 +168,10 @@ const productsData = [
 {id:45,name:"Suji",detail:"500 g",price:30,emoji:"🌾",cat:"Anaj & Daal"},
 {id:46,name:"Maida",detail:"1 kg",price:45,emoji:"🌾",cat:"Anaj & Daal"}
 ];
-
-let activeCat="Sabhi";
-const cart={};
-let currentOrder=null;
+let activeCat="Sabhi";const cart={};let currentOrder=null;
 const money=n=>"₹"+n.toLocaleString("en-IN");
 const categories=["Sabhi",...new Set(productsData.map(p=>p.cat))];
-
-function renderCategories(){
- document.getElementById("categories").innerHTML=categories.map(c=>`<button type="button" class="cat ${c===activeCat?"active":""}" onclick="setCat(${JSON.stringify(c)})">${c}</button>`).join("");
-}
+function renderCategories(){document.getElementById("categories").innerHTML=categories.map(c=>`<button type="button" class="cat ${c===activeCat?"active":""}" onclick="setCat(${JSON.stringify(c)})">${c}</button>`).join("");}
 function setCat(c){activeCat=c;renderCategories();renderProducts();}
 function renderProducts(){
  const q=document.getElementById("search").value.trim().toLowerCase();
@@ -206,44 +183,26 @@ function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id]
 function getTotal(){return productsData.reduce((s,p)=>s+p.price*(cart[p.id]||0),0);}
 function renderCart(){
  const chosen=productsData.filter(p=>cart[p.id]);
- document.getElementById("cart").innerHTML=chosen.length?chosen.map(p=>`<div class="cart-row"><div><div class="cart-name">${p.name} — ${p.detail}</div><div class="qty"><button type="button" onclick="changeQty(${p.id},-1)">−</button><span>${cart[p.id]}</span><button type="button" onclick="changeQty(${p.id},1)">+</button></div></div><div class="cart-price">${money(p.price*cart[p.id])}</div></div>`).join(""):'<div class="cart-empty">Abhi cart khaali hai. Product add karein.</div>';
- document.getElementById("total").textContent=money(getTotal());
- document.getElementById("status").style.display="none";
- document.getElementById("payButton").style.display="none";
- document.getElementById("sendButton").style.display="none";
- currentOrder=null;
+ document.getElementById("cart").innerHTML=chosen.length?chosen.map(p=>`<div class="cart-row"><div><div class="cart-name">${p.name} — ${p.detail}</div><div class="qty"><button type="button" onclick="changeQty(${p.id},-1)" aria-label="Quantity kam karein">−</button><span>${cart[p.id]}</span><button type="button" onclick="changeQty(${p.id},1)" aria-label="Quantity badhayein">+</button></div></div><div class="cart-price">${money(p.price*cart[p.id])}</div></div>`).join(""):'<div class="cart-empty">Abhi cart khaali hai. Product add karein.</div>';
+ document.getElementById("total").textContent=money(getTotal());document.getElementById("status").style.display="none";document.getElementById("payButton").style.display="none";document.getElementById("sendButton").style.display="none";currentOrder=null;
 }
 document.getElementById("search").addEventListener("input",renderProducts);
 document.getElementById("orderForm").addEventListener("submit",function(e){
- e.preventDefault();
- if(getTotal()<=0){alert("Pehle cart mein product add karein.");return;}
- const phone=document.getElementById("phone").value.trim();
- if(!/^[6-9]\d{9}$/.test(phone)){alert("Sahi 10 digit mobile number likhein.");return;}
+ e.preventDefault();if(getTotal()<=0){alert("Pehle cart mein product add karein.");return;}
+ const phone=document.getElementById("phone").value.trim();if(!/^[6-9]\d{9}$/.test(phone)){alert("Sahi 10 digit mobile number likhein.");return;}
  const payment=document.querySelector('input[name="payment"]:checked').value;
  const items=productsData.filter(p=>cart[p.id]).map(p=>({name:p.name,detail:p.detail,qty:cart[p.id],price:p.price,subtotal:p.price*cart[p.id]}));
  const orderId="PVM"+Date.now().toString().slice(-7);
  currentOrder={orderId,customer:document.getElementById("customer").value.trim(),phone,address:document.getElementById("address").value.trim(),landmark:document.getElementById("landmark").value.trim(),payment,items,total:getTotal()};
  const lines=items.map(i=>`- ${i.name} (${i.detail}) x ${i.qty} = ${money(i.subtotal)}`).join("\n");
  currentOrder.message=`New order — ${SHOP_NAME}\nOrder ID: ${orderId}\nName: ${currentOrder.customer}\nMobile: ${phone}\nAddress: ${currentOrder.address}\nLandmark: ${currentOrder.landmark||"N/A"}\n\nItems:\n${lines}\n\nTotal: ${money(currentOrder.total)}\nPayment: ${payment==="upi"?"UPI (verify payment manually)":"Cash on Delivery"}`;
- const status=document.getElementById("status");
- status.style.display="block";
- status.textContent=`Order summary ready (${orderId}), total ${money(currentOrder.total)}. WhatsApp button se shop ko order bhejein. Order tab tak shop ko nahi milega jab tak WhatsApp par send na karein.`;
+ const status=document.getElementById("status");status.style.display="block";status.textContent=`Order summary ready (${orderId}), total ${money(currentOrder.total)}. WhatsApp button se shop ko order bhejein. Order tab tak shop ko nahi milega jab tak WhatsApp par send na karein.`;
  document.getElementById("sendButton").style.display="block";
- document.getElementById("payButton").style.display=payment==="upi"?"block":"none";
- document.getElementById("payButton").textContent="UPI App se "+money(currentOrder.total)+" Pay Karein";
- document.getElementById("payButton").onclick=()=>{
-   if(SHOP_UPI_ID==="YOUR-UPI-ID@bank"){alert("Pehle code mein apni asli UPI ID set karein.");return;}
-   const params=new URLSearchParams({pa:SHOP_UPI_ID,pn:SHOP_NAME,am:currentOrder.total.toFixed(2),cu:"INR",tn:"Order "+currentOrder.orderId});
-   window.location.href="upi://pay?"+params.toString();
- };
- document.getElementById("sendButton").onclick=()=>{
-   if(SHOP_WHATSAPP==="91XXXXXXXXXX"){alert("Pehle code mein apna WhatsApp number set karein.");return;}
-   window.open("https://wa.me/"+SHOP_WHATSAPP+"?text="+encodeURIComponent(currentOrder.message),"_blank","noopener");
- };
+ document.getElementById("payButton").style.display=payment==="upi"?"block":"none";document.getElementById("payButton").textContent="UPI App se "+money(currentOrder.total)+" Pay Karein";
+ document.getElementById("payButton").onclick=()=>{if(SHOP_UPI_ID==="YOUR-UPI-ID@bank"){alert("Pehle code mein SHOP_UPI_ID ko apni asli UPI ID se replace karein.");return;}const params=new URLSearchParams({pa:SHOP_UPI_ID,pn:SHOP_NAME,am:currentOrder.total.toFixed(2),cu:"INR",tn:"Order "+currentOrder.orderId});window.location.href="upi://pay?"+params.toString();};
+ document.getElementById("sendButton").onclick=()=>{if(SHOP_WHATSAPP==="91XXXXXXXXXX"){alert("Pehle code mein SHOP_WHATSAPP ko dukaan ke WhatsApp number se replace karein.");return;}window.open("https://wa.me/"+SHOP_WHATSAPP+"?text="+encodeURIComponent(currentOrder.message),"_blank","noopener");};
 });
-renderCategories();
-renderProducts();
-renderCart();
+renderCategories();renderProducts();renderCart();
 </script>
 </body>
 </html>
