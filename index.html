@@ -462,6 +462,40 @@
                 padding-right: 14px !important;
             }
         }
+
+        /* Final mobile navigation adjustment: readable links without clipping */
+        @media screen and (max-width: 700px) {
+            .brand-header .main-nav {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 8px 12px !important;
+                overflow: visible !important;
+                white-space: normal !important;
+                padding: 4px 0 0 !important;
+                margin: 8px 0 0 !important;
+            }
+            .brand-header .main-nav a {
+                flex: 0 0 auto !important;
+                font-size: 13px !important;
+                line-height: 1.35 !important;
+                padding: 4px 0 !important;
+                white-space: nowrap !important;
+            }
+            .brand-header .main-nav a.mart-nav-button,
+            .brand-header .main-nav a.header-cta {
+                padding: 6px 8px !important;
+                font-size: 12px !important;
+            }
+        }
+        @media screen and (max-width: 380px) {
+            .brand-header .main-nav { gap: 7px 10px !important; }
+            .brand-header .main-nav a { font-size: 12px !important; }
+            .brand-header .main-nav a.mart-nav-button,
+            .brand-header .main-nav a.header-cta { font-size: 11px !important; padding: 5px 6px !important; }
+        }
     </style>
 </head>
 
@@ -486,7 +520,7 @@
             <a href="services.html">Services</a>
             <a href="projects.html">Projects</a>
             <a href="contact.html">Contact</a>
-            <a href="contact.html" class="header-cta">Get in Touch</a>
+            <a href="contact.html" class="header-cta">Connect</a>
         </nav>
 
     </div>
