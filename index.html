@@ -18,33 +18,34 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* PV MART button */
+        /* PV MART button: match the existing Get in Touch blue-cyan accent */
         .main-nav a.mart-nav-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #0f766e, #115e59) !important;
+            background: rgba(23, 119, 168, 0.18) !important;
             color: #ffffff !important;
-            border: 1px solid #5eead4 !important;
-            border-radius: 8px;
-            padding: 7px 9px;
-            font-weight: 800;
+            border: 1px solid #2b9bd0 !important;
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-weight: 800 !important;
             font-size: 12px;
             text-decoration: none;
             line-height: 1.2;
             white-space: nowrap;
-            box-shadow: 0 3px 10px rgba(15, 118, 110, 0.20);
-            transition: background 0.2s ease, transform 0.2s ease;
+            box-shadow: none;
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
         }
 
         .main-nav a.mart-nav-button:hover {
-            background: linear-gradient(135deg, #0d9488, #0f766e) !important;
+            background: rgba(39, 160, 218, 0.28) !important;
+            border-color: #5ecbff !important;
             color: #ffffff !important;
             transform: translateY(-1px);
         }
 
         .main-nav a.mart-nav-button:focus-visible {
-            outline: 3px solid #5eead4;
+            outline: 3px solid #5ecbff;
             outline-offset: 3px;
         }
 
@@ -515,12 +516,11 @@
 
         <nav class="main-nav" aria-label="Main navigation">
             <a href="index.html" class="active">Home</a>
-            <a href="kirana.html" class="mart-nav-button">PV MART</a>
             <a href="about.html">About</a>
             <a href="services.html">Services</a>
             <a href="projects.html">Projects</a>
             <a href="contact.html">Contact</a>
-            <a href="contact.html" class="header-cta">Connect</a>
+            <a href="kirana.html" class="mart-nav-button">PV MART</a>
         </nav>
 
     </div>
