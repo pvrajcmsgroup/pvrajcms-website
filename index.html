@@ -86,14 +86,7 @@
                 height: auto;
             }
 
-            .brand-header .brand-name-block {
-                flex: 0 1 330px;
-                min-width: 0 !important;
-                padding-left: 8px !important;
-            }
-
-            /* Let CMS and tagline use the shared style.css sizing,
-               matching the About page. Logo sizing is unchanged. */
+            /* Keep CMS heading and tagline at the shared style.css sizes, matching About page. */
 
             .brand-header .main-nav {
                 display: flex;
@@ -491,20 +484,6 @@
             .brand-header .main-nav a { font-size: 12px !important; }
             .brand-header .main-nav a.mart-nav-button,
             .brand-header .main-nav a.header-cta { font-size: 11px !important; padding: 5px 6px !important; }
-        }
-
-        /* Keep the homepage tagline on one line on desktop; leave logo unchanged. */
-        @media (min-width: 1200px) {
-            .brand-header .brand-name-block {
-                flex: 0 1 450px !important;
-                min-width: 0 !important;
-            }
-            .brand-header .brand-tagline {
-                font-size: 10px !important;
-                letter-spacing: 0.2px !important;
-                white-space: nowrap !important;
-                overflow-wrap: normal !important;
-            }
         }
     </style>
 </head>
