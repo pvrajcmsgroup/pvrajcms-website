@@ -1301,3 +1301,69 @@ nav:not(.main-nav) a:hover {
         font-size: 11px !important;
     }
 }
+
+
+/* FINAL MOBILE NAVIGATION: readable text, no clipped CTA */
+@media screen and (max-width: 700px) {
+  .brand-header .main-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px 12px !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    padding: 4px 0 0 !important;
+    margin: 8px 0 0 !important;
+  }
+  .brand-header .main-nav a {
+    flex: 0 0 auto !important;
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    padding: 4px 0 !important;
+    white-space: nowrap !important;
+  }
+  .brand-header .main-nav a.mart-nav-button,
+  .brand-header .main-nav a.header-cta {
+    padding: 6px 8px !important;
+    font-size: 12px !important;
+  }
+}
+@media screen and (max-width: 380px) {
+  .brand-header .main-nav { gap: 7px 10px !important; }
+  .brand-header .main-nav a { font-size: 12px !important; }
+  .brand-header .main-nav a.mart-nav-button,
+  .brand-header .main-nav a.header-cta { font-size: 11px !important; padding: 5px 6px !important; }
+}
+
+
+/* PV MART branded navigation button — match the existing Get in Touch accent */
+.brand-header .main-nav a.mart-nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(23, 119, 168, 0.18) !important;
+    color: #ffffff !important;
+    border: 1px solid #2b9bd0 !important;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-weight: 800 !important;
+    text-decoration: none;
+    line-height: 1.2;
+    white-space: nowrap;
+    box-shadow: none;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.brand-header .main-nav a.mart-nav-button:hover {
+    background: rgba(39, 160, 218, 0.28) !important;
+    border-color: #5ecbff !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.brand-header .main-nav a.mart-nav-button:focus-visible {
+    outline: 3px solid #5ecbff;
+    outline-offset: 3px;
+}
