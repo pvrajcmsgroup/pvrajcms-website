@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PVRAJCMS MART Electronics Store - Mobile, laptops, computers and electronic products.">
+  <title>Electronics Store | PVRAJCMS MART</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7f8;
+      color: #183333;
+    }
+    header {
+      background: #075e54;
+      color: white;
+      padding: 22px 16px;
+      text-align: center;
+    }
+    header h1 { margin: 0 0 8px; font-size: 27px; }
+    header p { margin: 0; }
+    .topbar {
+      padding: 14px;
+      background: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .back {
+      display: inline-block;
+      background: #075e54;
+      color: white;
+      padding: 11px 15px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container { max-width: 1100px; margin: auto; padding: 18px; }
+    .search {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccd7d7;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-bottom: 18px;
+    }
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .category {
+      background: white;
+      padding: 18px 8px;
+      text-align: center;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid #e0e8e8;
+      font-weight: bold;
+    }
+    .category span { display: block; font-size: 30px; margin-bottom: 8px; }
+    h2 { font-size: 21px; }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .product {
+      background: white;
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px solid #e0e8e8;
+      text-align: center;
+    }
+    .emoji { font-size: 44px; margin: 6px 0 12px; }
+    .product h3 { font-size: 17px; margin: 8px 0; }
+    .product p { color: #536565; font-size: 14px; min-height: 36px; }
+    .price { color: #087b54; font-size: 19px; font-weight: bold; }
+    .note {
+      background: #fff8df;
+      border: 1px solid #f0df9d;
+      border-radius: 8px;
+      padding: 14px;
+      line-height: 1.6;
+      margin-top: 24px;
+    }
+    footer {
+      text-align: center;
+      padding: 22px;
+      background: #123e3b;
+      color: white;
+      margin-top: 30px;
+    }
+    @media (max-width: 650px) {
+      .products { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .categories { grid-template-columns: 1fr; }
+      header h1 { font-size: 23px; }
+      .container { padding: 12px; }
+    }
+    @media (max-width: 360px) {
+      .products { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>PVRAJCMS MART</h1>
+  <p>Electronics Store | इलेक्ट्रॉनिक्स स्टोर</p>
+  <p style="margin-top:8px;">Technology Aapke Ghar Tak!</p>
+</header>
+
+<div class="topbar">
+  <a class="back" href="kirana.html">← Main Shop</a>
+  <strong>Electronics Collection</strong>
+</div>
+
+<main class="container">
+  <input
+    type="search"
+    id="search"
+    class="search"
+    placeholder="Search product... / सामान खोजें"
+    aria-label="Search products"
+  >
+
+  <h2>Shop by Category | श्रेणी चुनें</h2>
+
+  <div class="categories">
+    <div class="category" data-category="mobile" role="button" tabindex="0">
+      <span>📱</span>
+      Mobile Store<br>मोबाइल स्टोर
+    </div>
+    <div class="category" data-category="computer" role="button" tabindex="0">
+      <span>💻</span>
+      Laptop & Computer<br>लैपटॉप और कंप्यूटर
+    </div>
+    <div class="category" data-category="electronics" role="button" tabindex="0">
+      <span>🔌</span>
+      Electronics<br>इलेक्ट्रॉनिक सामान
+    </div>
+  </div>
+
+  <h2 id="sectionTitle">All Products | सभी सामान</h2>
+  <div class="products" id="products"></div>
+
+  <div class="note">
+    <strong>Important Notice | जरूरी सूचना</strong><br>
+    ये केवल नमूना उत्पाद और अनुमानित कीमतें हैं, वास्तविक बिक्री की पुष्टि नहीं।
+    खरीदने से पहले उपलब्धता, सही कीमत, वारंटी और डिलीवरी की जानकारी विक्रेता से जांचें।
+    अभी इस पेज पर ऑनलाइन भुगतान या ऑर्डर बुकिंग चालू नहीं है।
+  </div>
+</main>
+
+<footer>
+  <strong>PVRAJCMS MART</strong>
+  <p>Ghar Ka Samaan, Aapke Dwaar Pe!</p>
+  <p>© <span id="year"></span> PVRAJCMS Group</p>
+</footer>
+
+<script>
+  const items = [
+    {name:"Smartphone", hindi:"स्मार्टफोन", desc:"मोबाइल फोन", price:"₹8,000 से", icon:"📱", cat:"mobile"},
+    {name:"Premium Smartphone", hindi:"प्रीमियम मोबाइल", desc:"अधिक फीचर वाला फोन", price:"₹15,000 से", icon:"📲", cat:"mobile"},
+    {name:"Mobile Charger", hindi:"मोबाइल चार्जर", desc:"चार्जिंग एक्सेसरी", price:"₹250 से", icon:"🔌", cat:"mobile"},
+    {name:"USB Cable", hindi:"यूएसबी केबल", desc:"चार्जिंग और डेटा केबल", price:"₹100 से", icon:"〰️", cat:"mobile"},
+    {name:"Earphones", hindi:"ईयरफोन", desc:"वायर्ड ऑडियो एक्सेसरी", price:"₹200 से", icon:"🎧", cat:"mobile"},
+    {name:"Power Bank", hindi:"पावर बैंक", desc:"मोबाइल चार्ज करने के लिए", price:"₹800 से", icon:"🔋", cat:"mobile"},
+    {name:"Laptop", hindi:"लैपटॉप", desc:"काम, पढ़ाई और कोडिंग", price:"₹25,000 से", icon:"💻", cat:"computer"},
+    {name:"Desktop Computer", hindi:"डेस्कटॉप कंप्यूटर", desc:"ऑफिस और घर के काम के लिए", price:"₹20,000 से", icon:"🖥️", cat:"computer"},
+    {name:"Computer Monitor", hindi:"कंप्यूटर मॉनिटर", desc:"कंप्यूटर स्क्रीन", price:"₹4,000 से", icon:"🖥️", cat:"computer"},
+    {name:"Keyboard", hindi:"कीबोर्ड", desc:"टाइपिंग के लिए", price:"₹300 से", icon:"⌨️", cat:"computer"},
+    {name:"Computer Mouse", hindi:"माउस", desc:"कंप्यूटर कंट्रोल", price:"₹150 से", icon:"🖱️", cat:"computer"},
+    {name:"Printer", hindi:"प्रिंटर", desc:"दस्तावेज प्रिंट करने के लिए", price:"₹4,000 से", icon:"🖨️", cat:"computer"},
+    {name:"Smart TV", hindi:"स्मार्ट टीवी", desc:"घर में मनोरंजन के लिए", price:"₹10,000 से", icon:"📺", cat:"electronics"},
+    {name:"Bluetooth Speaker", hindi:"ब्लूटूथ स्पीकर", desc:"वायरलेस म्यूजिक", price:"₹500 से", icon:"🔊", cat:"electronics"},
+    {name:"Mixer Grinder", hindi:"मिक्सर ग्राइंडर", desc:"रसोई के लिए", price:"₹1,500 से", icon:"🥣", cat:"electronics"},
+    {name:"Electric Kettle", hindi:"इलेक्ट्रिक केतली", desc:"पानी गर्म करने के लिए", price:"₹600 से", icon:"☕", cat:"electronics"},
+    {name:"Extension Board", hindi:"एक्सटेंशन बोर्ड", desc:"अनेक प्लग के लिए", price:"₹250 से", icon:"🔌", cat:"electronics"},
+    {name:"LED Bulb", hindi:"एलईडी बल्ब", desc:"घर की रोशनी के लिए", price:"₹100 से", icon:"💡", cat:"electronics"}
+  ];
+
+  let activeCategory = "all";
+
+  function renderProducts() {
+    const query = document.getElementById("search").value.trim().toLowerCase();
+    const filtered = items.filter(item => {
+      const matchesCategory = activeCategory === "all" || item.cat === activeCategory;
+      const matchesSearch = (item.name + " " + item.hindi + " " + item.desc)
+        .toLowerCase().includes(query);
+      return matchesCategory && matchesSearch;
+    });
+
+    document.getElementById("sectionTitle").textContent =
+      activeCategory === "all" ? "All Products | सभी सामान" :
+      activeCategory === "mobile" ? "Mobile Store | मोबाइल स्टोर" :
+      activeCategory === "computer" ? "Laptop & Computer | लैपटॉप और कंप्यूटर" :
+      "Electronics | इलेक्ट्रॉनिक सामान";
+
+    const products = document.getElementById("products");
+    products.innerHTML = "";
+
+    if (!filtered.length) {
+      products.innerHTML = "<p>कोई सामान नहीं मिला। दूसरी खोज करें।</p>";
+      return;
+    }
+
+    filtered.forEach(item => {
+      const card = document.createElement("article");
+      card.className = "product";
+      card.innerHTML = `
+        <div class="emoji" aria-hidden="true">${item.icon}</div>
+        <h3>${item.name}</h3>
+        <strong>${item.hindi}</strong>
+        <p>${item.desc}</p>
+        <div class="price">${item.price}</div>
+      `;
+      products.appendChild(card);
+    });
+  }
+
+  document.getElementById("search").addEventListener("input", renderProducts);
+
+  document.querySelectorAll(".category").forEach(button => {
+    function chooseCategory() {
+      activeCategory = button.dataset.category;
+      renderProducts();
+      document.getElementById("sectionTitle").scrollIntoView({behavior:"smooth", block:"start"});
+    }
+    button.addEventListener("click", chooseCategory);
+    button.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        chooseCategory();
+      }
+    });
+  });
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+  renderProducts();
+</script>
+
+</body>
+</html>
