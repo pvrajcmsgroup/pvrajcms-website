@@ -858,11 +858,12 @@ nav:not(.main-nav) a:hover {
 .about h2,
 .services h2,
 .contact h2 {
-    color: #
-   
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
 /* ===== MOBILE RESPONSIVE FIX ONLY ===== */
 @media screen and (max-width: 700px) {
-
     html,
     body {
         width: 100%;
@@ -870,8 +871,13 @@ nav:not(.main-nav) a:hover {
         overflow-x: hidden;
     }
 
+    body {
+        min-width: 0;
+    }
+
     .brand-header,
-    .brand-header .header-container {
+    .brand-header .header-container,
+    header:not(.brand-header) {
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
@@ -888,7 +894,8 @@ nav:not(.main-nav) a:hover {
         width: 100%;
         max-width: 100%;
         flex: 0 1 100% !important;
-        min-width: 0;
+        min-width: 0 !important;
+        flex-shrink: 1 !important;
     }
 
     .brand-header .brand-logo {
@@ -901,41 +908,76 @@ nav:not(.main-nav) a:hover {
 
     .brand-header .brand-name-block {
         width: 100%;
-        min-width: 0;
-        flex: 1 1 100%;
-        padding-left: 0;
-        border-left: 0;
+        min-width: 0 !important;
+        flex: 1 1 100% !important;
+        padding-left: 0 !important;
+        border-left: 0 !important;
+        flex-shrink: 1 !important;
     }
 
     .brand-header .brand-name {
-        font-size: 25px;
-        white-space: normal;
+        font-size: 25px !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere;
     }
 
     .brand-header .brand-tagline {
-        font-size: 11px;
-        letter-spacing: 0.5px;
-        white-space: normal;
+        font-size: 11px !important;
+        letter-spacing: 0.5px !important;
+        white-space: normal !important;
         overflow-wrap: anywhere;
     }
 
     .brand-header .main-nav {
-        width: 100%;
-        min-width: 0;
-        margin-left: 0;
-        display: flex;
+        width: 100% !important;
+        max-width: 100%;
+        min-width: 0 !important;
+        margin-left: 0 !important;
+        display: flex !important;
+        flex: 1 1 100%;
         flex-wrap: wrap !important;
-        justify-content: flex-start;
-        gap: 10px;
+        justify-content: flex-start !important;
+        gap: 9px !important;
     }
 
     .brand-header .main-nav a {
-        font-size: 13px;
-        white-space: nowrap;
+        max-width: 100%;
+        font-size: 13px !important;
+        white-space: nowrap !important;
     }
 
     .brand-header .main-nav .header-cta {
-        margin-top: 0;
+        margin-top: 0 !important;
+    }
+
+    /* Header used on About, Services, Projects and Contact pages */
+    header:not(.brand-header) {
+        padding: 14px !important;
+        overflow: hidden;
+    }
+
+    .site-logo {
+        width: 100% !important;
+        max-width: 450px !important;
+        height: auto !important;
+        margin: 0 auto;
+    }
+
+    nav:not(.main-nav) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px 14px;
+        padding: 12px 10px !important;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    nav:not(.main-nav) a {
+        margin: 0 !important;
+        white-space: normal;
     }
 
     .engineering-hero {
@@ -977,9 +1019,53 @@ nav:not(.main-nav) a:hover {
     .moneyx-container,
     .final-cta-container,
     .footer-container,
-    .footer-bottom {
+    .footer-bottom,
+    .projects,
+    .about,
+    .services,
+    .contact {
         width: 92%;
         max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .projects,
+    .about,
+    .services,
+    .contact {
+        padding: 40px 0;
+        overflow-wrap: anywhere;
+    }
+
+    .projects h1,
+    .about h1,
+    .services h1,
+    .contact h1 {
+        font-size: clamp(28px, 8vw, 40px);
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+    }
+
+    .projects h2,
+    .about h2,
+    .services h2,
+    .contact h2 {
+        font-size: clamp(22px, 6vw, 30px);
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+    }
+
+    .projects p,
+    .about p,
+    .services p,
+    .contact p,
+    .projects li,
+    .about li,
+    .services li,
+    .contact li {
+        overflow-wrap: anywhere;
+        word-break: normal;
     }
 
     .capability-grid {
@@ -1008,9 +1094,20 @@ nav:not(.main-nav) a:hover {
         gap: 12px;
     }
 
-    img {
+    img,
+    video,
+    iframe,
+    canvas,
+    svg {
         max-width: 100%;
-        height: auto;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+        max-width: 100%;
+        box-sizing: border-box;
     }
 }
 
@@ -1020,15 +1117,21 @@ nav:not(.main-nav) a:hover {
     }
 
     .brand-header .main-nav {
-        gap: 8px;
+        gap: 8px !important;
     }
 
     .brand-header .main-nav a {
-        font-size: 12px;
+        font-size: 12px !important;
     }
 
     .engineering-hero .hero-container {
         width: 92%;
     }
-}
 
+    .projects,
+    .about,
+    .services,
+    .contact {
+        width: 92%;
+    }
+}
