@@ -492,6 +492,20 @@
             .brand-header .main-nav a.mart-nav-button,
             .brand-header .main-nav a.header-cta { font-size: 11px !important; padding: 5px 6px !important; }
         }
+
+        /* Keep the homepage tagline on one line on desktop; leave logo unchanged. */
+        @media (min-width: 1200px) {
+            .brand-header .brand-name-block {
+                flex: 0 1 450px !important;
+                min-width: 0 !important;
+            }
+            .brand-header .brand-tagline {
+                font-size: 10px !important;
+                letter-spacing: 0.2px !important;
+                white-space: nowrap !important;
+                overflow-wrap: normal !important;
+            }
+        }
     </style>
 </head>
 
