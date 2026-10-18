@@ -1218,35 +1218,43 @@ nav:not(.main-nav) a:hover {
         overflow-wrap: anywhere;
     }
 
+    /* Keep every navigation link, including Get in Touch, on one row */
     .brand-header .main-nav {
         width: 100%;
         max-width: 100%;
         min-width: 0;
         margin: 8px 0 0 !important;
-        padding: 0 2px;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        gap: 8px 12px;
+        padding: 0;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 3px !important;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
     }
 
     .brand-header .main-nav a {
-        max-width: 100%;
+        flex: 0 0 auto !important;
+        max-width: none;
         margin: 0 !important;
-        padding: 4px 0;
-        font-size: 12px !important;
-        line-height: 1.35;
-        white-space: normal;
-        overflow-wrap: anywhere;
+        padding: 3px 0 !important;
+        font-size: 9px !important;
+        line-height: 1.2;
+        white-space: nowrap !important;
+        overflow-wrap: normal;
         text-align: center;
     }
 
     .brand-header .main-nav a.header-cta,
     .brand-header .main-nav a.mart-nav-button {
-        padding: 7px 10px !important;
+        flex: 0 0 auto !important;
+        padding: 4px 5px !important;
         border-radius: 6px;
+        font-size: 9px !important;
     }
 
     .engineering-hero,
@@ -1291,5 +1299,60 @@ nav:not(.main-nav) a:hover {
 
     .brand-header .main-nav a {
         font-size: 11px !important;
+    }
+}
+
+/* FINAL MOBILE NAVIGATION FIX — keeps Get in Touch on the same row */
+@media screen and (max-width: 700px) {
+    .brand-header .main-nav {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 3px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        white-space: nowrap !important;
+        margin: 8px 0 0 !important;
+        padding: 0 !important;
+    }
+
+    .brand-header .main-nav a {
+        flex: 0 0 auto !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 3px 0 !important;
+        font-size: 9px !important;
+        line-height: 1.2 !important;
+        white-space: nowrap !important;
+        overflow-wrap: normal !important;
+    }
+
+    .brand-header .main-nav a.mart-nav-button,
+    .brand-header .main-nav a.header-cta {
+        flex: 0 0 auto !important;
+        padding: 4px 5px !important;
+        font-size: 9px !important;
+        white-space: nowrap !important;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .brand-header .main-nav {
+        gap: 2px !important;
+    }
+
+    .brand-header .main-nav a {
+        font-size: 8px !important;
+    }
+
+    .brand-header .main-nav a.mart-nav-button,
+    .brand-header .main-nav a.header-cta {
+        padding: 3px 4px !important;
+        font-size: 8px !important;
     }
 }
