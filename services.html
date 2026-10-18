@@ -1,21 +1,89 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Services | PVRajCMS Group</title>
-
     <meta name="description" content="Explore PVRajCMS Group services across digital solutions, software, AI, automation, financial technology, healthcare innovation and digital business solutions.">
-
     <meta name="keywords" content="PVRajCMS Group services, digital solutions, software development, AI, automation, FinTech, financial technology, healthcare innovation, business technology">
-
     <meta name="author" content="PVRajCMS Group">
-
     <link rel="stylesheet" href="style.css">
 
     <style>
+        /* Match the homepage navigation and PV MART button */
+        .brand-header .main-nav a {
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .brand-header .main-nav a.mart-nav-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            border: 1px solid #2b9bd0;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #087cae, #075985);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.2;
+            text-decoration: none;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(43, 155, 208, .18);
+            transition: background .2s ease, border-color .2s ease, transform .2s ease;
+        }
+        .brand-header .main-nav a.mart-nav-button:hover {
+            background: linear-gradient(135deg, #129bd1, #087cae);
+            border-color: #5ecbff;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+        .brand-header .main-nav a.mart-nav-button:focus-visible {
+            outline: 3px solid #5ecbff;
+            outline-offset: 3px;
+        }
+        @media (max-width: 1199px) {
+            .brand-header .main-nav {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                gap: 10px 14px;
+                width: 100%;
+            }
+        }
+        @media (max-width: 700px) {
+            .brand-header .main-nav {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 8px 12px !important;
+                width: 100% !important;
+                overflow: visible !important;
+                white-space: normal !important;
+                margin-top: 8px !important;
+            }
+            .brand-header .main-nav a {
+                font-size: 13px !important;
+                line-height: 1.35;
+            }
+            .brand-header .main-nav a.mart-nav-button {
+                padding: 7px 10px !important;
+                font-size: 13px !important;
+            }
+        }
+        @media (max-width: 380px) {
+            .brand-header .main-nav { gap: 7px 9px !important; }
+            .brand-header .main-nav a { font-size: 12px !important; }
+            .brand-header .main-nav a.mart-nav-button {
+                padding: 6px 8px !important;
+                font-size: 12px !important;
+            }
+        }
+
         .product-card {
             display: flex;
             align-items: center;
@@ -27,7 +95,6 @@
             background: #ffffff;
             box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
         }
-
         .product-number {
             display: flex;
             align-items: center;
@@ -41,22 +108,9 @@
             font-size: 16px;
             font-weight: 700;
         }
-
-        .product-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .product-info h3 {
-            margin: 0 0 7px;
-            font-size: 18px;
-        }
-
-        .product-info p {
-            margin: 0 0 9px;
-            line-height: 1.6;
-        }
-
+        .product-info { flex: 1; min-width: 0; }
+        .product-info h3 { margin: 0 0 7px; font-size: 18px; }
+        .product-info p { margin: 0 0 9px; line-height: 1.6; }
         .product-price {
             display: inline-block;
             margin-bottom: 10px;
@@ -64,7 +118,6 @@
             font-size: 14px;
             font-weight: 700;
         }
-
         .product-button {
             display: inline-flex;
             align-items: center;
@@ -82,287 +135,98 @@
             text-decoration: none;
             white-space: nowrap;
         }
-
-        .product-button:hover {
-            background: #123c80;
-        }
-
+        .product-button:hover { background: #123c80; }
         @media (max-width: 480px) {
-            .product-card {
-                gap: 10px;
-                padding: 13px;
-            }
-
-            .product-number {
-                width: 34px;
-                height: 34px;
-                font-size: 14px;
-            }
-
-            .product-info h3 {
-                font-size: 16px;
-                line-height: 1.4;
-            }
-
-            .product-info p {
-                font-size: 14px;
-            }
-
-            .product-button {
-                padding: 8px 10px;
-                font-size: 12px;
-                white-space: normal;
-            }
+            .product-card { gap: 10px; padding: 13px; }
+            .product-number { width: 34px; height: 34px; font-size: 14px; }
+            .product-info h3 { font-size: 16px; line-height: 1.4; }
+            .product-info p { font-size: 14px; }
+            .product-button { padding: 8px 10px; font-size: 12px; white-space: normal; }
         }
     </style>
 </head>
-
 <body>
-
 <header class="brand-header">
     <div class="header-container">
-
         <a href="index.html" class="brand-logo-link">
             <img src="logo.png" alt="PVRajCMS Group Logo" class="brand-logo">
         </a>
-
         <div class="brand-name-block">
             <div class="brand-name">CMS</div>
-            <div class="brand-tagline">
-                Engineering • Technology • Digital Innovation
-            </div>
+            <div class="brand-tagline">Engineering • Technology • Digital Innovation</div>
         </div>
-
-        <nav class="main-nav">
+        <nav class="main-nav" aria-label="Main navigation">
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
             <a href="services.html" class="active">Services</a>
             <a href="projects.html">Projects</a>
             <a href="contact.html">Contact</a>
-            <a href="contact.html" class="header-cta">Get in Touch</a>
+            <a href="kirana.html" class="mart-nav-button">PV MART</a>
         </nav>
-
     </div>
 </header>
-
 <main>
 <section class="services">
-
     <span class="section-label">OUR SERVICES</span>
-
     <h1>Technology • Digital Solutions • Innovation</h1>
-
-    <p>
-        PVRajCMS Group develops and explores technology-driven
-        solutions across digital systems, software, financial
-        technology, automation, healthcare innovation and
-        business ventures.
-    </p>
-
-    <p>
-        Our services and capabilities are designed around
-        practical technology applications that can help
-        businesses build, improve and expand their digital
-        presence and operations.
-    </p>
+    <p>PVRajCMS Group develops and explores technology-driven solutions across digital systems, software, financial technology, automation, healthcare innovation and business ventures.</p>
+    <p>Our services and capabilities are designed around practical technology applications that can help businesses build, improve and expand their digital presence and operations.</p>
 
     <h2>Digital Solutions</h2>
-
-    <div class="service-card">
-        <h3>Web Development</h3>
-        <p>
-            Modern, responsive and professional websites for
-            businesses, brands, digital projects and online
-            platforms.
-        </p>
-    </div>
-
-    <div class="service-card">
-        <h3>Software Solutions</h3>
-        <p>
-            Technology solutions designed to support business
-            processes, digital operations and future software
-            requirements.
-        </p>
-    </div>
-
-    <div class="service-card">
-        <h3>AI &amp; Automation</h3>
-        <p>
-            Exploring artificial intelligence and automation
-            technologies to improve efficiency, workflows and
-            digital processes.
-        </p>
-    </div>
+    <div class="service-card"><h3>Web Development</h3><p>Modern, responsive and professional websites for businesses, brands, digital projects and online platforms.</p></div>
+    <div class="service-card"><h3>Software Solutions</h3><p>Technology solutions designed to support business processes, digital operations and future software requirements.</p></div>
+    <div class="service-card"><h3>AI &amp; Automation</h3><p>Exploring artificial intelligence and automation technologies to improve efficiency, workflows and digital processes.</p></div>
 
     <h2>Financial Markets &amp; FinTech</h2>
-
-    <div class="service-card">
-        <h3>Financial Technology</h3>
-        <p>
-            Technology-focused initiatives connecting financial
-            markets, software and modern digital financial
-            systems.
-        </p>
-    </div>
-
-    <!-- Paid Products -->
+    <div class="service-card"><h3>Financial Technology</h3><p>Technology-focused initiatives connecting financial markets, software and modern digital financial systems.</p></div>
 
     <div class="product-card">
         <div class="product-number">01</div>
-
         <div class="product-info">
             <h3>Crude Oil Scalping Calculator</h3>
-
-            <p>
-                Calculate entry price, stop loss and target levels
-                with a dedicated crude oil trading calculator.
-                An active subscription is required.
-            </p>
-
-            <div class="product-price">₹499 / 30 Days</div>
-            <br>
-
-            <a href="crude-oil-login.html" class="product-button">
-                Login / Subscribe →
-            </a>
+            <p>Calculate entry price, stop loss and target levels with a dedicated crude oil trading calculator. An active subscription is required.</p>
+            <div class="product-price">₹499 / 30 Days</div><br>
+            <a href="crude-oil-login.html" class="product-button">Login / Subscribe →</a>
         </div>
     </div>
 
-    <div class="service-card">
-        <h3>Trading &amp; Market Technology</h3>
-        <p>
-            Digital tools, technology concepts and projects
-            related to financial markets, trading and market
-            analysis.
-        </p>
-    </div>
-
-    <div class="service-card">
-        <h3>Commodities &amp; Market Solutions</h3>
-        <p>
-            Technology-oriented work and digital initiatives
-            related to commodities and financial market
-            environments.
-        </p>
-    </div>
+    <div class="service-card"><h3>Trading &amp; Market Technology</h3><p>Digital tools, technology concepts and projects related to financial markets, trading and market analysis.</p></div>
+    <div class="service-card"><h3>Commodities &amp; Market Solutions</h3><p>Technology-oriented work and digital initiatives related to commodities and financial market environments.</p></div>
 
     <h2>Healthcare &amp; Innovation</h2>
-
-    <div class="service-card">
-        <h3>Healthcare Technology</h3>
-        <p>
-            Exploring digital technology and software concepts
-            that can support healthcare-focused projects and
-            innovative solutions.
-        </p>
-    </div>
-
-    <div class="service-card">
-        <h3>Digital Innovation</h3>
-        <p>
-            Identifying opportunities where technology,
-            engineering and innovation can contribute to
-            practical healthcare and technology initiatives.
-        </p>
-    </div>
+    <div class="service-card"><h3>Healthcare Technology</h3><p>Exploring digital technology and software concepts that can support healthcare-focused projects and innovative solutions.</p></div>
+    <div class="service-card"><h3>Digital Innovation</h3><p>Identifying opportunities where technology, engineering and innovation can contribute to practical healthcare and technology initiatives.</p></div>
 
     <h2>Business &amp; Digital Ventures</h2>
-
-    <div class="service-card">
-        <h3>Digital Business Solutions</h3>
-        <p>
-            Technology-driven ideas and digital solutions
-            designed to support modern business opportunities
-            and ventures.
-        </p>
-    </div>
-
-    <div class="service-card">
-        <h3>Business Technology</h3>
-        <p>
-            Combining technology, engineering thinking and
-            business opportunities to develop practical
-            digital initiatives.
-        </p>
-    </div>
-
-    <div class="service-card">
-        <h3>Future-Focused Ventures</h3>
-        <p>
-            Exploring emerging technologies, digital markets
-            and new business opportunities for future
-            development.
-        </p>
-    </div>
+    <div class="service-card"><h3>Digital Business Solutions</h3><p>Technology-driven ideas and digital solutions designed to support modern business opportunities and ventures.</p></div>
+    <div class="service-card"><h3>Business Technology</h3><p>Combining technology, engineering thinking and business opportunities to develop practical digital initiatives.</p></div>
+    <div class="service-card"><h3>Future-Focused Ventures</h3><p>Exploring emerging technologies, digital markets and new business opportunities for future development.</p></div>
 
     <h2>Our Digital Media</h2>
-
-    <div class="service-card">
-        <h3>MoneyX Labs USA</h3>
-        <p>
-            A USA-focused finance and markets digital media
-            brand covering trading, investing, Bitcoin and
-            crypto, personal finance, AI and FinTech.
-        </p>
-    </div>
+    <div class="service-card"><h3>MoneyX Labs USA</h3><p>A USA-focused finance and markets digital media brand covering trading, investing, Bitcoin and crypto, personal finance, AI and FinTech.</p></div>
 
     <h2>Our Technology Approach</h2>
-
-    <p>
-        PVRajCMS Group focuses on combining engineering,
-        technology and digital innovation to identify
-        practical opportunities and build solutions for
-        an evolving digital world.
-    </p>
-
-    <p>
-        Our capabilities and service areas will continue to
-        evolve as new technologies, projects and business
-        opportunities develop.
-    </p>
+    <p>PVRajCMS Group focuses on combining engineering, technology and digital innovation to identify practical opportunities and build solutions for an evolving digital world.</p>
+    <p>Our capabilities and service areas will continue to evolve as new technologies, projects and business opportunities develop.</p>
 
     <h2>Let's Build Something Digital</h2>
-
-    <p>
-        Have a technology idea, digital project or business
-        opportunity? Connect with PVRajCMS Group to discuss
-        how technology and innovation can support your vision.
-    </p>
-
-    <p>
-        <a href="contact.html" class="header-cta">Get in Touch</a>
-    </p>
-
+    <p>Have a technology idea, digital project or business opportunity? Connect with PVRajCMS Group to discuss how technology and innovation can support your vision.</p>
+    <p><a href="contact.html" class="header-cta">Get in Touch</a></p>
 </section>
 </main>
-
 <footer class="site-footer">
-
     <div class="footer-container">
-
-        <div class="footer-brand">
-            <strong>PVRajCMS GROUP</strong>
-            <p>Engineering • Technology • Digital Innovation</p>
-        </div>
-
+        <div class="footer-brand"><strong>PVRajCMS GROUP</strong><p>Engineering • Technology • Digital Innovation</p></div>
         <div class="footer-links">
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
             <a href="services.html">Services</a>
             <a href="projects.html">Projects</a>
             <a href="contact.html">Contact</a>
+            <a href="kirana.html">PV MART</a>
         </div>
-
     </div>
-
-    <div class="footer-bottom">
-        <span>© 2026 PVRajCMS Group. All rights reserved.</span>
-        <span>Engineering • Technology • Digital Innovation</span>
-    </div>
-
+    <div class="footer-bottom"><span>© 2026 PVRajCMS Group. All rights reserved.</span><span>Engineering • Technology • Digital Innovation</span></div>
 </footer>
-
 </body>
 </html>
-```
