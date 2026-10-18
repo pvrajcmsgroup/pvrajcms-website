@@ -14,6 +14,83 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="canonical" href="https://pvrajcmsgroup.github.io/pvrajcms-website/about.html">
+
+    <style>
+        /* Keep the About page navigation consistent with the homepage */
+        .brand-header .main-nav a.mart-nav-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #087eae, #13b5d8);
+            color: #ffffff;
+            border: 1px solid #35c5f0;
+            border-radius: 7px;
+            padding: 8px 12px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            white-space: nowrap;
+            text-decoration: none;
+            box-shadow: 0 4px 14px rgba(19, 181, 216, 0.2);
+            transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .brand-header .main-nav a.mart-nav-button:hover {
+            background: linear-gradient(135deg, #0b9bcf, #28c8ee);
+            border-color: #75e0ff;
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(19, 181, 216, 0.3);
+        }
+
+        .brand-header .main-nav a.mart-nav-button:focus-visible {
+            outline: 3px solid #75e0ff;
+            outline-offset: 3px;
+        }
+
+        @media (min-width: 1200px) {
+            .brand-header .main-nav {
+                flex-wrap: nowrap;
+                align-items: center;
+                gap: 9px;
+            }
+
+            .brand-header .main-nav > a {
+                font-size: 13px;
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 1199px) {
+            .brand-header .main-nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: 10px 14px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .brand-header .main-nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px 12px;
+                margin-top: 8px;
+            }
+
+            .brand-header .main-nav > a {
+                font-size: 13px;
+                white-space: nowrap;
+            }
+
+            .brand-header .main-nav > a.mart-nav-button {
+                padding: 7px 9px;
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -37,13 +114,13 @@
             </div>
         </div>
 
-        <nav class="main-nav">
+        <nav class="main-nav" aria-label="Main navigation">
             <a href="index.html">Home</a>
             <a href="about.html" class="active">About</a>
             <a href="services.html">Services</a>
             <a href="projects.html">Projects</a>
             <a href="contact.html">Contact</a>
-            <a href="contact.html" class="header-cta">Get in Touch</a>
+            <a href="kirana.html" class="mart-nav-button">PV MART</a>
         </nav>
 
     </div>
@@ -207,6 +284,8 @@
             <a href="projects.html">Projects</a>
 
             <a href="contact.html">Contact</a>
+
+            <a href="kirana.html">PV MART</a>
 
         </div>
 
