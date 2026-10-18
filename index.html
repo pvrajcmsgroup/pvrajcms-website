@@ -48,7 +48,7 @@
             outline-offset: 3px;
         }
 
-        /* Restore logo size */
+        /* Logo */
         .brand-logo {
             width: 450px;
             max-width: 100%;
@@ -63,7 +63,7 @@
             min-width: 0;
         }
 
-        /* Desktop: keep the complete navigation on one line */
+        /* Desktop layout */
         @media (min-width: 1200px) {
             .brand-header .header-container {
                 display: flex;
@@ -130,7 +130,7 @@
             }
         }
 
-        /* Tablet and mobile: allow navigation to wrap */
+        /* Tablet layout */
         @media (max-width: 1199px) {
             .brand-header .header-container {
                 flex-wrap: wrap;
@@ -158,14 +158,290 @@
             }
         }
 
-        @media (max-width: 700px) {
-            .brand-header .main-nav a.mart-nav-button {
-                padding: 8px 11px;
-                margin: 3px 0;
+        /* MOBILE-ONLY FIX */
+        @media screen and (max-width: 700px) {
+            html,
+            body {
+                width: 100%;
+                max-width: 100%;
+                overflow-x: clip;
+            }
+
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+
+            .brand-header {
+                width: 100%;
+                max-width: 100%;
+                overflow: hidden;
+            }
+
+            .brand-header .header-container {
+                display: flex !important;
+                flex-direction: row;
+                flex-wrap: wrap !important;
+                align-items: center;
+                gap: 12px !important;
+                width: 100%;
+                max-width: 100%;
+                padding: 14px !important;
+                margin: 0 auto;
+            }
+
+            .brand-header .brand-logo-link {
+                display: flex;
+                flex: 0 1 100% !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                margin: 0;
+            }
+
+            .brand-header .brand-logo {
+                display: block;
+                width: 100% !important;
+                max-width: 450px !important;
+                height: auto !important;
+                margin: 0 auto;
+            }
+
+            .brand-header .brand-name-block {
+                display: block;
+                flex: 1 1 100% !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                padding: 0 !important;
+                margin: 0;
+            }
+
+            .brand-header .brand-name {
+                font-size: 24px !important;
             }
 
             .brand-header .brand-tagline {
-                white-space: normal;
+                font-size: 11px !important;
+                line-height: 1.5;
+                white-space: normal !important;
+                overflow-wrap: anywhere;
+            }
+
+            .brand-header .main-nav {
+                display: flex !important;
+                flex: 1 1 100% !important;
+                flex-direction: row;
+                flex-wrap: wrap !important;
+                align-items: center;
+                justify-content: flex-start !important;
+                gap: 9px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                margin: 0 !important;
+                padding: 0;
+            }
+
+            .brand-header .main-nav a {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                flex: 0 0 auto;
+                max-width: 100%;
+                font-size: 13px !important;
+                white-space: nowrap !important;
+                margin: 0;
+            }
+
+            .brand-header .main-nav a.mart-nav-button {
+                padding: 8px 11px !important;
+                margin: 0 !important;
+            }
+
+            .brand-header .main-nav a.header-cta {
+                margin: 0 !important;
+            }
+
+            /* Hero section */
+            .engineering-hero,
+            .capabilities-section,
+            .moneyx-section,
+            .final-cta,
+            .site-footer {
+                width: 100%;
+                max-width: 100%;
+                overflow: hidden;
+            }
+
+            .engineering-hero .hero-container {
+                display: grid !important;
+                grid-template-columns: minmax(0, 1fr) !important;
+                gap: 28px !important;
+                width: 100%;
+                max-width: 100%;
+                padding: 28px 18px !important;
+                margin: 0 auto;
+            }
+
+            .engineering-hero .hero-content,
+            .engineering-hero .hero-tech-panel {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                margin: 0;
+            }
+
+            .engineering-hero h1 {
+                font-size: clamp(32px, 9vw, 46px) !important;
+                line-height: 1.12 !important;
+                overflow-wrap: anywhere;
+            }
+
+            .engineering-hero .hero-description {
+                font-size: 15px;
+                line-height: 1.7;
+            }
+
+            .engineering-hero .hero-pill-row,
+            .engineering-hero .hero-buttons {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .engineering-hero .hero-tech-panel {
+                min-height: 300px;
+                overflow: hidden;
+            }
+
+            /* Capability cards */
+            .capabilities-section .section-container {
+                width: 100%;
+                max-width: 100%;
+                padding: 32px 18px !important;
+                margin: 0 auto;
+            }
+
+            .capabilities-section .section-heading {
+                max-width: 100%;
+            }
+
+            .capabilities-section .section-heading h2 {
+                font-size: clamp(25px, 7vw, 34px);
+                line-height: 1.2;
+                overflow-wrap: anywhere;
+            }
+
+            .capabilities-section .capability-grid {
+                display: grid !important;
+                grid-template-columns: minmax(0, 1fr) !important;
+                gap: 16px;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .capabilities-section .capability-card {
+                width: 100%;
+                max-width: 100%;
+                min-width: 0;
+            }
+
+            /* MoneyX section */
+            .moneyx-section .moneyx-container {
+                display: grid !important;
+                grid-template-columns: minmax(0, 1fr) !important;
+                gap: 24px;
+                width: 100%;
+                max-width: 100%;
+                padding: 32px 18px !important;
+                margin: 0 auto;
+            }
+
+            .moneyx-section .moneyx-content,
+            .moneyx-section .moneyx-visual {
+                width: 100%;
+                max-width: 100%;
+                min-width: 0;
+            }
+
+            .moneyx-section .moneyx-visual {
+                overflow: hidden;
+            }
+
+            /* Contact call-to-action */
+            .final-cta .final-cta-container {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 18px;
+                width: 100%;
+                max-width: 100%;
+                padding: 28px 18px !important;
+                margin: 0 auto;
+            }
+
+            .final-cta .final-cta-container > * {
+                max-width: 100%;
+            }
+
+            /* Footer */
+            .site-footer .footer-container {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                width: 100%;
+                max-width: 100%;
+                padding: 24px 18px !important;
+                margin: 0 auto;
+            }
+
+            .site-footer .footer-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                max-width: 100%;
+            }
+
+            .site-footer .footer-bottom {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
+                max-width: 100%;
+                padding: 16px 18px !important;
+                overflow-wrap: anywhere;
+            }
+        }
+
+        @media screen and (max-width: 380px) {
+            .brand-header .header-container {
+                padding: 10px !important;
+            }
+
+            .brand-header .main-nav {
+                gap: 7px !important;
+            }
+
+            .brand-header .main-nav a {
+                font-size: 12px !important;
+            }
+
+            .engineering-hero .hero-container {
+                padding: 24px 14px !important;
+            }
+
+            .engineering-hero h1 {
+                font-size: 32px !important;
+            }
+
+            .capabilities-section .section-container,
+            .moneyx-section .moneyx-container,
+            .final-cta .final-cta-container,
+            .site-footer .footer-container {
+                padding-left: 14px !important;
+                padding-right: 14px !important;
             }
         }
     </style>
