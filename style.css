@@ -1242,8 +1242,8 @@ nav:not(.main-nav) a:hover {
         max-width: none;
         margin: 0 !important;
         padding: 3px 0 !important;
-        font-size: 9px !important;
-        line-height: 1.2;
+        font-size: 12px !important;
+        line-height: 1.3;
         white-space: nowrap !important;
         overflow-wrap: normal;
         text-align: center;
@@ -1252,9 +1252,9 @@ nav:not(.main-nav) a:hover {
     .brand-header .main-nav a.header-cta,
     .brand-header .main-nav a.mart-nav-button {
         flex: 0 0 auto !important;
-        padding: 4px 5px !important;
+        padding: 5px 6px !important;
         border-radius: 6px;
-        font-size: 9px !important;
+        font-size: 11px !important;
     }
 
     .engineering-hero,
@@ -1299,60 +1299,5 @@ nav:not(.main-nav) a:hover {
 
     .brand-header .main-nav a {
         font-size: 11px !important;
-    }
-}
-
-/* FINAL MOBILE NAVIGATION FIX — keeps Get in Touch on the same row */
-@media screen and (max-width: 700px) {
-    .brand-header .main-nav {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        gap: 3px !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        white-space: nowrap !important;
-        margin: 8px 0 0 !important;
-        padding: 0 !important;
-    }
-
-    .brand-header .main-nav a {
-        flex: 0 0 auto !important;
-        min-width: 0 !important;
-        margin: 0 !important;
-        padding: 3px 0 !important;
-        font-size: 9px !important;
-        line-height: 1.2 !important;
-        white-space: nowrap !important;
-        overflow-wrap: normal !important;
-    }
-
-    .brand-header .main-nav a.mart-nav-button,
-    .brand-header .main-nav a.header-cta {
-        flex: 0 0 auto !important;
-        padding: 4px 5px !important;
-        font-size: 9px !important;
-        white-space: nowrap !important;
-    }
-}
-
-@media screen and (max-width: 380px) {
-    .brand-header .main-nav {
-        gap: 2px !important;
-    }
-
-    .brand-header .main-nav a {
-        font-size: 8px !important;
-    }
-
-    .brand-header .main-nav a.mart-nav-button,
-    .brand-header .main-nav a.header-cta {
-        padding: 3px 4px !important;
-        font-size: 8px !important;
     }
 }
