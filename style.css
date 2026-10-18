@@ -859,3 +859,176 @@ nav:not(.main-nav) a:hover {
 .services h2,
 .contact h2 {
     color: #
+   
+/* ===== MOBILE RESPONSIVE FIX ONLY ===== */
+@media screen and (max-width: 700px) {
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .brand-header,
+    .brand-header .header-container {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .brand-header .header-container {
+        min-height: auto;
+        padding: 14px !important;
+        gap: 14px !important;
+        flex-wrap: wrap !important;
+    }
+
+    .brand-header .brand-logo-link {
+        width: 100%;
+        max-width: 100%;
+        flex: 0 1 100% !important;
+        min-width: 0;
+    }
+
+    .brand-header .brand-logo {
+        width: 100% !important;
+        max-width: 450px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .brand-header .brand-name-block {
+        width: 100%;
+        min-width: 0;
+        flex: 1 1 100%;
+        padding-left: 0;
+        border-left: 0;
+    }
+
+    .brand-header .brand-name {
+        font-size: 25px;
+        white-space: normal;
+    }
+
+    .brand-header .brand-tagline {
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .brand-header .main-nav {
+        width: 100%;
+        min-width: 0;
+        margin-left: 0;
+        display: flex;
+        flex-wrap: wrap !important;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .brand-header .main-nav a {
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .brand-header .main-nav .header-cta {
+        margin-top: 0;
+    }
+
+    .engineering-hero {
+        min-height: auto;
+    }
+
+    .engineering-hero .hero-container {
+        width: 92%;
+        max-width: 100%;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        padding: 45px 0;
+    }
+
+    .engineering-hero .hero-content,
+    .engineering-hero .hero-tech-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .engineering-hero .hero-content h1 {
+        font-size: clamp(32px, 9vw, 46px);
+        line-height: 1.12;
+        letter-spacing: -1px;
+        overflow-wrap: anywhere;
+    }
+
+    .engineering-hero .hero-tech-panel {
+        height: 320px;
+    }
+
+    .capabilities-section,
+    .moneyx-section {
+        padding: 55px 0;
+    }
+
+    .section-container,
+    .moneyx-container,
+    .final-cta-container,
+    .footer-container,
+    .footer-bottom {
+        width: 92%;
+        max-width: 100%;
+    }
+
+    .capability-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .moneyx-container {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 30px;
+    }
+
+    .moneyx-visual {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .final-cta-container,
+    .footer-container,
+    .footer-bottom {
+        flex-wrap: wrap;
+        gap: 18px;
+    }
+
+    .footer-links {
+        gap: 12px;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .brand-header .header-container {
+        padding: 10px !important;
+    }
+
+    .brand-header .main-nav {
+        gap: 8px;
+    }
+
+    .brand-header .main-nav a {
+        font-size: 12px;
+    }
+
+    .engineering-hero .hero-container {
+        width: 92%;
+    }
+}
+
