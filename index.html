@@ -18,150 +18,75 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* Header layout: original-size logo, separate PV MART button */
-        .brand-header .header-container {
-            position: relative;
-            display: flex;
-            flex-wrap: wrap !important;
-            align-items: center;
-            gap: 12px 22px;
-            padding-top: 56px;
-        }
-
-        /* Keep the logo at its original desktop size */
-        .brand-header .brand-logo-link {
-            display: flex;
-            align-items: center;
-            flex: 0 1 450px;
-            width: 450px;
-            max-width: 100%;
-            min-width: 0;
-            flex-shrink: 0;
-        }
-
-        .brand-header .brand-logo {
-            display: block;
-            width: 450px !important;
-            max-width: 100%;
-            height: auto;
-            flex-shrink: 0;
-        }
-
-        .brand-header .brand-name-block {
-            min-width: 0;
-        }
-
-        /* PV MART stays separately at the top-right */
-        .brand-header a.mart-nav-button {
-            position: absolute;
-            top: 10px;
-            right: 0;
-            z-index: 5;
+        /* PV MART button: same navigation row as Home */
+        .main-nav a.mart-nav-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 10px 18px;
             background: linear-gradient(135deg, #0f766e, #115e59);
             color: #ffffff;
             border: 1px solid #5eead4;
             border-radius: 8px;
-            font-size: 14px;
+            padding: 8px 11px;
             font-weight: 800;
+            font-size: 13px;
+            text-decoration: none;
             line-height: 1.2;
             white-space: nowrap;
-            text-decoration: none;
-            box-shadow: 0 3px 10px rgba(15, 118, 110, 0.2);
+            box-shadow: 0 3px 10px rgba(15, 118, 110, 0.20);
             transition: background 0.2s ease, transform 0.2s ease;
         }
 
-        .brand-header a.mart-nav-button:hover {
+        .main-nav a.mart-nav-button:hover {
             background: linear-gradient(135deg, #0d9488, #0f766e);
             color: #ffffff;
             transform: translateY(-1px);
         }
 
-        .brand-header a.mart-nav-button:focus-visible {
+        .main-nav a.mart-nav-button:focus-visible {
             outline: 3px solid #5eead4;
             outline-offset: 3px;
         }
 
-        /* Navigation occupies its own row below the branding */
-        .brand-header .main-nav {
+        /* Restore original logo width */
+        .brand-logo {
+            width: 450px;
+            height: auto;
+            max-width: 100%;
+            display: block;
+        }
+
+        /* Keep the header layout controlled by style.css */
+        .brand-logo-link {
             display: flex;
-            flex: 1 0 100%;
-            width: 100%;
-            flex-wrap: wrap !important;
             align-items: center;
-            justify-content: center;
-            gap: 12px 18px;
-            margin-left: 0;
+            flex-shrink: 0;
         }
 
-        .brand-header .main-nav a {
-            white-space: nowrap;
+        /* Responsive logo and navigation */
+        @media (max-width: 1199px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+
+            .main-nav {
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-left: 0;
+            }
         }
 
-        /* PV MART is outside the main navigation */
-        .brand-header .main-nav .mart-nav-button {
-            display: none !important;
-        }
-
-        .brand-header .main-nav .header-cta {
-            margin-top: 0;
-        }
-
-        /* Tablet and mobile */
         @media (max-width: 700px) {
-            .brand-header .header-container {
-                padding-top: 58px;
-                gap: 14px;
-            }
-
-            .brand-header .brand-logo-link {
-                flex: 0 1 450px;
+            .brand-logo {
                 width: 450px;
-                max-width: 100%;
-            }
-
-            .brand-header .brand-logo {
-                width: 450px !important;
                 max-width: 100%;
                 height: auto;
             }
 
-            .brand-header a.mart-nav-button {
-                top: 10px;
-                right: 0;
-                padding: 9px 13px;
-                font-size: 13px;
-            }
-
-            .brand-header .brand-name-block {
-                max-width: 100%;
-            }
-
-            .brand-header .brand-tagline {
-                white-space: normal;
-            }
-
-            .brand-header .main-nav {
-                justify-content: center;
-                gap: 10px 14px;
-            }
-        }
-
-        @media (max-width: 380px) {
-            .brand-header .header-container {
-                padding-top: 56px;
-            }
-
-            .brand-header a.mart-nav-button {
+            .main-nav a.mart-nav-button {
                 padding: 8px 11px;
-                font-size: 12px;
-            }
-
-            .brand-header .main-nav {
-                gap: 9px 11px;
+                margin: 3px 0;
             }
         }
     </style>
@@ -181,10 +106,9 @@
             <div class="brand-tagline">Engineering • Technology • Digital Innovation</div>
         </div>
 
-        <a href="kirana.html" class="mart-nav-button">PV MART</a>
-
         <nav class="main-nav" aria-label="Main navigation">
             <a href="index.html" class="active">Home</a>
+            <a href="kirana.html" class="mart-nav-button">PV MART</a>
             <a href="about.html">About</a>
             <a href="services.html">Services</a>
             <a href="projects.html">Projects</a>
@@ -197,211 +121,211 @@
 
 <main>
 
-<section class="engineering-hero">
-    <div class="hero-grid"></div>
-    <div class="hero-glow hero-glow-one"></div>
-    <div class="hero-glow hero-glow-two"></div>
+    <section class="engineering-hero">
+        <div class="hero-grid"></div>
+        <div class="hero-glow hero-glow-one"></div>
+        <div class="hero-glow hero-glow-two"></div>
 
-    <div class="hero-container">
+        <div class="hero-container">
 
-        <div class="hero-content">
-            <div class="eyebrow">ENGINEERING • TECHNOLOGY • INNOVATION</div>
+            <div class="hero-content">
+                <div class="eyebrow">ENGINEERING • TECHNOLOGY • INNOVATION</div>
 
-            <h1>
-                Engineering Technology
-                <span>for a Digital Future.</span>
-            </h1>
+                <h1>
+                    Engineering Technology
+                    <span>for a Digital Future.</span>
+                </h1>
 
-            <p class="hero-description">
-                Building software, digital systems and technology-driven
-                solutions for modern businesses.
-            </p>
+                <p class="hero-description">
+                    Building software, digital systems and technology-driven
+                    solutions for modern businesses.
+                </p>
 
-            <div class="hero-pill-row">
-                <span>Technology</span>
-                <span>Digital Solutions</span>
-                <span>Innovation</span>
+                <div class="hero-pill-row">
+                    <span>Technology</span>
+                    <span>Digital Solutions</span>
+                    <span>Innovation</span>
+                </div>
+
+                <div class="hero-buttons">
+                    <a href="services.html" class="primary-button">
+                        Explore Services <span>→</span>
+                    </a>
+
+                    <a href="projects.html" class="secondary-button">
+                        View Projects
+                    </a>
+                </div>
             </div>
 
-            <div class="hero-buttons">
-                <a href="services.html" class="primary-button">
-                    Explore Services <span>→</span>
+            <div class="hero-tech-panel">
+                <div class="tech-panel-top">
+                    <span class="status-dot"></span>
+                    <span>TECHNOLOGY SYSTEM</span>
+                    <span class="tech-panel-code">PVR-CMS / 01</span>
+                </div>
+
+                <div class="tech-grid"></div>
+                <div class="tech-orbit orbit-one"></div>
+                <div class="tech-orbit orbit-two"></div>
+
+                <div class="tech-core">
+                    <div class="core-ring"></div>
+                    <div class="core-center">CMS</div>
+                </div>
+
+                <div class="tech-line line-one"></div>
+                <div class="tech-line line-two"></div>
+                <div class="tech-line line-three"></div>
+
+                <div class="tech-code code-one">DIGITAL_SYSTEM // ACTIVE</div>
+                <div class="tech-code code-two">AI / SOFTWARE / FINTECH</div>
+                <div class="tech-code code-three">INNOVATION_ENGINE</div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="capabilities-section">
+        <div class="section-container">
+
+            <div class="section-heading">
+                <span class="section-label">OUR FOCUS</span>
+
+                <h2>Technology built around real-world opportunities.</h2>
+
+                <p>
+                    PVRajCMS Group develops technology-focused solutions
+                    across digital systems, financial technology,
+                    healthcare innovation and future-oriented business ventures.
+                </p>
+            </div>
+
+            <div class="capability-grid">
+
+                <article class="capability-card">
+                    <span class="capability-number">01</span>
+                    <div class="capability-icon">DS</div>
+                    <h3>Digital Solutions</h3>
+                    <p>
+                        Web, software, AI, automation and digital technology
+                        solutions designed to help modern businesses operate,
+                        connect and grow.
+                    </p>
+                    <div class="card-line"></div>
+                </article>
+
+                <article class="capability-card">
+                    <span class="capability-number">02</span>
+                    <div class="capability-icon">FM</div>
+                    <h3>FM &amp; FinTech</h3>
+                    <p>
+                        Financial markets, trading, commodities and
+                        financial technology initiatives focused on
+                        technology-driven market solutions.
+                    </p>
+                    <div class="card-line"></div>
+                </article>
+
+                <article class="capability-card">
+                    <span class="capability-number">03</span>
+                    <div class="capability-icon">HI</div>
+                    <h3>Healthcare &amp; Innovation</h3>
+                    <p>
+                        Healthcare-focused projects, technology and
+                        innovative solutions designed around future
+                        opportunities and digital transformation.
+                    </p>
+                    <div class="card-line"></div>
+                </article>
+
+                <article class="capability-card">
+                    <span class="capability-number">04</span>
+                    <div class="capability-icon">BV</div>
+                    <h3>Business Ventures</h3>
+                    <p>
+                        Business development, digital ventures and
+                        future-focused opportunities supported by
+                        technology and innovation.
+                    </p>
+                    <div class="card-line"></div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="moneyx-section">
+        <div class="moneyx-container">
+
+            <div class="moneyx-content">
+                <span class="section-label">DIGITAL MEDIA BRAND</span>
+
+                <h2>MoneyX Labs USA</h2>
+
+                <p>
+                    A USA-focused finance and markets digital media brand
+                    covering trading, investing, Bitcoin and crypto,
+                    personal finance, AI and FinTech.
+                </p>
+
+                <a
+                    href="https://www.youtube.com/"
+                    class="moneyx-button"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Explore MoneyX Labs USA <span>→</span>
                 </a>
-
-                <a href="projects.html" class="secondary-button">
-                    View Projects
-                </a>
-            </div>
-        </div>
-
-        <div class="hero-tech-panel">
-            <div class="tech-panel-top">
-                <span class="status-dot"></span>
-                <span>TECHNOLOGY SYSTEM</span>
-                <span class="tech-panel-code">PVR-CMS / 01</span>
             </div>
 
-            <div class="tech-grid"></div>
-            <div class="tech-orbit orbit-one"></div>
-            <div class="tech-orbit orbit-two"></div>
+            <div class="moneyx-visual">
+                <div class="city-grid"></div>
 
-            <div class="tech-core">
-                <div class="core-ring"></div>
-                <div class="core-center">CMS</div>
+                <div class="market-chart">
+                    <div class="chart-label">FINANCIAL MARKETS / DIGITAL ECONOMY</div>
+
+                    <div class="chart-line">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <div class="chart-footer">
+                        <span>MARKET</span>
+                        <span>FINTECH</span>
+                        <span>USA</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="tech-line line-one"></div>
-            <div class="tech-line line-two"></div>
-            <div class="tech-line line-three"></div>
-
-            <div class="tech-code code-one">DIGITAL_SYSTEM // ACTIVE</div>
-            <div class="tech-code code-two">AI / SOFTWARE / FINTECH</div>
-            <div class="tech-code code-three">INNOVATION_ENGINE</div>
         </div>
+    </section>
 
-    </div>
-</section>
+    <section class="final-cta">
+        <div class="final-cta-container">
 
-<section class="capabilities-section">
-    <div class="section-container">
+            <div>
+                <h2>Let's build the digital future.</h2>
 
-        <div class="section-heading">
-            <span class="section-label">OUR FOCUS</span>
-
-            <h2>Technology built around real-world opportunities.</h2>
-
-            <p>
-                PVRajCMS Group develops technology-focused solutions
-                across digital systems, financial technology,
-                healthcare innovation and future-oriented business ventures.
-            </p>
-        </div>
-
-        <div class="capability-grid">
-
-            <article class="capability-card">
-                <span class="capability-number">01</span>
-                <div class="capability-icon">DS</div>
-                <h3>Digital Solutions</h3>
                 <p>
-                    Web, software, AI, automation and digital technology
-                    solutions designed to help modern businesses operate,
-                    connect and grow.
+                    Have an idea, technology requirement or business opportunity?
+                    Let's connect.
                 </p>
-                <div class="card-line"></div>
-            </article>
+            </div>
 
-            <article class="capability-card">
-                <span class="capability-number">02</span>
-                <div class="capability-icon">FM</div>
-                <h3>FM &amp; FinTech</h3>
-                <p>
-                    Financial markets, trading, commodities and
-                    financial technology initiatives focused on
-                    technology-driven market solutions.
-                </p>
-                <div class="card-line"></div>
-            </article>
-
-            <article class="capability-card">
-                <span class="capability-number">03</span>
-                <div class="capability-icon">HI</div>
-                <h3>Healthcare &amp; Innovation</h3>
-                <p>
-                    Healthcare-focused projects, technology and
-                    innovative solutions designed around future
-                    opportunities and digital transformation.
-                </p>
-                <div class="card-line"></div>
-            </article>
-
-            <article class="capability-card">
-                <span class="capability-number">04</span>
-                <div class="capability-icon">BV</div>
-                <h3>Business Ventures</h3>
-                <p>
-                    Business development, digital ventures and
-                    future-focused opportunities supported by
-                    technology and innovation.
-                </p>
-                <div class="card-line"></div>
-            </article>
-
-        </div>
-    </div>
-</section>
-
-<section class="moneyx-section">
-    <div class="moneyx-container">
-
-        <div class="moneyx-content">
-            <span class="section-label">DIGITAL MEDIA BRAND</span>
-
-            <h2>MoneyX Labs USA</h2>
-
-            <p>
-                A USA-focused finance and markets digital media brand
-                covering trading, investing, Bitcoin and crypto,
-                personal finance, AI and FinTech.
-            </p>
-
-            <a
-                href="https://www.youtube.com/"
-                class="moneyx-button"
-                target="_blank"
-                rel="noopener"
-            >
-                Explore MoneyX Labs USA <span>→</span>
+            <a href="contact.html" class="primary-button">
+                Get in Touch <span>→</span>
             </a>
+
         </div>
-
-        <div class="moneyx-visual">
-            <div class="city-grid"></div>
-
-            <div class="market-chart">
-                <div class="chart-label">FINANCIAL MARKETS / DIGITAL ECONOMY</div>
-
-                <div class="chart-line">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-
-                <div class="chart-footer">
-                    <span>MARKET</span>
-                    <span>FINTECH</span>
-                    <span>USA</span>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<section class="final-cta">
-    <div class="final-cta-container">
-
-        <div>
-            <h2>Let's build the digital future.</h2>
-
-            <p>
-                Have an idea, technology requirement or business opportunity?
-                Let's connect.
-            </p>
-        </div>
-
-        <a href="contact.html" class="primary-button">
-            Get in Touch <span>→</span>
-        </a>
-
-    </div>
-</section>
+    </section>
 
 </main>
 
