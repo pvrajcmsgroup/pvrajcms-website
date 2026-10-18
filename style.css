@@ -114,7 +114,7 @@ img {
 
 .main-nav a {
     color: #c9d9e8;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 700;
     transition: .25s;
     white-space: nowrap;
@@ -1319,7 +1319,7 @@ nav:not(.main-nav) a:hover {
   }
   .brand-header .main-nav a {
     flex: 0 0 auto !important;
-    font-size: 13px !important;
+    font-size: 14px !important;
     line-height: 1.35 !important;
     padding: 4px 0 !important;
     white-space: nowrap !important;
@@ -1338,32 +1338,42 @@ nav:not(.main-nav) a:hover {
 }
 
 
-/* PV MART branded navigation button — match the existing Get in Touch accent */
+/* PV MART branded navigation button — match the existing Get in Touch blue-cyan accent */
 .brand-header .main-nav a.mart-nav-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(23, 119, 168, 0.18) !important;
+    background: linear-gradient(135deg, #126f98, #0b4668) !important;
     color: #ffffff !important;
     border: 1px solid #2b9bd0 !important;
-    border-radius: 6px;
-    padding: 8px 10px;
+    border-radius: 7px;
+    padding: 9px 13px;
+    font-size: 14px;
     font-weight: 800 !important;
+    letter-spacing: 0.25px;
     text-decoration: none;
     line-height: 1.2;
     white-space: nowrap;
-    box-shadow: none;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 14px rgba(43, 155, 208, 0.22);
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .brand-header .main-nav a.mart-nav-button:hover {
-    background: rgba(39, 160, 218, 0.28) !important;
+    background: linear-gradient(135deg, #168bb8, #126f98) !important;
     border-color: #5ecbff !important;
     color: #ffffff !important;
+    box-shadow: 0 6px 18px rgba(43, 155, 208, 0.32);
     transform: translateY(-1px);
 }
 
 .brand-header .main-nav a.mart-nav-button:focus-visible {
     outline: 3px solid #5ecbff;
     outline-offset: 3px;
+}
+
+@media screen and (max-width: 700px) {
+    .brand-header .main-nav a.mart-nav-button {
+        font-size: 12px !important;
+        padding: 6px 9px !important;
+    }
 }
