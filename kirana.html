@@ -457,11 +457,13 @@ footer {
     height:auto;
     max-height:none;
     object-fit:contain;
-    flex:0 1 auto;
+    /* Prevent flexbox from squeezing the logo and distorting its appearance. */
+    flex:0 0 auto;
+    align-self:center;
   }
 
   .brand-text {
-    flex:1 1 auto;
+    flex:1 1 0;
     min-width:0;
     padding-left:7px;
     gap:4px;
@@ -560,7 +562,9 @@ footer {
     max-width:none;
     height:auto;
     max-height:none;
-    flex:0 1 auto;
+    /* Keep the original image proportions on narrow phones too. */
+    flex:0 0 auto;
+    align-self:center;
   }
 
   .brand-text {
