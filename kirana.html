@@ -53,7 +53,9 @@ header {
   align-items:center;
   gap:12px;
   min-width:0;
-  flex:1 1 auto;
+  /* Keep the clickable link only around the logo and brand text. */
+  flex:0 1 auto;
+  width:fit-content;
   text-decoration:none;
   color:#fff;
 }
@@ -442,8 +444,9 @@ footer {
   }
 
   .brand {
-    flex:1 1 auto;
-    width:auto;
+    flex:0 1 auto;
+    width:fit-content;
+    max-width:calc(100% - 70px);
     min-width:0;
     gap:7px;
   }
