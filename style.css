@@ -1446,3 +1446,165 @@ nav:not(.main-nav) a:hover {
         font-size: 12px !important;
     }
 }
+
+/* =========================================================
+   FINAL HEADER WIDTH + SPACING TUNE
+   Keeps the current design; adjusts logo, tagline and navigation.
+   ========================================================= */
+.brand-header .header-container {
+    width: 98%;
+    max-width: 1600px;
+    min-height: 0 !important;
+    padding: 8px 0 !important;
+    gap: 12px !important;
+}
+
+.brand-header .brand-logo-link {
+    flex: 0 0 auto;
+    min-width: 0;
+}
+
+.brand-header .brand-logo {
+    width: clamp(290px, 26vw, 350px) !important;
+    max-width: 100% !important;
+    max-height: 100px;
+    height: auto !important;
+    object-fit: contain;
+    display: block;
+}
+
+.brand-header .brand-name-block {
+    min-width: 0;
+    padding-left: 12px;
+    flex: 0 1 auto;
+}
+
+.brand-header .brand-name {
+    display: none !important;
+}
+
+.brand-header .brand-tagline {
+    margin-top: 0;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    line-height: 1.4;
+}
+
+.brand-header .main-nav {
+    margin-left: auto;
+    gap: 9px !important;
+    flex-wrap: nowrap;
+    min-width: 0;
+}
+
+.brand-header .main-nav a {
+    font-size: 13px;
+}
+
+/* Laptop / tablet: allow a clean second row rather than squeezing items. */
+@media screen and (max-width: 1150px) and (min-width: 701px) {
+    .brand-header .header-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px 12px !important;
+        gap: 10px 14px !important;
+    }
+
+    .brand-header .brand-logo {
+        width: clamp(260px, 32vw, 330px) !important;
+    }
+
+    .brand-header .brand-tagline {
+        font-size: 11px;
+        letter-spacing: 0.6px;
+    }
+
+    .brand-header .main-nav {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px 14px !important;
+        margin-left: 0;
+    }
+}
+
+/* Mobile: centered logo with readable, wrapped navigation. */
+@media screen and (max-width: 700px) {
+    .brand-header .header-container {
+        width: 100%;
+        min-height: 0 !important;
+        padding: 8px 10px 12px !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap !important;
+        gap: 7px !important;
+    }
+
+    .brand-header .brand-logo-link {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .brand-header .brand-logo {
+        width: min(340px, 86vw) !important;
+        max-width: 100% !important;
+        max-height: 90px;
+        margin: 0 auto;
+    }
+
+    .brand-header .brand-name-block {
+        width: 100%;
+        padding: 0 !important;
+        border-left: 0 !important;
+        text-align: center;
+    }
+
+    .brand-header .brand-tagline {
+        font-size: 10px;
+        letter-spacing: 0.5px;
+        line-height: 1.45;
+        white-space: normal;
+    }
+
+    .brand-header .main-nav {
+        width: 100%;
+        margin: 5px 0 0 !important;
+        padding: 0 2px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 6px 11px !important;
+        overflow: visible !important;
+    }
+
+    .brand-header .main-nav a {
+        flex: 0 0 auto !important;
+        font-size: 12px !important;
+        line-height: 1.35;
+        padding: 3px 0 !important;
+    }
+
+    .brand-header .main-nav a.mart-nav-button,
+    .brand-header .main-nav a.header-cta {
+        padding: 5px 7px !important;
+        font-size: 11px !important;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .brand-header .brand-logo {
+        width: 84vw !important;
+    }
+
+    .brand-header .main-nav {
+        gap: 5px 8px !important;
+    }
+
+    .brand-header .main-nav a {
+        font-size: 11px !important;
+    }
+}
+
