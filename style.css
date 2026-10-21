@@ -1555,3 +1555,14 @@ nav:not(.main-nav) a:hover {
         gap: 12px !important;
     }
 }
+
+
+/* FINAL TWEAK: slightly smaller desktop logo for cleaner header spacing */
+@media screen and (min-width: 1001px) {
+    .brand-header .brand-logo {
+        width: 360px !important;
+        max-width: 34vw !important;
+        max-height: 100px !important;
+        height: auto !important;
+    }
+}
