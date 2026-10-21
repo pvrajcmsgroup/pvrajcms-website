@@ -1377,3 +1377,72 @@ nav:not(.main-nav) a:hover {
         padding: 6px 9px !important;
     }
 }
+
+/* ===== PVRajCMS COMPACT HEADER FIX ===== */
+
+.brand-header .header-container {
+    min-height: 0 !important;
+    padding: 8px 0 !important;
+    gap: 14px !important;
+}
+
+.brand-header .brand-logo {
+    width: 360px !important;
+    max-width: 100% !important;
+    max-height: 110px;
+    height: auto !important;
+    object-fit: contain;
+    display: block;
+}
+
+/* Logo ke andar CMS hai, isliye extra CMS heading hide */
+.brand-header .brand-name {
+    display: none !important;
+}
+
+.brand-header .brand-name-block {
+    padding-left: 14px;
+    min-width: 0;
+}
+
+/* Navigation ko ek line mein rakhne ki koshish */
+.brand-header .main-nav {
+    gap: 10px !important;
+    flex-wrap: nowrap;
+}
+
+.brand-header .main-nav a {
+    font-size: 13px;
+}
+
+/* ===== MOBILE HEADER ===== */
+@media screen and (max-width: 700px) {
+    .brand-header .header-container {
+        padding: 8px 10px !important;
+        gap: 6px !important;
+    }
+
+    .brand-header .brand-logo {
+        width: min(360px, 88vw) !important;
+        max-width: 100% !important;
+        max-height: 95px;
+        height: auto !important;
+    }
+
+    .brand-header .brand-name-block {
+        border-left: 0 !important;
+        padding: 0 !important;
+        text-align: center;
+    }
+
+    .brand-header .main-nav {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 6px 10px !important;
+        margin-top: 4px !important;
+    }
+
+    .brand-header .main-nav a {
+        font-size: 12px !important;
+    }
+}
