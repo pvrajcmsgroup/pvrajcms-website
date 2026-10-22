@@ -11,179 +11,134 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* Shared compact horizontal PVRajCMS brand header */
-        .brand-header {
-            padding: 0 12px !important;
+        /* Exact compact horizontal header copied from About page */
+        .projects-page .site-header {
             background: #071422;
+            padding: 3px 12px !important;
             border-bottom: 1px solid rgba(255,255,255,.12);
         }
-        .brand-header .header-container {
+
+        .projects-page .site-header > .container {
             display: flex;
             flex-direction: row;
-            flex-wrap: nowrap;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-            min-height: 0;
+            gap: 14px;
             width: 100%;
             max-width: 1400px;
             margin: 0 auto;
         }
-        .brand-header .brand-logo-link {
+
+        .projects-page .site-header .logo {
             display: flex;
-            flex: 0 1 330px;
-            min-width: 0;
+            flex-direction: row;
             align-items: center;
+            gap: 14px;
+            flex: 0 1 auto;
+            min-width: 0;
             text-decoration: none;
         }
-        .brand-header .brand-logo {
+
+        .projects-page .site-header .logo img {
             display: block;
-            width: 330px;
-            max-width: 100%;
-            max-height: 62px;
-            height: auto;
+            width: min(28vw, 360px) !important;
+            min-width: 230px;
+            height: auto !important;
+            max-height: 72px;
             object-fit: contain;
             object-position: left center;
         }
-        .brand-header .brand-name-block {
-            flex: 0 1 auto;
-            min-width: 0;
-            margin-right: auto;
+
+        .projects-page .site-header .logo-text {
+            text-align: left;
+            margin: 0;
+            padding-left: 14px;
+            border-left: 1px solid rgba(255,255,255,.18);
         }
-        .brand-header .brand-tagline {
+
+        .projects-page .site-header .logo-text p {
+            margin: 0;
             color: #d6e6f7;
             font-size: 12px;
             line-height: 1.5;
             white-space: nowrap;
+            letter-spacing: .5px;
         }
-        .brand-header .main-nav {
+
+        .projects-page .site-header .navbar {
             display: flex;
-            flex: 1 1 auto;
-            align-items: center;
             justify-content: flex-end;
-            flex-wrap: nowrap;
-            gap: 6px;
-            width: auto;
-            min-width: 0;
-            margin-left: auto;
-        }
-        .brand-header .main-nav a {
-            font-size: 13px;
-            font-weight: 600;
-            line-height: 1.2;
-            padding-top: 4px;
-            padding-bottom: 4px;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-        .brand-header .main-nav a.mart-nav-button {
-            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            padding: 6px 8px;
-            border: 1px solid #43c5f5;
-            border-radius: 7px;
-            background: linear-gradient(135deg, #147eaf, #0b5f91);
-            color: #fff;
-            font-size: 13px;
-            font-weight: 800;
-            line-height: 1.2;
-            text-decoration: none;
+            flex: 0 0 auto;
+            flex-wrap: nowrap;
+            gap: 16px;
+            width: auto;
+            margin: 0;
+            padding: 5px 0;
+            border: 0;
+        }
+
+        .projects-page .site-header .navbar a {
             white-space: nowrap;
-            box-shadow: 0 4px 14px rgba(43,155,208,.22);
-            transition: background .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease;
         }
-        .brand-header .main-nav a.mart-nav-button:hover {
-            background: linear-gradient(135deg, #22a8df, #117bb5);
-            border-color: #8be0ff;
-            color: #fff;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(43,155,208,.32);
-        }
-        .brand-header .main-nav a.mart-nav-button:focus-visible {
-            outline: 3px solid #5ecbff;
-            outline-offset: 3px;
-        }
-        @media (max-width: 1050px) {
-            .brand-header .header-container {
+
+        @media (max-width: 1000px) {
+            .projects-page .site-header > .container {
                 flex-wrap: wrap;
                 justify-content: center;
             }
-            .brand-header .brand-logo-link {
-                flex: 0 1 330px;
-            }
-            .brand-header .brand-name-block {
-                margin-right: 0;
-            }
-            .brand-header .main-nav {
-                flex: 1 1 100%;
-                width: 100%;
-                flex-wrap: wrap;
+
+            .projects-page .site-header .logo {
                 justify-content: center;
-                gap: 8px 14px;
-                margin: 0;
+            }
+
+            .projects-page .site-header .navbar {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 12px 20px;
             }
         }
-        @media (max-width: 700px) {
-            .brand-header {
+
+        @media (max-width: 600px) {
+            .projects-page .site-header {
                 padding: 10px !important;
             }
-            .brand-header .header-container {
+
+            .projects-page .site-header .logo {
                 flex-direction: column;
-                gap: 8px;
-                padding: 0 !important;
+                gap: 6px;
             }
-            .brand-header .brand-logo-link {
-                flex: 0 1 auto;
-                width: 100%;
-                justify-content: center;
+
+            .projects-page .site-header .logo img {
+                width: min(88vw, 300px) !important;
+                min-width: 0;
+                max-height: 75px;
             }
-            .brand-header .brand-logo {
-                width: min(88vw, 300px);
-                max-height: 68px;
-                margin: 0 auto;
-            }
-            .brand-header .brand-name-block {
-                width: 100%;
+
+            .projects-page .site-header .logo-text {
+                border-left: 0;
+                padding-left: 0;
                 text-align: center;
             }
-            .brand-header .brand-tagline {
-                font-size: 11px;
+
+            .projects-page .site-header .logo-text p {
                 white-space: normal;
+                font-size: 11px;
             }
-            .brand-header .main-nav {
-                display: flex !important;
-                flex-wrap: wrap !important;
-                justify-content: center !important;
-                gap: 8px 12px !important;
-                width: 100%;
-                margin: 0 !important;
-            }
-            .brand-header .main-nav a {
-                font-size: 13px !important;
-                line-height: 1.35;
-            }
-            .brand-header .main-nav a.mart-nav-button {
-                padding: 7px 9px !important;
-                font-size: 12px !important;
+
+            .projects-page .site-header .navbar {
+                gap: 10px 15px;
             }
         }
-        @media (max-width: 380px) {
-            .brand-header .main-nav { gap: 7px 9px !important; }
-            .brand-header .main-nav a { font-size: 12px !important; }
-            .brand-header .main-nav a.mart-nav-button { padding: 6px 8px !important; font-size: 11px !important; }
-        }
-    
-        /* Projects page cards: restore the premium card layout without changing the header */
-        .projects {
-            width: 92%;
-            max-width: 1200px;
+
+        /* Projects content cards */
+        .projects-page .projects {
+            width: min(1200px, calc(100% - 36px));
             margin: 0 auto;
             padding: 58px 0 76px;
         }
-        .projects > .section-label {
+
+        .projects-page .projects > .section-label {
             display: inline-block;
             margin-bottom: 8px;
             color: #55c9fa;
@@ -191,27 +146,29 @@
             font-weight: 800;
             letter-spacing: 2.5px;
         }
-        .projects > h1 {
+
+        .projects-page .projects > h1 {
             margin: 0 0 16px;
             color: #f7fbff;
             font-size: clamp(30px, 3.5vw, 44px);
             line-height: 1.18;
         }
-        .projects > p {
-            max-width: 1050px;
+
+        .projects-page .projects > p {
             margin: 0 0 12px;
             color: #b8cbd9;
             font-size: 16px;
             line-height: 1.8;
         }
-        .projects > h2 {
+
+        .projects-page .projects > h2 {
             margin: 38px 0 16px;
             color: #f4f9ff;
             font-size: clamp(23px, 2.5vw, 30px);
             line-height: 1.25;
         }
-        .projects .project-card {
-            position: relative;
+
+        .projects-page .project-card {
             margin: 0 0 16px;
             padding: 22px 24px;
             border: 1px solid rgba(103,189,226,.20);
@@ -220,27 +177,32 @@
             box-shadow: 0 10px 26px rgba(0,0,0,.12);
             transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
         }
-        .projects .project-card:hover {
+
+        .projects-page .project-card:hover {
             transform: translateY(-2px);
             border-color: rgba(72,194,241,.48);
             box-shadow: 0 14px 30px rgba(0,0,0,.18);
         }
-        .projects .project-card h3 {
+
+        .projects-page .project-card h3 {
             margin: 0 0 8px;
             color: #f7fbff;
             font-size: 19px;
             line-height: 1.4;
         }
-        .projects .project-card p {
+
+        .projects-page .project-card p {
             margin: 0 0 10px;
             color: #afc3d2;
             font-size: 15px;
             line-height: 1.75;
         }
-        .projects .project-card p:last-child {
+
+        .projects-page .project-card p:last-child {
             margin-bottom: 0;
         }
-        .projects .project-card .header-cta {
+
+        .projects-page .project-card .header-cta {
             margin-top: 5px;
             border-radius: 7px;
             border-color: #2b9bd0;
@@ -248,53 +210,58 @@
             padding: 9px 13px;
             font-weight: 700;
         }
-        .projects .project-card .header-cta:hover {
+
+        .projects-page .project-card .header-cta:hover {
             background: linear-gradient(135deg, #168bb8, #126f98);
         }
+
         @media (max-width: 700px) {
-            .projects {
-                width: 92%;
+            .projects-page .projects {
+                width: calc(100% - 30px);
                 padding: 38px 0 52px;
             }
-            .projects > p {
+
+            .projects-page .projects > p {
                 font-size: 15px;
             }
-            .projects > h2 {
+
+            .projects-page .projects > h2 {
                 margin-top: 30px;
             }
-            .projects .project-card {
+
+            .projects-page .project-card {
                 padding: 18px 16px;
                 border-radius: 9px;
             }
-            .projects .project-card h3 {
+
+            .projects-page .project-card h3 {
                 font-size: 18px;
             }
-            .projects .project-card p {
+
+            .projects-page .project-card p {
                 font-size: 14px;
             }
         }
 
     </style>
 </head>
-<body>
+<body class="projects-page">
 
-<header class="brand-header">
-    <div class="header-container">
-        <a href="index.html" class="brand-logo-link">
-            <img src="logo.png" alt="PVRajCMS Group Logo" class="brand-logo">
+<header class="site-header">
+    <div class="container">
+        <a href="index.html" class="logo" aria-label="PVRajCMS Group Home">
+            <img src="logo.png" alt="PVRajCMS Group Logo">
+            <div class="logo-text">
+                <p>Engineering • Technology • Digital Innovation</p>
+            </div>
         </a>
-
-        <div class="brand-name-block">
-            <div class="brand-tagline">Engineering • Technology • Digital Innovation</div>
-        </div>
-
-        <nav class="main-nav" aria-label="Main navigation">
+        <nav class="navbar" aria-label="Main navigation">
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
             <a href="services.html">Services</a>
-            <a href="projects.html" class="active">Projects</a>
+            <a href="projects.html" aria-current="page">Projects</a>
             <a href="contact.html">Contact</a>
-            <a href="kirana.html" class="mart-nav-button">PV MART</a>
+            <a href="kirana.html">PV MART</a>
         </nav>
     </div>
 </header>
