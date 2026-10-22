@@ -695,18 +695,18 @@
         }
     
         /* =====================================
-           ABOUT PAGE HEADER FIX
+           ABOUT PAGE HEADER FIX - LEFT LOGO
         ====================================== */
         .about-page .site-header {
             background: #071422;
-            padding: 18px 20px !important;
+            padding: 14px 20px !important;
         }
 
         .about-page .site-header > .container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 12px;
+            align-items: stretch;
+            gap: 8px;
             width: 100%;
             max-width: 1320px;
             margin: 0 auto;
@@ -715,8 +715,9 @@
         .about-page .site-header .logo {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            width: 100%;
+            align-items: flex-start;
+            width: fit-content;
+            max-width: 100%;
             text-decoration: none;
         }
 
@@ -726,20 +727,17 @@
             height: auto !important;
             max-height: 150px;
             object-fit: contain;
+            object-position: left center;
         }
 
         .about-page .site-header .logo-text {
-            text-align: center;
-            margin-top: 4px;
-        }
-
-        .about-page .site-header .logo-text h2 {
-            margin: 0;
-            font-size: 22px;
+            text-align: left;
+            margin-top: 3px;
         }
 
         .about-page .site-header .logo-text p {
-            margin: 5px 0 0;
+            margin: 4px 0 0;
+            color: #a9bfd9;
             font-size: 14px;
         }
 
@@ -750,6 +748,7 @@
             flex-wrap: wrap;
             gap: 28px;
             width: 100%;
+            margin-top: 4px;
             padding: 14px 10px;
             border-bottom: 1px solid rgba(255,255,255,.12);
         }
@@ -764,11 +763,14 @@
                 max-height: 100px;
             }
 
+            .about-page .site-header .logo-text p {
+                font-size: 12px;
+            }
+
             .about-page .site-header .navbar {
                 gap: 12px 18px;
             }
         }
-
     </style>
 </head>
 
@@ -785,7 +787,6 @@
                 <a href="index.html" class="logo" aria-label="PVRajCMS Group Home">
                     <img src="logo.png" alt="PVRajCMS Group Logo">
                     <div class="logo-text">
-                        <h2>CMS</h2>
                         <p>Engineering • Technology • Digital Innovation</p>
                     </div>
                 </a>
