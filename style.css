@@ -1698,3 +1698,52 @@ nav:not(.main-nav) a:hover {
         padding: 5px 7px !important;
     }
 }
+```css
+/* ===== PVRajCMS HEADER SIZE FIX ===== */
+
+.brand-header {
+    padding: 12px 20px !important;
+}
+
+.header-container {
+    gap: 8px !important;
+}
+
+.brand-logo {
+    width: 100% !important;
+    max-width: 480px !important;
+    height: auto !important;
+    max-height: 150px !important;
+    object-fit: contain !important;
+}
+
+.brand-name-block {
+    margin-top: 4px !important;
+}
+
+.brand-name-block .brand-tagline {
+    margin-top: 6px !important;
+}
+
+.main-nav {
+    margin-top: 8px !important;
+    padding: 12px 10px !important;
+}
+
+/* Mobile screens */
+@media (max-width: 600px) {
+    .brand-header {
+        padding: 10px !important;
+    }
+
+    .brand-logo {
+        max-width: 300px !important;
+        max-height: 100px !important;
+    }
+
+    .main-nav {
+        padding: 10px 5px !important;
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+    }
+}
