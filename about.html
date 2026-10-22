@@ -7,122 +7,66 @@
 
     <title>About Us | PVRajCMS Group</title>
 
-    <meta name="description" content="Discover PVRajCMS Group, our vision, mission and initiatives across software, technology, trading, FinTech, healthcare, retail, e-commerce and hospitality.">
+    <meta name="description" content="Discover PVRajCMS Group, our vision, mission, technology initiatives, digital services, MoneyX Labs USA and future business ventures.">
 
-    <meta name="keywords" content="PVRajCMS Group, software, technology, trading tools, FinTech, healthcare, retail, e-commerce, PV Mart">
-
-    <meta name="author" content="PVRajCMS Group">
-    <meta name="robots" content="index, follow">
-
-    <link rel="stylesheet" href="style.css">
+    <meta name="theme-color" content="#071a35">
 
     <link rel="canonical" href="https://pvrajcmsgroup.github.io/pvrajcms-website/about.html">
+    <link rel="stylesheet" href="style.css">
 
     <style>
+        /* =====================================
+           PVRajCMS GROUP - ABOUT PAGE
+           Premium Blue & White Corporate Design
+        ====================================== */
+
         :root {
-            --about-blue: #087eae;
-            --about-cyan: #13b5d8;
-            --about-dark: #10243a;
-            --about-text: #526174;
-            --about-light: #f4f8fc;
-            --about-border: #e1eaf2;
+            --about-navy: #071a35;
+            --about-blue: #1258c9;
+            --about-cyan: #16b9e8;
+            --about-light: #f3f7fd;
+            --about-white: #ffffff;
+            --about-text: #34445c;
+            --about-muted: #718096;
+            --about-border: #e0e8f2;
+            --about-radius: 20px;
+            --about-shadow: 0 12px 35px rgba(7, 26, 53, 0.08);
+        }
+
+        .about-page,
+        .about-page * {
+            box-sizing: border-box;
         }
 
         .about-page {
-            color: var(--about-dark);
-            overflow: hidden;
+            margin: 0;
+            color: var(--about-text);
+            background: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.7;
+            overflow-wrap: break-word;
+        }
+
+        .about-page a {
+            text-decoration: none;
         }
 
         .about-container {
-            width: min(1120px, calc(100% - 40px));
+            width: min(1160px, calc(100% - 36px));
             margin: 0 auto;
         }
 
-        .brand-header .main-nav a.mart-nav-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #087eae, #13b5d8);
-            color: #fff;
-            border: 1px solid #35c5f0;
-            border-radius: 7px;
-            padding: 8px 12px;
-            font-weight: 800;
-            font-size: 13px;
-            line-height: 1.2;
-            white-space: nowrap;
-            text-decoration: none;
-            box-shadow: 0 4px 14px rgba(19, 181, 216, .2);
-            transition: .2s ease;
+        .about-section {
+            padding: 76px 0;
         }
 
-        .brand-header .main-nav a.mart-nav-button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(19, 181, 216, .3);
-        }
-
-        .brand-header .main-nav a.mart-nav-button:focus-visible {
-            outline: 3px solid #75e0ff;
-            outline-offset: 3px;
-        }
-
-        @media (min-width: 1200px) {
-            .brand-header .main-nav {
-                flex-wrap: nowrap;
-                align-items: center;
-                gap: 9px;
-            }
-
-            .brand-header .main-nav > a {
-                font-size: 13px;
-                white-space: nowrap;
-            }
-        }
-
-        @media (max-width: 1199px) {
-            .brand-header .main-nav {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                align-items: center;
-                gap: 10px 14px;
-            }
-        }
-
-        @media (max-width: 700px) {
-            .brand-header .main-nav {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 8px 12px;
-                margin-top: 8px;
-            }
-
-            .brand-header .main-nav > a {
-                font-size: 13px;
-                white-space: nowrap;
-            }
-
-            .brand-header .main-nav > a.mart-nav-button {
-                padding: 7px 9px;
-                font-size: 12px;
-            }
-        }
-
-        .about-hero {
-            position: relative;
-            padding: 90px 0 80px;
-            background:
-                radial-gradient(ellipse at 90% 10%,
-                    rgba(19, 181, 216, .15), transparent 35%),
-                linear-gradient(135deg, #f4f9ff 0%, #fff 65%);
-            border-bottom: 1px solid var(--about-border);
+        .about-section-light {
+            background: var(--about-light);
         }
 
         .about-eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
+            display: inline-block;
+            margin-bottom: 12px;
             color: var(--about-blue);
             font-size: 12px;
             font-weight: 800;
@@ -130,417 +74,623 @@
             text-transform: uppercase;
         }
 
-        .about-eyebrow::before {
-            content: "";
-            width: 25px;
-            height: 3px;
-            background: var(--about-cyan);
-            border-radius: 4px;
+        .about-heading {
+            max-width: 760px;
+            margin: 0 auto 15px;
+            color: var(--about-navy);
+            font-size: clamp(27px, 4vw, 40px);
+            font-weight: 800;
+            line-height: 1.2;
+            text-align: center;
         }
 
-        .about-hero h1 {
-            max-width: 850px;
-            margin: 22px 0;
-            font-size: clamp(34px, 5vw, 57px);
-            line-height: 1.13;
-            letter-spacing: -1.5px;
-            color: var(--about-dark);
+        .about-subheading {
+            max-width: 740px;
+            margin: 0 auto 42px;
+            color: var(--about-muted);
+            font-size: 16px;
+            text-align: center;
         }
 
-        .about-hero h1 span {
+        .about-gradient-text {
             color: var(--about-blue);
         }
 
-        .hero-description {
-            max-width: 760px;
-            margin: 0;
-            color: var(--about-text);
-            font-size: 17px;
+        /* HERO */
+
+        .about-hero {
+            position: relative;
+            padding: 94px 0 88px;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    circle at 88% 15%,
+                    rgba(22, 185, 232, 0.20),
+                    transparent 28%
+                ),
+                linear-gradient(135deg, #071a35 0%, #0b2c59 65%, #104d91 100%);
+        }
+
+        .about-hero::before {
+            position: absolute;
+            right: -110px;
+            bottom: -220px;
+            width: 460px;
+            height: 460px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 50%;
+            content: "";
+        }
+
+        .about-hero::after {
+            position: absolute;
+            right: -35px;
+            bottom: -145px;
+            width: 310px;
+            height: 310px;
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 50%;
+            content: "";
+        }
+
+        .about-hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-hero-label {
+            display: inline-block;
+            margin-bottom: 22px;
+            padding: 7px 15px;
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 50px;
+            background: rgba(255,255,255,0.08);
+            color: #c6f3ff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .about-hero h1 {
+            margin: 0 0 23px;
+            color: #ffffff;
+            font-size: clamp(36px, 6vw, 64px);
+            font-weight: 800;
+            line-height: 1.13;
+            letter-spacing: -1.4px;
+        }
+
+        .about-hero h1 span {
+            color: #55d5ff;
+        }
+
+        .about-hero p {
+            max-width: 740px;
+            margin: 0 auto;
+            color: #d7e6f8;
+            font-size: clamp(16px, 2vw, 19px);
             line-height: 1.9;
         }
 
-        .about-actions {
+        .about-hero-actions {
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
             gap: 13px;
-            margin-top: 30px;
+            margin-top: 32px;
         }
 
         .about-button {
             display: inline-flex;
+            min-height: 48px;
             align-items: center;
             justify-content: center;
-            min-height: 46px;
-            padding: 12px 20px;
-            border: 1px solid var(--about-blue);
-            border-radius: 7px;
-            background: var(--about-blue);
-            color: #fff !important;
+            padding: 12px 23px;
+            border: 1px solid transparent;
+            border-radius: 9px;
             font-size: 14px;
-            font-weight: 750;
-            text-decoration: none !important;
-            transition: .2s ease;
+            font-weight: 700;
+            transition: transform 0.2s ease, background 0.2s ease;
         }
 
         .about-button:hover {
             transform: translateY(-2px);
-            background: #06688f;
         }
 
-        .about-button.secondary {
-            background: #fff;
-            color: var(--about-blue) !important;
+        .about-button-primary {
+            background: #ffffff;
+            color: var(--about-navy);
         }
 
-        .about-button.secondary:hover {
-            background: #edf8fd;
+        .about-button-outline {
+            border-color: rgba(255,255,255,0.45);
+            color: #ffffff;
         }
 
-        .about-section {
-            padding: 76px 0;
+        .about-button-outline:hover {
+            background: rgba(255,255,255,0.10);
         }
 
-        .about-section.soft {
-            background: var(--about-light);
+        /* INTRODUCTION */
+
+        .about-intro-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            gap: 44px;
         }
 
-        .about-section-heading {
-            max-width: 760px;
-            margin-bottom: 32px;
-        }
-
-        .about-section-heading h2 {
-            margin: 13px 0;
-            color: var(--about-dark);
-            font-size: clamp(27px, 3.5vw, 38px);
+        .about-intro-copy h2 {
+            margin: 0 0 20px;
+            color: var(--about-navy);
+            font-size: clamp(28px, 4vw, 38px);
             line-height: 1.25;
-            letter-spacing: -.6px;
         }
 
-        .about-section-heading p {
-            color: var(--about-text);
-            font-size: 16px;
-            line-height: 1.85;
+        .about-intro-copy p {
+            margin: 0 0 16px;
+            color: var(--about-muted);
+            font-size: 15px;
         }
 
-        .about-story-grid {
-            display: grid;
-            grid-template-columns: 1.15fr .85fr;
-            gap: 35px;
-            align-items: start;
-        }
-
-        .about-story-copy p {
-            margin-top: 0;
-            margin-bottom: 18px;
-            color: var(--about-text);
-            font-size: 16px;
-            line-height: 1.95;
-        }
-
-        .about-highlight {
-            padding: 29px;
+        .about-intro-panel {
+            padding: 32px;
             border: 1px solid var(--about-border);
-            border-radius: 15px;
-            background: #fff;
-            box-shadow: 0 12px 35px rgba(16, 36, 58, .045);
+            border-radius: var(--about-radius);
+            background: #ffffff;
+            box-shadow: var(--about-shadow);
         }
 
-        .about-highlight h3 {
-            margin: 0 0 15px;
-            font-size: 21px;
-        }
-
-        .about-highlight p {
-            color: var(--about-text);
-            line-height: 1.8;
-        }
-
-        .highlight-line {
-            height: 3px;
-            width: 48px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            background: linear-gradient(90deg, var(--about-blue), var(--about-cyan));
-        }
-
-        .about-sector-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 20px;
-        }
-
-        .about-sector-card {
-            min-width: 0;
-            padding: 26px 23px;
-            border: 1px solid var(--about-border);
-            border-radius: 13px;
-            background: #fff;
-            transition: transform .2s ease, box-shadow .2s ease;
-        }
-
-        .about-sector-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 14px 32px rgba(16, 36, 58, .08);
-        }
-
-        .about-sector-number {
-            display: inline-flex;
+        .about-intro-panel .about-panel-mark {
+            display: flex;
+            width: 58px;
+            height: 58px;
             align-items: center;
             justify-content: center;
-            width: 39px;
-            height: 39px;
-            border-radius: 10px;
-            background: #eaf7fc;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            background: #eaf3ff;
             color: var(--about-blue);
-            font-size: 13px;
-            font-weight: 850;
+            font-size: 22px;
+            font-weight: 900;
         }
 
-        .about-sector-card h3 {
-            margin: 20px 0 10px;
-            font-size: 19px;
-            line-height: 1.4;
+        .about-intro-panel h3 {
+            margin: 0 0 10px;
+            color: var(--about-navy);
+            font-size: 22px;
         }
 
-        .about-sector-card p {
+        .about-intro-panel p {
             margin: 0;
-            color: var(--about-text);
+            color: var(--about-muted);
             font-size: 14px;
-            line-height: 1.85;
         }
 
-        .about-sector-status {
-            display: block;
-            margin-top: 15px;
-            color: var(--about-blue);
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: .6px;
-            text-transform: uppercase;
-        }
+        /* BUSINESS SECTORS */
 
-        .about-principles-grid {
+        .about-business-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 22px;
         }
 
-        .about-principle {
-            padding: 28px;
-            border-radius: 13px;
-            background: #fff;
-            border: 1px solid var(--about-border);
-        }
-
-        .about-principle h3 {
-            margin: 0 0 12px;
-            font-size: 21px;
-        }
-
-        .about-principle p {
-            margin: 0;
-            color: var(--about-text);
-            line-height: 1.9;
-        }
-
-        .about-brand-card {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 25px;
-            align-items: center;
-            padding: 34px;
-            border: 1px solid var(--about-border);
-            border-radius: 15px;
-            background: #fff;
-        }
-
-        .about-brand-card h3 {
-            margin: 0 0 12px;
-            font-size: 25px;
-        }
-
-        .about-brand-card p {
-            margin: 0;
-            color: var(--about-text);
-            line-height: 1.9;
-        }
-
-        .about-brand-mark {
+        .about-business-card {
+            position: relative;
             display: flex;
+            min-height: 245px;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 27px;
+            border: 1px solid var(--about-border);
+            border-radius: var(--about-radius);
+            background: #ffffff;
+            box-shadow: 0 5px 20px rgba(7, 26, 53, 0.035);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .about-business-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--about-shadow);
+        }
+
+        .about-business-icon {
+            display: flex;
+            width: 52px;
+            height: 52px;
             align-items: center;
             justify-content: center;
-            width: 95px;
-            height: 95px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, #087eae, #13b5d8);
-            color: #fff;
+            margin-bottom: 19px;
+            border-radius: 14px;
+            background: #eaf3ff;
+            color: var(--about-blue);
             font-size: 25px;
+        }
+
+        .about-business-card h3 {
+            margin: 0 0 11px;
+            color: var(--about-navy);
+            font-size: 19px;
+            line-height: 1.35;
+        }
+
+        .about-business-card p {
+            margin: 0;
+            color: var(--about-muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .about-card-tag {
+            display: inline-block;
+            margin-top: auto;
+            padding-top: 18px;
+            color: var(--about-blue);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* COMING SOON */
+
+        .about-coming-soon {
+            border: 1px dashed #c5d7ec;
+            background: linear-gradient(145deg, #f8fbff, #edf4ff);
+        }
+
+        .about-coming-soon .about-business-icon {
+            background: #e3edfa;
+            color: #45658e;
+        }
+
+        .about-coming-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 14px;
+            padding: 6px 10px;
+            border: 1px solid #c9d9f0;
+            border-radius: 6px;
+            background: #e7f0ff;
+            color: #174a92;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+        }
+
+        .about-coming-badge::before {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #4381db;
+            content: "";
+        }
+
+        /* VISION & MISSION */
+
+        .about-purpose-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .about-purpose-card {
+            padding: 34px;
+            border: 1px solid var(--about-border);
+            border-radius: var(--about-radius);
+            background: #ffffff;
+        }
+
+        .about-purpose-card h3 {
+            margin: 0 0 14px;
+            color: var(--about-navy);
+            font-size: 23px;
+        }
+
+        .about-purpose-card p {
+            margin: 0;
+            color: var(--about-muted);
+            font-size: 15px;
+        }
+
+        .about-purpose-label {
+            display: inline-block;
+            margin-bottom: 16px;
+            color: var(--about-blue);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* VALUES */
+
+        .about-values-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .about-value {
+            padding: 23px 18px;
+            border: 1px solid var(--about-border);
+            border-radius: 14px;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .about-value h3 {
+            margin: 0 0 8px;
+            color: var(--about-navy);
+            font-size: 17px;
+        }
+
+        .about-value p {
+            margin: 0;
+            color: var(--about-muted);
+            font-size: 13px;
+        }
+
+        /* MONEYX LABS */
+
+        .about-moneyx {
+            position: relative;
+            overflow: hidden;
+            padding: 42px;
+            border-radius: 24px;
+            background: linear-gradient(130deg, #071a35, #103f7e);
+            color: #ffffff;
+        }
+
+        .about-moneyx::after {
+            position: absolute;
+            top: -100px;
+            right: -75px;
+            width: 270px;
+            height: 270px;
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 50%;
+            content: "";
+        }
+
+        .about-moneyx-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 780px;
+        }
+
+        .about-moneyx .about-eyebrow {
+            color: #72dcff;
+        }
+
+        .about-moneyx h2 {
+            margin: 0 0 16px;
+            color: #ffffff;
+            font-size: clamp(27px, 4vw, 38px);
+            line-height: 1.25;
+        }
+
+        .about-moneyx p {
+            margin: 0 0 22px;
+            color: #d7e6f8;
+            font-size: 15px;
+        }
+
+        .about-moneyx-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin: 0 0 27px;
+        }
+
+        .about-moneyx-topics span {
+            padding: 7px 12px;
+            border: 1px solid rgba(255,255,255,0.19);
+            border-radius: 50px;
+            background: rgba(255,255,255,0.07);
+            color: #f1f8ff;
+            font-size: 12px;
+        }
+
+        .about-moneyx .about-button-primary {
+            background: #ffffff;
+            color: var(--about-navy);
+        }
+
+        /* FOUNDER */
+
+        .about-founder-card {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            align-items: center;
+            gap: 28px;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 35px;
+            border: 1px solid var(--about-border);
+            border-radius: 22px;
+            background: #ffffff;
+            box-shadow: var(--about-shadow);
+        }
+
+        .about-founder-monogram {
+            display: flex;
+            width: 100px;
+            height: 100px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 22px;
+            background: linear-gradient(145deg, #0b2b55, #1261c7);
+            color: #ffffff;
+            font-size: 30px;
             font-weight: 900;
             letter-spacing: -1px;
         }
 
-        .about-founder {
-            display: grid;
-            grid-template-columns: 100px 1fr;
-            gap: 25px;
-            align-items: start;
-            max-width: 820px;
-            padding: 32px;
-            border: 1px solid var(--about-border);
-            border-radius: 15px;
-            background: #fff;
+        .about-founder-card h3 {
+            margin: 0 0 5px;
+            color: var(--about-navy);
+            font-size: clamp(21px, 3vw, 28px);
+            line-height: 1.3;
         }
 
-        .about-founder-initials {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: #eaf7fc;
+        .about-founder-role {
+            margin: 0 0 13px;
             color: var(--about-blue);
-            font-size: 30px;
-            font-weight: 850;
-        }
-
-        .about-founder h3 {
-            margin: 0 0 7px;
-            font-size: 24px;
-            overflow-wrap: anywhere;
-        }
-
-        .founder-role {
-            margin: 0 0 15px;
-            color: var(--about-blue);
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 800;
         }
 
-        .about-founder p:last-child {
-            margin-bottom: 0;
-            color: var(--about-text);
-            line-height: 1.9;
+        .about-founder-description {
+            margin: 0;
+            color: var(--about-muted);
+            font-size: 14px;
         }
 
-        .about-future {
-            padding: 52px 35px;
-            border-radius: 17px;
-            background: linear-gradient(125deg, #10243a, #124b6c);
-            color: #fff;
+        /* CLOSING CTA */
+
+        .about-closing {
+            padding: 65px 20px;
+            background: #edf4ff;
+            text-align: center;
         }
 
-        .about-future .about-eyebrow {
-            color: #8ce7ff;
-        }
-
-        .about-future h2 {
-            max-width: 700px;
-            margin: 18px 0;
-            color: #fff;
-            font-size: clamp(28px, 4vw, 39px);
+        .about-closing h2 {
+            margin: 0 0 13px;
+            color: var(--about-navy);
+            font-size: clamp(27px, 4vw, 38px);
             line-height: 1.25;
         }
 
-        .about-future p {
-            max-width: 750px;
-            color: #dcebf4;
-            line-height: 1.9;
+        .about-closing p {
+            max-width: 660px;
+            margin: 0 auto 25px;
+            color: var(--about-muted);
+            font-size: 15px;
         }
 
-        .about-future .about-button {
-            margin-top: 12px;
-            border-color: #fff;
-            background: #fff;
-            color: #10243a !important;
+        .about-closing .about-button-primary {
+            background: var(--about-blue);
+            color: #ffffff;
         }
 
-        .about-disclaimer {
-            margin-top: 24px;
-            color: #6c7b8b;
-            font-size: 12px;
-            line-height: 1.8;
+        .about-closing .about-button-primary:hover {
+            background: #0b429f;
         }
 
-        @media (max-width: 850px) {
-            .about-sector-grid {
+        /* ACCESSIBILITY */
+
+        .about-page a:focus-visible {
+            outline: 3px solid #16b9e8;
+            outline-offset: 4px;
+        }
+
+        /* TABLET */
+
+        @media (max-width: 900px) {
+            .about-business-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
-            .about-story-grid {
-                grid-template-columns: 1fr;
+            .about-values-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .about-intro-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 26px;
             }
         }
 
+        /* MOBILE */
+
         @media (max-width: 600px) {
             .about-container {
-                width: calc(100% - 32px);
-            }
-
-            .about-hero {
-                padding: 55px 0;
-            }
-
-            .about-hero h1 {
-                letter-spacing: -.8px;
-            }
-
-            .hero-description {
-                font-size: 15px;
+                width: min(100% - 30px, 1160px);
             }
 
             .about-section {
-                padding: 48px 0;
+                padding: 52px 0;
             }
 
-            .about-sector-grid,
-            .about-principles-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
+            .about-hero {
+                padding: 64px 0 62px;
             }
 
-            .about-sector-card,
-            .about-highlight,
-            .about-principle {
-                padding: 23px;
+            .about-hero h1 {
+                letter-spacing: -0.7px;
             }
 
-            .about-brand-card {
-                grid-template-columns: 1fr;
-                padding: 24px;
+            .about-hero p {
+                font-size: 15px;
             }
 
-            .about-brand-mark {
-                width: 70px;
-                height: 70px;
-                font-size: 21px;
-            }
-
-            .about-founder {
-                grid-template-columns: 1fr;
-                gap: 18px;
-                padding: 24px;
-            }
-
-            .about-founder-initials {
-                width: 76px;
-                height: 76px;
-                font-size: 24px;
-            }
-
-            .about-future {
-                padding: 32px 23px;
-            }
-
-            .about-actions {
-                align-items: stretch;
+            .about-hero-actions {
                 flex-direction: column;
+                align-items: stretch;
             }
 
             .about-button {
                 width: 100%;
+            }
+
+            .about-intro-grid,
+            .about-business-grid,
+            .about-purpose-grid,
+            .about-values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-intro-panel,
+            .about-purpose-card {
+                padding: 25px;
+            }
+
+            .about-business-card {
+                min-height: auto;
+                padding: 24px;
+            }
+
+            .about-subheading {
+                margin-bottom: 30px;
+                font-size: 14px;
+            }
+
+            .about-moneyx {
+                padding: 28px 23px;
+                border-radius: 18px;
+            }
+
+            .about-founder-card {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 26px 22px;
                 text-align: center;
+            }
+
+            .about-founder-monogram {
+                width: 82px;
+                height: 82px;
+                margin: 0 auto;
+                border-radius: 18px;
+                font-size: 25px;
+            }
+
+            .about-closing {
+                padding: 50px 15px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .about-page *,
+            .about-page *::before,
+            .about-page *::after {
+                scroll-behavior: auto !important;
+                transition: none !important;
             }
         }
     </style>
@@ -548,459 +698,558 @@
 
 <body>
 
-<header class="brand-header">
-    <div class="header-container">
+    <main class="about-page">
 
-        <a href="index.html" class="brand-logo-link">
-            <img
-                src="logo.png"
-                alt="PVRajCMS Group Logo"
-                class="brand-logo"
-            >
-        </a>
+        <!-- =================================
+             HEADER
+        ================================== -->
+        <header class="site-header">
+            <div class="container">
 
-        <div class="brand-name-block">
-            <div class="brand-name">CMS</div>
-
-            <div class="brand-tagline">
-                Engineering • Technology • Digital Innovation
-            </div>
-        </div>
-
-        <nav class="main-nav" aria-label="Main navigation">
-            <a href="index.html">Home</a>
-            <a href="about.html" class="active">About</a>
-            <a href="services.html">Services</a>
-            <a href="projects.html">Projects</a>
-            <a href="contact.html">Contact</a>
-            <a href="kirana.html" class="mart-nav-button">PV MART</a>
-        </nav>
-
-    </div>
-</header>
-
-<main class="about-page">
-
-    <section class="about-hero">
-        <div class="about-container">
-
-            <span class="about-eyebrow">
-                ABOUT PVRajCMS GROUP
-            </span>
-
-            <h1>
-                Ideas into Innovation.<br>
-                <span>Technology into Possibilities.</span>
-            </h1>
-
-            <p class="hero-description">
-                PVRajCMS Group is a growing business initiative
-                focused on software, technology, financial-market
-                tools and diversified business opportunities.
-                Our vision is to build useful solutions and create
-                a strong foundation for long-term growth.
-            </p>
-
-            <div class="about-actions">
-                <a href="projects.html" class="about-button">
-                    Explore Our Projects →
+                <a href="index.html" class="logo" aria-label="PVRajCMS Group Home">
+                    <img src="logo.png" alt="PVRajCMS Group Logo">
+                    <div class="logo-text">
+                        <h2>CMS</h2>
+                        <p>Engineering • Technology • Digital Innovation</p>
+                    </div>
                 </a>
 
-                <a href="#our-businesses" class="about-button secondary">
-                    Explore Our Focus Areas
-                </a>
+                <nav class="navbar" aria-label="Main navigation">
+                    <a href="index.html">Home</a>
+                    <a href="about.html" aria-current="page">About</a>
+                    <a href="services.html">Services</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="kirana.html">PV MART</a>
+                </nav>
+
             </div>
+        </header>
 
-        </div>
-    </section>
 
-    <section class="about-section">
-        <div class="about-container">
+        <!-- =================================
+             HERO SECTION
+        ================================== -->
+        <section class="about-hero">
+            <div class="about-container about-hero-inner">
 
-            <div class="about-story-grid">
+                <span class="about-hero-label">
+                    ABOUT PVRajCMS GROUP
+                </span>
 
-                <div class="about-story-copy">
+                <h1>
+                    Ideas into Innovation.<br>
+                    Technology into <span>Possibilities.</span>
+                </h1>
 
-                    <span class="about-eyebrow">WHO WE ARE</span>
+                <p>
+                    PVRajCMS Group is building a technology-driven ecosystem
+                    focused on digital solutions, software innovation,
+                    financial technology, e-commerce and emerging business
+                    opportunities.
+                </p>
 
-                    <h2>Building a diversified group for the future.</h2>
+                <div class="about-hero-actions">
+                    <a href="projects.html" class="about-button about-button-primary">
+                        Explore Our Projects
+                    </a>
 
-                    <p>
-                        PVRajCMS Group brings together a vision for
-                        software development, technology-driven
-                        products, trading utilities and new business
-                        opportunities under one brand.
-                    </p>
-
-                    <p>
-                        We believe that technology can help solve
-                        practical problems, simplify everyday tasks
-                        and create new possibilities for individuals
-                        and businesses.
-                    </p>
-
-                    <p>
-                        Our journey is focused on learning, building
-                        useful products, improving digital experiences
-                        and gradually developing opportunities across
-                        multiple sectors.
-                    </p>
-
+                    <a href="contact.html" class="about-button about-button-outline">
+                        Connect With Us
+                    </a>
                 </div>
 
-                <aside class="about-highlight">
+            </div>
+        </section>
 
-                    <div class="highlight-line"></div>
+
+        <!-- =================================
+             OUR STORY
+        ================================== -->
+        <section class="about-section">
+            <div class="about-container about-intro-grid">
+
+                <div class="about-intro-copy">
+                    <span class="about-eyebrow">WHO WE ARE</span>
+
+                    <h2>
+                        Building Digital Solutions for a
+                        <span class="about-gradient-text">Connected Future</span>
+                    </h2>
+
+                    <p>
+                        PVRajCMS Group is a growing business initiative
+                        focused on using technology, creativity and
+                        practical thinking to develop useful digital
+                        products and services.
+                    </p>
+
+                    <p>
+                        Our approach combines software development,
+                        digital platforms, financial technology and
+                        customer-focused business ideas. We aim to build
+                        solutions that are accessible, useful and designed
+                        to grow with changing needs.
+                    </p>
+
+                    <p>
+                        We believe that meaningful innovation starts with
+                        understanding real problems and creating solutions
+                        that deliver long-term value.
+                    </p>
+                </div>
+
+                <div class="about-intro-panel">
+                    <div class="about-panel-mark">CMS</div>
 
                     <h3>One Vision. Multiple Possibilities.</h3>
 
                     <p>
-                        From web-based software and trading tools
-                        to retail, healthcare and hospitality
-                        opportunities, our long-term vision is to
-                        grow through practical ideas, innovation
-                        and responsible business development.
+                        A growing ecosystem of technology initiatives,
+                        digital services and future-focused business
+                        ventures under the PVRajCMS Group identity.
                     </p>
-
-                    <p>
-                        We aim to build each initiative according
-                        to its purpose, customer needs and readiness.
-                    </p>
-
-                </aside>
-
-            </div>
-
-        </div>
-    </section>
-
-    <section class="about-section soft" id="our-businesses">
-        <div class="about-container">
-
-            <div class="about-section-heading">
-
-                <span class="about-eyebrow">OUR BUSINESS AREAS</span>
-
-                <h2>Different sectors. A shared vision.</h2>
-
-                <p>
-                    These are the key sectors in our business vision.
-                    Individual products and services will be developed
-                    and introduced as projects become ready.
-                </p>
-
-            </div>
-
-            <div class="about-sector-grid">
-
-                <article class="about-sector-card">
-                    <span class="about-sector-number">01</span>
-                    <h3>Software &amp; Technology</h3>
-                    <p>
-                        Web applications, software products,
-                        online calculators, automation and
-                        technology-driven digital solutions.
-                    </p>
-                    <span class="about-sector-status">
-                        Software &amp; Digital Products
-                    </span>
-                </article>
-
-                <article class="about-sector-card">
-                    <span class="about-sector-number">02</span>
-                    <h3>Trading &amp; Financial Technology</h3>
-                    <p>
-                        Trading calculators, risk-reward tools,
-                        commodity-market utilities and financial
-                        technology projects.
-                    </p>
-                    <span class="about-sector-status">
-                        Trading Tools &amp; FinTech
-                    </span>
-                </article>
-
-                <article class="about-sector-card">
-                    <span class="about-sector-number">03</span>
-                    <h3>Healthcare &amp; Hospital</h3>
-                    <p>
-                        Healthcare and hospital-related business
-                        opportunities, including potential digital
-                        solutions for healthcare services.
-                    </p>
-                    <span class="about-sector-status">
-                        Healthcare Initiatives
-                    </span>
-                </article>
-
-                <article class="about-sector-card">
-                    <span class="about-sector-number">04</span>
-                    <h3>Retail &amp; E-Commerce</h3>
-                    <p>
-                        PV Mart, grocery retail, online mobile
-                        shopping, electronics and other
-                        online-shopping opportunities.
-                    </p>
-                    <span class="about-sector-status">
-                        Retail &amp; Online Commerce
-                    </span>
-                </article>
-
-                <article class="about-sector-card">
-                    <span class="about-sector-number">05</span>
-                    <h3>Hospitality &amp; Travel</h3>
-                    <p>
-                        Hotel-related business opportunities,
-                        online hotel booking concepts and
-                        hospitality-focused digital platforms.
-                    </p>
-                    <span class="about-sector-status">
-                        Hospitality &amp; Booking
-                    </span>
-                </article>
-
-                <article class="about-sector-card">
-                    <span class="about-sector-number">06</span>
-                    <h3>Digital &amp; Business Services</h3>
-                    <p>
-                        Website solutions, digital services,
-                        online business support and additional
-                        opportunities as capabilities develop.
-                    </p>
-                    <span class="about-sector-status">
-                        Digital Business Solutions
-                    </span>
-                </article>
-
-            </div>
-
-        </div>
-    </section>
-
-    <section class="about-section">
-        <div class="about-container">
-
-            <div class="about-section-heading">
-
-                <span class="about-eyebrow">OUR DIRECTION</span>
-
-                <h2>What guides us.</h2>
-
-                <p>
-                    Our long-term direction is built around
-                    innovation, usefulness and responsible growth.
-                </p>
-
-            </div>
-
-            <div class="about-principles-grid">
-
-                <article class="about-principle">
-                    <h3>Our Vision</h3>
-                    <p>
-                        To build PVRajCMS Group into a trusted,
-                        diversified brand that brings together
-                        software, technology, financial innovation
-                        and business opportunities.
-                    </p>
-                </article>
-
-                <article class="about-principle">
-                    <h3>Our Mission</h3>
-                    <p>
-                        To develop practical digital products,
-                        improve user experiences and pursue
-                        business opportunities with a focus on
-                        usefulness, learning and continuous improvement.
-                    </p>
-                </article>
-
-                <article class="about-principle">
-                    <h3>Our Approach</h3>
-                    <p>
-                        Understand real needs, start with clear
-                        objectives, build practical solutions
-                        and improve them as we learn.
-                    </p>
-                </article>
-
-                <article class="about-principle">
-                    <h3>Our Values</h3>
-                    <p>
-                        Innovation, transparency, responsible
-                        business practices, customer focus and
-                        long-term thinking guide our ambitions.
-                    </p>
-                </article>
-
-            </div>
-
-        </div>
-    </section>
-
-    <section class="about-section soft">
-        <div class="about-container">
-
-            <div class="about-section-heading">
-
-                <span class="about-eyebrow">OUR DIGITAL INITIATIVES</span>
-
-                <h2>Building useful digital experiences.</h2>
-
-                <p>
-                    We aim to develop online products and digital
-                    initiatives that serve clear purposes.
-                </p>
-
-            </div>
-
-            <div class="about-brand-card">
-
-                <div>
-
-                    <h3>MoneyX Labs USA</h3>
-
-                    <p>
-                        MoneyX Labs USA is a finance and markets
-                        digital media brand focused on an American
-                        audience. Its content covers personal
-                        finance, investing, trading, cryptocurrency,
-                        AI and financial technology.
-                    </p>
-
-                    <p style="margin-top: 12px;">
-                        It represents one of the digital media
-                        initiatives associated with the broader
-                        PVRajCMS Group vision.
-                    </p>
-
-                </div>
-
-                <div class="about-brand-mark" aria-label="MoneyX Labs">
-                    MX
                 </div>
 
             </div>
+        </section>
 
-        </div>
-    </section>
 
-    <section class="about-section">
-        <div class="about-container">
+        <!-- =================================
+             BUSINESS SECTORS
+        ================================== -->
+        <section class="about-section about-section-light" id="business-areas">
+            <div class="about-container">
 
-            <div class="about-section-heading">
+                <span class="about-eyebrow" style="display:block;text-align:center;">
+                    OUR BUSINESS AREAS
+                </span>
 
-                <span class="about-eyebrow">LEADERSHIP</span>
+                <h2 class="about-heading">
+                    Different Sectors. One Growing Ecosystem.
+                </h2>
 
-                <h2>The vision behind PVRajCMS Group.</h2>
-
-            </div>
-
-            <div class="about-founder">
-
-                <div class="about-founder-initials" aria-hidden="true">
-                    AK
-                </div>
-
-                <div>
-
-                    <h3>Er. Ajay Kumar (IT)</h3>
-
-                    <p class="founder-role">
-                        Founder, PVRajCMS Group
-                    </p>
-
-                    <p>
-                        PVRajCMS Group is being developed with
-                        a vision to bring together technology,
-                        software products, trading tools and
-                        diversified business opportunities.
-                        The focus is on building practical
-                        solutions, learning continuously and
-                        developing a brand with a long-term vision.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
-    <section class="about-section soft">
-        <div class="about-container">
-
-            <div class="about-future">
-
-                <span class="about-eyebrow">LOOKING AHEAD</span>
-
-                <h2>Building today for the opportunities of tomorrow.</h2>
-
-                <p>
-                    Our journey continues through new ideas,
-                    digital projects and business opportunities.
-                    We aim to grow step by step, strengthen our
-                    capabilities and develop solutions that create
-                    lasting value.
+                <p class="about-subheading">
+                    Exploring practical opportunities across technology,
+                    finance, commerce and digital services, with additional
+                    sectors planned for the future.
                 </p>
 
-                <a href="projects.html" class="about-button">
-                    Discover Our Projects →
+                <div class="about-business-grid">
+
+                    <!-- 1. SOFTWARE & TECHNOLOGY -->
+                    <article class="about-business-card">
+                        <div class="about-business-icon" aria-hidden="true">
+                            &lt;/&gt;
+                        </div>
+
+                        <h3>Software &amp; Technology</h3>
+
+                        <p>
+                            Website development, web-based tools, digital
+                            platforms and technology solutions designed
+                            to support individuals and businesses.
+                        </p>
+
+                        <span class="about-card-tag">
+                            Digital Innovation
+                        </span>
+                    </article>
+
+
+                    <!-- 2. TRADING & FINANCIAL TECHNOLOGY -->
+                    <article class="about-business-card">
+                        <div class="about-business-icon" aria-hidden="true">
+                            ↗
+                        </div>
+
+                        <h3>Trading &amp; Financial Technology</h3>
+
+                        <p>
+                            Exploring financial technology through
+                            trading calculators, risk-management tools
+                            and educational finance content.
+                        </p>
+
+                        <span class="about-card-tag">
+                            FinTech Initiatives
+                        </span>
+                    </article>
+
+
+                    <!-- 3. RETAIL & E-COMMERCE -->
+                    <article class="about-business-card">
+                        <div class="about-business-icon" aria-hidden="true">
+                            ◈
+                        </div>
+
+                        <h3>Retail &amp; E-Commerce</h3>
+
+                        <p>
+                            Developing retail and online commerce
+                            initiatives, including PV MART, with a focus
+                            on convenient shopping and customer service.
+                        </p>
+
+                        <span class="about-card-tag">
+                            PV MART
+                        </span>
+                    </article>
+
+
+                    <!-- 4. HOSPITALITY & TRAVEL -->
+                    <article class="about-business-card">
+                        <div class="about-business-icon" aria-hidden="true">
+                            ✈
+                        </div>
+
+                        <h3>Hospitality &amp; Travel</h3>
+
+                        <p>
+                            Exploring digital travel services and future
+                            hospitality solutions, including online
+                            hotel discovery and booking opportunities.
+                        </p>
+
+                        <span class="about-card-tag">
+                            Future Opportunities
+                        </span>
+                    </article>
+
+
+                    <!-- 5. DIGITAL SERVICES -->
+                    <article class="about-business-card">
+                        <div class="about-business-icon" aria-hidden="true">
+                            ✦
+                        </div>
+
+                        <h3>Digital Services</h3>
+
+                        <p>
+                            Digital business support, online solutions,
+                            content initiatives and technology-enabled
+                            services for a changing digital world.
+                        </p>
+
+                        <span class="about-card-tag">
+                            Digital Solutions
+                        </span>
+                    </article>
+
+
+                    <!-- 6. HEALTHCARE & HOSPITAL - LAST -->
+                    <article class="about-business-card about-coming-soon">
+
+                        <span class="about-coming-badge">
+                            COMING SOON
+                        </span>
+
+                        <div class="about-business-icon" aria-hidden="true">
+                            +
+                        </div>
+
+                        <h3>Healthcare &amp; Hospital</h3>
+
+                        <p>
+                            A future-focused initiative exploring
+                            healthcare and hospital-related opportunities.
+                            This sector is planned for a later phase
+                            as the group develops.
+                        </p>
+
+                        <span class="about-card-tag">
+                            Planned Future Sector
+                        </span>
+
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- =================================
+             VISION & MISSION
+        ================================== -->
+        <section class="about-section">
+            <div class="about-container">
+
+                <span class="about-eyebrow" style="display:block;text-align:center;">
+                    OUR DIRECTION
+                </span>
+
+                <h2 class="about-heading">
+                    Vision &amp; Mission
+                </h2>
+
+                <p class="about-subheading">
+                    The principles guiding our approach to technology,
+                    business development and long-term growth.
+                </p>
+
+                <div class="about-purpose-grid">
+
+                    <article class="about-purpose-card">
+                        <span class="about-purpose-label">Our Vision</span>
+
+                        <h3>A Trusted, Technology-Driven Group</h3>
+
+                        <p>
+                            Our vision is to build a trusted and
+                            sustainable business ecosystem that brings
+                            together technology, innovation and
+                            customer-focused solutions across multiple
+                            sectors.
+                        </p>
+                    </article>
+
+                    <article class="about-purpose-card">
+                        <span class="about-purpose-label">Our Mission</span>
+
+                        <h3>Turn Ideas into Useful Solutions</h3>
+
+                        <p>
+                            Our mission is to identify real-world needs,
+                            develop practical digital products, improve
+                            user experiences and grow responsibly through
+                            learning, innovation and continuous improvement.
+                        </p>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- =================================
+             CORE VALUES
+        ================================== -->
+        <section class="about-section about-section-light">
+            <div class="about-container">
+
+                <span class="about-eyebrow" style="display:block;text-align:center;">
+                    WHAT GUIDES US
+                </span>
+
+                <h2 class="about-heading">
+                    Our Core Values
+                </h2>
+
+                <p class="about-subheading">
+                    The principles we aim to bring into every project,
+                    product and customer interaction.
+                </p>
+
+                <div class="about-values-grid">
+
+                    <article class="about-value">
+                        <h3>Innovation</h3>
+                        <p>
+                            Exploring better ideas and practical ways
+                            to solve problems.
+                        </p>
+                    </article>
+
+                    <article class="about-value">
+                        <h3>Integrity</h3>
+                        <p>
+                            Working toward honest communication,
+                            transparency and responsibility.
+                        </p>
+                    </article>
+
+                    <article class="about-value">
+                        <h3>Quality</h3>
+                        <p>
+                            Building useful experiences with care,
+                            clarity and continuous improvement.
+                        </p>
+                    </article>
+
+                    <article class="about-value">
+                        <h3>Growth</h3>
+                        <p>
+                            Learning, adapting and building for
+                            long-term progress.
+                        </p>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- =================================
+             MONEYX LABS USA
+        ================================== -->
+        <section class="about-section">
+            <div class="about-container">
+
+                <div class="about-moneyx">
+                    <div class="about-moneyx-inner">
+
+                        <span class="about-eyebrow">
+                            OUR DIGITAL MEDIA INITIATIVE
+                        </span>
+
+                        <h2>MoneyX Labs USA</h2>
+
+                        <p>
+                            MoneyX Labs USA is our finance-focused
+                            digital media initiative, created to make
+                            financial topics easier to understand for
+                            an English-speaking audience, particularly
+                            in the United States.
+                        </p>
+
+                        <div class="about-moneyx-topics">
+                            <span>Personal Finance</span>
+                            <span>Trading</span>
+                            <span>Investing</span>
+                            <span>Crypto Education</span>
+                            <span>AI &amp; FinTech</span>
+                        </div>
+
+                        <a
+                            href="https://www.youtube.com/@MoneyXLabsUSA"
+                            class="about-button about-button-primary"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Explore MoneyX Labs USA
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- =================================
+             FOUNDER
+        ================================== -->
+        <section class="about-section about-section-light">
+            <div class="about-container">
+
+                <span class="about-eyebrow" style="display:block;text-align:center;">
+                    LEADERSHIP
+                </span>
+
+                <h2 class="about-heading">
+                    The Vision Behind PVRajCMS Group
+                </h2>
+
+                <p class="about-subheading">
+                    Building with a long-term perspective, a technology
+                    mindset and a commitment to continuous learning.
+                </p>
+
+                <article class="about-founder-card">
+
+                    <div class="about-founder-monogram" aria-label="Founder initials">
+                        AK
+                    </div>
+
+                    <div>
+                        <h3>Er. Ajay Kumar (IT)</h3>
+
+                        <p class="about-founder-role">
+                            Founder &amp; CEO — PVRajCMS Group
+                        </p>
+
+                        <p class="about-founder-description">
+                            Focused on developing technology initiatives,
+                            digital products and new business opportunities
+                            under the PVRajCMS Group vision. The goal is
+                            to create useful solutions, strengthen the
+                            group's digital presence and build a foundation
+                            for responsible long-term growth.
+                        </p>
+                    </div>
+
+                </article>
+
+            </div>
+        </section>
+
+
+        <!-- =================================
+             CLOSING CTA
+        ================================== -->
+        <section class="about-closing">
+            <div class="about-container">
+
+                <span class="about-eyebrow">
+                    LET'S CONNECT
+                </span>
+
+                <h2>Have an Idea or a Project in Mind?</h2>
+
+                <p>
+                    We welcome opportunities to connect, explore ideas
+                    and discuss potential collaborations in technology,
+                    digital services and emerging business sectors.
+                </p>
+
+                <a href="contact.html" class="about-button about-button-primary">
+                    Contact PVRajCMS Group
                 </a>
 
             </div>
+        </section>
 
-            <p class="about-disclaimer">
-                Some business areas described on this page represent
-                development plans or future opportunities and may not
-                yet be operational. Product and service availability
-                depends on the status of each individual project.
-            </p>
 
-        </div>
-    </section>
+        <!-- =================================
+             FOOTER
+        ================================== -->
+        <footer class="site-footer">
+            <div class="container">
 
-</main>
+                <div class="footer-content">
 
-<footer class="site-footer">
+                    <div class="footer-brand">
+                        <h3>PVRajCMS Group</h3>
 
-    <div class="footer-container">
+                        <p>
+                            Engineering • Technology • Digital Innovation
+                        </p>
 
-        <div class="footer-brand">
+                        <p>
+                            Building digital solutions and exploring
+                            future-focused business opportunities.
+                        </p>
+                    </div>
 
-            <strong>PVRajCMS GROUP</strong>
+                    <div class="footer-links">
+                        <h4>Quick Links</h4>
 
-            <p>
-                Engineering • Technology • Digital Innovation
-            </p>
+                        <a href="index.html">Home</a>
+                        <a href="about.html">About Us</a>
+                        <a href="services.html">Services</a>
+                        <a href="projects.html">Projects</a>
+                        <a href="contact.html">Contact</a>
+                        <a href="kirana.html">PV MART</a>
+                    </div>
 
-        </div>
+                </div>
 
-        <div class="footer-links">
+                <div class="footer-bottom">
+                    <p>
+                        &copy; <span id="about-current-year">2026</span>
+                        PVRajCMS Group. All Rights Reserved.
+                    </p>
+                </div>
 
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="services.html">Services</a>
-            <a href="projects.html">Projects</a>
-            <a href="contact.html">Contact</a>
-            <a href="kirana.html">PV MART</a>
+            </div>
+        </footer>
 
-        </div>
+    </main>
 
-    </div>
-
-    <div class="footer-bottom">
-
-        <span>
-            © 2026 PVRajCMS Group. All rights reserved.
-        </span>
-
-        <span>
-            Engineering • Technology • Digital Innovation
-        </span>
-
-    </div>
-
-</footer>
+    <script>
+        document.getElementById("about-current-year").textContent =
+            new Date().getFullYear();
+    </script>
 
 </body>
 </html>
