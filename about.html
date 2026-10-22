@@ -695,80 +695,124 @@
         }
     
         /* =====================================
-           ABOUT PAGE HEADER FIX - LEFT LOGO
+           PVRajCMS HEADER - COMPACT HORIZONTAL LAYOUT
         ====================================== */
         .about-page .site-header {
             background: #071422;
-            padding: 14px 20px !important;
+            padding: 6px 12px !important;
+            border-bottom: 1px solid rgba(255,255,255,.12);
         }
 
         .about-page .site-header > .container {
             display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            gap: 8px;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
             width: 100%;
-            max-width: 1320px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .about-page .site-header .logo {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            width: fit-content;
-            max-width: 100%;
+            flex-direction: row;
+            align-items: center;
+            gap: 14px;
+            flex: 0 1 auto;
+            min-width: 0;
             text-decoration: none;
         }
 
         .about-page .site-header .logo img {
             display: block;
-            width: min(100%, 480px) !important;
+            width: min(28vw, 360px) !important;
+            min-width: 230px;
             height: auto !important;
-            max-height: 150px;
+            max-height: 82px;
             object-fit: contain;
             object-position: left center;
         }
 
         .about-page .site-header .logo-text {
             text-align: left;
-            margin-top: 3px;
+            margin: 0;
+            padding-left: 14px;
+            border-left: 1px solid rgba(255,255,255,.18);
         }
 
         .about-page .site-header .logo-text p {
-            margin: 4px 0 0;
-            color: #a9bfd9;
-            font-size: 14px;
+            margin: 0;
+            color: #d6e6f7;
+            font-size: 12px;
+            line-height: 1.5;
+            white-space: nowrap;
+            letter-spacing: .5px;
         }
 
         .about-page .site-header .navbar {
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 28px;
-            width: 100%;
-            margin-top: 4px;
-            padding: 14px 10px;
-            border-bottom: 1px solid rgba(255,255,255,.12);
+            flex: 0 0 auto;
+            flex-wrap: nowrap;
+            gap: 18px;
+            width: auto;
+            margin: 0;
+            padding: 8px 0;
+            border: 0;
+        }
+
+        .about-page .site-header .navbar a {
+            white-space: nowrap;
+        }
+
+        @media (max-width: 1000px) {
+            .about-page .site-header > .container {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .about-page .site-header .logo {
+                justify-content: center;
+            }
+
+            .about-page .site-header .navbar {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 12px 20px;
+            }
         }
 
         @media (max-width: 600px) {
             .about-page .site-header {
-                padding: 12px 10px !important;
+                padding: 10px !important;
+            }
+
+            .about-page .site-header .logo {
+                flex-direction: column;
+                gap: 6px;
             }
 
             .about-page .site-header .logo img {
-                width: min(100%, 300px) !important;
-                max-height: 100px;
+                width: min(88vw, 300px) !important;
+                min-width: 0;
+                max-height: 75px;
+            }
+
+            .about-page .site-header .logo-text {
+                border-left: 0;
+                padding-left: 0;
+                text-align: center;
             }
 
             .about-page .site-header .logo-text p {
-                font-size: 12px;
+                white-space: normal;
+                font-size: 11px;
             }
 
             .about-page .site-header .navbar {
-                gap: 12px 18px;
+                gap: 10px 15px;
             }
         }
     </style>
