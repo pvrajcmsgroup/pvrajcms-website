@@ -81,12 +81,23 @@
             }
 
             .brand-header .brand-logo {
-                width: 450px !important;
+                width: 360px !important;
                 max-width: 100%;
                 height: auto;
+                max-height: 82px;
+                object-fit: contain;
+                object-position: left center;
             }
 
-            /* Keep CMS heading and tagline at the shared style.css sizes, matching About page. */
+            .brand-header .brand-name-block {
+                flex: 0 1 auto;
+                min-width: 0;
+            }
+
+            .brand-header .brand-tagline {
+                white-space: nowrap;
+                font-size: 12px;
+            }
 
             .brand-header .main-nav {
                 display: flex;
@@ -498,7 +509,6 @@
         </a>
 
         <div class="brand-name-block">
-            <div class="brand-name">CMS</div>
             <div class="brand-tagline">Engineering • Technology • Digital Innovation</div>
         </div>
 
@@ -564,9 +574,8 @@
                 <div class="tech-orbit orbit-one"></div>
                 <div class="tech-orbit orbit-two"></div>
 
-                <div class="tech-core">
+                <div class="tech-core" aria-hidden="true">
                     <div class="core-ring"></div>
-                    <div class="core-center">CMS</div>
                 </div>
 
                 <div class="tech-line line-one"></div>
