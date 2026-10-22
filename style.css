@@ -1,78 +1,1700 @@
+/* =========================================================
+   PVRAJCMS GROUP
+   COMPLETE WEBSITE CSS
+   PV MART + RESPONSIVE HEADER FIX
+   Desktop + Tablet + Mobile
+   ========================================================= */
 
-/* PVRajCMS Group - Compact Header Fix */
-
-.site-header {
-    padding: 12px 0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-.site-header .container {
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #06111f;
+    color: #eaf4ff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* ================= HEADER ================= */
+
+.brand-header {
+    width: 100%;
+    background: #071525;
+    border-bottom: 1px solid rgba(80,190,240,.2);
+    position: relative;
+    z-index: 10;
+}
+
+.header-container {
+    width: 98%;
+    max-width: 1600px;
+    min-height: 145px;
+    margin: auto;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 22px;
+    padding: 14px 0;
 }
 
-.site-header .logo {
+.brand-logo-link {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 4px;
+    flex-shrink: 0;
 }
 
-.site-header .logo img {
+.brand-logo {
+    width: 450px;
+    height: auto;
     display: block;
-    width: min(280px, 75vw);
-    max-height: 100px;
-    object-fit: contain;
 }
 
-.site-header .logo-text {
+.brand-name-block {
+    border-left: 1px solid rgba(125,211,252,.25);
+    padding-left: 20px;
+    min-width: 210px;
+    flex-shrink: 0;
+}
+
+.brand-name {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    white-space: nowrap;
+    background: linear-gradient(
+        90deg,
+        #ffffff 0%,
+        #dce7ed 25%,
+        #4fd2ff 58%,
+        #0d75c4 82%,
+        #55bff2 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 18px rgba(66,198,245,.22);
+}
+
+.brand-tagline {
+    font-size: 13px;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    color: #78c9f5;
+    margin-top: 5px;
+    line-height: 1.5;
+}
+
+/* MAIN NAVIGATION */
+
+.main-nav {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.main-nav a {
+    color: #c9d9e8;
+    font-size: 15px;
+    font-weight: 700;
+    transition: .25s;
+    white-space: nowrap;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    color: #5ecbff;
+}
+
+/* PV MART PREMIUM TEAL-GREEN BUTTON */
+
+.main-nav a.mart-nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 11px;
+    border: 1px solid #5eead4;
+    border-radius: 7px;
+    background: linear-gradient(135deg, #0f766e, #115e59);
+    color: #ffffff !important;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+    box-shadow: 0 3px 10px rgba(15,118,110,.20);
+    transition: background .2s ease, transform .2s ease;
+}
+
+.main-nav a.mart-nav-button:hover {
+    background: linear-gradient(135deg, #0d9488, #0f766e);
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.header-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 13px;
+    border: 1px solid #2b9bd0;
+    border-radius: 6px;
+    background: rgba(23,119,168,.18);
+    color: #fff !important;
+    white-space: nowrap;
+}
+
+/* ================= HERO ================= */
+
+.engineering-hero {
+    position: relative;
+    min-height: 640px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: linear-gradient(
+        120deg,
+        #06111f,
+        #071a2b 55%,
+        #061321
+    );
+}
+
+.hero-grid {
+    position: absolute;
+    inset: 0;
+    opacity: .25;
+    background-image:
+        linear-gradient(
+            rgba(55,179,235,.14) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(55,179,235,.14) 1px,
+            transparent 1px
+        );
+    background-size: 55px 55px;
+}
+
+.hero-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+}
+
+.hero-glow-one {
+    width: 360px;
+    height: 360px;
+    background: rgba(0,157,255,.15);
+    right: 15%;
+    top: 8%;
+}
+
+.hero-glow-two {
+    width: 260px;
+    height: 260px;
+    background: rgba(0,221,255,.08);
+    left: 10%;
+    bottom: -80px;
+}
+
+.hero-container {
+    position: relative;
+    width: 94%;
+    max-width: 1350px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    align-items: center;
+    gap: 55px;
+    padding: 80px 0;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.eyebrow,
+.section-label {
+    display: inline-block;
+    color: #55c9fa;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+}
+
+.eyebrow {
+    border-left: 3px solid #43c5ff;
+    padding: 5px 10px;
+    margin-bottom: 18px;
+    background: rgba(39,155,210,.08);
+}
+
+.hero-content h1 {
+    max-width: 760px;
+    font-size: clamp(42px,5vw,72px);
+    line-height: 1.05;
+    letter-spacing: -2px;
+    font-weight: 800;
+    color: #fff;
+}
+
+.hero-content h1 span {
+    display: block;
+    color: #58c9ff;
+}
+
+.hero-description {
+    max-width: 650px;
+    margin-top: 24px;
+    font-size: 18px;
+    line-height: 1.8;
+    color: #a9c0d2;
+}
+
+.hero-pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.hero-pill-row span {
+    padding: 7px 13px;
+    border: 1px solid rgba(84,191,240,.28);
+    border-radius: 30px;
+    background: rgba(36,128,173,.08);
+    color: #bfeaff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 13px;
+    margin-top: 30px;
+}
+
+.primary-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 21px;
+    border-radius: 6px;
+    background: linear-gradient(135deg,#1595d2,#36c1ef);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 8px 25px rgba(18,159,219,.18);
+    transition: .25s;
+}
+
+.primary-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(18,159,219,.3);
+}
+
+.primary-button span {
+    font-size: 18px;
+}
+
+.secondary-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 20px;
+    border: 1px solid rgba(145,191,217,.3);
+    border-radius: 6px;
+    color: #d9ebf7;
+    font-size: 14px;
+    font-weight: 700;
+    background: rgba(255,255,255,.02);
+}
+
+.secondary-button:hover {
+    border-color: #42bff1;
+}
+
+/* ================= TECHNOLOGY PANEL ================= */
+
+.hero-tech-panel {
+    position: relative;
+    height: 430px;
+    border: 1px solid rgba(79,193,241,.25);
+    border-radius: 12px;
+    background: linear-gradient(
+        145deg,
+        rgba(14,46,67,.75),
+        rgba(5,19,32,.94)
+    );
+    box-shadow:
+        inset 0 0 60px rgba(36,174,229,.04),
+        0 30px 80px rgba(0,0,0,.2);
+    overflow: hidden;
+}
+
+.tech-panel-top {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 17px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 9px;
+    letter-spacing: 1.4px;
+    color: #70ccef;
+    z-index: 2;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #47d5ff;
+    box-shadow: 0 0 12px rgba(71,213,255,.9);
+}
+
+.tech-panel-code {
+    margin-left: auto;
+    color: #57798f;
+}
+
+.tech-grid {
+    position: absolute;
+    inset: 0;
+    opacity: .35;
+    background-image:
+        linear-gradient(rgba(75,180,225,.12) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(75,180,225,.12) 1px,transparent 1px);
+    background-size: 35px 35px;
+}
+
+.tech-orbit {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    transform: translate(-50%,-50%) rotate(20deg);
+    border: 1px solid rgba(83,204,250,.32);
+    border-radius: 50%;
+}
+
+.orbit-one {
+    width: 220px;
+    height: 220px;
+}
+
+.orbit-two {
+    width: 310px;
+    height: 125px;
+    transform: translate(-50%,-50%) rotate(-25deg);
+}
+
+.tech-core {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    width: 105px;
+    height: 105px;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle,rgba(46,188,238,.25),rgba(4,21,35,.8) 65%);
+    border: 1px solid rgba(82,203,246,.5);
+    box-shadow: 0 0 45px rgba(32,179,235,.18);
+}
+
+.core-ring {
+    position: absolute;
+    width: 76px;
+    height: 76px;
+    border: 1px dashed rgba(94,209,250,.55);
+    border-radius: 50%;
+}
+
+.core-center {
+    position: relative;
+    font-size: 22px;
+    font-weight: 800;
+    color: #65d2ff;
+    letter-spacing: 2px;
+}
+
+.tech-line {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(90deg,transparent,#47c9f6,transparent);
+    opacity: .45;
+}
+
+.line-one {
+    width: 220px;
+    top: 33%;
+    left: 5%;
+    transform: rotate(18deg);
+}
+
+.line-two {
+    width: 190px;
+    top: 68%;
+    right: 4%;
+    transform: rotate(-25deg);
+}
+
+.line-three {
+    width: 170px;
+    bottom: 18%;
+    left: 18%;
+    transform: rotate(8deg);
+}
+
+.tech-code {
+    position: absolute;
+    font-family: "Courier New",monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: #52768b;
+}
+
+.code-one { top: 27%; left: 9%; }
+.code-two { bottom: 23%; right: 8%; }
+.code-three { bottom: 9%; left: 11%; }
+
+/* ================= FOCUS / CAPABILITIES ================= */
+
+.capabilities-section {
+    padding: 100px 0;
+    background: #081625;
+    border-top: 1px solid rgba(89,180,224,.08);
+}
+
+.section-container {
+    width: 94%;
+    max-width: 1250px;
+    margin: auto;
+}
+
+.section-heading {
+    max-width: 800px;
+    margin-bottom: 45px;
+}
+
+.section-heading h2 {
+    font-size: clamp(30px,4vw,48px);
+    line-height: 1.15;
+    color: #fff;
+    letter-spacing: -1px;
+    margin-top: 8px;
+}
+
+.section-heading p {
+    margin-top: 16px;
+    color: #8fa9bb;
+    font-size: 16px;
+    max-width: 720px;
+}
+
+.capability-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 18px;
+}
+
+.capability-card {
+    position: relative;
+    min-height: 285px;
+    padding: 27px 23px;
+    border: 1px solid rgba(103,189,226,.15);
+    border-radius: 8px;
+    background: linear-gradient(145deg,rgba(18,48,69,.7),rgba(7,22,36,.85));
+    overflow: hidden;
+    transition: .25s;
+}
+
+.capability-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(72,194,241,.45);
+}
+
+.capability-number {
+    position: absolute;
+    top: 17px;
+    right: 20px;
+    font-size: 11px;
+    color: #45657a;
+    font-weight: 700;
+}
+
+.capability-icon {
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 23px;
+    border: 1px solid rgba(73,199,245,.35);
+    border-radius: 8px;
+    background: rgba(43,160,211,.08);
+    color: #5dceff;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.capability-card h3 {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 12px;
+}
+
+.capability-card p {
+    color: #8faabc;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.card-line {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #3ec5f7;
+    transition: .3s;
+}
+
+.capability-card:hover .card-line {
+    width: 100%;
+}
+
+/* ================= MONEYX LABS USA ================= */
+
+.moneyx-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg,#06111e,#091c2d);
+}
+
+.moneyx-container {
+    width: 94%;
+    max-width: 1250px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    align-items: center;
+}
+
+.moneyx-content h2 {
+    font-size: clamp(35px,4vw,58px);
+    line-height: 1.05;
+    color: #fff;
+}
+
+.moneyx-content p {
+    max-width: 600px;
+    margin: 20px 0 28px;
+    color: #9ab2c4;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.moneyx-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    border: 1px solid rgba(79,200,244,.35);
+    border-radius: 6px;
+    color: #bdeaff;
+    font-size: 14px;
+    font-weight: 700;
+    background: rgba(35,140,190,.08);
+}
+
+.moneyx-button:hover {
+    background: rgba(35,140,190,.18);
+    color: #fff;
+}
+
+.moneyx-visual {
+    position: relative;
+    height: 350px;
+    border: 1px solid rgba(77,193,239,.2);
+    border-radius: 10px;
+    overflow: hidden;
+    background: linear-gradient(180deg,#071b2a,#06121f);
+}
+
+.city-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(63,173,220,.1) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(63,173,220,.1) 1px,transparent 1px);
+    background-size: 28px 28px;
+    transform: perspective(350px) rotateX(55deg) scale(1.6);
+    transform-origin: bottom center;
+    opacity: .55;
+}
+
+.market-chart {
+    position: absolute;
+    left: 9%;
+    right: 9%;
+    top: 17%;
+    bottom: 15%;
+    padding: 20px;
+    border: 1px solid rgba(97,194,232,.17);
+    background: rgba(3,15,25,.65);
+}
+
+.chart-label {
+    color: #5ecfff;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.chart-line {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 90px;
+    height: 120px;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.chart-line span {
+    flex: 1;
+    border-top: 2px solid #44c6f5;
+    transform: skewY(-20deg);
+    box-shadow: 0 0 12px rgba(68,198,245,.3);
+}
+
+.chart-line span:nth-child(1) { height: 25%; }
+.chart-line span:nth-child(2) { height: 38%; }
+.chart-line span:nth-child(3) { height: 30%; }
+.chart-line span:nth-child(4) { height: 50%; }
+.chart-line span:nth-child(5) { height: 42%; }
+.chart-line span:nth-child(6) { height: 62%; }
+.chart-line span:nth-child(7) { height: 55%; }
+.chart-line span:nth-child(8) { height: 78%; }
+.chart-line span:nth-child(9) { height: 92%; }
+
+.chart-footer {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    color: #54748a;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+
+/* ================= FINAL CTA ================= */
+
+.final-cta {
+    padding: 80px 0;
+    background: #071421;
+    border-top: 1px solid rgba(90,188,230,.1);
+    border-bottom: 1px solid rgba(90,188,230,.1);
+}
+
+.final-cta-container {
+    width: 94%;
+    max-width: 1250px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 35px;
+}
+
+.final-cta h2 {
+    color: #fff;
+    font-size: clamp(28px,4vw,44px);
+    line-height: 1.15;
+}
+
+.final-cta p {
+    margin-top: 10px;
+    color: #8faabd;
+}
+
+/* ================= FOOTER ================= */
+
+.site-footer {
+    background: #050d16;
+    padding-top: 45px;
+}
+
+.footer-container {
+    width: 94%;
+    max-width: 1250px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    padding-bottom: 35px;
+}
+
+.footer-brand strong {
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    color: #fff;
+}
+
+.footer-brand p {
+    margin-top: 7px;
+    color: #637d8f;
+    font-size: 12px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #718b9e;
+    font-size: 12px;
+}
+
+.footer-links a:hover {
+    color: #56c9fa;
+}
+
+.footer-bottom {
+    width: 94%;
+    max-width: 1250px;
+    margin: auto;
+    padding: 18px 0 25px;
+    border-top: 1px solid rgba(120,170,195,.1);
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    color: #506a7c;
+    font-size: 11px;
+}
+
+/* ================= EXISTING PAGES ================= */
+
+header:not(.brand-header) {
+    background: #071525;
+    padding: 20px;
     text-align: center;
 }
 
-.site-header .logo-text h2 {
-    margin: 0;
-    font-size: 22px;
+.site-logo {
+    width: 420px;
+    max-width: 90%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
-.site-header .logo-text p {
-    margin: 3px 0 0;
+nav:not(.main-nav) {
+    background: #06111d;
+    padding: 14px;
+    text-align: center;
+    border-bottom: 1px solid rgba(80,180,225,.15);
+}
+
+nav:not(.main-nav) a {
+    color: #d8eaf5;
+    margin: 0 12px;
+    font-weight: 600;
+}
+
+nav:not(.main-nav) a:hover {
+    color: #56c9fa;
+}
+
+.projects,
+.about,
+.services,
+.contact {
+    width: 94%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 70px 0;
+}
+
+.projects h1,
+.about h1,
+.services h1,
+.contact h1 {
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.projects h2,
+.about h2,
+.services h2,
+.contact h2 {
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+/* ===== MOBILE RESPONSIVE FIX ONLY ===== */
+@media screen and (max-width: 700px) {
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        min-width: 0;
+    }
+
+    .brand-header,
+    .brand-header .header-container,
+    header:not(.brand-header) {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .brand-header .header-container {
+        min-height: auto;
+        padding: 14px !important;
+        gap: 14px !important;
+        flex-wrap: wrap !important;
+    }
+
+    .brand-header .brand-logo-link {
+        width: 100%;
+        max-width: 100%;
+        flex: 0 1 100% !important;
+        min-width: 0 !important;
+        flex-shrink: 1 !important;
+    }
+
+    .brand-header .brand-logo {
+        width: 100% !important;
+        max-width: 450px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .brand-header .brand-name-block {
+        width: 100%;
+        min-width: 0 !important;
+        flex: 1 1 100% !important;
+        padding-left: 0 !important;
+        border-left: 0 !important;
+        flex-shrink: 1 !important;
+    }
+
+    .brand-header .brand-name {
+        font-size: 25px !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere;
+    }
+
+    .brand-header .brand-tagline {
+        font-size: 11px !important;
+        letter-spacing: 0.5px !important;
+        white-space: normal !important;
+        overflow-wrap: anywhere;
+    }
+
+    .brand-header .main-nav {
+        width: 100% !important;
+        max-width: 100%;
+        min-width: 0 !important;
+        margin-left: 0 !important;
+        display: flex !important;
+        flex: 1 1 100%;
+        flex-wrap: wrap !important;
+        justify-content: flex-start !important;
+        gap: 9px !important;
+    }
+
+    .brand-header .main-nav a {
+        max-width: 100%;
+        font-size: 13px !important;
+        white-space: nowrap !important;
+    }
+
+    .brand-header .main-nav .header-cta {
+        margin-top: 0 !important;
+    }
+
+    /* Header used on About, Services, Projects and Contact pages */
+    header:not(.brand-header) {
+        padding: 14px !important;
+        overflow: hidden;
+    }
+
+    .site-logo {
+        width: 100% !important;
+        max-width: 450px !important;
+        height: auto !important;
+        margin: 0 auto;
+    }
+
+    nav:not(.main-nav) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px 14px;
+        padding: 12px 10px !important;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    nav:not(.main-nav) a {
+        margin: 0 !important;
+        white-space: normal;
+    }
+
+    .engineering-hero {
+        min-height: auto;
+    }
+
+    .engineering-hero .hero-container {
+        width: 92%;
+        max-width: 100%;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        padding: 45px 0;
+    }
+
+    .engineering-hero .hero-content,
+    .engineering-hero .hero-tech-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .engineering-hero .hero-content h1 {
+        font-size: clamp(32px, 9vw, 46px);
+        line-height: 1.12;
+        letter-spacing: -1px;
+        overflow-wrap: anywhere;
+    }
+
+    .engineering-hero .hero-tech-panel {
+        height: 320px;
+    }
+
+    .capabilities-section,
+    .moneyx-section {
+        padding: 55px 0;
+    }
+
+    .section-container,
+    .moneyx-container,
+    .final-cta-container,
+    .footer-container,
+    .footer-bottom,
+    .projects,
+    .about,
+    .services,
+    .contact {
+        width: 92%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .projects,
+    .about,
+    .services,
+    .contact {
+        padding: 40px 0;
+        overflow-wrap: anywhere;
+    }
+
+    .projects h1,
+    .about h1,
+    .services h1,
+    .contact h1 {
+        font-size: clamp(28px, 8vw, 40px);
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+    }
+
+    .projects h2,
+    .about h2,
+    .services h2,
+    .contact h2 {
+        font-size: clamp(22px, 6vw, 30px);
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+    }
+
+    .projects p,
+    .about p,
+    .services p,
+    .contact p,
+    .projects li,
+    .about li,
+    .services li,
+    .contact li {
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    .capability-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .moneyx-container {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 30px;
+    }
+
+    .moneyx-visual {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .final-cta-container,
+    .footer-container,
+    .footer-bottom {
+        flex-wrap: wrap;
+        gap: 18px;
+    }
+
+    .footer-links {
+        gap: 12px;
+    }
+
+    img,
+    video,
+    iframe,
+    canvas,
+    svg {
+        max-width: 100%;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .brand-header .header-container {
+        padding: 10px !important;
+    }
+
+    .brand-header .main-nav {
+        gap: 8px !important;
+    }
+
+    .brand-header .main-nav a {
+        font-size: 12px !important;
+    }
+
+    .engineering-hero .hero-container {
+        width: 92%;
+    }
+
+    .projects,
+    .about,
+    .services,
+    .contact {
+        width: 92%;
+    }
+}
+
+/* =========================================================
+   MOBILE LAYOUT REPAIR — DESKTOP STYLES LEFT UNCHANGED
+   Keeps the logo and brand text inside the screen, places
+   the tagline below the logo, wraps navigation, and prevents
+   horizontal overflow on phones.
+   ========================================================= */
+@media screen and (max-width: 700px) {
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: clip;
+    }
+
+    .brand-header,
+    .brand-header * {
+        box-sizing: border-box;
+    }
+
+    .brand-header .header-container {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        min-height: 0;
+        margin: 0 auto;
+        padding: 14px 12px 16px !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .brand-header .brand-logo-link {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 1 auto;
+    }
+
+    .brand-header .brand-logo {
+        display: block;
+        width: min(450px, 88vw) !important;
+        max-width: 100% !important;
+        height: auto !important;
+        margin: 0 auto;
+        object-fit: contain;
+    }
+
+    .brand-header .brand-name-block {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        flex: 0 1 auto;
+        border-left: 0;
+        padding: 0 4px !important;
+        margin: 0;
+        text-align: center;
+    }
+
+    .brand-header .brand-name {
+        font-size: clamp(22px, 6vw, 30px);
+        line-height: 1.2;
+        letter-spacing: clamp(1px, 0.6vw, 3px);
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .brand-header .brand-tagline {
+        max-width: 100%;
+        margin: 5px auto 0;
+        padding: 0 4px;
+        font-size: clamp(10px, 2.8vw, 13px);
+        line-height: 1.45;
+        letter-spacing: 0.6px;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    /* Keep every navigation link, including Get in Touch, on one row */
+    .brand-header .main-nav {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        margin: 8px 0 0 !important;
+        padding: 0;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 3px !important;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .brand-header .main-nav a {
+        flex: 0 0 auto !important;
+        max-width: none;
+        margin: 0 !important;
+        padding: 3px 0 !important;
+        font-size: 12px !important;
+        line-height: 1.3;
+        white-space: nowrap !important;
+        overflow-wrap: normal;
+        text-align: center;
+    }
+
+    .brand-header .main-nav a.header-cta,
+    .brand-header .main-nav a.mart-nav-button {
+        flex: 0 0 auto !important;
+        padding: 5px 6px !important;
+        border-radius: 6px;
+        font-size: 11px !important;
+    }
+
+    .engineering-hero,
+    .engineering-hero .hero-container,
+    .engineering-hero .hero-content,
+    .engineering-hero .hero-tech-panel,
+    main,
+    section,
+    footer {
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .engineering-hero .hero-content h1,
+    h1,
+    h2,
+    h3,
+    p,
+    li,
+    a {
+        overflow-wrap: anywhere;
+    }
+
+    img,
+    video,
+    iframe,
+    canvas,
+    svg {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .brand-header .header-container {
+        padding-right: 9px !important;
+        padding-left: 9px !important;
+    }
+
+    .brand-header .main-nav {
+        gap: 7px 9px;
+    }
+
+    .brand-header .main-nav a {
+        font-size: 11px !important;
+    }
+}
+
+
+/* FINAL MOBILE NAVIGATION: readable text, no clipped CTA */
+@media screen and (max-width: 700px) {
+  .brand-header .main-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px 12px !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    padding: 4px 0 0 !important;
+    margin: 8px 0 0 !important;
+  }
+  .brand-header .main-nav a {
+    flex: 0 0 auto !important;
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+    padding: 4px 0 !important;
+    white-space: nowrap !important;
+  }
+  .brand-header .main-nav a.mart-nav-button,
+  .brand-header .main-nav a.header-cta {
+    padding: 6px 8px !important;
+    font-size: 12px !important;
+  }
+}
+@media screen and (max-width: 380px) {
+  .brand-header .main-nav { gap: 7px 10px !important; }
+  .brand-header .main-nav a { font-size: 12px !important; }
+  .brand-header .main-nav a.mart-nav-button,
+  .brand-header .main-nav a.header-cta { font-size: 11px !important; padding: 5px 6px !important; }
+}
+
+
+/* PV MART branded navigation button — match the existing Get in Touch blue-cyan accent */
+.brand-header .main-nav a.mart-nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #126f98, #0b4668) !important;
+    color: #ffffff !important;
+    border: 1px solid #2b9bd0 !important;
+    border-radius: 7px;
+    padding: 9px 13px;
+    font-size: 14px;
+    font-weight: 800 !important;
+    letter-spacing: 0.25px;
+    text-decoration: none;
+    line-height: 1.2;
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(43, 155, 208, 0.22);
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.brand-header .main-nav a.mart-nav-button:hover {
+    background: linear-gradient(135deg, #168bb8, #126f98) !important;
+    border-color: #5ecbff !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 18px rgba(43, 155, 208, 0.32);
+    transform: translateY(-1px);
+}
+
+.brand-header .main-nav a.mart-nav-button:focus-visible {
+    outline: 3px solid #5ecbff;
+    outline-offset: 3px;
+}
+
+@media screen and (max-width: 700px) {
+    .brand-header .main-nav a.mart-nav-button {
+        font-size: 12px !important;
+        padding: 6px 9px !important;
+    }
+}
+
+/* ===== PVRajCMS COMPACT HEADER FIX ===== */
+
+.brand-header .header-container {
+    min-height: 0 !important;
+    padding: 8px 0 !important;
+    gap: 14px !important;
+}
+
+.brand-header .brand-logo {
+    width: 360px !important;
+    max-width: 100% !important;
+    max-height: 110px;
+    height: auto !important;
+    object-fit: contain;
+    display: block;
+}
+
+/* Logo ke andar CMS hai, isliye extra CMS heading hide */
+.brand-header .brand-name {
+    display: none !important;
+}
+
+.brand-header .brand-name-block {
+    padding-left: 14px;
+    min-width: 0;
+}
+
+/* Navigation ko ek line mein rakhne ki koshish */
+.brand-header .main-nav {
+    gap: 10px !important;
+    flex-wrap: nowrap;
+}
+
+.brand-header .main-nav a {
     font-size: 13px;
 }
 
-.site-header .navbar {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px 22px;
-    width: 100%;
-    padding: 12px 8px;
+/* ===== MOBILE HEADER ===== */
+@media screen and (max-width: 700px) {
+    .brand-header .header-container {
+        padding: 8px 10px !important;
+        gap: 6px !important;
+    }
+
+    .brand-header .brand-logo {
+        width: min(360px, 88vw) !important;
+        max-width: 100% !important;
+        max-height: 95px;
+        height: auto !important;
+    }
+
+    .brand-header .brand-name-block {
+        border-left: 0 !important;
+        padding: 0 !important;
+        text-align: center;
+    }
+
+    .brand-header .main-nav {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 6px 10px !important;
+        margin-top: 4px !important;
+    }
+
+    .brand-header .main-nav a {
+        font-size: 12px !important;
+    }
 }
 
-@media (max-width: 600px) {
-    .site-header {
-        padding: 10px 0;
+
+
+/* =========================================================
+   FINAL DESKTOP HEADER ALIGNMENT
+   Keeps logo, tagline and navigation on one row.
+   Mobile rules below 701px remain in control.
+   ========================================================= */
+@media screen and (min-width: 1001px) {
+    .brand-header .header-container {
+        width: 99%;
+        max-width: 1600px;
+        min-height: 0 !important;
+        padding: 8px 10px !important;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 12px !important;
     }
 
-    .site-header .logo img {
-        width: min(200px, 70vw);
-        max-height: 75px;
+    .brand-header .brand-logo-link {
+        flex: 0 0 auto !important;
+        width: auto !important;
+        min-width: 0 !important;
     }
 
-    .site-header .logo-text h2 {
-        font-size: 19px;
+    .brand-header .brand-logo {
+        width: 340px !important;
+        max-width: 34vw !important;
+        max-height: 100px !important;
+        height: auto !important;
+        object-fit: contain;
     }
 
-    .site-header .logo-text p {
-        font-size: 11px;
+    .brand-header .brand-name-block {
+        display: block !important;
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        padding-left: 14px !important;
+        margin: 0 !important;
     }
 
-    .site-header .navbar {
-        gap: 10px 15px;
-        padding: 10px 5px;
+    .brand-header .brand-name {
+        display: none !important;
     }
 
-    .site-header .navbar a {
-        font-size: 13px;
+    .brand-header .brand-tagline {
+        margin: 0 !important;
+        font-size: 12px !important;
+        letter-spacing: 0.7px !important;
+        line-height: 1.4 !important;
+        white-space: nowrap !important;
+    }
+
+    .brand-header .main-nav {
+        flex: 0 0 auto !important;
+        margin-left: auto !important;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 9px !important;
+        min-width: 0 !important;
+    }
+
+    .brand-header .main-nav a {
+        font-size: 13px !important;
+        white-space: nowrap !important;
+    }
+
+    .brand-header .main-nav a.mart-nav-button,
+    .brand-header .main-nav a.header-cta {
+        padding: 7px 10px !important;
+        font-size: 12px !important;
+    }
+}
+
+/* Medium desktop / tablet: allow the header to wrap cleanly if needed. */
+@media screen and (min-width: 701px) and (max-width: 1000px) {
+    .brand-header .header-container {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 10px 14px !important;
+        padding: 12px !important;
+    }
+
+    .brand-header .brand-logo {
+        width: min(320px, 42vw) !important;
+        max-height: 90px !important;
+    }
+
+    .brand-header .brand-name-block {
+        flex: 1 1 280px !important;
+        min-width: 0 !important;
+        padding-left: 12px !important;
+    }
+
+    .brand-header .brand-tagline {
+        font-size: 11px !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    .brand-header .main-nav {
+        flex: 1 1 100% !important;
+        justify-content: center !important;
+        margin-left: 0 !important;
+        gap: 12px !important;
+    }
+}
+
+
+/* FINAL TWEAK: slightly smaller desktop logo for cleaner header spacing */
+@media screen and (min-width: 1001px) {
+    .brand-header .brand-logo {
+        width: 360px !important;
+        max-width: 34vw !important;
+        max-height: 100px !important;
+        height: auto !important;
+    }
+}
+
+
+
+/* =========================================================
+   FINAL MOBILE HEADER — compact logo, tagline and navigation
+   Desktop layout remains unchanged.
+   ========================================================= */
+@media screen and (max-width: 700px) {
+    .brand-header .header-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 0 !important;
+        padding: 10px 12px 12px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 5px !important;
+    }
+
+    .brand-header .brand-logo-link {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .brand-header .brand-logo {
+        width: min(340px, 86vw) !important;
+        max-width: 100% !important;
+        max-height: 90px !important;
+        height: auto !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    .brand-header .brand-name-block {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        flex: 0 1 auto !important;
+        border-left: 0 !important;
+        padding: 0 4px !important;
+        margin: 0 !important;
+        text-align: center !important;
+    }
+
+    .brand-header .brand-name {
+        display: none !important;
+    }
+
+    .brand-header .brand-tagline {
+        max-width: 100% !important;
+        margin: 2px auto 0 !important;
+        padding: 0 2px !important;
+        font-size: 11px !important;
+        line-height: 1.4 !important;
+        letter-spacing: 0.45px !important;
+        text-align: center !important;
+        white-space: normal !important;
+        overflow-wrap: normal !important;
+    }
+
+    .brand-header .main-nav {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin: 7px 0 0 !important;
+        padding: 2px 0 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 5px 12px !important;
+        overflow: visible !important;
+        white-space: normal !important;
+    }
+
+    .brand-header .main-nav a {
+        flex: 0 0 auto !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 4px 0 !important;
+        font-size: 13px !important;
+        line-height: 1.3 !important;
+        white-space: nowrap !important;
+        text-align: center !important;
+    }
+
+    .brand-header .main-nav a.mart-nav-button,
+    .brand-header .main-nav a.header-cta {
+        padding: 6px 9px !important;
+        font-size: 12px !important;
+        border-radius: 6px !important;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .brand-header .header-container {
+        padding-right: 9px !important;
+        padding-left: 9px !important;
+    }
+
+    .brand-header .brand-logo {
+        width: min(310px, 84vw) !important;
+        max-height: 82px !important;
+    }
+
+    .brand-header .brand-tagline {
+        font-size: 10px !important;
+        letter-spacing: 0.3px !important;
+    }
+
+    .brand-header .main-nav {
+        gap: 5px 9px !important;
+    }
+
+    .brand-header .main-nav a {
+        font-size: 12px !important;
+    }
+
+    .brand-header .main-nav a.mart-nav-button,
+    .brand-header .main-nav a.header-cta {
+        font-size: 11px !important;
+        padding: 5px 7px !important;
     }
 }
