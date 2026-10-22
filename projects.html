@@ -24,6 +24,9 @@
             align-items: center;
             justify-content: space-between;
             gap: 12px;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            min-height: 0;
             width: 100%;
             max-width: 1400px;
             margin: 0 auto;
@@ -39,7 +42,7 @@
             display: block;
             width: 330px;
             max-width: 100%;
-            max-height: 68px;
+            max-height: 62px;
             height: auto;
             object-fit: contain;
             object-position: left center;
@@ -69,6 +72,9 @@
         .brand-header .main-nav a {
             font-size: 13px;
             font-weight: 600;
+            line-height: 1.2;
+            padding-top: 4px;
+            padding-bottom: 4px;
             white-space: nowrap;
             flex-shrink: 0;
         }
@@ -136,7 +142,7 @@
             }
             .brand-header .brand-logo {
                 width: min(88vw, 300px);
-                max-height: 75px;
+                max-height: 68px;
                 margin: 0 auto;
             }
             .brand-header .brand-name-block {
