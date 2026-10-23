@@ -815,6 +815,116 @@
                 gap: 10px 15px;
             }
         }
+
+        /* MOBILE HEADER FIX - keep About header compact like Home */
+        @media (max-width: 600px) {
+            .about-page .site-header {
+                padding: 8px 8px 10px !important;
+                margin: 0 !important;
+                background: #071422 !important;
+                overflow: hidden !important;
+            }
+
+            .about-page .site-header > .container {
+                display: flex !important;
+                flex-direction: column !important;
+                flex-wrap: nowrap !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 8px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 auto !important;
+                background: transparent !important;
+                box-shadow: none !important;
+            }
+
+            .about-page .site-header .logo {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 3px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: transparent !important;
+            }
+
+            .about-page .site-header .logo img {
+                display: block !important;
+                width: min(78vw, 260px) !important;
+                min-width: 0 !important;
+                max-width: 260px !important;
+                max-height: 68px !important;
+                height: auto !important;
+                margin: 0 auto !important;
+                object-fit: contain !important;
+            }
+
+            .about-page .site-header .logo-text {
+                margin: 0 !important;
+                padding: 0 !important;
+                border: 0 !important;
+                text-align: center !important;
+                width: 100% !important;
+                background: transparent !important;
+            }
+
+            .about-page .site-header .logo-text p {
+                margin: 0 !important;
+                padding: 0 !important;
+                color: #d6e6f7 !important;
+                font-size: clamp(9px, 2.5vw, 11px) !important;
+                line-height: 1.35 !important;
+                letter-spacing: 0 !important;
+                white-space: normal !important;
+            }
+
+            .about-page .site-header .navbar {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: clamp(5px, 1.8vw, 11px) !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 5px 0 0 !important;
+                border: 0 !important;
+                border-radius: 0 !important;
+                background: transparent !important;
+                box-shadow: none !important;
+                overflow: visible !important;
+            }
+
+            .about-page .site-header .navbar a {
+                display: inline-block !important;
+                flex: 0 0 auto !important;
+                margin: 0 !important;
+                padding: 3px 0 !important;
+                font-size: clamp(10px, 2.6vw, 13px) !important;
+                line-height: 1.3 !important;
+                white-space: nowrap !important;
+                border: 0 !important;
+                box-shadow: none !important;
+                background: transparent !important;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .about-page .site-header .navbar {
+                gap: 5px !important;
+            }
+
+            .about-page .site-header .navbar a {
+                font-size: 10px !important;
+            }
+        }
+
     </style>
 </head>
 
