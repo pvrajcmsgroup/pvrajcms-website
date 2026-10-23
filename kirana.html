@@ -13,7 +13,7 @@ header{background:#071422;color:#fff;padding:10px 18px;border-top:4px solid #f3f
 .brand{display:flex;align-items:center;gap:16px;min-width:0;color:white;text-decoration:none}
 .brand img{display:block;width:295px;max-width:32vw;height:auto;max-height:66px;object-fit:contain;object-position:left center}
 .brand-divider{height:30px;width:1px;background:#526172;flex:0 0 1px}
-.brand-tagline{font-size:12px;white-space:nowrap;color:#f4f7fb;font-weight:500}
+.brand-tagline{display:flex;flex-direction:column;align-items:flex-start;gap:2px;white-space:nowrap;color:#f4f7fb;font-weight:500;line-height:1.15}.brand-name{font-size:clamp(23px,2.5vw,30px);font-weight:900;letter-spacing:.2px;line-height:1}.brand-pv{color:#36D6B2}.brand-subtitle{font-size:12px;font-weight:500;color:#E8C978;line-height:1.2}
 nav{display:flex;align-items:center;justify-content:flex-end;gap:16px;flex-wrap:wrap}nav a,nav .drop-label{color:white;text-decoration:none;font-size:13px;font-weight:700;white-space:nowrap}
 .dropdown{position:relative;display:inline-flex;align-items:center}
 .drop-label{cursor:pointer;padding:10px 0;display:inline-block}
@@ -60,7 +60,7 @@ input{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;back
 footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size:13px;line-height:1.7}
 @media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:850px){.brand img{width:220px}nav{gap:11px}}
-@media(max-width:600px){header{padding:10px 12px}.header-inner{display:flex;align-items:flex-start;flex-direction:column;gap:8px}.brand{gap:9px;flex-wrap:wrap}.brand img{width:190px;max-width:60vw;max-height:52px}.brand-divider{height:24px}.brand-tagline{font-size:11px;white-space:normal}nav{justify-content:flex-start;gap:12px;width:100%}nav a,nav .drop-label{font-size:12px}.dropdown-menu{left:0;max-width:85vw}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product{padding:9px}.emoji{height:58px}.product h3{font-size:13px}.wrap,.hero{padding-left:10px;padding-right:10px}}
+@media(max-width:600px){header{padding:10px 12px}.header-inner{display:flex;align-items:flex-start;flex-direction:column;gap:8px}.brand{gap:9px;flex-wrap:nowrap;max-width:100%}.brand img{width:190px;max-width:52vw;max-height:52px}.brand-divider{height:30px}.brand-tagline{white-space:normal;min-width:0}.brand-name{font-size:clamp(20px,5vw,27px)}.brand-subtitle{font-size:11px;line-height:1.25}nav{justify-content:flex-start;gap:12px;width:100%}nav a,nav .drop-label{font-size:12px}.dropdown-menu{left:0;max-width:85vw}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product{padding:9px}.emoji{height:58px}.product h3{font-size:13px}.wrap,.hero{padding-left:10px;padding-right:10px}}
 
 /* PV MART / Kirana click and focus feedback */
 button, a, .product, .payment-option { transition: background-color .18s ease, color .18s ease, box-shadow .18s ease, transform .12s ease, filter .18s ease; }
@@ -77,7 +77,7 @@ button.click-feedback, a.click-feedback, .product.click-feedback, .payment-optio
   <a class="brand" href="pv-mart.html" aria-label="PV MART Home">
    <img src="logo.png" alt="PVRajCMS Group logo">
    <span class="brand-divider" aria-hidden="true"></span>
-   <span class="brand-tagline">PV MART · Aapki Apni Online Dukaan</span>
+   <span class="brand-tagline"><span class="brand-name"><span class="brand-pv">PV</span> MART</span><span class="brand-subtitle">Aapki Apni Online Dukaan</span></span>
   </a>
   <nav aria-label="Main navigation">
    <a href="pv-mart.html">PV MART Home</a>
