@@ -8,10 +8,19 @@
 <style>
 :root{--navy:#0d2545;--green:#13865c;--gold:#ffcf58;--ink:#172536;--muted:#667487;--line:#e5eaf0;--bg:#f5f8fb}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:#071422;color:#fff;padding:15px 18px}
-.header-inner{max-width:1150px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.brand{font-weight:800;font-size:22px;color:white;text-decoration:none}.brand span{color:var(--gold)}
-nav{display:flex;gap:15px;flex-wrap:wrap}nav a{color:white;text-decoration:none;font-size:14px;font-weight:700}
+header{background:#071422;color:#fff;padding:10px 18px;border-top:4px solid #f3f5f8}
+.header-inner{max-width:1320px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:62px}
+.brand{display:flex;align-items:center;gap:16px;min-width:0;color:white;text-decoration:none}
+.brand img{display:block;width:295px;max-width:32vw;height:auto;max-height:66px;object-fit:contain;object-position:left center}
+.brand-divider{height:30px;width:1px;background:#526172;flex:0 0 1px}
+.brand-tagline{font-size:12px;white-space:nowrap;color:#f4f7fb;font-weight:500}
+nav{display:flex;align-items:center;justify-content:flex-end;gap:16px;flex-wrap:wrap}nav a,nav .drop-label{color:white;text-decoration:none;font-size:13px;font-weight:700;white-space:nowrap}
+.dropdown{position:relative;display:inline-flex;align-items:center}
+.drop-label{cursor:pointer;padding:10px 0;display:inline-block}
+.dropdown-menu{display:none;position:absolute;top:100%;left:-12px;min-width:205px;padding:8px;background:#fff;border:1px solid #dfe6ee;border-radius:10px;box-shadow:0 12px 28px #0003;z-index:50}
+.dropdown-menu a{display:block;color:#172536;padding:10px 12px;border-radius:7px;font-size:13px}
+.dropdown-menu a:hover,.dropdown-menu a:focus{background:#eef5fa;color:#0d4b50}
+.dropdown:hover .dropdown-menu,.dropdown:focus-within .dropdown-menu{display:block}
 .hero{max-width:1150px;margin:18px auto;padding:0 15px}
 .hero-inner{background:linear-gradient(115deg,#071729,#0d4b50);border-radius:16px;padding:clamp(24px,5vw,48px);color:white}
 .hero h1{font-size:clamp(28px,5vw,44px);margin:0 0 10px}.hero p{line-height:1.6;margin:0;color:#e1f1f2}
@@ -31,14 +40,27 @@ input{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;back
 .note{font-size:12px;color:var(--muted);line-height:1.6}
 footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size:13px;line-height:1.7}
 @media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:600px){header{padding:13px}.header-inner{display:block}.brand{display:block;margin-bottom:10px}nav{gap:12px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product{padding:9px}.emoji{height:58px}.product h3{font-size:13px}.wrap,.hero{padding-left:10px;padding-right:10px}}
+@media(max-width:850px){.brand img{width:220px}nav{gap:11px}}
+@media(max-width:600px){header{padding:10px 12px}.header-inner{display:flex;align-items:flex-start;flex-direction:column;gap:8px}.brand{gap:9px;flex-wrap:wrap}.brand img{width:190px;max-width:60vw;max-height:52px}.brand-divider{height:24px}.brand-tagline{font-size:11px;white-space:normal}nav{justify-content:flex-start;gap:12px;width:100%}nav a,nav .drop-label{font-size:12px}.dropdown-menu{left:0;max-width:85vw}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product{padding:9px}.emoji{height:58px}.product h3{font-size:13px}.wrap,.hero{padding-left:10px;padding-right:10px}}
 </style>
 </head>
 <body>
 <header>
  <div class="header-inner">
-  <a class="brand" href="pv-mart.html">PV <span>MART</span></a>
-  <nav><a href="pv-mart.html">PV MART Home</a><a href="#products">Kirana Products</a><a href="#cart">My Cart (<span id="count">0</span>)</a></nav>
+  <a class="brand" href="pv-mart.html" aria-label="PV MART Home">
+   <img src="logo.png" alt="PVRajCMS Group logo" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<strong style="font-size:24px;color:#fff">PVRajCMS <span style="color:#ffcf58">GROUP</span></strong>')">
+   <span class="brand-divider" aria-hidden="true"></span>
+   <span class="brand-tagline">PV MART · Aapki Apni Online Dukaan</span>
+  </a>
+  <nav aria-label="Main navigation">
+   <a href="pv-mart.html#shop">Shop Now</a>
+   <div class="dropdown"><a class="drop-label" href="pv-mart.html#categories" aria-haspopup="true">Categories⌄</a>
+    <div class="dropdown-menu">
+     <a href="kirana.html">Kirana</a><a href="clothes.html">Clothes &amp; Fashion</a><a href="electronics.html">Electronics</a><a href="beauty.html">Beauty &amp; Cosmetics</a><a href="household.html">Home &amp; Kitchen</a><a href="stationery.html">Stationery &amp; Books</a><a href="baby-care.html">Baby Care</a><a href="animal-feed.html">Animal Feed &amp; Agriculture</a><a href="pv-foods.html">PV Foods &amp; Agro</a><a href="sarson-tel.html">Sarson Tel</a>
+    </div>
+   </div>
+   <a href="pv-mart.html#offers">Offers</a><a href="#cart">My Cart (<span id="count">0</span>)</a><a href="contact.html">Contact</a>
+  </nav>
  </div>
 </header>
 <section class="hero"><div class="hero-inner">
