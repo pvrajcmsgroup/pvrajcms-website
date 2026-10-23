@@ -58,6 +58,11 @@ textarea{resize:vertical;min-height:72px}
 .note{font-size:12px;line-height:1.55;color:var(--muted);margin-top:12px}
 .warning{background:#fff8df;border:1px solid #f1dda0;padding:11px;border-radius:10px;color:#604b12;font-size:12px;line-height:1.5;margin-top:12px}
 #status{display:none;margin-top:12px;padding:12px;border-radius:10px;background:#e9f8f0;color:#14563d;font-size:13px;line-height:1.5}
+.order-preview{display:none;margin-top:14px;padding:15px;border:1px solid #b9dfcc;background:#f7fffa;border-radius:12px;line-height:1.6}
+.order-preview h3{margin:0 0 10px;color:var(--navy);font-size:18px}
+.preview-line{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #dceee4;font-size:13px}
+.preview-address{font-size:13px;white-space:pre-line;margin:8px 0}
+.preview-total{display:flex;justify-content:space-between;font-size:18px;font-weight:800;margin-top:12px}
 footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font-size:12px;line-height:1.7}
 
 .category-section{max-width:1400px;margin:20px auto 0;padding:0 16px}
@@ -386,7 +391,7 @@ function renderCart(){
  document.getElementById("cart").innerHTML=chosen.length?chosen.map(p=>`<div class="cart-row"><div><div class="cart-name">${p.name} — ${p.detail}</div><div class="qty"><button type="button" onclick="changeQty(${p.id},-1)" aria-label="Quantity kam karein">−</button><span>${cart[p.id]}</span><button type="button" onclick="changeQty(${p.id},1)" aria-label="Quantity badhayein">+</button></div></div><div class="cart-price">${money(p.price*cart[p.id])}</div></div>`).join(""):'<div class="cart-empty">Abhi cart khaali hai. Product add karein.</div>';
  document.getElementById("total").textContent=money(getTotal());
  document.getElementById("cartCount").textContent=Object.values(cart).reduce((a,b)=>a+b,0);
- document.getElementById("status").style.display="none";document.getElementById("payButton").style.display="none";document.getElementById("sendButton").style.display="none";currentOrder=null;
+ document.getElementById("status").style.display="none";document.getElementById("payButton").style.display="none";document.getElementById("sendButton").style.display="none";document.getElementById("orderPreview").style.display="none";currentOrder=null;
 }
 document.getElementById("search").addEventListener("input",renderProducts);
 document.getElementById("orderForm").addEventListener("submit",function(e){
@@ -399,8 +404,15 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
  currentOrder={orderId,customer:document.getElementById("customer").value.trim(),phone,address:document.getElementById("address").value.trim(),city:document.getElementById("city").value.trim(),state:document.getElementById("state").value.trim(),pincode,landmark:document.getElementById("landmark").value.trim(),payment,items,total:getTotal()};
  const lines=items.map(i=>`- ${i.name} (${i.detail}) x ${i.qty} = ${money(i.subtotal)}`).join("\n");
  currentOrder.message=`New order — ${SHOP_NAME}\nOrder ID: ${orderId}\nName: ${currentOrder.customer}\nMobile: ${phone}\nDelivery Address: ${currentOrder.address}, ${currentOrder.city}, ${currentOrder.state} - ${currentOrder.pincode}\nLandmark: ${currentOrder.landmark||"N/A"}\n\nItems:\n${lines}\n\nTotal: ${money(currentOrder.total)}\nPayment: ${payment==="upi"?"UPI (payment verify manually)":"Cash on Delivery"}`;
- const status=document.getElementById("status");status.style.display="block";status.textContent=payment==="cod"?`COD order summary ready (${orderId}). Total ${money(currentOrder.total)}. Order confirm karne ke liye neeche WhatsApp button dabayein.`:`Order summary ready (${orderId}). Total ${money(currentOrder.total)}. Pehle WhatsApp par order bhejein, phir UPI payment karein.`;
- const sendButton=document.getElementById("sendButton");sendButton.style.display="block";sendButton.textContent=payment==="cod"?"Cash on Delivery Order Confirm Karein":"WhatsApp par Order Bhejein";
+ const status=document.getElementById("status");status.style.display="block";status.textContent=payment==="cod"?`Order summary (${orderId}) ready hai. Total ${money(currentOrder.total)}. Shop ko order bhejne ke liye neeche WhatsApp button dabayein.`:`Order summary (${orderId}) ready hai. Total ${money(currentOrder.total)}. Pehle order WhatsApp par bhejein; UPI payment ke baad shop payment verify karegi.`;
+ document.getElementById("previewOrderId").innerHTML="<strong>Order ID:</strong> "+orderId;
+ document.getElementById("previewItems").innerHTML=items.map(i=>`<div class="preview-line"><span>${i.name} (${i.detail}) × ${i.qty}</span><strong>${money(i.subtotal)}</strong></div>`).join("");
+ document.getElementById("previewTotal").textContent=money(currentOrder.total);
+ document.getElementById("previewPayment").textContent=payment==="upi"?"UPI — payment verification pending":"Cash on Delivery (COD)";
+ document.getElementById("previewAddress").textContent=currentOrder.customer+" · "+phone+"\\n"+currentOrder.address+"\\n"+currentOrder.city+", "+currentOrder.state+" - "+pincode+"\\nLandmark: "+(currentOrder.landmark||"Not provided");
+ document.getElementById("orderPreview").style.display="block";
+ document.getElementById("orderPreview").scrollIntoView({behavior:"smooth",block:"nearest"});
+ const sendButton=document.getElementById("sendButton");sendButton.style.display="block";sendButton.textContent=payment==="cod"?"WhatsApp par COD Order Bhejein":"WhatsApp par Order Bhejein";
  const payButton=document.getElementById("payButton");payButton.style.display=payment==="upi"?"block":"none";payButton.textContent="UPI App se "+money(currentOrder.total)+" Pay Karein";
  payButton.onclick=()=>{if(SHOP_UPI_ID==="YOUR-UPI-ID@bank"){alert("Pehle SHOP_UPI_ID mein apni asli UPI ID daalein.");return}const params=new URLSearchParams({pa:SHOP_UPI_ID,pn:SHOP_NAME,am:currentOrder.total.toFixed(2),cu:"INR",tn:"Order "+currentOrder.orderId});window.location.href="upi://pay?"+params.toString()};
  document.getElementById("sendButton").onclick=()=>{if(SHOP_WHATSAPP==="91XXXXXXXXXX"){alert("Pehle SHOP_WHATSAPP mein shop ka WhatsApp number daalein.");return}window.open("https://wa.me/"+SHOP_WHATSAPP+"?text="+encodeURIComponent(currentOrder.message),"_blank","noopener")};
