@@ -114,7 +114,11 @@ footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font
   <a href="#shop" class="text-link">Products dekhein →</a>
  </div>
  <div class="category-cards">
-  <article class="category-card"><div class="category-icon">🫗</div><h3>Sarson Tel</h3><p>Mustard oil · retail & bulk packs</p></article>
+   <button type="button" class="category-card" onclick="chooseCategory('Sarson Tel')"><span class="cat-icon">🫗</span><span><strong>Sarson Tel</strong><small>Mustard oil · retail & bulk packs</small></span></button>
+   <button type="button" class="category-card" onclick="chooseCategory('Aata & Flour')"><span class="cat-icon">🌾</span><span><strong>Aata & Flour</strong><small>Flour products</small></span></button>
+   <button type="button" class="category-card" onclick="chooseCategory('Masale & Spices')"><span class="cat-icon">🌶️</span><span><strong>Masale & Spices</strong><small>Whole spices and ground masalas</small></span></button>
+   <button type="button" class="category-card" onclick="chooseCategory('Wholesale Orders')"><span class="cat-icon">📦</span><span><strong>Wholesale Orders</strong><small>Bulk food products</small></span></button>
+  </div><h3>Sarson Tel</h3><p>Mustard oil · retail & bulk packs</p></article>
   <article class="category-card"><div class="category-icon">🌾</div><h3>Aata & Flour</h3><p>Freshly milled flour products</p></article>
   <article class="category-card"><div class="category-icon">🌶️</div><h3>Masale & Spices</h3><p>Whole spices and ground masalas</p></article>
   <article class="category-card"><div class="category-icon">📦</div><h3>Wholesale Orders</h3><p>Retailers and bulk buyers can enquire</p></article>
@@ -191,11 +195,11 @@ const productsData = [
 {id:28,name:"Earphones",detail:"Sample listing",price:199,emoji:"🎧",cat:"Mobiles & Electronics"},
 {id:29,name:"USB Cable",detail:"Connector type select karein",price:99,emoji:"🔌",cat:"Mobiles & Electronics"},
 {id:30,name:"Power Bank",detail:"Sample listing · capacity verify karein",price:999,emoji:"🔋",cat:"Mobiles & Electronics"},
-{id:31,name:"Washing Powder",detail:"1 kg",price:90,emoji:"🫧",cat:"Home & Cleaning"},
-{id:32,name:"Bartaan Bar",detail:"1 piece",price:15,emoji:"🧽",cat:"Home & Cleaning"},
-{id:33,name:"Phenyl",detail:"500 ml",price:65,emoji:"🧴",cat:"Home & Cleaning"},
-{id:34,name:"Kitchen Storage Box",detail:"Sample listing",price:129,emoji:"🥣",cat:"Home & Cleaning"},
-{id:35,name:"Water Bottle",detail:"1 piece",price:99,emoji:"🧴",cat:"Home & Cleaning"},
+{id:31,name:"Washing Powder",detail:"1 kg",price:90,emoji:"🫧",cat:"Cleaning & Household"},
+{id:32,name:"Bartaan Bar",detail:"1 piece",price:15,emoji:"🧽",cat:"Cleaning & Household"},
+{id:33,name:"Phenyl",detail:"500 ml",price:65,emoji:"🧴",cat:"Cleaning & Household"},
+{id:34,name:"Kitchen Storage Box",detail:"Sample listing",price:129,emoji:"🥣",cat:"Home & Kitchen"},
+{id:35,name:"Water Bottle",detail:"1 piece",price:99,emoji:"🧴",cat:"Home & Kitchen"},
 {id:36,name:"Notebook",detail:"1 piece",price:40,emoji:"📓",cat:"Stationery & Books"},
 {id:37,name:"Pen Pack",detail:"5 pens",price:50,emoji:"🖊️",cat:"Stationery & Books"},
 {id:38,name:"Pencil Pack",detail:"10 pencils",price:40,emoji:"✏️",cat:"Stationery & Books"},
@@ -246,14 +250,14 @@ const productsData = [
 ,{id:83,name:"LED Bulb",detail:"9 W · sample rate",price:99,emoji:"💡",cat:"Mobiles & Electronics"}
 ,{id:84,name:"Mouse",detail:"Wired · sample rate",price:249,emoji:"🖱️",cat:"Mobiles & Electronics"}
 ,{id:85,name:"Keyboard",detail:"Wired · sample rate",price:399,emoji:"⌨️",cat:"Mobiles & Electronics"}
-,{id:86,name:"Frying Pan",detail:"1 piece · sample rate",price:349,emoji:"🍳",cat:"Home & Cleaning"}
-,{id:87,name:"Pressure Cooker",detail:"3 litre · sample rate",price:1299,emoji:"🍲",cat:"Home & Cleaning"}
-,{id:88,name:"Dinner Plate Set",detail:"6 pieces · sample rate",price:399,emoji:"🍽️",cat:"Home & Cleaning"}
-,{id:89,name:"Mug Set",detail:"2 pieces · sample rate",price:149,emoji:"☕",cat:"Home & Cleaning"}
-,{id:90,name:"Floor Wiper",detail:"1 piece · sample rate",price:120,emoji:"🧹",cat:"Home & Cleaning"}
-,{id:91,name:"Garbage Bags",detail:"Pack · sample rate",price:75,emoji:"🗑️",cat:"Home & Cleaning"}
-,{id:92,name:"Toilet Cleaner",detail:"500 ml · sample rate",price:110,emoji:"🧴",cat:"Home & Cleaning"}
-,{id:93,name:"Handwash",detail:"Refill 750 ml · sample rate",price:99,emoji:"🧼",cat:"Home & Cleaning"}
+,{id:86,name:"Frying Pan",detail:"1 piece · sample rate",price:349,emoji:"🍳",cat:"Home & Kitchen"}
+,{id:87,name:"Pressure Cooker",detail:"3 litre · sample rate",price:1299,emoji:"🍲",cat:"Home & Kitchen"}
+,{id:88,name:"Dinner Plate Set",detail:"6 pieces · sample rate",price:399,emoji:"🍽️",cat:"Home & Kitchen"}
+,{id:89,name:"Mug Set",detail:"2 pieces · sample rate",price:149,emoji:"☕",cat:"Home & Kitchen"}
+,{id:90,name:"Floor Wiper",detail:"1 piece · sample rate",price:120,emoji:"🧹",cat:"Cleaning & Household"}
+,{id:91,name:"Garbage Bags",detail:"Pack · sample rate",price:75,emoji:"🗑️",cat:"Cleaning & Household"}
+,{id:92,name:"Toilet Cleaner",detail:"500 ml · sample rate",price:110,emoji:"🧴",cat:"Cleaning & Household"}
+,{id:93,name:"Handwash",detail:"Refill 750 ml · sample rate",price:99,emoji:"🧼",cat:"Cleaning & Household"}
 ,{id:94,name:"A4 Paper",detail:"1 ream · sample rate",price:299,emoji:"📄",cat:"Stationery & Books"}
 ,{id:95,name:"Geometry Box",detail:"1 set · sample rate",price:120,emoji:"📐",cat:"Stationery & Books"}
 ,{id:96,name:"Marker Set",detail:"4 pieces · sample rate",price:99,emoji:"🖍️",cat:"Stationery & Books"}
@@ -294,7 +298,7 @@ const categoryCardsData=[
  {name:"Wholesale Orders",icon:"📦",desc:"Bulk orders for shops"},
  {name:"PV Foods & Agro",icon:"🏷️",desc:"Our own food brand"}
 ];
-let activeCat="Sabhi";const cart={};let currentOrder=null;
+let activeCat="Sabhi";let activeSpecialCategory="";const cart={};let currentOrder=null;
 const money=n=>"₹"+n.toLocaleString("en-IN");
 const categories=["Sabhi",...new Set(productsData.map(p=>p.cat))];
 function renderCategories(){document.getElementById("categories").innerHTML=categories.map(c=>`<button type="button" class="cat ${c===activeCat?"active":""}" onclick="setCat(${JSON.stringify(c)})">${c}</button>`).join("")}
@@ -303,28 +307,31 @@ function renderCategoryCards(){
  wrap.innerHTML=categoryCardsData.map(c=>`<button type="button" class="category-card" onclick="chooseCategory(${JSON.stringify(c.name)})"><span class="cat-icon">${c.icon}</span><span><strong>${c.name}</strong><small>${c.desc}</small></span></button>`).join("");
 }
 function chooseCategory(name){
- const categoryMap={"Home & Kitchen":"Home & Cleaning","Cleaning & Household":"Home & Cleaning"};
- const mapped=categoryMap[name]||name;
- document.getElementById("search").value="";
- if(name==="PV Foods & Agro"){
-   activeCat="Sabhi";
-   document.getElementById("search").value="PV Foods & Agro";
- } else if(name==="Wholesale Orders"){
-   activeCat="Sabhi";
-   document.getElementById("search").value="";
- } else {
-   activeCat=productsData.some(p=>p.cat===mapped)?mapped:"Sabhi";
- }
- renderCategories();
- renderProducts();
- const heading=document.querySelector("#shop h2");
- if(heading) heading.textContent = name==="Wholesale Orders" ? "Wholesale Orders — Bulk Shopping" : name==="PV Foods & Agro" ? "PV Foods & Agro Products" : name+" — Products";
- document.getElementById("shop").scrollIntoView({behavior:"smooth",block:"start"});
+  document.getElementById("search").value="";
+  activeSpecialCategory="";
+  if(name==="PV Foods & Agro" || name==="Wholesale Orders"){
+    activeCat="Sabhi";
+    activeSpecialCategory=name;
+  } else {
+    activeCat=productsData.some(p=>p.cat===name)?name:"Sabhi";
+  }
+  renderCategories();
+  renderProducts();
+  const heading=document.querySelector("#shop h2");
+  if(heading) heading.textContent = name==="Wholesale Orders" ? "Wholesale Orders — PV Foods & Agro Bulk Products" : name==="PV Foods & Agro" ? "PV Foods & Agro Products" : name+" — Products";
+  document.getElementById("shop").scrollIntoView({behavior:"smooth",block:"start"});
 }
-function setCat(c){activeCat=c;document.getElementById("search").value="";renderCategories();renderProducts();const heading=document.querySelector("#shop h2");if(heading)heading.textContent=c==="Sabhi"?"🛍️ Products Explore Karein":c+" — Products"}
+function setCat(c){activeCat=c;activeSpecialCategory="";document.getElementById("search").value="";renderCategories();renderProducts();const heading=document.querySelector("#shop h2");if(heading)heading.textContent=c==="Sabhi"?"🛍️ Products Explore Karein":c+" — Products"}
 function renderProducts(){
  const q=document.getElementById("search").value.trim().toLowerCase();
- const filtered=productsData.filter(p=>(activeCat==="Sabhi"||p.cat===activeCat)&&(`${p.name} ${p.detail} ${p.cat}`).toLowerCase().includes(q));
+ const filtered=productsData.filter(p=>{
+   const matchesCategory=activeSpecialCategory
+     ? (activeSpecialCategory==="PV Foods & Agro"
+        ? (p.name.toLowerCase().includes("pv foods & agro") || ["Sarson Tel","Aata & Flour","Masale & Spices"].includes(p.cat))
+        : ["Sarson Tel","Aata & Flour","Masale & Spices"].includes(p.cat))
+     : (activeCat==="Sabhi"||p.cat===activeCat);
+   return matchesCategory && (`${p.name} ${p.detail} ${p.cat}`).toLowerCase().includes(q);
+  });
  document.getElementById("products").innerHTML=filtered.length?filtered.map(p=>`<article class="product"><div class="product-emoji">${p.emoji}</div><h3>${p.name}</h3><div class="small">${p.detail}</div><div class="small">${p.cat}</div><div class="price">${money(p.price)}</div><button class="add" type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi product nahi mila. Doosra naam search karein.</p>"
 }
 function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart()}
