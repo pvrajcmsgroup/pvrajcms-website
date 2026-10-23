@@ -412,12 +412,16 @@
         }
 
     
-        /* Home page header: same structure, spacing and responsive behavior as about.html */
+
+        /* =====================================
+           PVRajCMS HEADER - COMPACT HORIZONTAL LAYOUT
+        ====================================== */
         body.home-page .site-header {
             background: #071422;
             padding: 3px 12px !important;
             border-bottom: 1px solid rgba(255,255,255,.12);
         }
+
         body.home-page .site-header > .container {
             display: flex;
             flex-direction: row;
@@ -428,6 +432,7 @@
             max-width: 1400px;
             margin: 0 auto;
         }
+
         body.home-page .site-header .logo {
             display: flex;
             flex-direction: row;
@@ -437,6 +442,7 @@
             min-width: 0;
             text-decoration: none;
         }
+
         body.home-page .site-header .logo img {
             display: block;
             width: min(28vw, 360px) !important;
@@ -446,12 +452,14 @@
             object-fit: contain;
             object-position: left center;
         }
+
         body.home-page .site-header .logo-text {
             text-align: left;
             margin: 0;
             padding-left: 14px;
             border-left: 1px solid rgba(255,255,255,.18);
         }
+
         body.home-page .site-header .logo-text p {
             margin: 0;
             color: #d6e6f7;
@@ -460,6 +468,7 @@
             white-space: nowrap;
             letter-spacing: .5px;
         }
+
         body.home-page .site-header .navbar {
             display: flex;
             justify-content: flex-end;
@@ -472,74 +481,82 @@
             padding: 5px 0;
             border: 0;
         }
+
         body.home-page .site-header .navbar a {
             white-space: nowrap;
-            flex-shrink: 0;
         }
+
         @media (max-width: 1000px) {
             body.home-page .site-header > .container {
                 flex-wrap: wrap;
                 justify-content: center;
             }
+
             body.home-page .site-header .logo {
                 justify-content: center;
             }
+
             body.home-page .site-header .navbar {
                 justify-content: center;
                 flex-wrap: wrap;
                 gap: 12px 20px;
             }
         }
+
         @media (max-width: 600px) {
             body.home-page .site-header {
                 padding: 10px !important;
             }
+
             body.home-page .site-header .logo {
                 flex-direction: column;
                 gap: 6px;
             }
+
             body.home-page .site-header .logo img {
                 width: min(88vw, 300px) !important;
                 min-width: 0;
                 max-height: 75px;
             }
+
             body.home-page .site-header .logo-text {
                 border-left: 0;
                 padding-left: 0;
                 text-align: center;
             }
+
             body.home-page .site-header .logo-text p {
                 white-space: normal;
                 font-size: 11px;
             }
+
             body.home-page .site-header .navbar {
                 gap: 10px 15px;
             }
         }
-
     </style>
 </head>
 
 <body class="home-page">
 
 <header class="site-header">
-    <div class="container">
-        <a href="index.html" class="logo" aria-label="PVRajCMS Group Home">
-            <img src="logo.png" alt="PVRajCMS Group Logo">
-            <div class="logo-text">
-                <p>Engineering • Technology • Digital Innovation</p>
+            <div class="container">
+                <a href="index.html" class="logo" aria-label="PVRajCMS Group Home">
+                    <img src="logo.png" alt="PVRajCMS Group Logo">
+                    <div class="logo-text">
+                        <p>Engineering • Technology • Digital Innovation</p>
+                    </div>
+                </a>
+                <nav class="navbar" aria-label="Main navigation">
+                    <a href="index.html" aria-current="page">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="services.html">Services</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="kirana.html">PV MART</a>
+                </nav>
             </div>
-        </a>
-        <nav class="navbar" aria-label="Main navigation">
-            <a href="index.html" aria-current="page">Home</a>
-            <a href="about.html">About</a>
-            <a href="services.html">Services</a>
-            <a href="projects.html">Projects</a>
-            <a href="contact.html">Contact</a>
-            <a href="kirana.html">PV MART</a>
-        </nav>
-    </div>
-</header>
+        </header>
 
 <main>
 
