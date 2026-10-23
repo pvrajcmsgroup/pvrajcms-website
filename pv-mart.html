@@ -161,12 +161,15 @@ footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font
   <form id="orderForm">
    <label for="customer">Aapka naam *</label><input id="customer" required autocomplete="name" placeholder="Naam likhein">
    <label for="phone">Mobile number *</label><input id="phone" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10 digit mobile number">
-   <label for="address">Poora delivery address *</label><textarea id="address" required placeholder="Gaon, mohalla, ghar ka pata"></textarea>
+   <label for="address">House / gali / mohalla / gaon ka poora pata *</label><textarea id="address" required minlength="8" autocomplete="street-address" placeholder="House number, gali, mohalla, gaon"></textarea>
+   <label for="city">Shehar / zila *</label><input id="city" required autocomplete="address-level2" placeholder="Shehar ya zila">
+   <label for="state">Rajya *</label><input id="state" required autocomplete="address-level1" value="Uttar Pradesh" placeholder="Rajya">
+   <label for="pincode">PIN code *</label><input id="pincode" required inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="postal-code" placeholder="6 digit PIN code">
    <label for="landmark">Paas ki pehchaan (optional)</label><input id="landmark" placeholder="Jaise school ke paas">
    <label>Payment ka tareeka *</label>
    <div class="payment-options">
-    <label class="payment-option"><input type="radio" name="payment" value="upi" checked><span><strong>UPI — PhonePe / Google Pay</strong>Payment bank/UPI app mein verify karein.</span></label>
-    <label class="payment-option"><input type="radio" name="payment" value="cod"><span><strong>Cash on Delivery</strong>Samaan milne par cash dein.</span></label>
+    <label class="payment-option"><input type="radio" name="payment" value="cod" checked><span><strong>Cash on Delivery (COD)</strong>Order receive karte waqt cash payment karein.</span></label>
+    <label class="payment-option"><input type="radio" name="payment" value="upi"><span><strong>UPI — PhonePe / Google Pay</strong>UPI app se payment karein; order shop ko bhejne ke baad payment verify hogi.</span></label>
    </div>
    <button type="submit" class="primary">Order Book Karein</button>
   </form>
@@ -389,14 +392,15 @@ document.getElementById("search").addEventListener("input",renderProducts);
 document.getElementById("orderForm").addEventListener("submit",function(e){
  e.preventDefault();if(getTotal()<=0){alert("Pehle cart mein product add karein.");return}
  const phone=document.getElementById("phone").value.trim();if(!/^[6-9]\d{9}$/.test(phone)){alert("Sahi 10 digit mobile number likhein.");return}
+ const pincode=document.getElementById("pincode").value.trim();if(!/^\d{6}$/.test(pincode)){alert("Sahi 6 digit PIN code likhein.");return}
  const payment=document.querySelector('input[name="payment"]:checked').value;
  const items=productsData.filter(p=>cart[p.id]).map(p=>({name:p.name,detail:p.detail,qty:cart[p.id],price:p.price,subtotal:p.price*cart[p.id]}));
  const orderId="PVM"+Date.now().toString().slice(-7);
- currentOrder={orderId,customer:document.getElementById("customer").value.trim(),phone,address:document.getElementById("address").value.trim(),landmark:document.getElementById("landmark").value.trim(),payment,items,total:getTotal()};
+ currentOrder={orderId,customer:document.getElementById("customer").value.trim(),phone,address:document.getElementById("address").value.trim(),city:document.getElementById("city").value.trim(),state:document.getElementById("state").value.trim(),pincode,landmark:document.getElementById("landmark").value.trim(),payment,items,total:getTotal()};
  const lines=items.map(i=>`- ${i.name} (${i.detail}) x ${i.qty} = ${money(i.subtotal)}`).join("\n");
- currentOrder.message=`New order — ${SHOP_NAME}\nOrder ID: ${orderId}\nName: ${currentOrder.customer}\nMobile: ${phone}\nAddress: ${currentOrder.address}\nLandmark: ${currentOrder.landmark||"N/A"}\n\nItems:\n${lines}\n\nTotal: ${money(currentOrder.total)}\nPayment: ${payment==="upi"?"UPI (payment verify manually)":"Cash on Delivery"}`;
- const status=document.getElementById("status");status.style.display="block";status.textContent=`Order summary ready (${orderId}), total ${money(currentOrder.total)}. WhatsApp button se shop ko order bhejein.`;
- document.getElementById("sendButton").style.display="block";
+ currentOrder.message=`New order — ${SHOP_NAME}\nOrder ID: ${orderId}\nName: ${currentOrder.customer}\nMobile: ${phone}\nDelivery Address: ${currentOrder.address}, ${currentOrder.city}, ${currentOrder.state} - ${currentOrder.pincode}\nLandmark: ${currentOrder.landmark||"N/A"}\n\nItems:\n${lines}\n\nTotal: ${money(currentOrder.total)}\nPayment: ${payment==="upi"?"UPI (payment verify manually)":"Cash on Delivery"}`;
+ const status=document.getElementById("status");status.style.display="block";status.textContent=payment==="cod"?`COD order summary ready (${orderId}). Total ${money(currentOrder.total)}. Order confirm karne ke liye neeche WhatsApp button dabayein.`:`Order summary ready (${orderId}). Total ${money(currentOrder.total)}. Pehle WhatsApp par order bhejein, phir UPI payment karein.`;
+ const sendButton=document.getElementById("sendButton");sendButton.style.display="block";sendButton.textContent=payment==="cod"?"Cash on Delivery Order Confirm Karein":"WhatsApp par Order Bhejein";
  const payButton=document.getElementById("payButton");payButton.style.display=payment==="upi"?"block":"none";payButton.textContent="UPI App se "+money(currentOrder.total)+" Pay Karein";
  payButton.onclick=()=>{if(SHOP_UPI_ID==="YOUR-UPI-ID@bank"){alert("Pehle SHOP_UPI_ID mein apni asli UPI ID daalein.");return}const params=new URLSearchParams({pa:SHOP_UPI_ID,pn:SHOP_NAME,am:currentOrder.total.toFixed(2),cu:"INR",tn:"Order "+currentOrder.orderId});window.location.href="upi://pay?"+params.toString()};
  document.getElementById("sendButton").onclick=()=>{if(SHOP_WHATSAPP==="91XXXXXXXXXX"){alert("Pehle SHOP_WHATSAPP mein shop ka WhatsApp number daalein.");return}window.open("https://wa.me/"+SHOP_WHATSAPP+"?text="+encodeURIComponent(currentOrder.message),"_blank","noopener")};
