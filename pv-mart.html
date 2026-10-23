@@ -66,7 +66,7 @@ footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font
 .eyebrow{font-size:11px;letter-spacing:1.5px;color:var(--green);font-weight:800;margin:0 0 5px}
 .text-link{color:var(--green);font-size:13px;font-weight:800;text-decoration:none;white-space:nowrap}
 .category-cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px}
-.category-card{display:flex;align-items:center;gap:10px;min-width:0;padding:14px 12px;border:1px solid var(--line);border-radius:13px;background:#fff;text-align:left;color:var(--ink);box-shadow:0 4px 14px #122b4206;transition:transform .15s,border-color .15s}
+.category-card{display:flex;text-decoration:none;align-items:center;cursor:pointer;gap:10px;min-width:0;padding:14px 12px;border:1px solid var(--line);border-radius:13px;background:#fff;text-align:left;color:var(--ink);box-shadow:0 4px 14px #122b4206;transition:transform .15s,border-color .15s}
 .category-card:hover{transform:translateY(-2px);border-color:#8fcdb4}
 .category-card .cat-icon{width:44px;height:44px;flex:0 0 44px;display:grid;place-items:center;background:#edf8f1;border-radius:12px;font-size:24px}
 .category-card strong{display:block;font-size:12px;line-height:1.35}
@@ -304,20 +304,16 @@ const productsData = [
 
 ];
 const categoryCardsData=[
- {name:"Kirana & Grocery",icon:"🛒",desc:"Daily essentials"},
- {name:"Clothes & Fashion",icon:"👕",desc:"Men, women & kids"},
- {name:"Beauty & Cosmetics",icon:"💄",desc:"Beauty & skincare"},
- {name:"Mobiles & Electronics",icon:"📱",desc:"Phones & accessories"},
- {name:"Home & Kitchen",icon:"🏠",desc:"Useful home items"},
- {name:"Cleaning & Household",icon:"🧽",desc:"Cleaning essentials"},
- {name:"Stationery & Books",icon:"📚",desc:"School & office"},
- {name:"Baby Care",icon:"🧸",desc:"Baby essentials"},
- {name:"Animal Feed & Agriculture",icon:"🐄",desc:"Feed & farm needs"},
- {name:"Sarson Tel",icon:"🫗",desc:"Mustard oil & oil packs"},
- {name:"Aata & Flour",icon:"🌾",desc:"Freshly milled flour"},
- {name:"Masale & Spices",icon:"🌶️",desc:"Whole & ground spices"},
- {name:"Wholesale Orders",icon:"📦",desc:"Bulk orders for shops"},
- {name:"PV Foods & Agro",icon:"🏷️",desc:"Our own food brand"}
+ {name:"Kirana & Grocery",icon:"🛒",desc:"Daily essentials",href:"kirana.html"},
+ {name:"Clothes & Fashion",icon:"👕",desc:"Men, women & kids",href:"clothes.html"},
+ {name:"Mobiles & Electronics",icon:"📱",desc:"Phones & accessories",href:"electronics.html"},
+ {name:"Beauty & Cosmetics",icon:"💄",desc:"Beauty & skincare",href:"beauty.html"},
+ {name:"Home & Kitchen",icon:"🏠",desc:"Useful home items",href:"household.html"},
+ {name:"Stationery & Books",icon:"📚",desc:"School & office",href:"stationery.html"},
+ {name:"Baby Care",icon:"🧸",desc:"Baby essentials",href:"baby-care.html"},
+ {name:"Animal Feed & Agriculture",icon:"🐄",desc:"Feed & farm needs",href:"animal-feed.html"},
+ {name:"PV Foods & Agro",icon:"🌾",desc:"Our own food brand",href:"pv-foods.html"},
+ {name:"Sarson Tel",icon:"🫗",desc:"Mustard oil & oil packs",href:"sarson-tel.html"}
 ];
 let activeCat="Sabhi";const cart={};let currentOrder=null;
 const money=n=>"₹"+n.toLocaleString("en-IN");
@@ -325,7 +321,7 @@ const categories=["Sabhi",...new Set(productsData.map(p=>p.cat))];
 function renderCategories(){document.getElementById("categories").innerHTML=categories.map(c=>`<button type="button" class="cat ${c===activeCat?"active":""}" onclick="setCat(${JSON.stringify(c)})">${c}</button>`).join("")}
 function renderCategoryCards(){
  const wrap=document.getElementById("categoryCards");
- wrap.innerHTML=categoryCardsData.map(c=>`<button type="button" class="category-card" onclick="chooseCategory(${JSON.stringify(c.name)})"><span class="cat-icon">${c.icon}</span><span><strong>${c.name}</strong><small>${c.desc}</small></span></button>`).join("");
+ wrap.innerHTML=categoryCardsData.map(c=>`<a class="category-card" href="${c.href}" aria-label="${c.name} products"><span class="cat-icon">${c.icon}</span><span><strong>${c.name}</strong><small>${c.desc}</small></span></a>`).join("");
 }
 function chooseCategory(name){
   const categoryMap = {
