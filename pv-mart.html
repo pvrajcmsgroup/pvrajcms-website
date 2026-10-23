@@ -116,6 +116,46 @@ footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font
  .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product{padding:9px}.product-emoji{height:58px;font-size:30px}.product h3{font-size:13px}.add{font-size:12px;padding:9px 6px}
  .cat{padding:8px 10px;font-size:11px}
 }
+
+/* PV MART ONLY: clear hover, press, focus and click feedback */
+button, a, .category-card, .cat, .dropdown-toggle {
+  -webkit-tap-highlight-color: rgba(255,207,88,.28);
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease,
+              box-shadow .18s ease, transform .12s ease, filter .18s ease;
+}
+button:hover, .cat:hover, .category-card:hover, nav a:hover, .dropdown-toggle:hover {
+  filter: brightness(1.08);
+}
+button:active, .cat:active, .category-card:active, nav a:active, .dropdown-toggle:active {
+  transform: scale(.97);
+  box-shadow: 0 0 0 3px rgba(255,207,88,.48);
+}
+button:focus-visible, a:focus-visible, .cat:focus-visible, .category-card:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+.cat.active {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(19,134,92,.18);
+}
+.add:active, .primary:active, .checkout-start:active, .proceed-buy:active {
+  filter: brightness(.9);
+  box-shadow: 0 0 0 3px rgba(19,134,92,.25);
+}
+.category-card:focus-visible, .category-card:active {
+  border-color: var(--green);
+}
+.nav-dropdown .dropdown-toggle:focus-visible {
+  border-radius: 6px;
+}
+/* Brief feedback remains visible after a click, then clears automatically. */
+.click-feedback {
+  box-shadow: 0 0 0 3px rgba(255,207,88,.65) !important;
+  filter: brightness(.92) !important;
+}
+
 </style>
 </head>
 <body>
@@ -500,6 +540,17 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
  payButton.onclick=()=>{if(SHOP_UPI_ID==="YOUR-UPI-ID@bank"){alert("Pehle SHOP_UPI_ID mein apni asli UPI ID daalein.");return}const params=new URLSearchParams({pa:SHOP_UPI_ID,pn:SHOP_NAME,am:currentOrder.total.toFixed(2),cu:"INR",tn:"Order "+currentOrder.orderId});window.location.href="upi://pay?"+params.toString()};
  document.getElementById("sendButton").onclick=()=>{if(SHOP_WHATSAPP==="91XXXXXXXXXX"){alert("Pehle SHOP_WHATSAPP mein shop ka WhatsApp number daalein.");return}window.open("https://wa.me/"+SHOP_WHATSAPP+"?text="+encodeURIComponent(currentOrder.message),"_blank","noopener")};
 });
+
+/* PV MART click feedback only; does not affect other site pages. */
+document.addEventListener("click", function(event) {
+  const target = event.target.closest("button, a, .category-card, .cat, .dropdown-toggle");
+  if (!target || target.closest(".dropdown-menu") && target.tagName !== "A") return;
+  target.classList.remove("click-feedback");
+  void target.offsetWidth;
+  target.classList.add("click-feedback");
+  window.setTimeout(() => target.classList.remove("click-feedback"), 420);
+});
+
 renderCategories();renderCategoryCards();renderProducts();renderCart();
 </script>
 </body>
