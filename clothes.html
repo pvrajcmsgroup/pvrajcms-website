@@ -21,7 +21,7 @@ nav a:hover{color:var(--teal)}
 nav a.current{background:var(--gold);color:var(--navy);border:1px solid var(--gold);border-radius:999px;padding:9px 12px}
 .dropdown{position:relative;display:inline-flex;align-items:center}
 .drop-label{display:inline-block}
-.dropdown-menu{display:none;position:absolute;top:100%;left:-12px;min-width:190px;padding:8px;background:#fff;border:1px solid #dfe6ee;border-radius:10px;box-shadow:0 12px 28px #0003;z-index:50}
+.dropdown-menu{display:none;position:absolute;top:100%;left:-12px;min-width:210px;max-height:calc(100vh - 100px);overflow-y:auto;padding:8px;background:#fff;border:1px solid #dfe6ee;border-radius:10px;box-shadow:0 12px 28px #0003;z-index:50}
 .dropdown-menu a{display:block;color:#172536;padding:10px 12px;border-radius:7px;font-size:13px}
 .dropdown-menu a:hover,.dropdown-menu a:focus{background:#eef5fa;color:#0d4b50}
 .dropdown:hover .dropdown-menu,.dropdown:focus-within .dropdown-menu{display:block}
@@ -88,10 +88,16 @@ body, main, .shop-layout, .shop-layout > section { overflow:visible !important; 
       <div class="dropdown">
         <a class="drop-label" href="pv-mart.html#categories" aria-haspopup="true">Categories⌄</a>
         <div class="dropdown-menu">
-          <a href="kirana.html">Kirana</a>
-          <a href="clothes.html">Clothes &amp; Fashion</a>
-          <a href="household.html">Home &amp; Kitchen</a>
-          <a href="animal-feed.html">Animal Feed</a>
+          <a href="kirana.html">🛒 Kirana</a>
+          <a href="clothes.html">👕 Clothes &amp; Fashion</a>
+          <a href="electronics.html">📱 Electronics</a>
+          <a href="beauty-cosmetics.html">💄 Beauty &amp; Cosmetics</a>
+          <a href="household.html">🏠 Home &amp; Kitchen</a>
+          <a href="stationery-books.html">📚 Stationery &amp; Books</a>
+          <a href="baby-care.html">👶 Baby Care</a>
+          <a href="animal-feed.html">🐄 Animal Feed &amp; Agriculture</a>
+          <a href="pv-foods-agro.html">🌾 PV Foods &amp; Agro</a>
+          <a href="sarson-tel.html">🛢️ Sarson Tel</a>
         </div>
       </div>
       <a href="pv-mart.html#offers">Offers</a>
