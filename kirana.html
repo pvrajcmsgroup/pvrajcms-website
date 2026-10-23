@@ -3,289 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PV MART | All-in-One Online Shopping</title>
-<meta name="description" content="PV MART par grocery, fashion, cosmetics, mobile accessories aur ghar ka saman dekhein.">
-<link rel="icon" type="image/png" href="logo.png">
+<title>Kirana Store | PV MART</title>
+<meta name="description" content="PV MART kirana store - aata, chawal, daal, tel aur daily grocery items.">
 <style>
 :root{--navy:#0d2545;--green:#13865c;--gold:#ffcf58;--ink:#172536;--muted:#667487;--line:#e5eaf0;--bg:#f5f8fb}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:#071422;color:#fff;border-bottom:1px solid #25405a}
-.header-inner{max-width:1400px;margin:auto;padding:8px 18px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:12px;min-width:0;text-decoration:none;color:white}
-.brand img{width:min(26vw,300px);max-height:65px;object-fit:contain;object-position:left center}
-.brand-tagline{border-left:1px solid #526275;padding-left:12px;font-size:12px;line-height:1.5;color:#d6e6f7;white-space:nowrap}
-nav{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
-nav a{color:#f4f8ff;text-decoration:none;font-weight:700;font-size:13px;white-space:nowrap}
-nav a:hover{color:var(--gold)}
-.hero{max-width:1400px;margin:14px auto 0;padding:0 16px}
-.hero-inner{background:linear-gradient(115deg,#071729,#0d4b50);border-radius:16px;padding:clamp(24px,5vw,58px);color:white;display:flex;justify-content:space-between;align-items:center;gap:24px;overflow:hidden}
-.hero h1{font-size:clamp(28px,4.5vw,54px);line-height:1.08;margin:0 0 12px;max-width:700px}
-.hero p{margin:0 0 18px;line-height:1.6;color:#e1f1f2;max-width:650px}
-.hero .hero-tag{display:inline-block;background:#ffcf58;color:#172536;border-radius:999px;padding:7px 13px;font-size:12px;font-weight:800;margin-bottom:14px}
-.hero-art{font-size:clamp(55px,9vw,110px);white-space:nowrap}
-.searchbar{max-width:1400px;margin:18px auto 0;padding:0 16px}
-.searchbar input{width:100%;padding:14px 16px;border:1px solid #d7e0e8;border-radius:12px;font-size:16px;background:white}
-main{max-width:1400px;margin:18px auto;padding:0 16px 36px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.75fr);gap:18px;align-items:start}
-.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 18px #122b4208}
-h2{font-size:20px;margin:0 0 14px}.categories{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.cat{border:1px solid #dce5ec;background:#f6f9fb;color:#30445b;border-radius:999px;padding:9px 12px;font-size:12px;font-weight:700;cursor:pointer}
-.cat.active{background:var(--navy);color:white;border-color:var(--navy)}
-.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
-.product{border:1px solid var(--line);border-radius:13px;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
-.product-emoji{height:68px;border-radius:10px;background:#f0f8f3;display:grid;place-items:center;font-size:34px}
-.product h3{font-size:14px;line-height:1.35;margin:0}.small{font-size:11px;color:var(--muted);line-height:1.4}
-.price{font-size:17px;font-weight:800;color:var(--green)}
-button{font:inherit;cursor:pointer;border:0;border-radius:9px;padding:10px 11px;font-weight:700}
-.add{background:var(--navy);color:white;margin-top:auto}.add:hover{background:#17476a}
-.cart-empty{color:var(--muted);font-size:14px;padding:10px 0}
-.cart-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:11px 0;border-bottom:1px solid var(--line)}
-.cart-name{font-weight:700;font-size:13px}.qty{display:flex;align-items:center;gap:8px;margin-top:6px}.qty button{padding:3px 9px;background:#edf2f6;color:var(--navy)}
-.cart-price{font-size:13px;font-weight:700;text-align:right}
-.total{display:flex;justify-content:space-between;padding:15px 0;font-size:18px;font-weight:800}
-label{display:block;font-size:13px;font-weight:700;margin:12px 0 6px}
-input,textarea{width:100%;border:1px solid #d7e0e8;border-radius:10px;padding:12px;font:inherit;background:white;color:var(--ink)}
-textarea{resize:vertical;min-height:72px}
-.payment-options{display:grid;gap:8px}.payment-option{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:11px;font-size:13px}
-.payment-option input{width:auto;margin-top:3px}.payment-option strong{display:block;margin-bottom:3px}
-.primary,.secondary{width:100%;margin-top:12px}.primary{background:var(--green);color:white}.secondary{background:#edf3f7;color:var(--navy)}
-.note{font-size:12px;line-height:1.55;color:var(--muted);margin-top:12px}
-.warning{background:#fff8df;border:1px solid #f1dda0;padding:11px;border-radius:10px;color:#604b12;font-size:12px;line-height:1.5;margin-top:12px}
-#status{display:none;margin-top:12px;padding:12px;border-radius:10px;background:#e9f8f0;color:#14563d;font-size:13px;line-height:1.5}
-footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font-size:12px;line-height:1.7}
-
-.category-section{max-width:1400px;margin:20px auto 0;padding:0 16px}
-.section-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:12px}
-.section-heading h2{margin:0;font-size:24px;color:var(--navy)}
-.eyebrow{font-size:11px;letter-spacing:1.5px;color:var(--green);font-weight:800;margin:0 0 5px}
-.text-link{color:var(--green);font-size:13px;font-weight:800;text-decoration:none;white-space:nowrap}
-.category-cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px}
-.category-card{display:flex;align-items:center;gap:10px;min-width:0;padding:14px 12px;border:1px solid var(--line);border-radius:13px;background:#fff;text-align:left;color:var(--ink);box-shadow:0 4px 14px #122b4206;transition:transform .15s,border-color .15s}
-.category-card:hover{transform:translateY(-2px);border-color:#8fcdb4}
-.category-card .cat-icon{width:44px;height:44px;flex:0 0 44px;display:grid;place-items:center;background:#edf8f1;border-radius:12px;font-size:24px}
-.category-card strong{display:block;font-size:12px;line-height:1.35}
-.category-card small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
-.offers-strip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fff8df;border:1px solid #f1dda0;color:#604b12;border-radius:11px;padding:11px 13px;margin-bottom:16px}
-.offers-strip span{font-weight:800;font-size:13px}.offers-strip small{font-size:12px}
-\n@media(max-width:1000px){main{grid-template-columns:1fr}.products{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:650px){
- .header-inner{padding:8px 10px;display:block}.brand{justify-content:center;gap:8px}.brand img{width:min(44vw,190px);max-height:48px}.brand-tagline{font-size:9px;padding-left:8px;white-space:normal;max-width:145px}
- nav{justify-content:center;gap:8px 13px;margin-top:9px}nav a{font-size:12px}
- .hero{padding:0 10px;margin-top:10px}.hero-inner{padding:24px 18px;border-radius:12px}.hero-art{display:none}.hero h1{font-size:30px}.hero p{font-size:14px}
- .category-section{padding:0 10px;margin-top:14px}.section-heading h2{font-size:20px}.section-heading{align-items:center}.text-link{font-size:11px}
- .category-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.category-card{padding:10px 8px;gap:8px}.category-card .cat-icon{width:36px;height:36px;flex-basis:36px;font-size:20px}.category-card strong{font-size:11px}
- .searchbar{padding:0 10px;margin-top:12px}main{padding:0 10px 25px;margin-top:12px;gap:12px}.panel{padding:13px}
- .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product{padding:9px}.product-emoji{height:58px;font-size:30px}.product h3{font-size:13px}.add{font-size:12px;padding:9px 6px}
- .cat{padding:8px 10px;font-size:11px}
-}
+header{background:#071422;color:#fff;padding:15px 18px}
+.header-inner{max-width:1150px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:22px;color:white;text-decoration:none}.brand span{color:var(--gold)}
+nav{display:flex;gap:15px;flex-wrap:wrap}nav a{color:white;text-decoration:none;font-size:14px;font-weight:700}
+.hero{max-width:1150px;margin:18px auto;padding:0 15px}
+.hero-inner{background:linear-gradient(115deg,#071729,#0d4b50);border-radius:16px;padding:clamp(24px,5vw,48px);color:white}
+.hero h1{font-size:clamp(28px,5vw,44px);margin:0 0 10px}.hero p{line-height:1.6;margin:0;color:#e1f1f2}
+.wrap{max-width:1150px;margin:18px auto;padding:0 15px 35px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+input{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;background:white}
+#search{flex:1;min-width:220px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.product{background:white;border:1px solid var(--line);border-radius:13px;padding:13px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.emoji{height:70px;background:#f0f8f3;border-radius:10px;display:grid;place-items:center;font-size:36px}
+.product h3{font-size:15px;line-height:1.35;margin:0}.detail{font-size:12px;color:var(--muted)}
+.price{font-weight:800;font-size:18px;color:var(--green)}button{font:inherit;font-weight:700;cursor:pointer;border:0;border-radius:9px;padding:10px;background:var(--navy);color:white;margin-top:auto}
+.panel{background:white;border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:20px}
+.cart-row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:10px 0;font-size:14px}
+.qty{display:flex;align-items:center;gap:7px;margin-top:6px}.qty button{padding:4px 10px;margin:0;background:#edf2f6;color:var(--navy)}
+.total{display:flex;justify-content:space-between;font-size:19px;font-weight:800;padding:14px 0}
+.note{font-size:12px;color:var(--muted);line-height:1.6}
+footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size:13px;line-height:1.7}
+@media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){header{padding:13px}.header-inner{display:block}.brand{display:block;margin-bottom:10px}nav{gap:12px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product{padding:9px}.emoji{height:58px}.product h3{font-size:13px}.wrap,.hero{padding-left:10px;padding-right:10px}}
 </style>
 </head>
 <body>
 <header>
  <div class="header-inner">
-  <a class="brand" href="index.html" aria-label="PVRajCMS Group home">
-   <img src="logo.png" alt="PVRajCMS Group Logo">
-   <span class="brand-tagline">PV MART · Aapki Apni Online Dukaan</span>
-  </a>
-  <nav aria-label="Store navigation">
-   <a href="#shop">Shop Now</a><a href="#categories-section">Categories</a><a href="#offers">Offers</a><a href="#cart-panel">My Cart (<span id="cartCount">0</span>)</a><a href="#contact">Contact</a>
-  </nav>
+  <a class="brand" href="index.html">PV <span>MART</span></a>
+  <nav><a href="index.html">Main Website</a><a href="#products">Kirana Products</a><a href="#cart">My Cart (<span id="count">0</span>)</a></nav>
  </div>
 </header>
-<section class="hero">
- <div class="hero-inner">
-  <div><span class="hero-tag">GROCERY • FASHION • BEAUTY • FOOD PRODUCTS</span>
-   <h1>Har Zaroorat Ka Samaan, Ek Hi Jagah!</h1>
-   <p>Kirana, kapde, cosmetics, electronics aur ghar ka samaan. Saath hi PV Foods & Agro ke sarson tel, aata aur masale bhi — sab ek hi jagah.</p>
-   <a href="#shop" style="display:inline-block;background:#ffcf58;color:#172536;text-decoration:none;padding:11px 17px;border-radius:9px;font-weight:800">Shopping Shuru Karein ↓</a>
-  </div>
-  <div class="hero-art" aria-hidden="true">🛒🛍️</div>
- </div>
-</section>
-<section class="category-section" id="categories-section" aria-labelledby="category-heading">
- <div class="section-heading">
-  <div><p class="eyebrow">APNI PASAND CHUNEIN</p><h2 id="category-heading">Shop by Category</h2></div>
-  <a href="#shop" class="text-link">Saare Products Dekhein →</a>
- </div>
- <div class="category-cards" id="categoryCards"></div>
-</section>
-<section class="category-section" id="pv-foods">
- <div class="section-heading">
-  <div><p class="eyebrow">OUR OWN FOOD BRAND</p><h2>🌾 PV Foods & Agro</h2></div>
-  <a href="#shop" class="text-link">Products dekhein →</a>
- </div>
- <div class="category-cards">
-  <article class="category-card"><div class="category-icon">🫗</div><h3>Sarson Tel</h3><p>Mustard oil · retail & bulk packs</p></article>
-  <article class="category-card"><div class="category-icon">🌾</div><h3>Aata & Flour</h3><p>Freshly milled flour products</p></article>
-  <article class="category-card"><div class="category-icon">🌶️</div><h3>Masale & Spices</h3><p>Whole spices and ground masalas</p></article>
-  <article class="category-card"><div class="category-icon">📦</div><h3>Wholesale Orders</h3><p>Retailers and bulk buyers can enquire</p></article>
- </div>
- <p class="note">PV Foods & Agro ke products, pack size, rates aur availability abhi sample hain. Selling se pehle actual details update karein.</p>
-</section>
-<div class="searchbar"><input id="search" placeholder="Product ya category search karein..." aria-label="Search products"></div>
-<main>
- <section class="panel" id="shop">
-  <h2>🛍️ Products Explore Karein</h2>
-  <div class="categories" id="categories"></div>
-  <div class="products" id="products"></div>
-  <p class="note">Demo catalog: yahan diye gaye products aur prices sirf sample hain. Website live karne se pehle actual product, brand, pack size, price aur stock update karein.</p>
- </section>
- <aside class="panel" id="cart-panel">
-  <h2>🧺 Aapka Cart</h2><div id="cart"><div class="cart-empty">Abhi cart khaali hai. Product add karein.</div></div>
+<section class="hero"><div class="hero-inner">
+ <h1>🛒 Kirana & Grocery Store</h1>
+ <p>Rozmarra ka kirana samaan ek jagah — aata, chawal, daal, tel, cheeni, namak, masale aur snacks.</p>
+</div></section>
+<main class="wrap">
+ <div class="toolbar"><input id="search" type="search" placeholder="Kirana ka samaan search karein..." aria-label="Kirana products search"></div>
+ <h2 id="products">Kirana ke Products</h2>
+ <div class="grid" id="productGrid"></div>
+ <section class="panel" id="cart">
+  <h2>🧺 Aapka Cart</h2><div id="cartItems">Abhi cart khaali hai.</div>
   <div class="total"><span>Total</span><span id="total">₹0</span></div>
-  <h2 style="margin-top:8px">📍 Delivery Details</h2>
-  <form id="orderForm">
-   <label for="customer">Aapka naam *</label><input id="customer" required autocomplete="name" placeholder="Naam likhein">
-   <label for="phone">Mobile number *</label><input id="phone" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10 digit mobile number">
-   <label for="address">Poora delivery address *</label><textarea id="address" required placeholder="Gaon, mohalla, ghar ka pata"></textarea>
-   <label for="landmark">Paas ki pehchaan (optional)</label><input id="landmark" placeholder="Jaise school ke paas">
-   <label>Payment ka tareeka *</label>
-   <div class="payment-options">
-    <label class="payment-option"><input type="radio" name="payment" value="upi" checked><span><strong>UPI — PhonePe / Google Pay</strong>Payment bank/UPI app mein verify karein.</span></label>
-    <label class="payment-option"><input type="radio" name="payment" value="cod"><span><strong>Cash on Delivery</strong>Samaan milne par cash dein.</span></label>
-   </div>
-   <button type="submit" class="primary">Order Details Taiyar Karein</button>
-  </form>
-  <div id="status" role="status"></div>
-  <button id="payButton" class="primary" style="display:none" type="button">UPI App se Payment Karein</button>
-  <button id="sendButton" class="secondary" style="display:none" type="button">WhatsApp par Order Bhejein</button>
-  <div class="warning"><strong>Live karne se pehle:</strong> Neeche code mein apni asli UPI ID aur shop WhatsApp number set karein. UPI payment ko bank/UPI app mein verify karein; screenshot ko akela proof na maanein.</div>
-  <p class="note">Yeh starter version order database mein save nahi karta. Order shop tak bhejne ke liye WhatsApp button use hoga.</p>
- </aside>
+  <p class="note">Yeh demo catalog hai. Rates sample hain; live karne se pehle actual price, brand, pack size aur stock update karein. Is file mein abhi online payment ya order submission set nahi hai.</p>
+ </section>
 </main>
-<footer id="contact"><strong>PV MART</strong> · Aapki Apni Online Dukaan<br>Retail Shopping • Grocery • Fashion • Electronics • Home Essentials<br><strong>PV Foods & Agro</strong> · Sarson Tel • Aata • Masale • Wholesale<br>Part of PVRajCMS Group</footer>
+<footer><strong>PV MART</strong> · Kirana & Grocery<br>Part of PVRajCMS Group</footer>
 <script>
-/* SETUP: publish karne se pehle apni asli details daalein. */
-const SHOP_UPI_ID = "YOUR-UPI-ID@bank";
-const SHOP_WHATSAPP = "91XXXXXXXXXX";
-const SHOP_NAME = "PV MART";
-
-/* Sample catalog. Rates/stock ko apne actual products ke mutabik update karein. */
-const productsData = [
-{id:1,name:"Aata",detail:"5 kg bag",price:152,emoji:"🌾",cat:"Kirana & Grocery"},
-{id:2,name:"Chawal",detail:"5 kg bag",price:275,emoji:"🍚",cat:"Kirana & Grocery"},
-{id:3,name:"Arhar Daal",detail:"1 kg",price:150,emoji:"🫘",cat:"Kirana & Grocery"},
-{id:4,name:"Masoor Daal",detail:"1 kg",price:105,emoji:"🫘",cat:"Kirana & Grocery"},
-{id:5,name:"Cooking Oil",detail:"1 litre",price:135,emoji:"🫗",cat:"Kirana & Grocery"},
-{id:6,name:"Sarson Tel",detail:"1 litre",price:160,emoji:"🫗",cat:"Kirana & Grocery"},
-{id:7,name:"Cheeni",detail:"1 kg",price:46,emoji:"🧂",cat:"Kirana & Grocery"},
-{id:8,name:"Namak",detail:"1 kg",price:22,emoji:"🧂",cat:"Kirana & Grocery"},
-{id:9,name:"Haldi Powder",detail:"100 g",price:30,emoji:"🟡",cat:"Kirana & Grocery"},
-{id:10,name:"Chai Patti",detail:"250 g",price:125,emoji:"🍵",cat:"Kirana & Grocery"},
-{id:11,name:"Biscuit",detail:"1 packet",price:10,emoji:"🍪",cat:"Kirana & Grocery"},
-{id:12,name:"Namkeen",detail:"1 packet",price:20,emoji:"🥨",cat:"Kirana & Grocery"},
-{id:13,name:"Men's T-Shirt",detail:"Sample listing · size select karein",price:299,emoji:"👕",cat:"Clothes & Fashion"},
-{id:14,name:"Men's Shirt",detail:"Sample listing · size select karein",price:499,emoji:"👔",cat:"Clothes & Fashion"},
-{id:15,name:"Jeans",detail:"Sample listing · size select karein",price:699,emoji:"👖",cat:"Clothes & Fashion"},
-{id:16,name:"Kurti",detail:"Sample listing · size select karein",price:399,emoji:"👗",cat:"Clothes & Fashion"},
-{id:17,name:"Saree",detail:"Sample listing",price:799,emoji:"🥻",cat:"Clothes & Fashion"},
-{id:18,name:"Slippers",detail:"Sample listing · size select karein",price:199,emoji:"🩴",cat:"Clothes & Fashion"},
-{id:19,name:"Face Cream",detail:"Sample listing · pack size verify karein",price:120,emoji:"🧴",cat:"Beauty & Cosmetics"},
-{id:20,name:"Lipstick",detail:"Sample listing",price:149,emoji:"💄",cat:"Beauty & Cosmetics"},
-{id:21,name:"Perfume",detail:"Sample listing",price:249,emoji:"🌸",cat:"Beauty & Cosmetics"},
-{id:22,name:"Shampoo",detail:"Sample listing · bottle",price:180,emoji:"🧴",cat:"Beauty & Cosmetics"},
-{id:23,name:"Face Wash",detail:"Sample listing",price:99,emoji:"🫧",cat:"Beauty & Cosmetics"},
-{id:24,name:"Moisturizer",detail:"Sample listing",price:160,emoji:"🧴",cat:"Beauty & Cosmetics"},
-{id:25,name:"Mobile Phone",detail:"Listing placeholder · price/stock confirm karein",price:8999,emoji:"📱",cat:"Mobiles & Electronics"},
-{id:26,name:"Mobile Cover",detail:"Model select karein",price:149,emoji:"📱",cat:"Mobiles & Electronics"},
-{id:27,name:"Charger",detail:"Compatible model verify karein",price:299,emoji:"🔌",cat:"Mobiles & Electronics"},
-{id:28,name:"Earphones",detail:"Sample listing",price:199,emoji:"🎧",cat:"Mobiles & Electronics"},
-{id:29,name:"USB Cable",detail:"Connector type select karein",price:99,emoji:"🔌",cat:"Mobiles & Electronics"},
-{id:30,name:"Power Bank",detail:"Sample listing · capacity verify karein",price:999,emoji:"🔋",cat:"Mobiles & Electronics"},
-{id:31,name:"Washing Powder",detail:"1 kg",price:90,emoji:"🫧",cat:"Home & Cleaning"},
-{id:32,name:"Bartaan Bar",detail:"1 piece",price:15,emoji:"🧽",cat:"Home & Cleaning"},
-{id:33,name:"Phenyl",detail:"500 ml",price:65,emoji:"🧴",cat:"Home & Cleaning"},
-{id:34,name:"Kitchen Storage Box",detail:"Sample listing",price:129,emoji:"🥣",cat:"Home & Cleaning"},
-{id:35,name:"Water Bottle",detail:"1 piece",price:99,emoji:"🧴",cat:"Home & Cleaning"},
-{id:36,name:"Notebook",detail:"1 piece",price:40,emoji:"📓",cat:"Stationery & Books"},
-{id:37,name:"Pen Pack",detail:"5 pens",price:50,emoji:"🖊️",cat:"Stationery & Books"},
-{id:38,name:"Pencil Pack",detail:"10 pencils",price:40,emoji:"✏️",cat:"Stationery & Books"},
-{id:39,name:"School Bag",detail:"Sample listing",price:399,emoji:"🎒",cat:"Stationery & Books"},
-{id:40,name:"Baby Diapers",detail:"Pack size confirm karein",price:299,emoji:"🧸",cat:"Baby Care"},
-{id:41,name:"Baby Wipes",detail:"Sample listing",price:99,emoji:"🧻",cat:"Baby Care"},
-{id:42,name:"Baby Lotion",detail:"Sample listing",price:149,emoji:"🧴",cat:"Baby Care"},
-{id:43,name:"Pashu Aahar Dana",detail:"1 kg",price:32,emoji:"🐄",cat:"Animal Feed & Agriculture"},
-{id:44,name:"Chokar",detail:"1 kg",price:24,emoji:"🌾",cat:"Animal Feed & Agriculture"},
-{id:45,name:"Sarson Khal",detail:"1 kg",price:30,emoji:"🌿",cat:"Animal Feed & Agriculture"},
-{id:46,name:"Poultry Feed",detail:"1 kg",price:48,emoji:"🐔",cat:"Animal Feed & Agriculture"},
-{id:47,name:"PV Foods & Agro Sarson Tel",detail:"1 litre · sample listing; actual pack/price confirm karein",price:170,emoji:"🫗",cat:"Sarson Tel"},
-{id:48,name:"PV Foods & Agro Aata",detail:"5 kg · sample listing; actual pack/price confirm karein",price:180,emoji:"🌾",cat:"Aata & Flour"},
-{id:49,name:"PV Foods & Agro Haldi Powder",detail:"100 g · sample listing; actual pack/price confirm karein",price:35,emoji:"🟡",cat:"Masale & Spices"},
-{id:50,name:"PV Foods & Agro Mirch Powder",detail:"100 g · sample listing; actual pack/price confirm karein",price:40,emoji:"🌶️",cat:"Masale & Spices"},
-{id:51,name:"PV Foods & Agro Dhaniya Powder",detail:"100 g · sample listing; actual pack/price confirm karein",price:35,emoji:"🌿",cat:"Masale & Spices"}
+const products = [
+ {id:2,name:"Chawal",detail:"5 kg bag",price:275,emoji:"🍚"},
+ {id:1,name:"Aata",detail:"5 kg bag",price:152,emoji:"🌾"},
+ {id:3,name:"Arhar Daal",detail:"1 kg",price:150,emoji:"🫘"},
+ {id:4,name:"Masoor Daal",detail:"1 kg",price:105,emoji:"🫘"},
+ {id:5,name:"Moong Daal",detail:"1 kg",price:125,emoji:"🫘"},
+ {id:6,name:"Urad Daal",detail:"1 kg",price:135,emoji:"🫘"},
+ {id:7,name:"Rajma",detail:"1 kg",price:145,emoji:"🫘"},
+ {id:8,name:"Kabuli Chana",detail:"1 kg",price:110,emoji:"🫘"},
+ {id:9,name:"Cooking Oil",detail:"1 litre",price:135,emoji:"🫗"},
+ {id:10,name:"Sarson Tel",detail:"1 litre",price:160,emoji:"🫗"},
+ {id:11,name:"Cheeni",detail:"1 kg",price:46,emoji:"🧂"},
+ {id:12,name:"Namak",detail:"1 kg",price:22,emoji:"🧂"},
+ {id:13,name:"Haldi Powder",detail:"100 g",price:30,emoji:"🟡"},
+ {id:14,name:"Chai Patti",detail:"250 g",price:125,emoji:"🍵"},
+ {id:15,name:"Biscuit",detail:"1 packet",price:10,emoji:"🍪"},
+ {id:16,name:"Namkeen",detail:"1 packet",price:20,emoji:"🥨"},
+ {id:17,name:"Besan",detail:"1 kg",price:95,emoji:"🌾"},
+ {id:18,name:"Poha",detail:"500 g",price:35,emoji:"🌾"},
+ {id:19,name:"Suji",detail:"1 kg",price:48,emoji:"🌾"},
+ {id:20,name:"Maida",detail:"1 kg",price:42,emoji:"🌾"},
+ {id:21,name:"Gur",detail:"1 kg",price:65,emoji:"🟤"},
+ {id:22,name:"Shahad",detail:"250 g",price:140,emoji:"🍯"},
+ {id:23,name:"Jeera",detail:"100 g",price:38,emoji:"🌿"},
+ {id:24,name:"Rai / Sarson Dana",detail:"100 g",price:20,emoji:"🌿"},
+ {id:25,name:"Hing",detail:"10 g",price:35,emoji:"🧂"},
+ {id:26,name:"Garam Masala",detail:"100 g",price:55,emoji:"🌶️"},
+ {id:27,name:"Sugar-Free Tea Biscuits",detail:"1 pack",price:30,emoji:"🍪"}
 ];
-const categoryCardsData=[
- {name:"Kirana & Grocery",icon:"🛒",desc:"Daily essentials"},
- {name:"Clothes & Fashion",icon:"👕",desc:"Men, women & kids"},
- {name:"Beauty & Cosmetics",icon:"💄",desc:"Beauty & skincare"},
- {name:"Mobiles & Electronics",icon:"📱",desc:"Phones & accessories"},
- {name:"Home & Kitchen",icon:"🏠",desc:"Useful home items"},
- {name:"Cleaning & Household",icon:"🧽",desc:"Cleaning essentials"},
- {name:"Stationery & Books",icon:"📚",desc:"School & office"},
- {name:"Baby Care",icon:"🧸",desc:"Baby essentials"},
- {name:"Animal Feed & Agriculture",icon:"🐄",desc:"Feed & farm needs"},
- {name:"Sarson Tel",icon:"🫗",desc:"Mustard oil & oil packs"},
- {name:"Aata & Flour",icon:"🌾",desc:"Freshly milled flour"},
- {name:"Masale & Spices",icon:"🌶️",desc:"Whole & ground spices"},
- {name:"Wholesale Orders",icon:"📦",desc:"Bulk orders for shops"},
- {name:"PV Foods & Agro",icon:"🏷️",desc:"Our own food brand"}
-];
-let activeCat="Sabhi";const cart={};let currentOrder=null;
-const money=n=>"₹"+n.toLocaleString("en-IN");
-const categories=["Sabhi",...new Set(productsData.map(p=>p.cat))];
-function renderCategories(){document.getElementById("categories").innerHTML=categories.map(c=>`<button type="button" class="cat ${c===activeCat?"active":""}" onclick="setCat(${JSON.stringify(c)})">${c}</button>`).join("")}
-function renderCategoryCards(){
- const wrap=document.getElementById("categoryCards");
- wrap.innerHTML=categoryCardsData.map(c=>`<button type="button" class="category-card" onclick="chooseCategory(${JSON.stringify(c.name)})"><span class="cat-icon">${c.icon}</span><span><strong>${c.name}</strong><small>${c.desc}</small></span></button>`).join("");
-}
-function chooseCategory(name){
- const categoryMap={"Home & Kitchen":"Home & Cleaning","Cleaning & Household":"Home & Cleaning"};
- const mapped=categoryMap[name]||name;
- if(name==="PV Foods & Agro"){
-   activeCat="Sabhi";
-   document.getElementById("search").value="PV Foods & Agro";
- } else if(name==="Wholesale Orders"){
-   activeCat="Sabhi";
-   document.getElementById("search").value="";
- } else {
-   activeCat=productsData.some(p=>p.cat===mapped)?mapped:"Sabhi";
-   document.getElementById("search").value="";
- }
- renderCategories();renderProducts();
- document.getElementById("shop").scrollIntoView({behavior:"smooth",block:"start"});
-}
-function setCat(c){activeCat=c;renderCategories();renderProducts()}
+const cart = {};
+const money = n => "₹" + n.toLocaleString("en-IN");
 function renderProducts(){
  const q=document.getElementById("search").value.trim().toLowerCase();
- const filtered=productsData.filter(p=>(activeCat==="Sabhi"||p.cat===activeCat)&&(`${p.name} ${p.detail} ${p.cat}`).toLowerCase().includes(q));
- document.getElementById("products").innerHTML=filtered.length?filtered.map(p=>`<article class="product"><div class="product-emoji">${p.emoji}</div><h3>${p.name}</h3><div class="small">${p.detail}</div><div class="small">${p.cat}</div><div class="price">${money(p.price)}</div><button class="add" type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi product nahi mila. Doosra naam search karein.</p>"
+ const list=products.filter(p=>(p.name+" "+p.detail).toLowerCase().includes(q));
+ document.getElementById("productGrid").innerHTML=list.length?list.map(p=>`<article class="product"><div class="emoji">${p.emoji}</div><h3>${p.name}</h3><div class="detail">${p.detail}</div><div class="price">${money(p.price)}</div><button type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi kirana product nahi mila.</p>";
 }
 function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart()}
 function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart()}
-function getTotal(){return productsData.reduce((s,p)=>s+p.price*(cart[p.id]||0),0)}
 function renderCart(){
- const chosen=productsData.filter(p=>cart[p.id]);
- document.getElementById("cart").innerHTML=chosen.length?chosen.map(p=>`<div class="cart-row"><div><div class="cart-name">${p.name} — ${p.detail}</div><div class="qty"><button type="button" onclick="changeQty(${p.id},-1)" aria-label="Quantity kam karein">−</button><span>${cart[p.id]}</span><button type="button" onclick="changeQty(${p.id},1)" aria-label="Quantity badhayein">+</button></div></div><div class="cart-price">${money(p.price*cart[p.id])}</div></div>`).join(""):'<div class="cart-empty">Abhi cart khaali hai. Product add karein.</div>';
- document.getElementById("total").textContent=money(getTotal());
- document.getElementById("cartCount").textContent=Object.values(cart).reduce((a,b)=>a+b,0);
- document.getElementById("status").style.display="none";document.getElementById("payButton").style.display="none";document.getElementById("sendButton").style.display="none";currentOrder=null;
+ const chosen=products.filter(p=>cart[p.id]);
+ document.getElementById("cartItems").innerHTML=chosen.length?chosen.map(p=>`<div class="cart-row"><div><strong>${p.name}</strong><div class="qty"><button type="button" onclick="changeQty(${p.id},-1)">−</button><span>${cart[p.id]}</span><button type="button" onclick="changeQty(${p.id},1)">+</button></div></div><strong>${money(p.price*cart[p.id])}</strong></div>`).join(""):"Abhi cart khaali hai.";
+ document.getElementById("total").textContent=money(products.reduce((sum,p)=>sum+p.price*(cart[p.id]||0),0));
+ document.getElementById("count").textContent=Object.values(cart).reduce((a,b)=>a+b,0);
 }
 document.getElementById("search").addEventListener("input",renderProducts);
-document.getElementById("orderForm").addEventListener("submit",function(e){
- e.preventDefault();if(getTotal()<=0){alert("Pehle cart mein product add karein.");return}
- const phone=document.getElementById("phone").value.trim();if(!/^[6-9]\d{9}$/.test(phone)){alert("Sahi 10 digit mobile number likhein.");return}
- const payment=document.querySelector('input[name="payment"]:checked').value;
- const items=productsData.filter(p=>cart[p.id]).map(p=>({name:p.name,detail:p.detail,qty:cart[p.id],price:p.price,subtotal:p.price*cart[p.id]}));
- const orderId="PVM"+Date.now().toString().slice(-7);
- currentOrder={orderId,customer:document.getElementById("customer").value.trim(),phone,address:document.getElementById("address").value.trim(),landmark:document.getElementById("landmark").value.trim(),payment,items,total:getTotal()};
- const lines=items.map(i=>`- ${i.name} (${i.detail}) x ${i.qty} = ${money(i.subtotal)}`).join("\n");
- currentOrder.message=`New order — ${SHOP_NAME}\nOrder ID: ${orderId}\nName: ${currentOrder.customer}\nMobile: ${phone}\nAddress: ${currentOrder.address}\nLandmark: ${currentOrder.landmark||"N/A"}\n\nItems:\n${lines}\n\nTotal: ${money(currentOrder.total)}\nPayment: ${payment==="upi"?"UPI (payment verify manually)":"Cash on Delivery"}`;
- const status=document.getElementById("status");status.style.display="block";status.textContent=`Order summary ready (${orderId}), total ${money(currentOrder.total)}. WhatsApp button se shop ko order bhejein.`;
- document.getElementById("sendButton").style.display="block";
- const payButton=document.getElementById("payButton");payButton.style.display=payment==="upi"?"block":"none";payButton.textContent="UPI App se "+money(currentOrder.total)+" Pay Karein";
- payButton.onclick=()=>{if(SHOP_UPI_ID==="YOUR-UPI-ID@bank"){alert("Pehle SHOP_UPI_ID mein apni asli UPI ID daalein.");return}const params=new URLSearchParams({pa:SHOP_UPI_ID,pn:SHOP_NAME,am:currentOrder.total.toFixed(2),cu:"INR",tn:"Order "+currentOrder.orderId});window.location.href="upi://pay?"+params.toString()};
- document.getElementById("sendButton").onclick=()=>{if(SHOP_WHATSAPP==="91XXXXXXXXXX"){alert("Pehle SHOP_WHATSAPP mein shop ka WhatsApp number daalein.");return}window.open("https://wa.me/"+SHOP_WHATSAPP+"?text="+encodeURIComponent(currentOrder.message),"_blank","noopener")};
-});
-renderCategories();renderCategoryCards();renderProducts();renderCart();
+renderProducts();renderCart();
 </script>
 </body>
 </html>
