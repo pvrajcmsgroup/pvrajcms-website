@@ -117,6 +117,22 @@ footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size
       </div>
       <p class="filter-hint">Multiple selections ke liye Ctrl (computer) ya mobile browser mein supported multi-select use karein.</p>
     </section>
+    <section id="computerFilters" class="mobile-filters" aria-label="Computer and laptop filters" hidden>
+      <div class="filter-heading"><h3>💻 Computer & Laptop Filters</h3><button type="button" id="clearComputerFilters" class="clear-filters">Clear All Filters</button></div>
+      <div class="filter-search"><input id="computerBrandSearch" type="search" placeholder="Search laptop/computer brands" aria-label="Computer brand search"></div>
+      <div class="filter-grid">
+        <label>Brand<select id="computerBrandFilter" multiple size="4"><option>HP</option><option>Dell</option><option>Lenovo</option><option>ASUS</option><option>Acer</option><option>Apple</option><option>MSI</option><option>Samsung</option><option>Microsoft</option><option>LG</option><option>Infinix</option><option>Avita</option></select></label>
+        <label>RAM<select id="computerRamFilter" multiple size="3"><option>4GB</option><option>8GB</option><option>12GB</option><option>16GB</option><option>24GB</option><option>32GB</option><option>64GB</option></select></label>
+        <label>Internal Storage<select id="computerStorageFilter" multiple size="3"><option>128GB SSD</option><option>256GB SSD</option><option>512GB SSD</option><option>1TB SSD</option><option>1TB HDD</option><option>2TB SSD</option><option>2TB HDD</option></select></label>
+        <label>Processor Brand<select id="computerProcessorFilter" multiple size="3"><option>Intel Core i3</option><option>Intel Core i5</option><option>Intel Core i7</option><option>Intel Core i9</option><option>AMD Ryzen 3</option><option>AMD Ryzen 5</option><option>AMD Ryzen 7</option><option>AMD Ryzen 9</option><option>Apple M-series</option><option>Qualcomm Snapdragon</option></select></label>
+        <label>Screen Size<select id="screenSizeFilter" multiple size="3"><option>11–12 inch</option><option>13–14 inch</option><option>15–16 inch</option><option>17 inch+</option></select></label>
+        <label>Operating System<select id="computerOsFilter" multiple size="3"><option>Windows</option><option>macOS</option><option>ChromeOS</option><option>Linux</option><option>DOS</option></select></label>
+        <label>Device Type<select id="deviceTypeFilter" multiple size="3"><option>Laptop</option><option>Desktop</option><option>Assembled Computer</option><option>Monitor</option><option>All-in-One</option></select></label>
+        <label>Price Range<select id="computerPriceFilter"><option value="">Any price</option><option value="0-20000">Under ₹20,000</option><option value="20000-35000">₹20,000–₹35,000</option><option value="35000-50000">₹35,000–₹50,000</option><option value="50000-75000">₹50,000–₹75,000</option><option value="75000-999999">₹75,000+</option></select></label>
+      </div>
+      <p class="filter-hint">Multiple selections ke liye Ctrl (computer) ya mobile browser mein supported multi-select use karein.</p>
+    </section>
+    
    <p class="product-count" id="productCount">Sabhi categories · 102 products</p>
    <div class="grid" id="productGrid"></div>
   </section>
@@ -189,7 +205,7 @@ const products = [
  {id:14,name:"Smart TV 43 inch",category:"TV & Home Entertainment",detail:"Full HD / 4K options · demo listing",price:21999,emoji:"📺"},
  {id:15,name:"TV Remote",category:"TV & Home Entertainment",detail:"Compatible models · demo listing",price:249,emoji:"🎛️"},
  {id:16,name:"HDMI Cable",category:"TV & Home Entertainment",detail:"1.5 metre · demo listing",price:199,emoji:"🔌"},
- {id:17,name:"Laptop",category:"Computers & Office",detail:"Entry-level laptop · demo listing",price:32999,emoji:"💻"},
+ {id:17,name:"HP Laptop",category:"Computers & Office",detail:"HP · 8GB RAM · 512GB SSD · Intel Core i5 · 15–16 inch · Windows",price:32999,emoji:"💻",computerBrand:"HP",computerRam:"8GB",computerStorage:"512GB SSD",computerProcessor:"Intel Core i5",screenSize:"15–16 inch",computerOs:"Windows",deviceType:"Laptop"},
  {id:18,name:"Desktop Keyboard",category:"Computers & Office",detail:"USB keyboard · demo listing",price:499,emoji:"⌨️"},
  {id:19,name:"Wireless Mouse",category:"Computers & Office",detail:"USB receiver · demo listing",price:399,emoji:"🖱️"},
  {id:20,name:"Laptop Backpack",category:"Computers & Office",detail:"Laptop carry bag · demo listing",price:799,emoji:"🎒"},
@@ -235,11 +251,11 @@ const products = [
  {id:60,name:"Smart TV 55 inch",category:"TV & Home Entertainment",detail:"Large-screen smart TV · demo listing",price:34999,emoji:"📺"},
  {id:61,name:"Streaming Stick",category:"TV & Home Entertainment",detail:"For compatible TVs · demo listing",price:2999,emoji:"📺"},
  {id:62,name:"Projector",category:"TV & Home Entertainment",detail:"Home / office projector · demo listing",price:7999,emoji:"📽️"},
- {id:63,name:"Desktop Computer",category:"Computers & Office",detail:"Home and office desktop · demo listing",price:24999,emoji:"🖥️"},
- {id:64,name:"Computer Monitor 22 inch",category:"Computers & Office",detail:"Full HD monitor · demo listing",price:5999,emoji:"🖥️"},
- {id:65,name:"Computer Mouse Wired",category:"Computers & Office",detail:"USB wired mouse · demo listing",price:199,emoji:"🖱️"},
- {id:66,name:"Mechanical Keyboard",category:"Computers & Office",detail:"Keyboard for typing / gaming · demo listing",price:1499,emoji:"⌨️"},
- {id:67,name:"Laptop Stand",category:"Computers & Office",detail:"Desk laptop stand · demo listing",price:599,emoji:"💻"},
+ {id:63,name:"Dell Desktop Computer",category:"Computers & Office",detail:"Dell · 8GB RAM · 512GB SSD · Intel Core i3 · Windows",price:24999,emoji:"🖥️",computerBrand:"Dell",computerRam:"8GB",computerStorage:"512GB SSD",computerProcessor:"Intel Core i3",screenSize:"15–16 inch",computerOs:"Windows",deviceType:"Desktop"},
+ {id:64,name:"Computer Monitor 22 inch",category:"Computers & Office",detail:"Full HD monitor · demo listing",price:5999,emoji:"🖥️",computerBrand:"LG",computerRam:"",computerStorage:"",computerProcessor:"",screenSize:"13–14 inch",computerOs:"",deviceType:"Monitor"},
+ {id:65,name:"Computer Mouse Wired",category:"Computers & Office",detail:"USB wired mouse · demo listing",price:199,emoji:"🖱️",computerBrand:"",computerRam:"",computerStorage:"",computerProcessor:"",screenSize:"",computerOs:"",deviceType:""},
+ {id:66,name:"Mechanical Keyboard",category:"Computers & Office",detail:"Keyboard for typing / gaming · demo listing",price:1499,emoji:"⌨️",computerBrand:"",computerRam:"",computerStorage:"",computerProcessor:"",screenSize:"",computerOs:"",deviceType:""},
+ {id:67,name:"Laptop Stand",category:"Computers & Office",detail:"Desk laptop stand · demo listing",price:599,emoji:"💻",computerBrand:"",computerRam:"",computerStorage:"",computerProcessor:"",screenSize:"",computerOs:"",deviceType:""},
  {id:68,name:"Webcam",category:"Computers & Office",detail:"Video calls and meetings · demo listing",price:999,emoji:"📷"},
  {id:69,name:"Inkjet Printer",category:"Computers & Office",detail:"Home printing · demo listing",price:4999,emoji:"🖨️"},
  {id:70,name:"Laser Printer",category:"Computers & Office",detail:"Office document printing · demo listing",price:9999,emoji:"🖨️"},
@@ -274,7 +290,16 @@ const products = [
  {id:99,name:"Digital Weighing Scale",category:"Personal Electronics",detail:"Personal weighing scale · demo listing",price:699,emoji:"⚖️"},
  {id:100,name:"Electric Shaver",category:"Personal Electronics",detail:"Personal grooming appliance · demo listing",price:999,emoji:"🪒"},
  {id:101,name:"Electric Toothbrush",category:"Personal Electronics",detail:"Rechargeable toothbrush · demo listing",price:799,emoji:"🪥"},
- {id:102,name:"Hair Straightener",category:"Personal Electronics",detail:"Hair styling appliance · demo listing",price:899,emoji:"💇"}
+ {id:102,name:"Hair Straightener",category:"Personal Electronics",detail:"Hair styling appliance · demo listing",price:899,emoji:"💇"},
+ {id:103,name:"Dell Core i5 Laptop",category:"Computers & Office",detail:"Dell · 16GB RAM · 512GB SSD · Intel Core i5 · 15–16 inch · Windows",price:45999,emoji:"💻",computerBrand:"Dell",computerRam:"16GB",computerStorage:"512GB SSD",computerProcessor:"Intel Core i5",screenSize:"15–16 inch",computerOs:"Windows",deviceType:"Laptop"},
+ {id:104,name:"Lenovo Ryzen 5 Laptop",category:"Computers & Office",detail:"Lenovo · 16GB RAM · 512GB SSD · AMD Ryzen 5 · 15–16 inch · Windows",price:42999,emoji:"💻",computerBrand:"Lenovo",computerRam:"16GB",computerStorage:"512GB SSD",computerProcessor:"AMD Ryzen 5",screenSize:"15–16 inch",computerOs:"Windows",deviceType:"Laptop"},
+ {id:105,name:"ASUS Gaming Laptop",category:"Computers & Office",detail:"ASUS · 16GB RAM · 1TB SSD · Intel Core i7 · 15–16 inch · Windows",price:74999,emoji:"💻",computerBrand:"ASUS",computerRam:"16GB",computerStorage:"1TB SSD",computerProcessor:"Intel Core i7",screenSize:"15–16 inch",computerOs:"Windows",deviceType:"Laptop"},
+ {id:106,name:"Acer Ryzen 3 Laptop",category:"Computers & Office",detail:"Acer · 8GB RAM · 512GB SSD · AMD Ryzen 3 · 13–14 inch · Windows",price:29999,emoji:"💻",computerBrand:"Acer",computerRam:"8GB",computerStorage:"512GB SSD",computerProcessor:"AMD Ryzen 3",screenSize:"13–14 inch",computerOs:"Windows",deviceType:"Laptop"},
+ {id:107,name:"Apple MacBook",category:"Computers & Office",detail:"Apple · 16GB RAM · 512GB SSD · Apple M-series · 13–14 inch · macOS",price:89999,emoji:"💻",computerBrand:"Apple",computerRam:"16GB",computerStorage:"512GB SSD",computerProcessor:"Apple M-series",screenSize:"13–14 inch",computerOs:"macOS",deviceType:"Laptop"},
+ {id:108,name:"MSI Gaming Laptop",category:"Computers & Office",detail:"MSI · 32GB RAM · 1TB SSD · Intel Core i7 · 15–16 inch · Windows",price:99999,emoji:"💻",computerBrand:"MSI",computerRam:"32GB",computerStorage:"1TB SSD",computerProcessor:"Intel Core i7",screenSize:"15–16 inch",computerOs:"Windows",deviceType:"Laptop"},
+ {id:109,name:"Assembled Computer — Basic Office PC",category:"Computers & Office",detail:"Assembled Computer · 8GB RAM · 512GB SSD · Intel Core i3 · Windows",price:21999,emoji:"🖥️",computerBrand:"",computerRam:"8GB",computerStorage:"512GB SSD",computerProcessor:"Intel Core i3",screenSize:"",computerOs:"Windows",deviceType:"Assembled Computer"},
+ {id:110,name:"Assembled Computer — Ryzen 5 PC",category:"Computers & Office",detail:"Assembled Computer · 16GB RAM · 512GB SSD · AMD Ryzen 5 · Windows",price:34999,emoji:"🖥️",computerBrand:"",computerRam:"16GB",computerStorage:"512GB SSD",computerProcessor:"AMD Ryzen 5",screenSize:"",computerOs:"Windows",deviceType:"Assembled Computer"},
+ {id:111,name:"Assembled Gaming Computer",category:"Computers & Office",detail:"Assembled Computer · 32GB RAM · 1TB SSD · Intel Core i7 · Windows",price:74999,emoji:"🎮",computerBrand:"",computerRam:"32GB",computerStorage:"1TB SSD",computerProcessor:"Intel Core i7",screenSize:"",computerOs:"Windows",deviceType:"Assembled Computer"}
 ];
 const cart = {};
 let currentOrder = null;
@@ -288,9 +313,14 @@ function cartTotal(){return products.reduce((sum,p)=>sum+p.price*(cart[p.id]||0)
 function renderProducts(){
  const q=document.getElementById("search").value.trim().toLowerCase();
  const isMobiles=activeCategory==="Mobiles & Tablets";
- const filterPanel=document.getElementById("mobileFilters"); if(filterPanel) filterPanel.hidden=!isMobiles;
+ const isComputers=activeCategory==="Computers & Office";
+ const mobilePanel=document.getElementById("mobileFilters");
+ const computerPanel=document.getElementById("computerFilters");
+ if(mobilePanel) mobilePanel.hidden=!isMobiles;
+ if(computerPanel) computerPanel.hidden=!isComputers;
  let list=products.filter(p=>(activeCategory==="All Products"||p.category===activeCategory)&&(p.name+" "+p.detail+" "+p.category).toLowerCase().includes(q));
  if(isMobiles && anyMobileFilterActive()) list=list.filter(matchesMobileFilters);
+ if(isComputers && anyComputerFilterActive()) list=list.filter(matchesComputerFilters);
  document.getElementById("productCount").textContent=(activeCategory==="All Products"?"Sabhi categories":activeCategory)+" · "+list.length+" products";
  document.getElementById("productGrid").innerHTML=list.length?list.map(p=>`<article class="product"><div class="emoji" aria-hidden="true">${p.emoji}</div><h3>${p.name}</h3><div class="detail">${p.category} · ${p.detail}</div><div class="price">${money(p.price)}</div><button type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi electronics product nahi mila. Filters clear karke dobara dekhein.</p>";
 }
@@ -380,6 +410,27 @@ function clearMobileFilters(){
 }
 const clearMobileFiltersButton=document.getElementById("clearMobileFilters");if(clearMobileFiltersButton)clearMobileFiltersButton.addEventListener("click",clearMobileFilters);
 ["brandSearch","priceFilter",...mobileFilterIds].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener("input",renderProducts);});
+
+
+const computerFilterIds=["computerBrandFilter","computerRamFilter","computerStorageFilter","computerProcessorFilter","screenSizeFilter","computerOsFilter","deviceTypeFilter"];
+function anyComputerFilterActive(){return document.getElementById("computerBrandSearch").value.trim()!==""||computerFilterIds.some(id=>selectedValues(id).length>0)||document.getElementById("computerPriceFilter").value!=="";}
+function matchesComputerFilters(p){
+ const q=document.getElementById("computerBrandSearch").value.trim().toLowerCase();
+ if(q && !(p.computerBrand||"").toLowerCase().includes(q)) return false;
+ const checks=[["computerBrandFilter","computerBrand"],["computerRamFilter","computerRam"],["computerStorageFilter","computerStorage"],["computerProcessorFilter","computerProcessor"],["screenSizeFilter","screenSize"],["computerOsFilter","computerOs"],["deviceTypeFilter","deviceType"]];
+ for(const [filter,key] of checks){const values=selectedValues(filter);if(values.length && !values.includes(p[key]||"")) return false;}
+ const range=document.getElementById("computerPriceFilter").value;
+ if(range){const [min,max]=range.split("-").map(Number);if(p.price<min || p.price>max) return false;}
+ return true;
+}
+function clearComputerFilters(){
+ document.getElementById("computerBrandSearch").value="";
+ computerFilterIds.forEach(id=>Array.from(document.getElementById(id).options).forEach(o=>o.selected=false));
+ document.getElementById("computerPriceFilter").value="";
+ renderProducts();
+}
+const clearComputerFiltersButton=document.getElementById("clearComputerFilters");if(clearComputerFiltersButton)clearComputerFiltersButton.addEventListener("click",clearComputerFilters);
+["computerBrandSearch","computerPriceFilter",...computerFilterIds].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener("input",renderProducts);});
 
 renderCategories();renderProducts();renderCart();
 </script>
