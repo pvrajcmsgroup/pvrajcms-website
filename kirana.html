@@ -714,6 +714,37 @@ body.kirana-page .selected-banner { margin:0; border-radius:0 0 15px 15px; }
   }
 }
 
+
+
+/* Compact mobile header: reduce logo, vertical space and navigation gaps */
+@media (max-width: 600px) {
+  body.kirana-page > header.site-header {
+    padding: 5px 8px !important;
+  }
+  body.kirana-page > header.site-header > .container {
+    gap: 5px;
+  }
+  body.kirana-page .site-header .logo {
+    gap: 3px;
+  }
+  body.kirana-page .site-header .logo img {
+    width: min(78vw, 260px) !important;
+    min-width: 0;
+    max-height: 65px;
+  }
+  body.kirana-page .site-header .logo-text p {
+    font-size: 10px;
+    line-height: 1.25;
+  }
+  body.kirana-page .site-header .navbar {
+    gap: 8px 12px;
+    padding: 2px 0;
+  }
+  body.kirana-page .site-header .navbar a {
+    font-size: 12px;
+  }
+}
+
 </style>
 </head>
 <body class="kirana-page">
