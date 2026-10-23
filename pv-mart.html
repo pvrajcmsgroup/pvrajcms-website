@@ -13,7 +13,7 @@ header{background:#071422;color:#fff;border-bottom:1px solid #25405a}
 .header-inner{max-width:1400px;margin:auto;padding:8px 18px;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .brand{display:flex;align-items:center;gap:12px;min-width:0;text-decoration:none;color:white}
 .brand img{width:min(26vw,300px);max-height:65px;object-fit:contain;object-position:left center}
-.brand-tagline{border-left:1px solid #526275;padding-left:16px;font-size:16px;font-weight:800;line-height:1.4;color:#fff;white-space:nowrap;letter-spacing:.15px}
+.brand-tagline{border-left:1px solid #526275;padding-left:16px;display:flex;flex-direction:column;align-items:flex-start;gap:2px;white-space:nowrap;line-height:1.15;letter-spacing:.15px}.brand-name{font-size:clamp(20px,2vw,28px);font-weight:900;color:#fff;letter-spacing:.5px}.brand-name .brand-pv{color:#36D6B2}.brand-subtitle{font-size:12px;font-weight:500;color:#E8C978;letter-spacing:.1px}
 nav{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
 nav a{color:#f4f8ff;text-decoration:none;font-weight:700;font-size:13px;white-space:nowrap}
 nav a:hover{color:var(--gold)}
@@ -105,7 +105,7 @@ footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font
 .offers-strip span{font-weight:800;font-size:13px}.offers-strip small{font-size:12px}
 @media(max-width:1000px){main{grid-template-columns:1fr}.products{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){
- .header-inner{padding:8px 10px;display:block}.brand{justify-content:center;gap:8px}.brand img{width:min(44vw,190px);max-height:48px}.brand-tagline{font-size:11px;font-weight:800;padding-left:9px;white-space:normal;max-width:155px;line-height:1.35}
+ .header-inner{padding:8px 10px;display:block}.brand{justify-content:center;gap:8px}.brand img{width:min(44vw,190px);max-height:48px}.brand-tagline{padding-left:9px;white-space:normal;max-width:155px}.brand-name{font-size:clamp(18px,5vw,23px)}.brand-subtitle{font-size:10px;line-height:1.25}
  nav{justify-content:center;gap:8px 13px;margin-top:9px}nav a{font-size:12px}
   nav .dropdown-menu{left:50%;transform:translateX(-50%);min-width:200px}
   nav .dropdown-toggle{font-size:12px}
@@ -163,7 +163,7 @@ button:focus-visible, a:focus-visible, .cat:focus-visible, .category-card:focus-
  <div class="header-inner">
   <a class="brand" href="index.html" aria-label="PVRajCMS Group home">
    <img src="logo.png" alt="PVRajCMS Group Logo">
-   <span class="brand-tagline">PV MART · Aapki Apni Online Dukaan</span>
+   <span class="brand-tagline"><span class="brand-name"><span class="brand-pv">PV</span> MART</span><span class="brand-subtitle">Aapki Apni Online Dukaan</span></span>
   </a>
   <nav aria-label="Store navigation">
    <a href="#shop">Shop Now</a>
