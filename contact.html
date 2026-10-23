@@ -10,72 +10,128 @@
     <link rel="stylesheet" href="style.css">
     <style>
         body.contact-page { overflow-x: hidden; }
-        /* Compact horizontal header consistent with the About and Projects pages */
-        body.contact-page .site-header {
-            padding: 3px 12px !important;
+        /* =====================================
+           PVRajCMS HEADER - COMPACT HORIZONTAL LAYOUT
+        ====================================== */
+        .contact-page .site-header {
             background: #071422;
+            padding: 3px 12px !important;
             border-bottom: 1px solid rgba(255,255,255,.12);
         }
-        body.contact-page .site-header > .container {
+
+        .contact-page .site-header > .container {
             display: flex;
             flex-direction: row;
-            flex-wrap: nowrap;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 14px;
             width: 100%;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0;
         }
-        body.contact-page .site-header .logo {
+
+        .contact-page .site-header .logo {
             display: flex;
-            flex: 0 1 300px;
-            min-width: 0;
+            flex-direction: row;
             align-items: center;
+            gap: 14px;
+            flex: 0 1 auto;
+            min-width: 0;
             text-decoration: none;
         }
-        body.contact-page .site-header .logo img {
+
+        .contact-page .site-header .logo img {
             display: block;
-            width: min(25vw, 300px);
-            max-width: 100%;
-            max-height: 68px;
-            height: auto;
+            width: min(28vw, 360px) !important;
+            min-width: 230px;
+            height: auto !important;
+            max-height: 72px;
             object-fit: contain;
             object-position: left center;
         }
-        body.contact-page .site-header .logo-text {
-            flex: 0 1 245px;
-            min-width: 0;
-            margin-right: auto;
+
+        .contact-page .site-header .logo-text {
+            text-align: left;
+            margin: 0;
+            padding-left: 14px;
+            border-left: 1px solid rgba(255,255,255,.18);
         }
-        body.contact-page .site-header .logo-text p {
+
+        .contact-page .site-header .logo-text p {
             margin: 0;
             color: #d6e6f7;
             font-size: 12px;
-            line-height: 1.4;
-            white-space: normal;
-        }
-        body.contact-page .site-header .navbar {
-            display: flex;
-            flex: 1 1 auto;
-            align-items: center;
-            justify-content: flex-end;
-            flex-wrap: nowrap;
-            gap: clamp(9px, 1.25vw, 18px);
-            width: auto;
-            min-width: 0;
-            margin-left: auto;
-        }
-        body.contact-page .site-header .navbar a {
-            font-size: 14px;
+            line-height: 1.5;
             white-space: nowrap;
-            flex-shrink: 0;
-        }
-        body.contact-page .site-header .navbar a[aria-current="page"] {
-            color: #59c7f5;
+            letter-spacing: .5px;
         }
 
+        .contact-page .site-header .navbar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            flex: 0 0 auto;
+            flex-wrap: nowrap;
+            gap: 16px;
+            width: auto;
+            margin: 0;
+            padding: 5px 0;
+            border: 0;
+        }
+
+        .contact-page .site-header .navbar a {
+            white-space: nowrap;
+        }
+
+        @media (max-width: 1000px) {
+            .contact-page .site-header > .container {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .contact-page .site-header .logo {
+                justify-content: center;
+            }
+
+            .contact-page .site-header .navbar {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 12px 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .contact-page .site-header {
+                padding: 10px !important;
+            }
+
+            .contact-page .site-header .logo {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .contact-page .site-header .logo img {
+                width: min(88vw, 300px) !important;
+                min-width: 0;
+                max-height: 75px;
+            }
+
+            .contact-page .site-header .logo-text {
+                border-left: 0;
+                padding-left: 0;
+                text-align: center;
+            }
+
+            .contact-page .site-header .logo-text p {
+                white-space: normal;
+                font-size: 11px;
+            }
+
+            .contact-page .site-header .navbar {
+                gap: 10px 15px;
+            }
+        }
+    
         /* Contact page content and readable enquiry cards */
         body.contact-page main { min-width: 0; }
         body.contact-page .contact {
@@ -205,8 +261,10 @@
     <div class="container">
         <a href="index.html" class="logo" aria-label="PVRajCMS Group Home">
             <img src="logo.png" alt="PVRajCMS Group Logo">
+            <div class="logo-text">
+                <p>Engineering • Technology • Digital Innovation</p>
+            </div>
         </a>
-        <div class="logo-text"><p>Engineering • Technology • Digital Innovation</p></div>
         <nav class="navbar" aria-label="Main navigation">
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
