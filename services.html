@@ -11,76 +11,101 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* Match the homepage navigation and PV MART button */
-        .brand-header .main-nav a {
-            font-size: 14px;
-            font-weight: 600;
-            white-space: nowrap;
+        /* Match the compact horizontal header used on the About and Projects pages */
+        .services-page .site-header {
+            background: #071422;
+            padding: 3px 12px !important;
+            border-bottom: 1px solid rgba(255,255,255,.12);
         }
-        .brand-header .main-nav a.mart-nav-button {
-            display: inline-flex;
+        .services-page .site-header > .container {
+            display: flex;
+            flex-direction: row;
             align-items: center;
-            justify-content: center;
-            padding: 8px 12px;
-            border: 1px solid #2b9bd0;
-            border-radius: 6px;
-            background: linear-gradient(135deg, #087cae, #075985);
-            color: #fff;
-            font-size: 14px;
-            font-weight: 800;
-            line-height: 1.2;
+            justify-content: space-between;
+            gap: 14px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .services-page .site-header .logo {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 14px;
+            flex: 0 1 auto;
+            min-width: 0;
             text-decoration: none;
+        }
+        .services-page .site-header .logo img {
+            display: block;
+            width: min(28vw, 360px) !important;
+            min-width: 230px;
+            height: auto !important;
+            max-height: 72px;
+            object-fit: contain;
+            object-position: left center;
+        }
+        .services-page .site-header .logo-text {
+            text-align: left;
+            margin: 0;
+            padding-left: 14px;
+            border-left: 1px solid rgba(255,255,255,.18);
+        }
+        .services-page .site-header .logo-text p {
+            margin: 0;
+            color: #d6e6f7;
+            font-size: 12px;
+            line-height: 1.5;
             white-space: nowrap;
-            box-shadow: 0 4px 12px rgba(43, 155, 208, .18);
-            transition: background .2s ease, border-color .2s ease, transform .2s ease;
+            letter-spacing: .5px;
         }
-        .brand-header .main-nav a.mart-nav-button:hover {
-            background: linear-gradient(135deg, #129bd1, #087cae);
-            border-color: #5ecbff;
-            color: #fff;
-            transform: translateY(-1px);
+        .services-page .site-header .navbar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            flex: 0 0 auto;
+            flex-wrap: nowrap;
+            gap: 16px;
+            width: auto;
+            margin: 0;
+            padding: 5px 0;
+            border: 0;
         }
-        .brand-header .main-nav a.mart-nav-button:focus-visible {
-            outline: 3px solid #5ecbff;
-            outline-offset: 3px;
-        }
-        @media (max-width: 1199px) {
-            .brand-header .main-nav {
-                display: flex;
+        .services-page .site-header .navbar a { white-space: nowrap; }
+        @media (max-width: 1000px) {
+            .services-page .site-header > .container {
                 flex-wrap: wrap;
-                align-items: center;
                 justify-content: center;
-                gap: 10px 14px;
-                width: 100%;
+            }
+            .services-page .site-header .logo { justify-content: center; }
+            .services-page .site-header .navbar {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 12px 20px;
             }
         }
-        @media (max-width: 700px) {
-            .brand-header .main-nav {
-                display: flex !important;
-                flex-wrap: wrap !important;
-                justify-content: center !important;
-                align-items: center !important;
-                gap: 8px 12px !important;
-                width: 100% !important;
-                overflow: visible !important;
-                white-space: normal !important;
-                margin-top: 8px !important;
+        @media (max-width: 600px) {
+            .services-page .site-header { padding: 10px !important; }
+            .services-page .site-header .logo {
+                flex-direction: column;
+                gap: 6px;
             }
-            .brand-header .main-nav a {
-                font-size: 13px !important;
-                line-height: 1.35;
+            .services-page .site-header .logo img {
+                width: min(88vw, 300px) !important;
+                min-width: 0;
+                max-height: 75px;
             }
-            .brand-header .main-nav a.mart-nav-button {
-                padding: 7px 10px !important;
-                font-size: 13px !important;
+            .services-page .site-header .logo-text {
+                border-left: 0;
+                padding-left: 0;
+                text-align: center;
             }
-        }
-        @media (max-width: 380px) {
-            .brand-header .main-nav { gap: 7px 9px !important; }
-            .brand-header .main-nav a { font-size: 12px !important; }
-            .brand-header .main-nav a.mart-nav-button {
-                padding: 6px 8px !important;
-                font-size: 12px !important;
+            .services-page .site-header .logo-text p {
+                white-space: normal;
+                font-size: 11px;
+            }
+            .services-page .site-header .navbar {
+                gap: 10px 15px;
             }
         }
 
@@ -143,25 +168,93 @@
             .product-info p { font-size: 14px; }
             .product-button { padding: 8px 10px; font-size: 12px; white-space: normal; }
         }
+
+        .services-page .services {
+            width: min(1200px, calc(100% - 36px));
+            margin: 0 auto;
+            padding: 38px 0 76px;
+        }
+        .services-page .services > .section-label {
+            display: inline-block;
+            margin-bottom: 8px;
+            color: #55c9fa;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+        }
+        .services-page .services > h1 {
+            margin: 0 0 16px;
+            color: #f7fbff;
+            font-size: clamp(30px, 3.5vw, 44px);
+            line-height: 1.18;
+        }
+        .services-page .services > p {
+            margin: 0 0 12px;
+            color: #b8cbd9;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        .services-page .services > h2 {
+            margin: 38px 0 16px;
+            color: #f4f9ff;
+            font-size: clamp(23px, 2.5vw, 30px);
+            line-height: 1.25;
+        }
+        .services-page .service-card {
+            margin: 0 0 16px;
+            padding: 22px 24px;
+            border: 1px solid rgba(103,189,226,.20);
+            border-radius: 10px;
+            background: linear-gradient(145deg, rgba(18,48,69,.78), rgba(7,22,36,.94));
+            box-shadow: 0 10px 26px rgba(0,0,0,.12);
+            transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+        }
+        .services-page .service-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(72,194,241,.48);
+            box-shadow: 0 14px 30px rgba(0,0,0,.18);
+        }
+        .services-page .service-card h3 {
+            margin: 0 0 8px;
+            color: #f7fbff;
+            font-size: 19px;
+            line-height: 1.4;
+        }
+        .services-page .service-card p {
+            margin: 0;
+            color: #afc3d2;
+            font-size: 15px;
+            line-height: 1.75;
+        }
+        @media (max-width: 700px) {
+            .services-page .services {
+                width: calc(100% - 30px);
+                padding: 30px 0 52px;
+            }
+            .services-page .services > p { font-size: 15px; }
+            .services-page .services > h2 { margin-top: 30px; }
+            .services-page .service-card { padding: 18px 16px; }
+            .services-page .service-card h3 { font-size: 18px; }
+            .services-page .service-card p { font-size: 14px; }
+        }
     </style>
 </head>
-<body>
-<header class="brand-header">
-    <div class="header-container">
-        <a href="index.html" class="brand-logo-link">
-            <img src="logo.png" alt="PVRajCMS Group Logo" class="brand-logo">
+<body class="services-page">
+<header class="site-header">
+    <div class="container">
+        <a href="index.html" class="logo" aria-label="PVRajCMS Group Home">
+            <img src="logo.png" alt="PVRajCMS Group Logo">
+            <div class="logo-text">
+                <p>Engineering • Technology • Digital Innovation</p>
+            </div>
         </a>
-        <div class="brand-name-block">
-            <div class="brand-name">CMS</div>
-            <div class="brand-tagline">Engineering • Technology • Digital Innovation</div>
-        </div>
-        <nav class="main-nav" aria-label="Main navigation">
+        <nav class="navbar" aria-label="Main navigation">
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
-            <a href="services.html" class="active">Services</a>
+            <a href="services.html" aria-current="page">Services</a>
             <a href="projects.html">Projects</a>
             <a href="contact.html">Contact</a>
-            <a href="kirana.html" class="mart-nav-button">PV MART</a>
+            <a href="kirana.html">PV MART</a>
         </nav>
     </div>
 </header>
