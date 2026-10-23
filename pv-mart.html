@@ -49,6 +49,11 @@ button{font:inherit;cursor:pointer;border:0;border-radius:9px;padding:10px 11px;
 .cart-name{font-weight:700;font-size:13px}.qty{display:flex;align-items:center;gap:8px;margin-top:6px}.qty button{padding:3px 9px;background:#edf2f6;color:var(--navy)}
 .cart-price{font-size:13px;font-weight:700;text-align:right}
 .total{display:flex;justify-content:space-between;padding:15px 0;font-size:18px;font-weight:800}
+.checkout-start{width:100%;background:#13865c;color:#fff;font-size:16px;padding:14px;margin:0 0 14px}
+#checkoutSection{display:none;border-top:1px solid var(--line);padding-top:14px;margin-top:4px}
+#orderPreview{display:none;border:1px solid #b7dfc9;background:#f3fbf6;border-radius:12px;padding:14px;margin-top:12px}
+.preview-line{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #dcece2;font-size:13px}
+.preview-address{white-space:pre-line;font-size:13px;line-height:1.6;margin-top:8px}
 label{display:block;font-size:13px;font-weight:700;margin:12px 0 6px}
 input,textarea{width:100%;border:1px solid #d7e0e8;border-radius:10px;padding:12px;font:inherit;background:white;color:var(--ink)}
 textarea{resize:vertical;min-height:72px}
@@ -162,6 +167,8 @@ footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font
  <aside class="panel" id="cart-panel">
   <h2>🧺 Aapka Cart</h2><div id="cart"><div class="cart-empty">Abhi cart khaali hai. Product add karein.</div></div>
   <div class="total"><span>Total</span><span id="total">₹0</span></div>
+  <button id="checkoutButton" class="checkout-start" type="button">🛍️ Buy Now / Checkout</button>
+  <div id="checkoutSection">
   <h2 style="margin-top:8px">📍 Delivery Details</h2>
   <form id="orderForm">
    <label for="customer">Aapka naam *</label><input id="customer" required autocomplete="name" placeholder="Naam likhein">
@@ -178,11 +185,20 @@ footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font
    </div>
    <button type="submit" class="primary">Order Book Karein</button>
   </form>
+  <div id="orderPreview">
+   <h2>✅ Order Summary</h2>
+   <div id="previewOrderId"></div>
+   <div id="previewItems"></div>
+   <div class="total"><span>Total Amount</span><span id="previewTotal">₹0</span></div>
+   <p><strong>Payment:</strong> <span id="previewPayment"></span></p>
+   <p><strong>Delivery Address:</strong></p><div id="previewAddress" class="preview-address"></div>
+  </div>
   <div id="status" role="status"></div>
   <button id="payButton" class="primary" style="display:none" type="button">UPI App se Payment Karein</button>
   <button id="sendButton" class="secondary" style="display:none" type="button">WhatsApp par Order Bhejein</button>
   <div class="warning"><strong>Live karne se pehle:</strong> Neeche code mein apni asli UPI ID aur shop WhatsApp number set karein. UPI payment ko bank/UPI app mein verify karein; screenshot ko akela proof na maanein.</div>
   <p class="note">Yeh starter version order database mein save nahi karta. Order shop tak bhejne ke liye WhatsApp button use hoga.</p>
+  </div>
  </aside>
 </main>
 <footer id="contact"><strong>PV MART</strong> · Aapki Apni Online Dukaan<br>Retail Shopping • Grocery • Fashion • Electronics • Home Essentials<br><strong>PV Foods & Agro</strong> · Sarson Tel • Aata • Masale • Wholesale<br>Part of PVRajCMS Group</footer>
@@ -383,7 +399,7 @@ function renderProducts(){
  const filtered=productsData.filter(p=>(activeCat==="Sabhi"||p.cat===activeCat)&&(`${p.name} ${p.detail} ${p.cat}`).toLowerCase().includes(q));
  document.getElementById("products").innerHTML=filtered.length?filtered.map(p=>`<article class="product"><div class="product-emoji">${p.emoji}</div><h3>${p.name}</h3><div class="small">${p.detail}</div><div class="small">${p.cat}</div><div class="price">${money(p.price)}</div><button class="add" type="button" onclick="addToCart(${p.id})">🛒 My Cart mein jodein</button></article>`).join(""):"<p>Koi product nahi mila. Doosra naam search karein.</p>"
 }
-function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart();const count=document.getElementById("cartCount");count.textContent=Object.values(cart).reduce((a,b)=>a+b,0);const status=document.getElementById("status");status.style.display="block";status.textContent="Product My Cart mein add ho gaya. Cart check karke delivery details bharein aur Order Book karein.";status.scrollIntoView({behavior:"smooth",block:"nearest"})}
+function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart();const count=document.getElementById("cartCount");count.textContent=Object.values(cart).reduce((a,b)=>a+b,0);const status=document.getElementById("status");status.style.display="block";status.textContent="Product Cart mein add ho gaya. Ab Buy Now / Checkout par click karein.";document.getElementById("checkoutButton").scrollIntoView({behavior:"smooth",block:"nearest"})}
 function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart()}
 function getTotal(){return productsData.reduce((s,p)=>s+p.price*(cart[p.id]||0),0)}
 function renderCart(){
@@ -393,6 +409,7 @@ function renderCart(){
  document.getElementById("cartCount").textContent=Object.values(cart).reduce((a,b)=>a+b,0);
  document.getElementById("status").style.display="none";document.getElementById("payButton").style.display="none";document.getElementById("sendButton").style.display="none";document.getElementById("orderPreview").style.display="none";currentOrder=null;
 }
+document.getElementById("checkoutButton").addEventListener("click",function(){if(getTotal()<=0){alert("Pehle product ko My Cart mein add karein.");return}const section=document.getElementById("checkoutSection");section.style.display="block";section.scrollIntoView({behavior:"smooth",block:"start"});});
 document.getElementById("search").addEventListener("input",renderProducts);
 document.getElementById("orderForm").addEventListener("submit",function(e){
  e.preventDefault();if(getTotal()<=0){alert("Pehle cart mein product add karein.");return}
