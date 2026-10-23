@@ -429,3 +429,21 @@ renderCategories();renderProducts();renderCart();
 </script>
 </body>
 </html>
+
+/* Corrected scroll behavior: page scrolls like Kirana; hero moves away naturally */
+@media (min-width: 761px) {
+  html, body { height: auto !important; min-height: 100%; overflow-y: auto !important; overflow-x: hidden; }
+  body { min-height: 100vh; }
+  main { height: auto !important; min-height: 0; overflow: visible !important; }
+  .shop-layout { height: auto !important; min-height: 0; align-items: start; }
+  .shop-layout > section.panel { height: auto !important; max-height: none !important; overflow: visible !important; }
+  .side-cats, .cart-panel { position: sticky !important; top: 12px; align-self: start; max-height: calc(100vh - 24px); overflow: visible; }
+  .cat-list { max-height: calc(100vh - 105px); overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; }
+  .cart-items { max-height: calc(100vh - 270px); overflow-y: auto; }
+}
+@media (max-width: 760px) {
+  html, body { height: auto !important; overflow-y: auto !important; }
+  main, .shop-layout, .shop-layout > section.panel { height: auto !important; max-height: none !important; overflow: visible !important; }
+  .side-cats, .cart-panel { position: static !important; max-height: none; }
+  .cat-list { max-height: 360px; overflow-y: auto; }
+}
