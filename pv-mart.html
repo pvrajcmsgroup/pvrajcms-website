@@ -17,6 +17,13 @@ header{background:#071422;color:#fff;border-bottom:1px solid #25405a}
 nav{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
 nav a{color:#f4f8ff;text-decoration:none;font-weight:700;font-size:13px;white-space:nowrap}
 nav a:hover{color:var(--gold)}
+nav .nav-dropdown{position:relative;display:inline-block}
+nav .dropdown-toggle{display:inline-flex;align-items:center;gap:5px;color:#f4f8ff;text-decoration:none;font-weight:700;font-size:13px;white-space:nowrap;cursor:pointer}
+nav .dropdown-menu{display:none;position:absolute;top:100%;left:0;min-width:220px;max-height:70vh;overflow-y:auto;background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px;box-shadow:0 10px 28px #07142230;z-index:1000}
+nav .nav-dropdown:hover .dropdown-menu,nav .nav-dropdown:focus-within .dropdown-menu{display:block}
+nav .dropdown-menu a{display:block;color:var(--ink);padding:10px 12px;border-radius:7px;font-size:13px;white-space:normal}
+nav .dropdown-menu a:hover{background:#edf8f1;color:var(--green)}
+
 .hero{max-width:1400px;margin:14px auto 0;padding:0 16px}
 .hero-inner{background:linear-gradient(115deg,#071729,#0d4b50);border-radius:16px;padding:clamp(24px,5vw,58px);color:white;display:flex;justify-content:space-between;align-items:center;gap:24px;overflow:hidden}
 .hero h1{font-size:clamp(28px,4.5vw,54px);line-height:1.08;margin:0 0 12px;max-width:700px}
@@ -70,6 +77,8 @@ footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font
 @media(max-width:650px){
  .header-inner{padding:8px 10px;display:block}.brand{justify-content:center;gap:8px}.brand img{width:min(44vw,190px);max-height:48px}.brand-tagline{font-size:9px;padding-left:8px;white-space:normal;max-width:145px}
  nav{justify-content:center;gap:8px 13px;margin-top:9px}nav a{font-size:12px}
+  nav .dropdown-menu{left:50%;transform:translateX(-50%);min-width:200px}
+  nav .dropdown-toggle{font-size:12px}
  .hero{padding:0 10px;margin-top:10px}.hero-inner{padding:24px 18px;border-radius:12px}.hero-art{display:none}.hero h1{font-size:30px}.hero p{font-size:14px}
  .category-section{padding:0 10px;margin-top:14px}.section-heading h2{font-size:20px}.section-heading{align-items:center}.text-link{font-size:11px}
  .category-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.category-card{padding:10px 8px;gap:8px}.category-card .cat-icon{width:36px;height:36px;flex-basis:36px;font-size:20px}.category-card strong{font-size:11px}
@@ -87,7 +96,23 @@ footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font
    <span class="brand-tagline">PV MART · Aapki Apni Online Dukaan</span>
   </a>
   <nav aria-label="Store navigation">
-   <a href="#shop">Shop Now</a><a href="#categories-section">Categories</a><a href="#offers">Offers</a><a href="#cart-panel">My Cart (<span id="cartCount">0</span>)</a><a href="#contact">Contact</a>
+   <a href="#shop">Shop Now</a>
+    <div class="nav-dropdown">
+     <a class="dropdown-toggle" href="#categories-section" aria-haspopup="true">Categories ▾</a>
+     <div class="dropdown-menu" aria-label="PV MART shops">
+      <a href="kirana.html">🛒 Kirana</a>
+      <a href="clothes.html">👕 Clothes & Fashion</a>
+      <a href="electronics.html">📱 Electronics</a>
+      <a href="beauty.html">💄 Beauty & Cosmetics</a>
+      <a href="household.html">🏠 Home & Kitchen</a>
+      <a href="stationery.html">📚 Stationery & Books</a>
+      <a href="baby-care.html">🧸 Baby Care</a>
+      <a href="animal-feed.html">🐄 Animal Feed & Agriculture</a>
+      <a href="pv-foods.html">🌾 PV Foods & Agro</a>
+      <a href="sarson-tel.html">🫗 Sarson Tel</a>
+     </div>
+    </div>
+    <a href="#offers">Offers</a><a href="#cart-panel">My Cart (<span id="cartCount">0</span>)</a><a href="#contact">Contact</a>
   </nav>
  </div>
 </header>
