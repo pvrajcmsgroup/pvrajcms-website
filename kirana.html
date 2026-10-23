@@ -38,6 +38,25 @@ input{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;back
 .qty{display:flex;align-items:center;gap:7px;margin-top:6px}.qty button{padding:4px 10px;margin:0;background:#edf2f6;color:var(--navy)}
 .total{display:flex;justify-content:space-between;font-size:19px;font-weight:800;padding:14px 0}
 .note{font-size:12px;color:var(--muted);line-height:1.6}
+.cart-layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:18px;align-items:start}
+.cart-summary{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:16px;position:sticky;top:12px}
+.checkout-btn{display:block;width:100%;background:#ffd814;color:#172536;border-radius:999px;padding:13px;margin-top:8px;font-weight:800}
+.checkout-btn:hover{background:#f7ca00}
+.secondary-btn{display:block;width:100%;background:#edf2f6;color:var(--navy);padding:12px;margin-top:10px}
+#checkoutPanel{display:none;scroll-margin-top:18px}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}
+.form-grid .full{grid-column:1/-1}
+.payment-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.payment-option{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff;cursor:pointer;font-size:13px;line-height:1.45}
+.payment-option input{width:auto;margin-top:3px;padding:0}
+.payment-option strong{display:block;margin-bottom:4px}
+.field-label{display:block;font-weight:700;font-size:13px;margin:12px 0 6px}
+.form-grid input,.form-grid textarea{width:100%;min-width:0}
+.form-grid textarea{min-height:75px;resize:vertical}
+.primary-btn{width:100%;margin-top:16px;background:var(--green);padding:13px}
+#orderResult{display:none;margin-top:16px;padding:16px;border:1px solid #a9dfc3;background:#f0fbf5;border-radius:12px;line-height:1.6}
+.order-line{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #d7eade;font-size:13px}
+@media(max-width:760px){.cart-layout{grid-template-columns:1fr}.cart-summary{position:static}.form-grid{grid-template-columns:1fr}.payment-options{grid-template-columns:1fr}}
 footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size:13px;line-height:1.7}
 @media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:850px){.brand img{width:220px}nav{gap:11px}}
@@ -74,12 +93,52 @@ footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size
  <div class="grid" id="productGrid"></div>
  <section class="panel" id="cart">
   <h2>🧺 Aapka Cart</h2><div id="cartItems">Abhi cart khaali hai.</div>
-  <div class="total"><span>Total</span><span id="total">₹0</span></div>
-  <p class="note">Yeh demo catalog hai. Rates sample hain; live karne se pehle actual price, brand, pack size aur stock update karein. Is file mein abhi online payment ya order submission set nahi hai.</p>
+  <div class="cart-layout">
+   <div>
+    <div class="total"><span>Subtotal</span><span id="total">₹0</span></div>
+    <p class="note">Delivery charge abhi calculate nahi kiya gaya. Order confirm karne se pehle shop se final total confirm hoga.</p>
+   </div>
+   <aside class="cart-summary">
+    <div style="font-size:16px;margin-bottom:12px">Subtotal (<span id="summaryCount">0</span> items): <strong id="summaryTotal">₹0</strong></div>
+    <button class="checkout-btn" type="button" id="checkoutButton">Proceed to Buy</button>
+    <button class="secondary-btn" type="button" id="continueShopping">Continue Shopping</button>
+   </aside>
+  </div>
+  <p class="note">Yeh demo catalog hai. Rates sample hain; live karne se pehle actual price, brand, pack size aur stock update karein.</p>
+ </section>
+ <section class="panel" id="checkoutPanel">
+  <h2>📍 Delivery Address & Payment</h2>
+  <p class="note">Checkout ke liye apna sahi delivery address bharein. * wale fields zaroori hain.</p>
+  <form id="checkoutForm">
+   <div class="form-grid">
+    <div><label class="field-label" for="customerName">Full Name *</label><input id="customerName" name="customerName" required autocomplete="name" placeholder="Aapka poora naam"></div>
+    <div><label class="field-label" for="customerPhone">Mobile Number *</label><input id="customerPhone" name="customerPhone" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" autocomplete="tel" placeholder="10 digit mobile number"></div>
+    <div class="full"><label class="field-label" for="address">House / Street / Mohalla / Village *</label><textarea id="address" name="address" required minlength="8" autocomplete="street-address" placeholder="House number, gali, mohalla ya gaon"></textarea></div>
+    <div><label class="field-label" for="city">City / District *</label><input id="city" name="city" required autocomplete="address-level2" placeholder="Shehar / zila"></div>
+    <div><label class="field-label" for="state">State *</label><input id="state" name="state" required autocomplete="address-level1" value="Uttar Pradesh"></div>
+    <div><label class="field-label" for="pincode">PIN Code *</label><input id="pincode" name="pincode" required inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="postal-code" placeholder="6 digit PIN code"></div>
+    <div><label class="field-label" for="landmark">Landmark (optional)</label><input id="landmark" name="landmark" placeholder="School, mandir ya koi paas ki jagah"></div>
+    <div class="full"><label class="field-label">Payment Method *</label>
+     <div class="payment-options">
+      <label class="payment-option"><input type="radio" name="paymentMethod" value="cod" checked><span><strong>Cash on Delivery (COD)</strong>Delivery milne par cash dein.</span></label>
+      <label class="payment-option"><input type="radio" name="paymentMethod" value="upi"><span><strong>UPI — PhonePe / Google Pay</strong>UPI option select karein. UPI ID baad mein configure hogi.</span></label>
+     </div>
+    </div>
+   </div>
+   <button class="primary-btn" type="submit">Place Order / Order Summary Dekhein</button>
+  </form>
+  <div id="orderResult" role="status" aria-live="polite"></div>
+  <button class="checkout-btn" id="sendOrderButton" type="button" style="display:none">WhatsApp par Order Bhejein</button>
+  <button class="secondary-btn" id="payUpiButton" type="button" style="display:none">UPI App se Payment Karein</button>
+  <p class="note">Note: WhatsApp number aur UPI ID abhi add nahi ki gayi hai. Is version mein order browser/database mein permanently save nahi hota.</p>
  </section>
 </main>
 <footer><strong>PV MART</strong> · Kirana & Grocery<br>Part of PVRajCMS Group</footer>
 <script>
+const SHOP_NAME = "PV MART";
+// Apni details baad mein yahan set karein. Abhi placeholders jaan-boojhkar rakhe hain.
+const SHOP_UPI_ID = "YOUR-UPI-ID@bank";
+const SHOP_WHATSAPP = "91XXXXXXXXXX";
 const products = [
  {id:2,name:"Chawal",detail:"5 kg bag",price:275,emoji:"🍚"},
  {id:1,name:"Aata",detail:"5 kg bag",price:152,emoji:"🌾"},
@@ -110,21 +169,57 @@ const products = [
  {id:27,name:"Sugar-Free Tea Biscuits",detail:"1 pack",price:30,emoji:"🍪"}
 ];
 const cart = {};
+let currentOrder = null;
 const money = n => "₹" + n.toLocaleString("en-IN");
+function cartCount(){return Object.values(cart).reduce((a,b)=>a+b,0)}
+function cartTotal(){return products.reduce((sum,p)=>sum+p.price*(cart[p.id]||0),0)}
 function renderProducts(){
  const q=document.getElementById("search").value.trim().toLowerCase();
  const list=products.filter(p=>(p.name+" "+p.detail).toLowerCase().includes(q));
  document.getElementById("productGrid").innerHTML=list.length?list.map(p=>`<article class="product"><div class="emoji">${p.emoji}</div><h3>${p.name}</h3><div class="detail">${p.detail}</div><div class="price">${money(p.price)}</div><button type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi kirana product nahi mila.</p>";
 }
-function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart()}
-function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart()}
+function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart();}
+function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart();}
 function renderCart(){
  const chosen=products.filter(p=>cart[p.id]);
- document.getElementById("cartItems").innerHTML=chosen.length?chosen.map(p=>`<div class="cart-row"><div><strong>${p.name}</strong><div class="qty"><button type="button" onclick="changeQty(${p.id},-1)">−</button><span>${cart[p.id]}</span><button type="button" onclick="changeQty(${p.id},1)">+</button></div></div><strong>${money(p.price*cart[p.id])}</strong></div>`).join(""):"Abhi cart khaali hai.";
- document.getElementById("total").textContent=money(products.reduce((sum,p)=>sum+p.price*(cart[p.id]||0),0));
- document.getElementById("count").textContent=Object.values(cart).reduce((a,b)=>a+b,0);
+ document.getElementById("cartItems").innerHTML=chosen.length?chosen.map(p=>`<div class="cart-row"><div><strong>${p.name}</strong><div class="detail">${p.detail}</div><div class="qty"><button type="button" onclick="changeQty(${p.id},-1)" aria-label="Quantity kam karein">−</button><span>${cart[p.id]}</span><button type="button" onclick="changeQty(${p.id},1)" aria-label="Quantity badhayein">+</button><button type="button" onclick="changeQty(${p.id},-${cart[p.id]})" style="background:#fff0f0;color:#a11">Remove</button></div></div><strong>${money(p.price*cart[p.id])}</strong></div>`).join(""):"<p class="note">Cart khaali hai. Pehle product add karein.</p>";
+ document.getElementById("total").textContent=money(cartTotal());
+ document.getElementById("summaryTotal").textContent=money(cartTotal());
+ document.getElementById("summaryCount").textContent=cartCount();
+ document.getElementById("count").textContent=cartCount();
+ const checkout=document.getElementById("checkoutButton");checkout.disabled=cartCount()===0;checkout.style.opacity=cartCount()===0?".55":"1";
+ if(cartCount()===0){document.getElementById("checkoutPanel").style.display="none";document.getElementById("orderResult").style.display="none";document.getElementById("sendOrderButton").style.display="none";document.getElementById("payUpiButton").style.display="none";currentOrder=null;}
 }
 document.getElementById("search").addEventListener("input",renderProducts);
+document.getElementById("checkoutButton").addEventListener("click",()=>{
+ if(cartCount()===0){alert("Pehle cart mein product add karein.");return;}
+ document.getElementById("checkoutPanel").style.display="block";
+ document.getElementById("checkoutPanel").scrollIntoView({behavior:"smooth",block:"start"});
+});
+document.getElementById("continueShopping").addEventListener("click",()=>document.getElementById("products").scrollIntoView({behavior:"smooth",block:"start"}));
+document.getElementById("checkoutForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ if(cartCount()===0){alert("Pehle cart mein product add karein.");return;}
+ const phone=document.getElementById("customerPhone").value.trim();
+ const pin=document.getElementById("pincode").value.trim();
+ if(!/^[6-9]\d{9}$/.test(phone)){alert("Sahi 10 digit mobile number bharein.");return;}
+ if(!/^\d{6}$/.test(pin)){alert("Sahi 6 digit PIN code bharein.");return;}
+ const payment=document.querySelector('input[name="paymentMethod"]:checked').value;
+ const items=products.filter(p=>cart[p.id]).map(p=>({name:p.name,detail:p.detail,qty:cart[p.id],price:p.price,subtotal:p.price*cart[p.id]}));
+ const orderId="PVM"+Date.now().toString().slice(-8);
+ currentOrder={orderId,customer:document.getElementById("customerName").value.trim(),phone,address:document.getElementById("address").value.trim(),city:document.getElementById("city").value.trim(),state:document.getElementById("state").value.trim(),pincode:pin,landmark:document.getElementById("landmark").value.trim(),payment,items,total:cartTotal()};
+ const itemHtml=items.map(i=>`<div class="order-line"><span>${i.name} (${i.detail}) × ${i.qty}</span><strong>${money(i.subtotal)}</strong></div>`).join("");
+ const addressHtml=`${currentOrder.address}, ${currentOrder.city}, ${currentOrder.state} - ${currentOrder.pincode}${currentOrder.landmark?", Landmark: "+currentOrder.landmark:""}`;
+ document.getElementById("orderResult").innerHTML=`<h3 style="margin-top:0">Order Summary Ready</h3><p><strong>Order ID:</strong> ${orderId}</p><p><strong>Name:</strong> ${currentOrder.customer}<br><strong>Mobile:</strong> ${phone}</p><p><strong>Delivery Address:</strong><br>${addressHtml}</p><h4>Items</h4>${itemHtml}<div class="total"><span>Total</span><span>${money(currentOrder.total)}</span></div><p><strong>Payment:</strong> ${payment==="cod"?"Cash on Delivery":"UPI (payment must be verified)"}</p><p class="note">Yeh summary is browser mein taiyar hui hai; abhi order database mein save nahi hua.</p>`;
+ document.getElementById("orderResult").style.display="block";
+ const send=document.getElementById("sendOrderButton");send.style.display="block";send.textContent=payment==="cod"?"Confirm COD Order on WhatsApp":"WhatsApp par Order Bhejein";
+ document.getElementById("payUpiButton").style.display=payment==="upi"?"block":"none";
+ const lines=items.map(i=>`- ${i.name} (${i.detail}) x ${i.qty} = ${money(i.subtotal)}`).join("\n");
+ currentOrder.message=`New order — ${SHOP_NAME}\nOrder ID: ${orderId}\nName: ${currentOrder.customer}\nMobile: ${phone}\nDelivery Address: ${addressHtml}\n\nItems:\n${lines}\n\nTotal: ${money(currentOrder.total)}\nPayment: ${payment==="upi"?"UPI (verify manually)":"Cash on Delivery"}`;
+ send.onclick=()=>{if(!currentOrder)return;if(SHOP_WHATSAPP==="91XXXXXXXXXX"){alert("WhatsApp number baad mein add karenge. Abhi order summary taiyar hai.");return;}window.open("https://wa.me/"+SHOP_WHATSAPP+"?text="+encodeURIComponent(currentOrder.message),"_blank","noopener");};
+ document.getElementById("payUpiButton").onclick=()=>{if(!currentOrder)return;if(SHOP_UPI_ID==="YOUR-UPI-ID@bank"){alert("UPI ID baad mein add karenge. Abhi order summary taiyar hai.");return;}const params=new URLSearchParams({pa:SHOP_UPI_ID,pn:SHOP_NAME,am:currentOrder.total.toFixed(2),cu:"INR",tn:"Order "+currentOrder.orderId});window.location.href="upi://pay?"+params.toString();};
+ document.getElementById("orderResult").scrollIntoView({behavior:"smooth",block:"start"});
+});
 renderProducts();renderCart();
 </script>
 </body>
