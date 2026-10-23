@@ -71,6 +71,18 @@ footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size
 @media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:850px){.brand img{width:220px}nav{gap:11px}}
 @media(max-width:600px){header{padding:10px 12px}.header-inner{display:flex;align-items:flex-start;flex-direction:column;gap:8px}.brand{gap:9px;flex-wrap:wrap}.brand img{width:190px;max-width:60vw;max-height:52px}.brand-divider{height:24px}.brand-tagline{font-size:11px;white-space:normal}nav{justify-content:flex-start;gap:12px;width:100%}nav a,nav .drop-label{font-size:12px}.dropdown-menu{left:0;max-width:85vw}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product{padding:9px}.emoji{height:58px}.product h3{font-size:13px}.wrap,.hero{padding-left:10px;padding-right:10px}}
+
+/* PV MART brand emphasis + clear active navigation */
+.brand-tagline{font-size:14px;font-weight:800;letter-spacing:.2px;color:#fff}
+.brand-tagline .pv-word{color:#36D6B2;font-weight:900;text-shadow:0 0 10px #36d6b255}
+.brand-tagline .mart-word{color:#FFE17A;font-weight:900;text-shadow:0 0 10px #ffe17a35}
+nav a,nav .drop-label{padding:10px 9px;border-radius:8px;transition:background .18s ease,color .18s ease,box-shadow .18s ease}
+nav a:hover,nav a:focus-visible,nav .drop-label:hover,nav .drop-label:focus-visible{background:#153d53;color:#ffe17a;outline:none}
+nav a.active,nav .drop-label.active{background:#36D6B2;color:#071422;box-shadow:0 0 0 1px #36D6B2;font-weight:900}
+.dropdown-menu a{color:#172536;padding:10px 12px}
+.dropdown-menu a:hover,.dropdown-menu a:focus{background:#e0f7ef;color:#087e57}
+@media(max-width:900px){.brand-tagline{font-size:12px}}
+
 </style>
 </head>
 <body>
@@ -79,7 +91,7 @@ footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size
   <a class="brand" href="pv-mart.html" aria-label="PV MART Home">
    <img src="logo.png" alt="PVRajCMS Group logo">
    <span class="brand-divider" aria-hidden="true"></span>
-   <span class="brand-tagline">PV MART · Aapki Apni Online Dukaan</span>
+   <span class="brand-tagline"><span class="pv-word">PV</span> <span class="mart-word">MART</span> · Aapki Apni Online Dukaan</span>
   </a>
   <nav aria-label="Main navigation">
    <a href="pv-mart.html">PV MART Home</a>
@@ -533,5 +545,22 @@ const clearComputerFiltersButton=document.getElementById("clearComputerFilters")
 
 renderCategories();renderProducts();renderCart();
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+ const navLinks=Array.from(document.querySelectorAll("nav a, nav .drop-label"));
+ const currentFile=(location.pathname.split("/").pop()||"index.html").toLowerCase();
+ navLinks.forEach(link=>{
+   const href=(link.getAttribute("href")||"").toLowerCase();
+   const target=href.split("#")[0];
+   if(target && target===currentFile && !link.classList.contains("drop-label")) link.classList.add("active");
+   link.addEventListener("click",function(){
+     navLinks.forEach(item=>item.classList.remove("active"));
+     link.classList.add("active");
+   });
+ });
+});
+</script>
+
 </body>
 </html>
