@@ -101,17 +101,22 @@ button.click-feedback, a.click-feedback, .product.click-feedback, .payment-optio
    <h3>🛍️ Categories</h3>
    <div class="category-list" id="categoryList">
     <button type="button" class="category-btn active" data-category="all">🛒 Sabhi Products</button>
-    <button type="button" class="category-btn" data-category="rice">🍚 Chawal</button>
-    <button type="button" class="category-btn" data-category="flour">🌾 Aata & Flour</button>
+    <button type="button" class="category-btn" data-category="rice">🍚 Chawal / Rice</button>
     <button type="button" class="category-btn" data-category="pulses">🫘 Daal & Beans</button>
+    <button type="button" class="category-btn" data-category="flour">🌾 Aata & Flour</button>
     <button type="button" class="category-btn" data-category="dryfruits">🥜 Dry Fruits</button>
-    <button type="button" class="category-btn" data-category="oil">🫗 Tel</button>
+    <button type="button" class="category-btn" data-category="oil">🫗 Tel & Ghee</button>
     <button type="button" class="category-btn" data-category="spices">🌶️ Masale</button>
-    <button type="button" class="category-btn" data-category="snacks">🍪 Snacks & Others</button>
+    <button type="button" class="category-btn" data-category="daily">🧂 Daily Essentials</button>
+    <button type="button" class="category-btn" data-category="snacks">🍪 Snacks & Biscuits</button>
+    <button type="button" class="category-btn" data-category="packaged">🍜 Packaged Foods</button>
+    <button type="button" class="category-btn" data-category="cleaning">🧹 Cleaning Items</button>
+    <button type="button" class="category-btn" data-category="personal">🧴 Personal Care</button>
+    <button type="button" class="category-btn" data-category="other">🥫 Other Grocery</button>
    </div>
   </aside>
   <section class="catalog-main">
-   <div class="toolbar"><input id="search" type="search" placeholder="Product ya category search karein..." aria-label="Kirana products search"></div>
+   <div class="toolbar"><input id="search" type="search" placeholder="Chawal, dal, basmati, badam ya koi product search karein..." aria-label="Kirana products search"></div>
    <h2 id="products">Kirana ke Products</h2>
    <p class="results-label" id="resultsLabel">Sabhi categories ke products</p>
    <div class="grid" id="productGrid"></div>
@@ -166,59 +171,128 @@ const SHOP_NAME = "PV MART";
 const SHOP_UPI_ID = "YOUR-UPI-ID@bank";
 const SHOP_WHATSAPP = "91XXXXXXXXXX";
 const products = [
- // Chawal / Rice — prices are sample prices; update before going live.
- {id:2,name:"Regular Rice (Rozana Chawal)",detail:"5 kg bag",price:275,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
- {id:28,name:"Basmati Rice",detail:"1 kg",price:120,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
- {id:29,name:"Sona Masoori Rice",detail:"1 kg",price:75,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
- {id:30,name:"Kolam Rice",detail:"1 kg",price:80,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
- {id:31,name:"Jeera Samba Rice",detail:"1 kg",price:95,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
- {id:34,name:"Parboiled / Usna Rice",detail:"1 kg",price:65,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
- // Aata and flour
- {id:1,name:"Aata (Wheat Flour)",detail:"5 kg bag",price:152,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
- {id:32,name:"Chakki Fresh Aata",detail:"1 kg",price:38,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
- {id:33,name:"Multigrain Aata",detail:"1 kg",price:65,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
- {id:35,name:"Besan",detail:"1 kg",price:95,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
- {id:36,name:"Maida",detail:"1 kg",price:42,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
- {id:37,name:"Suji / Rava",detail:"1 kg",price:48,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
- {id:38,name:"Poha",detail:"500 g",price:35,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
- // Daal, pulses and beans
- {id:3,name:"Chana Daal",detail:"1 kg",price:85,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
- {id:4,name:"Arhar / Toor Daal",detail:"1 kg",price:150,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
- {id:5,name:"Moong Daal (Dhuli)",detail:"1 kg",price:125,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
- {id:39,name:"Moong Sabut",detail:"1 kg",price:115,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
- {id:6,name:"Urad Daal",detail:"1 kg",price:135,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
- {id:40,name:"Masoor Daal (Dhuli)",detail:"1 kg",price:105,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
- {id:41,name:"Masoor Sabut",detail:"1 kg",price:95,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
- {id:42,name:"Kala Chana",detail:"1 kg",price:75,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
- {id:8,name:"Kabuli Chana",detail:"1 kg",price:110,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
- {id:43,name:"Safed Matar",detail:"1 kg",price:65,emoji:"🟢",category:"pulses",categoryLabel:"Daal & Beans"},
- {id:44,name:"Hara Matar (Dry)",detail:"1 kg",price:90,emoji:"🟢",category:"pulses",categoryLabel:"Daal & Beans"},
- {id:7,name:"Rajma",detail:"1 kg",price:145,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
- {id:45,name:"Lobia / Black-Eyed Peas",detail:"1 kg",price:110,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
- // Dry fruits
- {id:46,name:"Badam (Almonds)",detail:"250 g",price:220,emoji:"🥜",category:"dryfruits",categoryLabel:"Dry Fruits"},
- {id:47,name:"Kaju (Cashews)",detail:"250 g",price:260,emoji:"🥜",category:"dryfruits",categoryLabel:"Dry Fruits"},
- {id:48,name:"Kishmish (Raisins)",detail:"250 g",price:100,emoji:"🍇",category:"dryfruits",categoryLabel:"Dry Fruits"},
- {id:49,name:"Akhrot (Walnuts)",detail:"250 g",price:280,emoji:"🌰",category:"dryfruits",categoryLabel:"Dry Fruits"},
- {id:50,name:"Pista (Pistachios)",detail:"100 g",price:140,emoji:"🥜",category:"dryfruits",categoryLabel:"Dry Fruits"},
- {id:51,name:"Khajoor (Dates)",detail:"250 g",price:120,emoji:"🌴",category:"dryfruits",categoryLabel:"Dry Fruits"},
- {id:52,name:"Anjeer (Dried Fig)",detail:"100 g",price:150,emoji:"🟤",category:"dryfruits",categoryLabel:"Dry Fruits"},
- // Oil, spices and daily essentials
- {id:9,name:"Cooking Oil",detail:"1 litre",price:135,emoji:"🫗",category:"oil",categoryLabel:"Tel"},
- {id:10,name:"Sarson Tel",detail:"1 litre",price:160,emoji:"🫗",category:"oil",categoryLabel:"Tel"},
- {id:11,name:"Cheeni",detail:"1 kg",price:46,emoji:"🧂",category:"snacks",categoryLabel:"Daily Essentials"},
- {id:12,name:"Namak",detail:"1 kg",price:22,emoji:"🧂",category:"snacks",categoryLabel:"Daily Essentials"},
- {id:13,name:"Haldi Powder",detail:"100 g",price:30,emoji:"🟡",category:"spices",categoryLabel:"Masale"},
- {id:23,name:"Jeera",detail:"100 g",price:38,emoji:"🌿",category:"spices",categoryLabel:"Masale"},
- {id:24,name:"Rai / Sarson Dana",detail:"100 g",price:20,emoji:"🌿",category:"spices",categoryLabel:"Masale"},
- {id:25,name:"Hing",detail:"10 g",price:35,emoji:"🧂",category:"spices",categoryLabel:"Masale"},
- {id:26,name:"Garam Masala",detail:"100 g",price:55,emoji:"🌶️",category:"spices",categoryLabel:"Masale"},
- {id:14,name:"Chai Patti",detail:"250 g",price:125,emoji:"🍵",category:"snacks",categoryLabel:"Daily Essentials"},
- {id:15,name:"Biscuit",detail:"1 packet",price:10,emoji:"🍪",category:"snacks",categoryLabel:"Snacks & Others"},
- {id:16,name:"Namkeen",detail:"1 packet",price:20,emoji:"🥨",category:"snacks",categoryLabel:"Snacks & Others"},
- {id:21,name:"Gur",detail:"1 kg",price:65,emoji:"🟤",category:"snacks",categoryLabel:"Daily Essentials"},
- {id:22,name:"Shahad",detail:"250 g",price:140,emoji:"🍯",category:"snacks",categoryLabel:"Daily Essentials"},
- {id:27,name:"Sugar-Free Tea Biscuits",detail:"1 pack",price:30,emoji:"🍪",category:"snacks",categoryLabel:"Snacks & Others"}
+ {id:101,name:'Regular Rice (Rozana Chawal)',detail:'5 kg bag',price:275,emoji:'🍚',category:'rice',categoryLabel:'Chawal / Rice'},
+ {id:102,name:'Basmati Rice',detail:'1 kg',price:120,emoji:'🍚',category:'rice',categoryLabel:'Chawal / Rice'},
+ {id:103,name:'Premium Basmati Rice',detail:'1 kg',price:160,emoji:'🍚',category:'rice',categoryLabel:'Chawal / Rice'},
+ {id:104,name:'Sona Masoori Rice',detail:'1 kg',price:75,emoji:'🍚',category:'rice',categoryLabel:'Chawal / Rice'},
+ {id:105,name:'Kolam Rice',detail:'1 kg',price:80,emoji:'🍚',category:'rice',categoryLabel:'Chawal / Rice'},
+ {id:106,name:'Jeera Samba Rice',detail:'1 kg',price:95,emoji:'🍚',category:'rice',categoryLabel:'Chawal / Rice'},
+ {id:107,name:'Parboiled / Usna Rice',detail:'1 kg',price:65,emoji:'🍚',category:'rice',categoryLabel:'Chawal / Rice'},
+ {id:108,name:'Brown Rice',detail:'1 kg',price:110,emoji:'🍚',category:'rice',categoryLabel:'Chawal / Rice'},
+ {id:109,name:'Idli Rice',detail:'1 kg',price:70,emoji:'🍚',category:'rice',categoryLabel:'Chawal / Rice'},
+ {id:110,name:'Long Grain Rice',detail:'1 kg',price:85,emoji:'🍚',category:'rice',categoryLabel:'Chawal / Rice'},
+ {id:111,name:'Chana Daal',detail:'1 kg',price:85,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:112,name:'Arhar / Toor Daal',detail:'1 kg',price:150,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:113,name:'Moong Daal (Dhuli)',detail:'1 kg',price:125,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:114,name:'Moong Sabut',detail:'1 kg',price:115,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:115,name:'Urad Daal (Dhuli)',detail:'1 kg',price:145,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:116,name:'Urad Sabut',detail:'1 kg',price:135,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:117,name:'Masoor Daal (Dhuli)',detail:'1 kg',price:105,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:118,name:'Masoor Sabut',detail:'1 kg',price:95,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:119,name:'Kala Chana',detail:'1 kg',price:75,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:120,name:'Kabuli Chana',detail:'1 kg',price:110,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:121,name:'Safed Matar',detail:'1 kg',price:65,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:122,name:'Hara Matar (Dry)',detail:'1 kg',price:90,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:123,name:'Rajma',detail:'1 kg',price:145,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:124,name:'Lobia',detail:'1 kg',price:110,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:125,name:'Moth Beans',detail:'1 kg',price:100,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:126,name:'Soya Chunks',detail:'200 g',price:45,emoji:'🫘',category:'pulses',categoryLabel:'Daal & Beans'},
+ {id:127,name:'Aata (Wheat Flour)',detail:'5 kg bag',price:152,emoji:'🌾',category:'flour',categoryLabel:'Aata & Flour'},
+ {id:128,name:'Chakki Fresh Aata',detail:'1 kg',price:38,emoji:'🌾',category:'flour',categoryLabel:'Aata & Flour'},
+ {id:129,name:'Multigrain Aata',detail:'1 kg',price:65,emoji:'🌾',category:'flour',categoryLabel:'Aata & Flour'},
+ {id:130,name:'Besan',detail:'1 kg',price:95,emoji:'🌾',category:'flour',categoryLabel:'Aata & Flour'},
+ {id:131,name:'Maida',detail:'1 kg',price:42,emoji:'🌾',category:'flour',categoryLabel:'Aata & Flour'},
+ {id:132,name:'Suji / Rava',detail:'1 kg',price:48,emoji:'🌾',category:'flour',categoryLabel:'Aata & Flour'},
+ {id:133,name:'Poha',detail:'500 g',price:35,emoji:'🌾',category:'flour',categoryLabel:'Aata & Flour'},
+ {id:134,name:'Daliya (Broken Wheat)',detail:'500 g',price:35,emoji:'🌾',category:'flour',categoryLabel:'Aata & Flour'},
+ {id:135,name:'Makka Aata',detail:'1 kg',price:45,emoji:'🌾',category:'flour',categoryLabel:'Aata & Flour'},
+ {id:136,name:'Sattu',detail:'500 g',price:60,emoji:'🌾',category:'flour',categoryLabel:'Aata & Flour'},
+ {id:137,name:'Rice Flour',detail:'500 g',price:35,emoji:'🌾',category:'flour',categoryLabel:'Aata & Flour'},
+ {id:138,name:'Ragi Flour',detail:'500 g',price:55,emoji:'🌾',category:'flour',categoryLabel:'Aata & Flour'},
+ {id:139,name:'Badam (Almonds)',detail:'250 g',price:220,emoji:'🥜',category:'dryfruits',categoryLabel:'Dry Fruits'},
+ {id:140,name:'Kaju (Cashews)',detail:'250 g',price:260,emoji:'🥜',category:'dryfruits',categoryLabel:'Dry Fruits'},
+ {id:141,name:'Kishmish (Raisins)',detail:'250 g',price:100,emoji:'🥜',category:'dryfruits',categoryLabel:'Dry Fruits'},
+ {id:142,name:'Akhrot (Walnuts)',detail:'250 g',price:280,emoji:'🥜',category:'dryfruits',categoryLabel:'Dry Fruits'},
+ {id:143,name:'Pista (Pistachios)',detail:'100 g',price:140,emoji:'🥜',category:'dryfruits',categoryLabel:'Dry Fruits'},
+ {id:144,name:'Khajoor (Dates)',detail:'250 g',price:120,emoji:'🥜',category:'dryfruits',categoryLabel:'Dry Fruits'},
+ {id:145,name:'Anjeer (Dried Fig)',detail:'100 g',price:150,emoji:'🥜',category:'dryfruits',categoryLabel:'Dry Fruits'},
+ {id:146,name:'Makhana',detail:'100 g',price:100,emoji:'🥜',category:'dryfruits',categoryLabel:'Dry Fruits'},
+ {id:147,name:'Chhuhara (Dry Dates)',detail:'250 g',price:90,emoji:'🥜',category:'dryfruits',categoryLabel:'Dry Fruits'},
+ {id:148,name:'Dried Apricot',detail:'100 g',price:130,emoji:'🥜',category:'dryfruits',categoryLabel:'Dry Fruits'},
+ {id:149,name:'Sarson Tel',detail:'1 litre',price:160,emoji:'🫗',category:'oil',categoryLabel:'Tel & Ghee'},
+ {id:150,name:'Refined Sunflower Oil',detail:'1 litre',price:135,emoji:'🫗',category:'oil',categoryLabel:'Tel & Ghee'},
+ {id:151,name:'Soybean Oil',detail:'1 litre',price:125,emoji:'🫗',category:'oil',categoryLabel:'Tel & Ghee'},
+ {id:152,name:'Groundnut Oil',detail:'1 litre',price:190,emoji:'🫗',category:'oil',categoryLabel:'Tel & Ghee'},
+ {id:153,name:'Coconut Oil',detail:'200 ml',price:85,emoji:'🫗',category:'oil',categoryLabel:'Tel & Ghee'},
+ {id:154,name:'Desi Ghee',detail:'500 ml',price:300,emoji:'🫗',category:'oil',categoryLabel:'Tel & Ghee'},
+ {id:155,name:'Vanaspati Ghee',detail:'1 kg',price:150,emoji:'🫗',category:'oil',categoryLabel:'Tel & Ghee'},
+ {id:156,name:'Olive Oil',detail:'250 ml',price:280,emoji:'🫗',category:'oil',categoryLabel:'Tel & Ghee'},
+ {id:157,name:'Haldi Powder',detail:'100 g',price:30,emoji:'🌶️',category:'spices',categoryLabel:'Masale'},
+ {id:158,name:'Lal Mirch Powder',detail:'100 g',price:35,emoji:'🌶️',category:'spices',categoryLabel:'Masale'},
+ {id:159,name:'Dhaniya Powder',detail:'100 g',price:25,emoji:'🌶️',category:'spices',categoryLabel:'Masale'},
+ {id:160,name:'Jeera',detail:'100 g',price:38,emoji:'🌶️',category:'spices',categoryLabel:'Masale'},
+ {id:161,name:'Rai / Sarson Dana',detail:'100 g',price:20,emoji:'🌶️',category:'spices',categoryLabel:'Masale'},
+ {id:162,name:'Ajwain',detail:'100 g',price:35,emoji:'🌶️',category:'spices',categoryLabel:'Masale'},
+ {id:163,name:'Hing',detail:'10 g',price:35,emoji:'🌶️',category:'spices',categoryLabel:'Masale'},
+ {id:164,name:'Garam Masala',detail:'100 g',price:55,emoji:'🌶️',category:'spices',categoryLabel:'Masale'},
+ {id:165,name:'Kali Mirch',detail:'50 g',price:55,emoji:'🌶️',category:'spices',categoryLabel:'Masale'},
+ {id:166,name:'Elaichi',detail:'25 g',price:65,emoji:'🌶️',category:'spices',categoryLabel:'Masale'},
+ {id:167,name:'Laung',detail:'25 g',price:45,emoji:'🌶️',category:'spices',categoryLabel:'Masale'},
+ {id:168,name:'Dalchini',detail:'25 g',price:30,emoji:'🌶️',category:'spices',categoryLabel:'Masale'},
+ {id:169,name:'Tej Patta',detail:'20 g',price:20,emoji:'🌶️',category:'spices',categoryLabel:'Masale'},
+ {id:170,name:'Kasuri Methi',detail:'25 g',price:25,emoji:'🌶️',category:'spices',categoryLabel:'Masale'},
+ {id:171,name:'Cheeni',detail:'1 kg',price:46,emoji:'🧂',category:'daily',categoryLabel:'Daily Essentials'},
+ {id:172,name:'Namak',detail:'1 kg',price:22,emoji:'🧂',category:'daily',categoryLabel:'Daily Essentials'},
+ {id:173,name:'Gur',detail:'1 kg',price:65,emoji:'🧂',category:'daily',categoryLabel:'Daily Essentials'},
+ {id:174,name:'Shahad',detail:'250 g',price:140,emoji:'🧂',category:'daily',categoryLabel:'Daily Essentials'},
+ {id:175,name:'Chai Patti',detail:'250 g',price:125,emoji:'🧂',category:'daily',categoryLabel:'Daily Essentials'},
+ {id:176,name:'Coffee',detail:'100 g',price:95,emoji:'🧂',category:'daily',categoryLabel:'Daily Essentials'},
+ {id:177,name:'Milk Powder',detail:'200 g',price:115,emoji:'🧂',category:'daily',categoryLabel:'Daily Essentials'},
+ {id:178,name:'Vinegar',detail:'500 ml',price:45,emoji:'🧂',category:'daily',categoryLabel:'Daily Essentials'},
+ {id:179,name:'Mishri',detail:'500 g',price:55,emoji:'🧂',category:'daily',categoryLabel:'Daily Essentials'},
+ {id:180,name:'Saunf',detail:'100 g',price:30,emoji:'🧂',category:'daily',categoryLabel:'Daily Essentials'},
+ {id:181,name:'Glucose Biscuits',detail:'1 pack',price:10,emoji:'🍪',category:'snacks',categoryLabel:'Snacks & Biscuits'},
+ {id:182,name:'Cream Biscuits',detail:'1 pack',price:20,emoji:'🍪',category:'snacks',categoryLabel:'Snacks & Biscuits'},
+ {id:183,name:'Sugar-Free Tea Biscuits',detail:'1 pack',price:30,emoji:'🍪',category:'snacks',categoryLabel:'Snacks & Biscuits'},
+ {id:184,name:'Namkeen',detail:'1 pack',price:20,emoji:'🍪',category:'snacks',categoryLabel:'Snacks & Biscuits'},
+ {id:185,name:'Aloo Chips',detail:'1 pack',price:20,emoji:'🍪',category:'snacks',categoryLabel:'Snacks & Biscuits'},
+ {id:186,name:'Bhujia',detail:'200 g',price:45,emoji:'🍪',category:'snacks',categoryLabel:'Snacks & Biscuits'},
+ {id:187,name:'Rusk',detail:'1 pack',price:35,emoji:'🍪',category:'snacks',categoryLabel:'Snacks & Biscuits'},
+ {id:188,name:'Toast',detail:'1 pack',price:30,emoji:'🍪',category:'snacks',categoryLabel:'Snacks & Biscuits'},
+ {id:189,name:'Chocolate',detail:'1 piece',price:20,emoji:'🍪',category:'snacks',categoryLabel:'Snacks & Biscuits'},
+ {id:190,name:'Toffee Pack',detail:'1 pack',price:10,emoji:'🍪',category:'snacks',categoryLabel:'Snacks & Biscuits'},
+ {id:191,name:'Instant Noodles',detail:'1 pack',price:15,emoji:'🍜',category:'packaged',categoryLabel:'Packaged Foods'},
+ {id:192,name:'Pasta',detail:'500 g',price:55,emoji:'🍜',category:'packaged',categoryLabel:'Packaged Foods'},
+ {id:193,name:'Sevaiyan',detail:'200 g',price:30,emoji:'🍜',category:'packaged',categoryLabel:'Packaged Foods'},
+ {id:194,name:'Oats',detail:'500 g',price:80,emoji:'🍜',category:'packaged',categoryLabel:'Packaged Foods'},
+ {id:195,name:'Cornflakes',detail:'250 g',price:95,emoji:'🍜',category:'packaged',categoryLabel:'Packaged Foods'},
+ {id:196,name:'Soup Mix',detail:'1 pack',price:35,emoji:'🍜',category:'packaged',categoryLabel:'Packaged Foods'},
+ {id:197,name:'Instant Dhokla Mix',detail:'200 g',price:60,emoji:'🍜',category:'packaged',categoryLabel:'Packaged Foods'},
+ {id:198,name:'Vermicelli',detail:'500 g',price:45,emoji:'🍜',category:'packaged',categoryLabel:'Packaged Foods'},
+ {id:199,name:'Washing Powder',detail:'1 kg',price:110,emoji:'🧹',category:'cleaning',categoryLabel:'Cleaning Items'},
+ {id:200,name:'Detergent Bar',detail:'1 bar',price:15,emoji:'🧹',category:'cleaning',categoryLabel:'Cleaning Items'},
+ {id:201,name:'Dishwash Bar',detail:'1 bar',price:10,emoji:'🧹',category:'cleaning',categoryLabel:'Cleaning Items'},
+ {id:202,name:'Dishwash Liquid',detail:'500 ml',price:95,emoji:'🧹',category:'cleaning',categoryLabel:'Cleaning Items'},
+ {id:203,name:'Phenyl',detail:'500 ml',price:65,emoji:'🧹',category:'cleaning',categoryLabel:'Cleaning Items'},
+ {id:204,name:'Floor Cleaner',detail:'500 ml',price:90,emoji:'🧹',category:'cleaning',categoryLabel:'Cleaning Items'},
+ {id:205,name:'Toilet Cleaner',detail:'500 ml',price:95,emoji:'🧹',category:'cleaning',categoryLabel:'Cleaning Items'},
+ {id:206,name:'Garbage Bags',detail:'1 roll',price:60,emoji:'🧹',category:'cleaning',categoryLabel:'Cleaning Items'},
+ {id:207,name:'Bathing Soap',detail:'1 bar',price:35,emoji:'🧴',category:'personal',categoryLabel:'Personal Care'},
+ {id:208,name:'Shampoo',detail:'180 ml',price:120,emoji:'🧴',category:'personal',categoryLabel:'Personal Care'},
+ {id:209,name:'Toothpaste',detail:'150 g',price:95,emoji:'🧴',category:'personal',categoryLabel:'Personal Care'},
+ {id:210,name:'Toothbrush',detail:'1 piece',price:25,emoji:'🧴',category:'personal',categoryLabel:'Personal Care'},
+ {id:211,name:'Hair Oil',detail:'200 ml',price:85,emoji:'🧴',category:'personal',categoryLabel:'Personal Care'},
+ {id:212,name:'Comb',detail:'1 piece',price:20,emoji:'🧴',category:'personal',categoryLabel:'Personal Care'},
+ {id:213,name:'Face Wash',detail:'100 g',price:110,emoji:'🧴',category:'personal',categoryLabel:'Personal Care'},
+ {id:214,name:'Handwash',detail:'200 ml',price:65,emoji:'🧴',category:'personal',categoryLabel:'Personal Care'},
+ {id:215,name:'Papad',detail:'200 g',price:45,emoji:'🥫',category:'other',categoryLabel:'Other Grocery'},
+ {id:216,name:'Mango Pickle',detail:'500 g',price:100,emoji:'🥫',category:'other',categoryLabel:'Other Grocery'},
+ {id:217,name:'Tomato Ketchup',detail:'500 g',price:95,emoji:'🥫',category:'other',categoryLabel:'Other Grocery'},
+ {id:218,name:'Jam',detail:'200 g',price:75,emoji:'🥫',category:'other',categoryLabel:'Other Grocery'},
+ {id:219,name:'Papad Masala',detail:'100 g',price:35,emoji:'🥫',category:'other',categoryLabel:'Other Grocery'},
+ {id:220,name:'Baking Soda',detail:'100 g',price:20,emoji:'🥫',category:'other',categoryLabel:'Other Grocery'},
+ {id:221,name:'Baking Powder',detail:'100 g',price:35,emoji:'🥫',category:'other',categoryLabel:'Other Grocery'},
+ {id:222,name:'Cornflour',detail:'100 g',price:30,emoji:'🥫',category:'other',categoryLabel:'Other Grocery'}
 ];
 const cart = {};
 let currentOrder = null;
@@ -229,7 +303,9 @@ function renderProducts(){
  const q=document.getElementById("search").value.trim().toLowerCase();
  const activeButton=document.querySelector(".category-btn.active");
  const category=activeButton?activeButton.dataset.category:"all";
- const list=products.filter(p=>(p.name+" "+p.detail+" "+(p.categoryLabel||"")).toLowerCase().includes(q)&&(category==="all"||p.category===category));
+ const normalize = value => value.toLowerCase().replace(/daal/g,"dal").replace(/chawal/g,"rice").replace(/chana/g,"chana").normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+ const query=normalize(q);
+ const list=products.filter(p=>normalize(p.name+" "+p.detail+" "+(p.categoryLabel||"")+" "+p.category).includes(query)&&(category==="all"||p.category===category));
  document.getElementById("resultsLabel").textContent=(category==="all"?"Sabhi categories":(activeButton?activeButton.textContent.trim():"Selected category"))+" · "+list.length+" products";
  document.getElementById("productGrid").innerHTML=list.length?list.map(p=>`<article class="product"><div class="emoji">${p.emoji}</div><div class="product-category">${p.categoryLabel||"Grocery"}</div><h3>${p.name}</h3><div class="detail">${p.detail}</div><div class="price">${money(p.price)}</div><button type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi kirana product nahi mila.</p>";
 }
@@ -246,6 +322,7 @@ function renderCart(){
  if(cartCount()===0){document.getElementById("checkoutPanel").style.display="none";document.getElementById("orderResult").style.display="none";document.getElementById("sendOrderButton").style.display="none";document.getElementById("payUpiButton").style.display="none";currentOrder=null;}
 }
 document.getElementById("search").addEventListener("input",renderProducts);
+document.querySelectorAll(".category-btn").forEach(button=>button.addEventListener("click",()=>{document.querySelectorAll(".category-btn").forEach(b=>b.classList.remove("active"));button.classList.add("active");renderProducts();}));
 document.querySelectorAll(".category-btn").forEach(button=>button.addEventListener("click",()=>{
  document.querySelectorAll(".category-btn").forEach(b=>b.classList.remove("active"));
  button.classList.add("active");
