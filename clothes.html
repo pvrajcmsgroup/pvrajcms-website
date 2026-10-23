@@ -84,6 +84,25 @@ main { overflow:visible; }
   .cat-list { max-height: none; }
   .cart-items { max-height: 350px; }
 }
+
+/* PV MART product-column scrolling: left categories and right cart stay in view */
+@media (min-width: 761px) {
+  html, body { height: 100%; overflow: hidden; }
+  body { min-height: 100vh; }
+  main { height: calc(100vh - 100px); overflow: visible; }
+  .shop-layout { height: 100%; min-height: 0; align-items: start; }
+  .side-cats, .cart-panel { position: static !important; align-self: start; max-height: calc(100vh - 140px); overflow: hidden; }
+  .cat-list { max-height: calc(100vh - 215px); overflow-y: auto; overscroll-behavior: contain; }
+  .shop-layout > section.panel { height: calc(100vh - 140px); min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+  .cart-items { max-height: calc(100vh - 390px); overflow-y: auto; }
+}
+@media (max-width: 760px) {
+  html, body { height: auto; overflow-y: auto; }
+  main { height: auto; overflow: visible; }
+  .shop-layout { height: auto; }
+  .shop-layout > section.panel { height: auto; max-height: none; overflow: visible; }
+}
+
 </style>
 </head>
 <body>
