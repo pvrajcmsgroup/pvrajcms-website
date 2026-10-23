@@ -52,11 +52,27 @@ textarea{resize:vertical;min-height:72px}
 .warning{background:#fff8df;border:1px solid #f1dda0;padding:11px;border-radius:10px;color:#604b12;font-size:12px;line-height:1.5;margin-top:12px}
 #status{display:none;margin-top:12px;padding:12px;border-radius:10px;background:#e9f8f0;color:#14563d;font-size:13px;line-height:1.5}
 footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font-size:12px;line-height:1.7}
-@media(max-width:1000px){main{grid-template-columns:1fr}.products{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+.category-section{max-width:1400px;margin:20px auto 0;padding:0 16px}
+.section-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:12px}
+.section-heading h2{margin:0;font-size:24px;color:var(--navy)}
+.eyebrow{font-size:11px;letter-spacing:1.5px;color:var(--green);font-weight:800;margin:0 0 5px}
+.text-link{color:var(--green);font-size:13px;font-weight:800;text-decoration:none;white-space:nowrap}
+.category-cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px}
+.category-card{display:flex;align-items:center;gap:10px;min-width:0;padding:14px 12px;border:1px solid var(--line);border-radius:13px;background:#fff;text-align:left;color:var(--ink);box-shadow:0 4px 14px #122b4206;transition:transform .15s,border-color .15s}
+.category-card:hover{transform:translateY(-2px);border-color:#8fcdb4}
+.category-card .cat-icon{width:44px;height:44px;flex:0 0 44px;display:grid;place-items:center;background:#edf8f1;border-radius:12px;font-size:24px}
+.category-card strong{display:block;font-size:12px;line-height:1.35}
+.category-card small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.offers-strip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fff8df;border:1px solid #f1dda0;color:#604b12;border-radius:11px;padding:11px 13px;margin-bottom:16px}
+.offers-strip span{font-weight:800;font-size:13px}.offers-strip small{font-size:12px}
+\n@media(max-width:1000px){main{grid-template-columns:1fr}.products{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){
  .header-inner{padding:8px 10px;display:block}.brand{justify-content:center;gap:8px}.brand img{width:min(44vw,190px);max-height:48px}.brand-tagline{font-size:9px;padding-left:8px;white-space:normal;max-width:145px}
  nav{justify-content:center;gap:8px 13px;margin-top:9px}nav a{font-size:12px}
  .hero{padding:0 10px;margin-top:10px}.hero-inner{padding:24px 18px;border-radius:12px}.hero-art{display:none}.hero h1{font-size:30px}.hero p{font-size:14px}
+ .category-section{padding:0 10px;margin-top:14px}.section-heading h2{font-size:20px}.section-heading{align-items:center}.text-link{font-size:11px}
+ .category-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.category-card{padding:10px 8px;gap:8px}.category-card .cat-icon{width:36px;height:36px;flex-basis:36px;font-size:20px}.category-card strong{font-size:11px}
  .searchbar{padding:0 10px;margin-top:12px}main{padding:0 10px 25px;margin-top:12px;gap:12px}.panel{padding:13px}
  .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product{padding:9px}.product-emoji{height:58px;font-size:30px}.product h3{font-size:13px}.add{font-size:12px;padding:9px 6px}
  .cat{padding:8px 10px;font-size:11px}
@@ -71,19 +87,39 @@ footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font
    <span class="brand-tagline">PV MART · Aapki Apni Online Dukaan</span>
   </a>
   <nav aria-label="Store navigation">
-   <a href="#shop">Shop Now</a><a href="#categories">Categories</a><a href="#cart-panel">My Cart (<span id="cartCount">0</span>)</a><a href="#contact">Contact</a>
+   <a href="#shop">Shop Now</a><a href="#categories-section">Categories</a><a href="#offers">Offers</a><a href="#cart-panel">My Cart (<span id="cartCount">0</span>)</a><a href="#contact">Contact</a>
   </nav>
  </div>
 </header>
 <section class="hero">
  <div class="hero-inner">
-  <div><span class="hero-tag">GROCERY • FASHION • BEAUTY • MOBILE</span>
+  <div><span class="hero-tag">GROCERY • FASHION • BEAUTY • FOOD PRODUCTS</span>
    <h1>Har Zaroorat Ka Samaan, Ek Hi Jagah!</h1>
-   <p>Kirana, kapde, cosmetics, mobile accessories aur ghar ke products — PV MART par apni pasand ka samaan chunein aur order taiyar karein.</p>
+   <p>Kirana, kapde, cosmetics, electronics aur ghar ka samaan. Saath hi PV Foods & Agro ke sarson tel, aata aur masale bhi — sab ek hi jagah.</p>
    <a href="#shop" style="display:inline-block;background:#ffcf58;color:#172536;text-decoration:none;padding:11px 17px;border-radius:9px;font-weight:800">Shopping Shuru Karein ↓</a>
   </div>
   <div class="hero-art" aria-hidden="true">🛒🛍️</div>
  </div>
+</section>
+<section class="category-section" id="categories-section" aria-labelledby="category-heading">
+ <div class="section-heading">
+  <div><p class="eyebrow">APNI PASAND CHUNEIN</p><h2 id="category-heading">Shop by Category</h2></div>
+  <a href="#shop" class="text-link">Saare Products Dekhein →</a>
+ </div>
+ <div class="category-cards" id="categoryCards"></div>
+</section>
+<section class="category-section" id="pv-foods">
+ <div class="section-heading">
+  <div><p class="eyebrow">OUR OWN FOOD BRAND</p><h2>🌾 PV Foods & Agro</h2></div>
+  <a href="#shop" class="text-link">Products dekhein →</a>
+ </div>
+ <div class="category-cards">
+  <article class="category-card"><div class="category-icon">🫗</div><h3>Sarson Tel</h3><p>Mustard oil · retail & bulk packs</p></article>
+  <article class="category-card"><div class="category-icon">🌾</div><h3>Aata & Flour</h3><p>Freshly milled flour products</p></article>
+  <article class="category-card"><div class="category-icon">🌶️</div><h3>Masale & Spices</h3><p>Whole spices and ground masalas</p></article>
+  <article class="category-card"><div class="category-icon">📦</div><h3>Wholesale Orders</h3><p>Retailers and bulk buyers can enquire</p></article>
+ </div>
+ <p class="note">PV Foods & Agro ke products, pack size, rates aur availability abhi sample hain. Selling se pehle actual details update karein.</p>
 </section>
 <div class="searchbar"><input id="search" placeholder="Product ya category search karein..." aria-label="Search products"></div>
 <main>
@@ -116,7 +152,7 @@ footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font
   <p class="note">Yeh starter version order database mein save nahi karta. Order shop tak bhejne ke liye WhatsApp button use hoga.</p>
  </aside>
 </main>
-<footer id="contact"><strong>PV MART</strong> · Aapki Apni Online Dukaan<br>Grocery • Fashion • Beauty • Mobile Accessories • Home Essentials<br>Part of PVRajCMS Group</footer>
+<footer id="contact"><strong>PV MART</strong> · Aapki Apni Online Dukaan<br>Retail Shopping • Grocery • Fashion • Electronics • Home Essentials<br><strong>PV Foods & Agro</strong> · Sarson Tel • Aata • Masale • Wholesale<br>Part of PVRajCMS Group</footer>
 <script>
 /* SETUP: publish karne se pehle apni asli details daalein. */
 const SHOP_UPI_ID = "YOUR-UPI-ID@bank";
@@ -170,12 +206,41 @@ const productsData = [
 {id:43,name:"Pashu Aahar Dana",detail:"1 kg",price:32,emoji:"🐄",cat:"Animal Feed & Agriculture"},
 {id:44,name:"Chokar",detail:"1 kg",price:24,emoji:"🌾",cat:"Animal Feed & Agriculture"},
 {id:45,name:"Sarson Khal",detail:"1 kg",price:30,emoji:"🌿",cat:"Animal Feed & Agriculture"},
-{id:46,name:"Poultry Feed",detail:"1 kg",price:48,emoji:"🐔",cat:"Animal Feed & Agriculture"}
+{id:46,name:"Poultry Feed",detail:"1 kg",price:48,emoji:"🐔",cat:"Animal Feed & Agriculture"},
+{id:47,name:"PV Foods & Agro Sarson Tel",detail:"1 litre · sample listing; actual pack/price confirm karein",price:170,emoji:"🫗",cat:"PV Foods & Agro"},
+{id:48,name:"PV Foods & Agro Aata",detail:"5 kg · sample listing; actual pack/price confirm karein",price:180,emoji:"🌾",cat:"PV Foods & Agro"},
+{id:49,name:"PV Foods & Agro Haldi Powder",detail:"100 g · sample listing; actual pack/price confirm karein",price:35,emoji:"🟡",cat:"PV Foods & Agro"},
+{id:50,name:"PV Foods & Agro Mirch Powder",detail:"100 g · sample listing; actual pack/price confirm karein",price:40,emoji:"🌶️",cat:"PV Foods & Agro"},
+{id:51,name:"PV Foods & Agro Dhaniya Powder",detail:"100 g · sample listing; actual pack/price confirm karein",price:35,emoji:"🌿",cat:"PV Foods & Agro"}
+];
+const categoryCardsData=[
+ {name:"Kirana & Grocery",icon:"🛒",desc:"Daily essentials"},
+ {name:"Clothes & Fashion",icon:"👕",desc:"Men, women & kids"},
+ {name:"Beauty & Cosmetics",icon:"💄",desc:"Beauty & skincare"},
+ {name:"Mobiles & Electronics",icon:"📱",desc:"Phones & accessories"},
+ {name:"Home & Kitchen",icon:"🏠",desc:"Useful home items"},
+ {name:"Cleaning & Household",icon:"🧽",desc:"Cleaning essentials"},
+ {name:"Stationery & Books",icon:"📚",desc:"School & office"},
+ {name:"Baby Care",icon:"🧸",desc:"Baby essentials"},
+ {name:"Animal Feed & Agriculture",icon:"🐄",desc:"Feed & farm needs"},
+ {name:"PV Foods & Agro",icon:"🌾",desc:"Sarson tel, aata & masale"}
 ];
 let activeCat="Sabhi";const cart={};let currentOrder=null;
 const money=n=>"₹"+n.toLocaleString("en-IN");
 const categories=["Sabhi",...new Set(productsData.map(p=>p.cat))];
 function renderCategories(){document.getElementById("categories").innerHTML=categories.map(c=>`<button type="button" class="cat ${c===activeCat?"active":""}" onclick="setCat(${JSON.stringify(c)})">${c}</button>`).join("")}
+function renderCategoryCards(){
+ const wrap=document.getElementById("categoryCards");
+ wrap.innerHTML=categoryCardsData.map(c=>`<button type="button" class="category-card" onclick="chooseCategory(${JSON.stringify(c.name)})"><span class="cat-icon">${c.icon}</span><span><strong>${c.name}</strong><small>${c.desc}</small></span></button>`).join("");
+}
+function chooseCategory(name){
+ const categoryMap={"Kirana & Grocery":"Kirana & Grocery","Clothes & Fashion":"Clothes & Fashion","Beauty & Cosmetics":"Beauty & Cosmetics","Mobiles & Electronics":"Mobiles & Electronics","Home & Kitchen":"Home & Cleaning","Cleaning & Household":"Home & Cleaning","Stationery & Books":"Stationery & Books","Baby Care":"Baby Care","Animal Feed & Agriculture":"Animal Feed & Agriculture"};
+ const mapped=categoryMap[name]||name;
+ activeCat=productsData.some(p=>p.cat===mapped)?mapped:"Sabhi";
+ document.getElementById("search").value="";
+ renderCategories();renderProducts();
+ document.getElementById("shop").scrollIntoView({behavior:"smooth",block:"start"});
+}
 function setCat(c){activeCat=c;renderCategories();renderProducts()}
 function renderProducts(){
  const q=document.getElementById("search").value.trim().toLowerCase();
@@ -208,7 +273,7 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
  payButton.onclick=()=>{if(SHOP_UPI_ID==="YOUR-UPI-ID@bank"){alert("Pehle SHOP_UPI_ID mein apni asli UPI ID daalein.");return}const params=new URLSearchParams({pa:SHOP_UPI_ID,pn:SHOP_NAME,am:currentOrder.total.toFixed(2),cu:"INR",tn:"Order "+currentOrder.orderId});window.location.href="upi://pay?"+params.toString()};
  document.getElementById("sendButton").onclick=()=>{if(SHOP_WHATSAPP==="91XXXXXXXXXX"){alert("Pehle SHOP_WHATSAPP mein shop ka WhatsApp number daalein.");return}window.open("https://wa.me/"+SHOP_WHATSAPP+"?text="+encodeURIComponent(currentOrder.message),"_blank","noopener")};
 });
-renderCategories();renderProducts();renderCart();
+renderCategories();renderCategoryCards();renderProducts();renderCart();
 </script>
 </body>
 </html>
