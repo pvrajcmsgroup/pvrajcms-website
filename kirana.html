@@ -182,7 +182,7 @@ function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart();}
 function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart();}
 function renderCart(){
  const chosen=products.filter(p=>cart[p.id]);
- document.getElementById("cartItems").innerHTML=chosen.length?chosen.map(p=>`<div class="cart-row"><div><strong>${p.name}</strong><div class="detail">${p.detail}</div><div class="qty"><button type="button" onclick="changeQty(${p.id},-1)" aria-label="Quantity kam karein">−</button><span>${cart[p.id]}</span><button type="button" onclick="changeQty(${p.id},1)" aria-label="Quantity badhayein">+</button><button type="button" onclick="changeQty(${p.id},-${cart[p.id]})" style="background:#fff0f0;color:#a11">Remove</button></div></div><strong>${money(p.price*cart[p.id])}</strong></div>`).join(""):"<p class="note">Cart khaali hai. Pehle product add karein.</p>";
+ document.getElementById("cartItems").innerHTML=chosen.length?chosen.map(p=>`<div class="cart-row"><div><strong>${p.name}</strong><div class="detail">${p.detail}</div><div class="qty"><button type="button" onclick="changeQty(${p.id},-1)" aria-label="Quantity kam karein">−</button><span>${cart[p.id]}</span><button type="button" onclick="changeQty(${p.id},1)" aria-label="Quantity badhayein">+</button><button type="button" onclick="changeQty(${p.id},-${cart[p.id]})" style="background:#fff0f0;color:#a11">Remove</button></div></div><strong>${money(p.price*cart[p.id])}</strong></div>`).join(""):`<p class="note">Cart khaali hai. Pehle product add karein.</p>`;
  document.getElementById("total").textContent=money(cartTotal());
  document.getElementById("summaryTotal").textContent=money(cartTotal());
  document.getElementById("summaryCount").textContent=cartCount();
