@@ -24,11 +24,16 @@ nav{display:flex;align-items:center;justify-content:flex-end;gap:16px;flex-wrap:
 .hero{max-width:1150px;margin:18px auto;padding:0 15px}
 .hero-inner{background:linear-gradient(115deg,#071729,#0d4b50);border-radius:16px;padding:clamp(24px,5vw,48px);color:white}
 .hero h1{font-size:clamp(28px,5vw,44px);margin:0 0 10px}.hero p{line-height:1.6;margin:0;color:#e1f1f2}
-.wrap{max-width:1150px;margin:18px auto;padding:0 15px 35px}
+.wrap{max-width:1370px;margin:18px auto;padding:0 15px 35px}
+.shop-layout{display:grid;grid-template-columns:190px minmax(0,1fr) 290px;gap:14px;align-items:start}
+.category-sidebar,.cart-sidebar{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px;min-width:0}
+.category-sidebar{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}
+.category-sidebar h2,.cart-sidebar h2{font-size:17px;margin:4px 0 12px}
+.products-area{min-width:0}.products-title{margin:0 0 8px;font-size:23px}.product-count{font-size:12px;color:var(--muted);margin:0 0 12px}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
 input{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;background:white}
 #search{flex:1;min-width:220px}
-.category-bar{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}.category-btn{background:#eaf2f7;color:#16334c;border:1px solid #d7e2ea;border-radius:999px;padding:8px 12px;font-size:12px;margin:0}.category-btn.active{background:var(--navy);color:white}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.category-bar{display:flex;flex-direction:column;gap:6px;margin:0}.category-btn{background:#f1f5f9;color:#16334c;border:1px solid transparent;border-radius:10px;padding:11px 10px;font-size:12px;margin:0;text-align:left;width:100%;line-height:1.25}.category-btn.active{background:#e4f7ef;color:#087e57;border-color:#9cdec2}.category-btn:hover{border-color:#9cdec2}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .product{background:white;border:1px solid var(--line);border-radius:13px;padding:13px;display:flex;flex-direction:column;gap:8px;min-width:0}
 .emoji{height:90px;background:linear-gradient(135deg,#eef5fa,#f4f8fc);border-radius:10px;display:grid;place-items:center;font-size:42px}
 .product h3{font-size:15px;line-height:1.35;margin:0}.detail{font-size:12px;color:var(--muted)}
@@ -38,7 +43,7 @@ input{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;back
 .qty{display:flex;align-items:center;gap:7px;margin-top:6px}.qty button{padding:4px 10px;margin:0;background:#edf2f6;color:var(--navy)}
 .total{display:flex;justify-content:space-between;font-size:19px;font-weight:800;padding:14px 0}
 .note{font-size:12px;color:var(--muted);line-height:1.6}
-.cart-layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:18px;align-items:start}
+.cart-layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:18px;align-items:start}.cart-sidebar .panel{border:0;padding:0;margin:0}
 .cart-summary{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:16px;position:sticky;top:12px}
 .checkout-btn{display:block;width:100%;background:#ffd814;color:#172536;border-radius:999px;padding:13px;margin-top:8px;font-weight:800}
 .checkout-btn:hover{background:#f7ca00}
@@ -56,7 +61,7 @@ input{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;back
 .primary-btn{width:100%;margin-top:16px;background:var(--green);padding:13px}
 #orderResult{display:none;margin-top:16px;padding:16px;border:1px solid #a9dfc3;background:#f0fbf5;border-radius:12px;line-height:1.6}
 .order-line{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #d7eade;font-size:13px}
-@media(max-width:760px){.cart-layout{grid-template-columns:1fr}.cart-summary{position:static}.form-grid{grid-template-columns:1fr}.payment-options{grid-template-columns:1fr}}
+@media(max-width:1050px){.shop-layout{grid-template-columns:170px minmax(0,1fr)}.cart-sidebar{grid-column:1/-1}.cart-sidebar .cart-layout{grid-template-columns:minmax(0,1fr) 280px}}@media(max-width:760px){.shop-layout{grid-template-columns:1fr}.category-sidebar{position:static;max-height:none}.category-bar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.category-btn{font-size:12px}.cart-sidebar{grid-column:auto}.cart-sidebar .cart-layout{grid-template-columns:1fr}.cart-layout{grid-template-columns:1fr}.cart-summary{position:static}.form-grid{grid-template-columns:1fr}.payment-options{grid-template-columns:1fr}}
 footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size:13px;line-height:1.7}
 @media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:850px){.brand img{width:220px}nav{gap:11px}}
@@ -88,26 +93,37 @@ footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size
  <p>Mobiles, accessories, computers, audio devices aur ghar ke electronics — sab ek jagah.</p>
 </div></section>
 <main class="wrap">
- <div class="toolbar"><input id="search" type="search" placeholder="Electronics search karein — charger, earphones, laptop..." aria-label="Electronics products search"></div>
- <h2 id="products">Electronics ke Products</h2>
- <div class="category-bar" id="categoryBar" aria-label="Electronics categories"></div>
- <div class="grid" id="productGrid"></div>
- <section class="panel" id="cart">
-  <h2>🧺 Aapka Cart</h2><div id="cartItems">Abhi cart khaali hai.</div>
-  <div class="cart-layout">
-   <div>
-    <div class="total"><span>Subtotal</span><span id="total">₹0</span></div>
-    <p class="note">Delivery charge abhi calculate nahi kiya gaya. Order confirm karne se pehle shop se final total confirm hoga.</p>
-   </div>
-   <aside class="cart-summary">
-    <div style="font-size:16px;margin-bottom:12px">Subtotal (<span id="summaryCount">0</span> items): <strong id="summaryTotal">₹0</strong></div>
-    <button class="checkout-btn" type="button" id="checkoutButton">Proceed to Buy</button>
-    <button class="secondary-btn" type="button" id="continueShopping">Continue Shopping</button>
-   </aside>
-  </div>
-  <p class="note">Yeh demo electronics catalog hai. Rates sample hain; live karne se pehle actual brand, model, warranty, price aur stock update karein. Product emojis illustrative hain; real product photos baad mein add kar sakte hain.</p>
- </section>
- <section class="panel" id="checkoutPanel">
+ <div class="shop-layout">
+  <aside class="category-sidebar">
+   <h2>🛍️ Categories</h2>
+   <div class="category-bar" id="categoryBar" aria-label="Electronics categories"></div>
+  </aside>
+  <section class="products-area" aria-label="Electronics products">
+   <div class="toolbar"><input id="search" type="search" placeholder="Mobile, charger, laptop ya product search karein..." aria-label="Electronics products search"></div>
+   <h2 class="products-title" id="products">Electronics ke Products</h2>
+   <p class="product-count" id="productCount">Sabhi categories · 102 products</p>
+   <div class="grid" id="productGrid"></div>
+  </section>
+  <aside class="cart-sidebar">
+   <section class="panel" id="cart">
+    <h2>🧺 Aapka Cart</h2>
+    <div id="cartItems">Cart khaali hai. Pehle product add karein.</div>
+    <div class="cart-layout">
+     <div>
+      <div class="total"><span>Subtotal</span><span id="total">₹0</span></div>
+      <p class="note">Delivery charge abhi calculate nahi kiya gaya. Order confirm karne se pehle final total confirm hoga.</p>
+     </div>
+     <div class="cart-summary">
+      <div style="font-size:16px;margin-bottom:12px">Subtotal (<span id="summaryCount">0</span> items): <strong id="summaryTotal">₹0</strong></div>
+      <button class="checkout-btn" type="button" id="checkoutButton">Proceed to Buy</button>
+      <button class="secondary-btn" type="button" id="continueShopping">Continue Shopping</button>
+     </div>
+    </div>
+    <p class="note">Rates sample hain; live karne se pehle actual price, stock aur warranty update karein.</p>
+   </section>
+  </aside>
+ </div>
+<section class="panel" id="checkoutPanel">
   <h2>📍 Delivery Address & Payment</h2>
   <p class="note">Checkout ke liye apna sahi delivery address bharein. * wale fields zaroori hain.</p>
   <form id="checkoutForm">
@@ -249,14 +265,15 @@ let currentOrder = null;
 let activeCategory = "All Products";
 const categories = ["All Products", ...new Set(products.map(p=>p.category))];
 function renderCategories(){document.getElementById("categoryBar").innerHTML=categories.map(c=>`<button type="button" class="category-btn ${c===activeCategory?"active":""}" onclick="setCategory('${c.replace(/'/g,"\\'")}')">${c}</button>`).join("");}
-function setCategory(c){activeCategory=c;renderCategories();renderProducts();}
+function setCategory(c){activeCategory=c;renderCategories();renderProducts();document.getElementById("products").scrollIntoView({behavior:"smooth",block:"start"});}
 const money = n => "₹" + n.toLocaleString("en-IN");
 function cartCount(){return Object.values(cart).reduce((a,b)=>a+b,0)}
 function cartTotal(){return products.reduce((sum,p)=>sum+p.price*(cart[p.id]||0),0)}
 function renderProducts(){
  const q=document.getElementById("search").value.trim().toLowerCase();
  const list=products.filter(p=>(activeCategory==="All Products"||p.category===activeCategory)&&(p.name+" "+p.detail+" "+p.category).toLowerCase().includes(q));
- document.getElementById("productGrid").innerHTML=list.length?list.map(p=>`<article class="product"><div class="emoji" aria-hidden="true">${p.emoji}</div><h3>${p.name}</h3><div class="detail">${p.category} · ${p.detail}</div><div class="price">${money(p.price)}</div><button type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi electronics product nahi mila.</p>";
+ document.getElementById("productCount").textContent=(activeCategory==="All Products"?"Sabhi categories":activeCategory)+" · "+list.length+" products";
+  document.getElementById("productGrid").innerHTML=list.length?list.map(p=>`<article class="product"><div class="emoji" aria-hidden="true">${p.emoji}</div><h3>${p.name}</h3><div class="detail">${p.category} · ${p.detail}</div><div class="price">${money(p.price)}</div><button type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi electronics product nahi mila.</p>";
 }
 function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart();}
 function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart();}
