@@ -168,7 +168,7 @@ footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font
     <label class="payment-option"><input type="radio" name="payment" value="upi" checked><span><strong>UPI — PhonePe / Google Pay</strong>Payment bank/UPI app mein verify karein.</span></label>
     <label class="payment-option"><input type="radio" name="payment" value="cod"><span><strong>Cash on Delivery</strong>Samaan milne par cash dein.</span></label>
    </div>
-   <button type="submit" class="primary">Order Details Taiyar Karein</button>
+   <button type="submit" class="primary">Order Book Karein</button>
   </form>
   <div id="status" role="status"></div>
   <button id="payButton" class="primary" style="display:none" type="button">UPI App se Payment Karein</button>
@@ -373,9 +373,9 @@ function setCat(c){activeCat=c;document.getElementById("search").value="";render
 function renderProducts(){
  const q=document.getElementById("search").value.trim().toLowerCase();
  const filtered=productsData.filter(p=>(activeCat==="Sabhi"||p.cat===activeCat)&&(`${p.name} ${p.detail} ${p.cat}`).toLowerCase().includes(q));
- document.getElementById("products").innerHTML=filtered.length?filtered.map(p=>`<article class="product"><div class="product-emoji">${p.emoji}</div><h3>${p.name}</h3><div class="small">${p.detail}</div><div class="small">${p.cat}</div><div class="price">${money(p.price)}</div><button class="add" type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi product nahi mila. Doosra naam search karein.</p>"
+ document.getElementById("products").innerHTML=filtered.length?filtered.map(p=>`<article class="product"><div class="product-emoji">${p.emoji}</div><h3>${p.name}</h3><div class="small">${p.detail}</div><div class="small">${p.cat}</div><div class="price">${money(p.price)}</div><button class="add" type="button" onclick="addToCart(${p.id})">🛒 My Cart mein jodein</button></article>`).join(""):"<p>Koi product nahi mila. Doosra naam search karein.</p>"
 }
-function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart()}
+function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart();const count=document.getElementById("cartCount");count.textContent=Object.values(cart).reduce((a,b)=>a+b,0);const status=document.getElementById("status");status.style.display="block";status.textContent="Product My Cart mein add ho gaya. Cart check karke delivery details bharein aur Order Book karein.";status.scrollIntoView({behavior:"smooth",block:"nearest"})}
 function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart()}
 function getTotal(){return productsData.reduce((s,p)=>s+p.price*(cart[p.id]||0),0)}
 function renderCart(){
