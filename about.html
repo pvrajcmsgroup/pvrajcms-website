@@ -966,7 +966,17 @@
             }
         }
 
-    </style>
+    
+        /* MOBILE: reduce the apparent white gap after the About hero */
+        @media (max-width: 600px) {
+            .about-page .about-hero + .about-section {
+                padding-top: 28px;
+            }
+            .about-page .about-hero + .about-section .about-intro-grid {
+                margin-top: 0;
+            }
+        }
+</style>
 </head>
 
 <body>
