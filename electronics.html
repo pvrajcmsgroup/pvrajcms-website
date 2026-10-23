@@ -83,6 +83,16 @@ nav a.active,nav .drop-label.active{background:#36D6B2;color:#071422;box-shadow:
 .dropdown-menu a:hover,.dropdown-menu a:focus{background:#e0f7ef;color:#087e57}
 @media(max-width:900px){.brand-tagline{font-size:12px}}
 
+
+/* Header brand stacked exactly like the supplied reference */
+.brand{display:flex;align-items:center;gap:14px}
+.brand-tagline{display:flex;flex-direction:column;align-items:flex-start;gap:1px;white-space:normal;font-size:11px;line-height:1.15;font-weight:600;color:#E8C978}
+.brand-tagline .brand-name{display:block;font-size:31px;line-height:1;font-weight:900;letter-spacing:.3px}
+.brand-tagline .pv-word{color:#36D6B2;font-weight:900}
+.brand-tagline .mart-word{color:#fff;font-weight:900}
+.brand-tagline .tagline-text{display:block;color:#E8C978;font-size:11px;font-weight:600;letter-spacing:0}
+@media(max-width:900px){.brand-tagline .brand-name{font-size:24px}.brand-tagline .tagline-text{font-size:10px}}
+
 </style>
 </head>
 <body>
@@ -91,7 +101,7 @@ nav a.active,nav .drop-label.active{background:#36D6B2;color:#071422;box-shadow:
   <a class="brand" href="pv-mart.html" aria-label="PV MART Home">
    <img src="logo.png" alt="PVRajCMS Group logo">
    <span class="brand-divider" aria-hidden="true"></span>
-   <span class="brand-tagline"><span class="pv-word">PV</span> <span class="mart-word">MART</span> · Aapki Apni Online Dukaan</span>
+   <span class="brand-tagline"><span class="brand-name"><span><span class="pv-word">PV</span> <span class="mart-word">MART</span></span></span><span class="tagline-text">Aapki Apni Online Dukaan</span></span>
   </a>
   <nav aria-label="Main navigation">
    <a href="pv-mart.html">PV MART Home</a>
