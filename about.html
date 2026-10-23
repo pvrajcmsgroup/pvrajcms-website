@@ -925,6 +925,47 @@
             }
         }
 
+
+
+        /* FINAL MOBILE HERO SPACING FIX — keep the header unchanged */
+        @media (max-width: 600px) {
+            .about-page .about-hero {
+                padding: 42px 0 42px;
+            }
+            .about-page .about-hero-inner {
+                width: min(100% - 30px, 1160px);
+            }
+            .about-page .about-hero-label {
+                margin-bottom: 18px;
+                padding: 7px 13px;
+                font-size: 11px;
+                letter-spacing: 1.1px;
+                max-width: 100%;
+            }
+            .about-page .about-hero h1 {
+                font-size: clamp(32px, 8.2vw, 40px);
+                line-height: 1.12;
+                letter-spacing: -0.8px;
+                margin-bottom: 18px;
+            }
+            .about-page .about-hero p {
+                font-size: 15px;
+                line-height: 1.75;
+            }
+            .about-page .about-hero-actions {
+                margin-top: 24px;
+                gap: 10px;
+            }
+            .about-page .about-hero-actions .about-button {
+                width: 100%;
+                min-height: 48px;
+                padding: 12px 16px;
+                font-size: 14px;
+                white-space: normal;
+                text-align: center;
+            }
+        }
+
     </style>
 </head>
 
