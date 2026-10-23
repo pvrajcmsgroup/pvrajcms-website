@@ -19,6 +19,12 @@ header{background:#071422;color:#fff;padding:8px 18px;border-top:2px solid #f3f5
 nav{display:flex;align-items:center;gap:16px;flex-wrap:wrap}nav a{color:white;text-decoration:none;font-size:13px;font-weight:700;padding:8px 0;white-space:nowrap}
 nav a:hover{color:var(--teal)}
 nav a.current{background:var(--gold);color:var(--navy);border:1px solid var(--gold);border-radius:999px;padding:9px 12px}
+.dropdown{position:relative;display:inline-flex;align-items:center}
+.drop-label{display:inline-block}
+.dropdown-menu{display:none;position:absolute;top:100%;left:-12px;min-width:190px;padding:8px;background:#fff;border:1px solid #dfe6ee;border-radius:10px;box-shadow:0 12px 28px #0003;z-index:50}
+.dropdown-menu a{display:block;color:#172536;padding:10px 12px;border-radius:7px;font-size:13px}
+.dropdown-menu a:hover,.dropdown-menu a:focus{background:#eef5fa;color:#0d4b50}
+.dropdown:hover .dropdown-menu,.dropdown:focus-within .dropdown-menu{display:block}
 .hero{max-width:1150px;margin:18px auto 0;padding:0 15px}.hero-inner{background:linear-gradient(115deg,#071729 0%,#0a3743 48%,#0d5555 100%);border-radius:16px;padding:clamp(30px,4.5vw,48px);color:white;min-height:190px;display:flex;flex-direction:column;justify-content:center}.hero h1{font-size:clamp(28px,5vw,44px);margin:0 0 10px;line-height:1.2}.hero p{margin:0;color:#e1f1f2;line-height:1.6;font-size:16px}
 main{max-width:1400px;margin:18px auto;padding:0 16px 40px}
 .shop-layout{display:grid;grid-template-columns:205px minmax(0,1fr) 300px;gap:16px;align-items:start}
@@ -45,7 +51,7 @@ button:hover{filter:brightness(1.08)}button:active{transform:scale(.98)}button:f
 #orderResult{display:none;margin-top:15px;padding:14px;border:1px solid #a9dfc3;background:#f0fbf5;border-radius:12px;line-height:1.6}
 footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size:13px;line-height:1.7}
 @media(max-width:1100px){.shop-layout{grid-template-columns:175px minmax(0,1fr)}.cart-panel{grid-column:1/-1;position:static}.cart-items{max-height:none}.products{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:760px){header{padding:9px 12px}.header-inner{align-items:flex-start;flex-direction:column;gap:10px}.brand{gap:9px;max-width:100%}.brand img{width:190px;max-width:48vw;max-height:52px}.brand-divider{height:30px}.brand-tagline{white-space:normal;min-width:0}.brand-mark{font-size:clamp(20px,5vw,27px)}.brand-subtitle{font-size:10px;line-height:1.25}nav{width:100%;gap:12px}nav a{font-size:12px;padding:7px 0}.hero{padding:0 10px}.hero-inner{min-height:150px;padding:24px 20px}.hero h1{font-size:28px}.shop-layout{grid-template-columns:1fr}.side-cats{position:static}.cat-list{display:flex;overflow-x:auto;padding-bottom:5px}.cat-btn{white-space:nowrap;width:auto;flex:0 0 auto}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.cart-panel{grid-column:auto}.cart-items{max-height:350px}main{padding:0 10px 30px}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}}
+@media(max-width:760px){header{padding:9px 12px}.header-inner{align-items:flex-start;flex-direction:column;gap:10px}.brand{gap:9px;max-width:100%}.brand img{width:190px;max-width:48vw;max-height:52px}.brand-divider{height:30px}.brand-tagline{white-space:normal;min-width:0}.brand-mark{font-size:clamp(20px,5vw,27px)}.brand-subtitle{font-size:10px;line-height:1.25}nav{width:100%;gap:12px}nav a{font-size:12px;padding:7px 0}.dropdown-menu{left:0;max-width:85vw}.hero{padding:0 10px}.hero-inner{min-height:150px;padding:24px 20px}.hero h1{font-size:28px}.shop-layout{grid-template-columns:1fr}.side-cats{position:static}.cat-list{display:flex;overflow-x:auto;padding-bottom:5px}.cat-btn{white-space:nowrap;width:auto;flex:0 0 auto}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.cart-panel{grid-column:auto}.cart-items{max-height:350px}main{padding:0 10px 30px}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}}
 @media(max-width:380px){.products{gap:8px}.product{padding:9px}.product-visual{height:70px;font-size:34px}.product h3{font-size:13px}.price{font-size:16px}}
 </style>
 </head>
@@ -58,7 +64,20 @@ footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size
       <span class="brand-tagline"><span class="brand-mark"><span class="pv">PV</span> <span class="mart">MART</span></span><span class="brand-subtitle">Aapki Apni Online Dukaan</span></span>
     </a>
     <nav aria-label="Main navigation">
-      <a href="pv-mart.html">PV MART Home</a><a href="kirana.html">🛒 Kirana</a><a class="current" href="clothes.html">👕 Clothes</a><a href="household.html">🏠 Home & Kitchen</a><a href="animal-feed.html">🐄 Animal Feed</a><a href="contact.html">Contact</a>
+      <a href="pv-mart.html">PV MART Home</a>
+      <a href="pv-mart.html#shop">Shop Now</a>
+      <div class="dropdown">
+        <a class="drop-label" href="pv-mart.html#categories" aria-haspopup="true">Categories⌄</a>
+        <div class="dropdown-menu">
+          <a href="kirana.html">Kirana</a>
+          <a href="clothes.html">Clothes &amp; Fashion</a>
+          <a href="household.html">Home &amp; Kitchen</a>
+          <a href="animal-feed.html">Animal Feed</a>
+        </div>
+      </div>
+      <a href="pv-mart.html#offers">Offers</a>
+      <a href="#cartPanel">My Cart (<span id="navCartCount">0</span>)</a>
+      <a href="contact.html">Contact</a>
     </nav>
   </div>
 </header>
@@ -182,7 +201,7 @@ function cartCount(){return Object.values(cart).reduce((n,x)=>n+x.qty,0)}
 function cartTotal(){return Object.values(cart).reduce((n,x)=>n+products.find(p=>p.id===x.id).price*x.qty,0)}
 function renderCart(){
  const items=Object.values(cart);
- document.getElementById("cartCount").textContent=`(${cartCount()})`;
+ document.getElementById("cartCount").textContent=`(${cartCount()})`;document.getElementById("navCartCount").textContent=cartCount();
  document.getElementById("cartTotal").textContent=money(cartTotal());
  document.getElementById("cartItems").innerHTML=items.length?items.map(x=>{const p=products.find(p=>p.id===x.id);return `<div class="cart-item"><div><div class="cart-name">${p.name}</div><div class="cart-meta">Size: ${x.size} · Colour: ${x.color}</div><div class="qty"><button type="button" data-qty="-1" data-key="${x.key}" aria-label="Decrease quantity">−</button><span>${x.qty}</span><button type="button" data-qty="1" data-key="${x.key}" aria-label="Increase quantity">+</button><button class="remove-btn" type="button" data-remove="${x.key}">Remove</button></div></div><div class="cart-price">${money(p.price*x.qty)}</div></div>`}).join(""):`<div class="cart-empty">Abhi cart khaali hai. Product add karein.</div>`;
  document.querySelectorAll("[data-qty]").forEach(b=>b.addEventListener("click",()=>changeQty(b.dataset.key,Number(b.dataset.qty))));
