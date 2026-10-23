@@ -412,16 +412,12 @@
         }
 
     
-
-        /* =====================================
-           PVRajCMS HEADER - COMPACT HORIZONTAL LAYOUT
-        ====================================== */
+        /* Home page header: same structure, spacing and responsive behavior as about.html */
         body.home-page .site-header {
             background: #071422;
             padding: 3px 12px !important;
             border-bottom: 1px solid rgba(255,255,255,.12);
         }
-
         body.home-page .site-header > .container {
             display: flex;
             flex-direction: row;
@@ -432,7 +428,6 @@
             max-width: 1400px;
             margin: 0 auto;
         }
-
         body.home-page .site-header .logo {
             display: flex;
             flex-direction: row;
@@ -442,7 +437,6 @@
             min-width: 0;
             text-decoration: none;
         }
-
         body.home-page .site-header .logo img {
             display: block;
             width: min(28vw, 360px) !important;
@@ -452,14 +446,12 @@
             object-fit: contain;
             object-position: left center;
         }
-
         body.home-page .site-header .logo-text {
             text-align: left;
             margin: 0;
             padding-left: 14px;
             border-left: 1px solid rgba(255,255,255,.18);
         }
-
         body.home-page .site-header .logo-text p {
             margin: 0;
             color: #d6e6f7;
@@ -468,7 +460,6 @@
             white-space: nowrap;
             letter-spacing: .5px;
         }
-
         body.home-page .site-header .navbar {
             display: flex;
             justify-content: flex-end;
@@ -481,82 +472,169 @@
             padding: 5px 0;
             border: 0;
         }
-
         body.home-page .site-header .navbar a {
             white-space: nowrap;
+            flex-shrink: 0;
         }
-
         @media (max-width: 1000px) {
             body.home-page .site-header > .container {
                 flex-wrap: wrap;
                 justify-content: center;
             }
-
             body.home-page .site-header .logo {
                 justify-content: center;
             }
-
             body.home-page .site-header .navbar {
                 justify-content: center;
                 flex-wrap: wrap;
                 gap: 12px 20px;
             }
         }
-
         @media (max-width: 600px) {
             body.home-page .site-header {
                 padding: 10px !important;
             }
-
             body.home-page .site-header .logo {
                 flex-direction: column;
                 gap: 6px;
             }
-
             body.home-page .site-header .logo img {
                 width: min(88vw, 300px) !important;
                 min-width: 0;
                 max-height: 75px;
             }
-
             body.home-page .site-header .logo-text {
                 border-left: 0;
                 padding-left: 0;
                 text-align: center;
             }
-
             body.home-page .site-header .logo-text p {
                 white-space: normal;
                 font-size: 11px;
             }
-
             body.home-page .site-header .navbar {
                 gap: 10px 15px;
             }
         }
+
+    
+
+        /* HOME PAGE MOBILE POLISH — only adjusts content below the header */
+        @media screen and (max-width: 600px) {
+            body.home-page .engineering-hero .hero-container {
+                padding: 30px 18px 38px !important;
+                gap: 24px !important;
+            }
+            body.home-page .engineering-hero .hero-content {
+                min-width: 0 !important;
+                width: 100% !important;
+            }
+            body.home-page .engineering-hero .eyebrow {
+                max-width: 100%;
+                font-size: 10px !important;
+                letter-spacing: 2px !important;
+                line-height: 1.6 !important;
+                overflow-wrap: normal !important;
+            }
+            body.home-page .engineering-hero .hero-content h1 {
+                font-size: clamp(30px, 7.4vw, 40px) !important;
+                line-height: 1.12 !important;
+                letter-spacing: -1.2px !important;
+                overflow-wrap: normal !important;
+                word-break: normal !important;
+            }
+            body.home-page .engineering-hero .hero-content h1 span {
+                display: block;
+            }
+            body.home-page .engineering-hero .hero-description {
+                margin-top: 20px !important;
+                font-size: 16px !important;
+                line-height: 1.7 !important;
+            }
+            body.home-page .engineering-hero .hero-pill-row {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                align-items: center !important;
+                gap: 8px !important;
+                margin-top: 20px !important;
+            }
+            body.home-page .engineering-hero .hero-pill-row span {
+                flex: 0 1 auto !important;
+                padding: 7px 12px !important;
+                font-size: 12px !important;
+                line-height: 1.4 !important;
+                white-space: nowrap !important;
+            }
+            body.home-page .engineering-hero .hero-buttons {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+                margin-top: 24px !important;
+                width: 100% !important;
+            }
+            body.home-page .engineering-hero .hero-buttons .primary-button,
+            body.home-page .engineering-hero .hero-buttons .secondary-button {
+                flex: 1 1 200px !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                justify-content: center !important;
+                text-align: center !important;
+                padding: 14px 14px !important;
+                font-size: 15px !important;
+                line-height: 1.35 !important;
+                white-space: normal !important;
+                box-sizing: border-box !important;
+            }
+            body.home-page .engineering-hero .hero-buttons .primary-button span {
+                flex: 0 0 auto;
+            }
+        }
+
+        @media screen and (max-width: 380px) {
+            body.home-page .engineering-hero .hero-container {
+                padding-left: 14px !important;
+                padding-right: 14px !important;
+            }
+            body.home-page .engineering-hero .hero-content h1 {
+                font-size: clamp(28px, 7.8vw, 32px) !important;
+                letter-spacing: -0.8px !important;
+            }
+            body.home-page .engineering-hero .hero-pill-row span {
+                padding: 6px 10px !important;
+                font-size: 11px !important;
+            }
+            body.home-page .engineering-hero .hero-buttons .primary-button,
+            body.home-page .engineering-hero .hero-buttons .secondary-button {
+                flex-basis: 100% !important;
+            }
+        }
+
     </style>
 </head>
 
 <body class="home-page">
 
 <header class="site-header">
-            <div class="container">
-                <a href="index.html" class="logo" aria-label="PVRajCMS Group Home">
-                    <img src="logo.png" alt="PVRajCMS Group Logo">
-                    <div class="logo-text">
-                        <p>Engineering • Technology • Digital Innovation</p>
-                    </div>
-                </a>
-                <nav class="navbar" aria-label="Main navigation">
-                    <a href="index.html" aria-current="page">Home</a>
-                    <a href="about.html">About</a>
-                    <a href="services.html">Services</a>
-                    <a href="projects.html">Projects</a>
-                    <a href="contact.html">Contact</a>
-                    <a href="kirana.html">PV MART</a>
-                </nav>
+    <div class="container">
+        <a href="index.html" class="logo" aria-label="PVRajCMS Group Home">
+            <img src="logo.png" alt="PVRajCMS Group Logo">
+            <div class="logo-text">
+                <p>Engineering • Technology • Digital Innovation</p>
             </div>
-        </header>
+        </a>
+        <nav class="navbar" aria-label="Main navigation">
+            <a href="index.html" aria-current="page">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="projects.html">Projects</a>
+            <a href="contact.html">Contact</a>
+            <a href="kirana.html">PV MART</a>
+        </nav>
+    </div>
+</header>
 
 <main>
 
