@@ -1,1102 +1,214 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PVRAJCMS MART | Online Shopping</title>
-<meta name="description" content="PVRAJCMS MART par ghar ki grocery, daily essentials aur pashu aahar dekhein.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PV MART | All-in-One Online Shopping</title>
+<meta name="description" content="PV MART par grocery, fashion, cosmetics, mobile accessories aur ghar ka saman dekhein.">
 <link rel="icon" type="image/png" href="logo.png">
-
 <style>
-:root {
-  --navy:#0d2545;
-  --green:#13865c;
-  --mint:#e9f8f0;
-  --gold:#ffcf58;
-  --ink:#172536;
-  --muted:#667487;
-  --line:#e5eaf0;
-  --bg:#f5f8fb;
+:root{--navy:#0d2545;--green:#13865c;--gold:#ffcf58;--ink:#172536;--muted:#667487;--line:#e5eaf0;--bg:#f5f8fb}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:#071422;color:#fff;border-bottom:1px solid #25405a}
+.header-inner{max-width:1400px;margin:auto;padding:8px 18px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0;text-decoration:none;color:white}
+.brand img{width:min(26vw,300px);max-height:65px;object-fit:contain;object-position:left center}
+.brand-tagline{border-left:1px solid #526275;padding-left:12px;font-size:12px;line-height:1.5;color:#d6e6f7;white-space:nowrap}
+nav{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
+nav a{color:#f4f8ff;text-decoration:none;font-weight:700;font-size:13px;white-space:nowrap}
+nav a:hover{color:var(--gold)}
+.hero{max-width:1400px;margin:14px auto 0;padding:0 16px}
+.hero-inner{background:linear-gradient(115deg,#071729,#0d4b50);border-radius:16px;padding:clamp(24px,5vw,58px);color:white;display:flex;justify-content:space-between;align-items:center;gap:24px;overflow:hidden}
+.hero h1{font-size:clamp(28px,4.5vw,54px);line-height:1.08;margin:0 0 12px;max-width:700px}
+.hero p{margin:0 0 18px;line-height:1.6;color:#e1f1f2;max-width:650px}
+.hero .hero-tag{display:inline-block;background:#ffcf58;color:#172536;border-radius:999px;padding:7px 13px;font-size:12px;font-weight:800;margin-bottom:14px}
+.hero-art{font-size:clamp(55px,9vw,110px);white-space:nowrap}
+.searchbar{max-width:1400px;margin:18px auto 0;padding:0 16px}
+.searchbar input{width:100%;padding:14px 16px;border:1px solid #d7e0e8;border-radius:12px;font-size:16px;background:white}
+main{max-width:1400px;margin:18px auto;padding:0 16px 36px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.75fr);gap:18px;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 18px #122b4208}
+h2{font-size:20px;margin:0 0 14px}.categories{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.cat{border:1px solid #dce5ec;background:#f6f9fb;color:#30445b;border-radius:999px;padding:9px 12px;font-size:12px;font-weight:700;cursor:pointer}
+.cat.active{background:var(--navy);color:white;border-color:var(--navy)}
+.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.product{border:1px solid var(--line);border-radius:13px;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.product-emoji{height:68px;border-radius:10px;background:#f0f8f3;display:grid;place-items:center;font-size:34px}
+.product h3{font-size:14px;line-height:1.35;margin:0}.small{font-size:11px;color:var(--muted);line-height:1.4}
+.price{font-size:17px;font-weight:800;color:var(--green)}
+button{font:inherit;cursor:pointer;border:0;border-radius:9px;padding:10px 11px;font-weight:700}
+.add{background:var(--navy);color:white;margin-top:auto}.add:hover{background:#17476a}
+.cart-empty{color:var(--muted);font-size:14px;padding:10px 0}
+.cart-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:11px 0;border-bottom:1px solid var(--line)}
+.cart-name{font-weight:700;font-size:13px}.qty{display:flex;align-items:center;gap:8px;margin-top:6px}.qty button{padding:3px 9px;background:#edf2f6;color:var(--navy)}
+.cart-price{font-size:13px;font-weight:700;text-align:right}
+.total{display:flex;justify-content:space-between;padding:15px 0;font-size:18px;font-weight:800}
+label{display:block;font-size:13px;font-weight:700;margin:12px 0 6px}
+input,textarea{width:100%;border:1px solid #d7e0e8;border-radius:10px;padding:12px;font:inherit;background:white;color:var(--ink)}
+textarea{resize:vertical;min-height:72px}
+.payment-options{display:grid;gap:8px}.payment-option{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:11px;font-size:13px}
+.payment-option input{width:auto;margin-top:3px}.payment-option strong{display:block;margin-bottom:3px}
+.primary,.secondary{width:100%;margin-top:12px}.primary{background:var(--green);color:white}.secondary{background:#edf3f7;color:var(--navy)}
+.note{font-size:12px;line-height:1.55;color:var(--muted);margin-top:12px}
+.warning{background:#fff8df;border:1px solid #f1dda0;padding:11px;border-radius:10px;color:#604b12;font-size:12px;line-height:1.5;margin-top:12px}
+#status{display:none;margin-top:12px;padding:12px;border-radius:10px;background:#e9f8f0;color:#14563d;font-size:13px;line-height:1.5}
+footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font-size:12px;line-height:1.7}
+@media(max-width:1000px){main{grid-template-columns:1fr}.products{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){
+ .header-inner{padding:8px 10px;display:block}.brand{justify-content:center;gap:8px}.brand img{width:min(44vw,190px);max-height:48px}.brand-tagline{font-size:9px;padding-left:8px;white-space:normal;max-width:145px}
+ nav{justify-content:center;gap:8px 13px;margin-top:9px}nav a{font-size:12px}
+ .hero{padding:0 10px;margin-top:10px}.hero-inner{padding:24px 18px;border-radius:12px}.hero-art{display:none}.hero h1{font-size:30px}.hero p{font-size:14px}
+ .searchbar{padding:0 10px;margin-top:12px}main{padding:0 10px 25px;margin-top:12px;gap:12px}.panel{padding:13px}
+ .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product{padding:9px}.product-emoji{height:58px;font-size:30px}.product h3{font-size:13px}.add{font-size:12px;padding:9px 6px}
+ .cat{padding:8px 10px;font-size:11px}
 }
-
-* { box-sizing:border-box; }
-
-body {
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg);
-  color:var(--ink);
-}
-
-header {
-  background:#071729;
-  color:#fff;
-  padding:18px 16px;
-  border-bottom:1px solid #20435a;
-}
-
-.wrap {
-  max-width:1400px;
-  margin:0 auto;
-}
-
-.topbar {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:18px;
-}
-
-.brand {
-  display:flex;
-  align-items:center;
-  gap:12px;
-  min-width:0;
-  /* Keep the clickable link only around the logo and brand text. */
-  flex:0 1 auto;
-  width:fit-content;
-  text-decoration:none;
-  color:#fff;
-}
-
-.group-logo {
-  display:block;
-  width:min(40vw,410px);
-  height:auto;
-  max-height:190px;
-  object-fit:contain;
-  flex-shrink:0;
-}
-
-.brand-text {
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  gap:5px;
-  border-left:1px solid #20435a;
-  padding-left:18px;
-  min-width:0;
-}
-
-.brand-text strong {
-  font-size:clamp(28px,3.4vw,46px);
-  line-height:1.05;
-  color:#ffcf58;
-  letter-spacing:1px;
-  font-weight:900;
-  text-transform:uppercase;
-}
-
-.brand-text small {
-  font-size:14px;
-  line-height:1.5;
-  color:#f5fbff;
-  font-weight:700;
-  letter-spacing:.2px;
-}
-
-.brand-text .unity {
-  font-size:12px;
-  line-height:1.4;
-  color:#ffcf58;
-  font-weight:800;
-  letter-spacing:1px;
-  text-transform:uppercase;
-}
-
-.main-nav {
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  flex:0 0 auto;
-  gap:7px;
-  margin-right:20px;
-}
-
-.main-nav a {
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  white-space:nowrap;
-  background:#0d2545;
-  color:#fff;
-  border:1px solid #28516a;
-  border-radius:999px;
-  padding:10px 16px;
-  font-size:13px;
-  font-weight:700;
-}
-
-.main-nav a:hover {
-  background:#16466a;
-}
-
-.selected-banner {
-  margin:16px 0 0;
-  border-radius:15px;
-  overflow:hidden;
-  background:#071729;
-  width:100%;
-  aspect-ratio:3.5 / 1;
-}
-
-.selected-banner img {
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:top center;
-}
-
-main {
-  max-width:1150px;
-  margin:22px auto;
-  padding:0 16px 40px;
-  display:grid;
-  grid-template-columns:minmax(0,1.45fr) minmax(290px,.8fr);
-  gap:20px;
-}
-
-.panel {
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:18px;
-  box-shadow:0 4px 18px #122b4208;
-}
-
-h3 {
-  margin:0 0 14px;
-  font-size:19px;
-}
-
-.tools {
-  display:flex;
-  gap:9px;
-  flex-wrap:wrap;
-  margin-bottom:14px;
-}
-
-input,textarea,select {
-  width:100%;
-  border:1px solid #d7e0e8;
-  border-radius:10px;
-  padding:12px;
-  font:inherit;
-  background:#fff;
-  color:var(--ink);
-}
-
-.tools input {
-  flex:1;
-  min-width:180px;
-}
-
-.categories {
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  margin:0 0 15px;
-}
-
-.cat {
-  border:1px solid #dce5ec;
-  background:#f6f9fb;
-  color:#30445b;
-  border-radius:999px;
-  padding:8px 12px;
-  font-size:12px;
-}
-
-.cat.active {
-  background:var(--navy);
-  color:#fff;
-  border-color:var(--navy);
-}
-
-.products {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:10px;
-}
-
-.product {
-  border:1px solid var(--line);
-  border-radius:13px;
-  padding:12px;
-  display:flex;
-  flex-direction:column;
-  gap:7px;
-  min-width:0;
-}
-
-.emoji {
-  font-size:26px;
-  background:#f0f8f3;
-  border-radius:10px;
-  height:48px;
-  display:grid;
-  place-items:center;
-}
-
-.product h4 {
-  margin:0;
-  font-size:14px;
-  line-height:1.35;
-}
-
-.small {
-  font-size:11px;
-  color:var(--muted);
-}
-
-.price {
-  font-size:17px;
-  font-weight:800;
-  color:var(--green);
-}
-
-button {
-  font:inherit;
-  cursor:pointer;
-  border:0;
-  border-radius:10px;
-  padding:10px 11px;
-  font-weight:700;
-}
-
-.add {
-  background:var(--navy);
-  color:#fff;
-  margin-top:auto;
-}
-
-.cart-empty {
-  color:var(--muted);
-  font-size:14px;
-  padding:10px 0;
-}
-
-.cart-row {
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:8px;
-  padding:11px 0;
-  border-bottom:1px solid var(--line);
-}
-
-.cart-name {
-  font-weight:700;
-  font-size:13px;
-}
-
-.qty {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-top:6px;
-}
-
-.qty button {
-  padding:3px 9px;
-  background:#edf2f6;
-  color:var(--navy);
-}
-
-.cart-price {
-  font-size:13px;
-  font-weight:700;
-  text-align:right;
-}
-
-.total {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 0;
-  font-size:18px;
-  font-weight:800;
-}
-
-label {
-  display:block;
-  font-size:13px;
-  font-weight:700;
-  margin:12px 0 6px;
-}
-
-textarea {
-  resize:vertical;
-  min-height:72px;
-}
-
-.payment-options {
-  display:grid;
-  gap:8px;
-}
-
-.payment-option {
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:11px;
-  font-size:13px;
-}
-
-.payment-option input {
-  width:auto;
-  margin-top:3px;
-  accent-color:var(--green);
-}
-
-.payment-option strong {
-  display:block;
-  margin-bottom:3px;
-}
-
-.primary {
-  width:100%;
-  background:var(--green);
-  color:white;
-  margin-top:14px;
-}
-
-.secondary {
-  width:100%;
-  background:#edf3f7;
-  color:var(--navy);
-  margin-top:9px;
-}
-
-.note {
-  font-size:12px;
-  line-height:1.55;
-  color:var(--muted);
-  margin-top:12px;
-}
-
-.warning {
-  background:#fff8df;
-  border:1px solid #f1dda0;
-  padding:11px;
-  border-radius:10px;
-  color:#604b12;
-  font-size:12px;
-  line-height:1.5;
-  margin-top:12px;
-}
-
-#status {
-  display:none;
-  margin-top:12px;
-  padding:12px;
-  border-radius:10px;
-  background:var(--mint);
-  color:#14563d;
-  font-size:13px;
-  line-height:1.5;
-}
-
-footer {
-  text-align:center;
-  padding:22px 16px;
-  background:#eaf0f5;
-  color:#5b6a7b;
-  font-size:12px;
-  line-height:1.7;
-}
-
-@media(max-width:900px) {
-  main {
-    grid-template-columns:1fr;
-  }
-
-  .products {
-    grid-template-columns:repeat(3,minmax(0,1fr));
-  }
-}
-
-@media(max-width:650px) {
-  .products {
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-
-  .panel {
-    padding:13px;
-  }
-}
-
-/* MOBILE HEADER FIX */
-@media(max-width:600px) {
-  header {
-    padding:12px 8px 10px;
-  }
-
-  .topbar {
-    flex-direction:row;
-    align-items:center;
-    justify-content:space-between;
-    gap:5px;
-  }
-
-  .brand {
-    flex:1 1 0;
-    width:auto;
-    max-width:calc(100% - 62px);
-    min-width:0;
-    gap:6px;
-  }
-
-  .group-logo {
-    width:clamp(90px,48vw,250px);
-    max-width:none;
-    height:auto;
-    max-height:none;
-    object-fit:contain;
-    /* Prevent flexbox from squeezing the logo and distorting its appearance. */
-    flex:0 0 auto;
-    align-self:center;
-  }
-
-  .brand-text {
-    flex:1 1 0;
-    min-width:0;
-    padding-left:7px;
-    gap:4px;
-    transform:translateX(0); /* moved 1/4 inch right from previous mobile position */
-  }
-
-  .brand-text strong {
-    font-size:clamp(19px,5.3vw,27px);
-    line-height:1.05;
-    letter-spacing:0;
-    white-space:nowrap;
-  }
-
-  .brand-text .unity {
-    font-size:clamp(7px,2vw,9px);
-    line-height:1.3;
-    letter-spacing:0;
-    white-space:nowrap;
-  }
-
-  .brand-text small {
-    font-size:clamp(8px,2.3vw,10px);
-    line-height:1.35;
-  }
-
-  .main-nav {
-    flex:0 0 auto;
-    width:auto;
-    margin:0 8px 0 0;
-  }
-
-  .main-nav a {
-    font-size:10px;
-    padding:8px 9px;
-  }
-
-  .selected-banner {
-    margin-top:10px;
-    border-radius:10px;
-  }
-
-  .selected-banner {
-    aspect-ratio:2.85 / 1;
-    margin-top:10px;
-  }
-
-  .selected-banner img {
-    display:block;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position:top center;
-  }
-
-  main {
-    margin:14px auto;
-    padding:0 12px 28px;
-    gap:14px;
-  }
-
-  .tools input {
-    min-width:0;
-    font-size:16px;
-  }
-
-  .categories {
-    gap:7px;
-  }
-
-  .cat {
-    font-size:12px;
-    padding:9px 12px;
-  }
-
-  .product {
-    padding:10px;
-  }
-
-  .add {
-    font-size:12px;
-    padding:9px 7px;
-  }
-}
-
-@media(max-width:380px) {
-  .topbar {
-    gap:4px;
-  }
-
-  .brand {
-    gap:4px;
-  }
-
-  .group-logo {
-    width:clamp(90px,48vw,250px);
-    max-width:none;
-    height:auto;
-    max-height:none;
-    /* Keep the original image proportions on narrow phones too. */
-    flex:0 0 auto;
-    align-self:center;
-  }
-
-  .brand-text {
-    padding-left:5px;
-    gap:3px;
-    transform:translateX(-6px); /* another 1/4 inch left on narrow phones */
-  }
-
-  .brand-text strong {
-    font-size:18px;
-  }
-
-  .brand-text .unity {
-    font-size:7px;
-  }
-
-  .brand-text small {
-    font-size:8px;
-  }
-
-  .main-nav {
-    margin-right:5px;
-  }
-
-  .main-nav a {
-    padding:7px 7px;
-    font-size:9px;
-  }
-}
-
-
-/* Shared PVRajCMS header — matched to Contact/About page */
-body.kirana-page > header.site-header {
-  background:#071422;
-  padding:3px 12px !important;
-  border-bottom:1px solid rgba(255,255,255,.12);
-  color:#fff;
-}
-body.kirana-page > header.site-header > .container {
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  width:100%;
-  max-width:1400px;
-  margin:0 auto;
-}
-body.kirana-page .site-header .logo {
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  gap:14px;
-  flex:0 1 auto;
-  min-width:0;
-  width:auto;
-  text-decoration:none;
-  color:#fff;
-}
-body.kirana-page .site-header .logo img {
-  display:block;
-  width:min(28vw,360px) !important;
-  min-width:230px;
-  height:auto !important;
-  max-height:72px;
-  object-fit:contain;
-  object-position:left center;
-  flex-shrink:0;
-}
-body.kirana-page .site-header .logo-text {
-  display:block;
-  text-align:left;
-  margin:0;
-  padding-left:14px;
-  border-left:1px solid rgba(255,255,255,.18);
-  min-width:0;
-}
-body.kirana-page .site-header .logo-text p {
-  margin:0;
-  color:#d6e6f7;
-  font-size:12px;
-  line-height:1.5;
-  white-space:nowrap;
-  letter-spacing:.5px;
-  font-weight:400;
-}
-body.kirana-page .site-header .navbar {
-  display:flex;
-  justify-content:flex-end;
-  align-items:center;
-  flex:0 0 auto;
-  flex-wrap:nowrap;
-  gap:16px;
-  width:auto;
-  margin:0;
-  padding:5px 0;
-  border:0;
-}
-body.kirana-page .site-header .navbar a {
-  display:inline;
-  background:none;
-  border:0;
-  border-radius:0;
-  padding:0;
-  color:#f2f7ff;
-  font-size:14px;
-  font-weight:700;
-  text-decoration:none;
-  white-space:nowrap;
-}
-body.kirana-page .site-header .navbar a:hover { color:#8bd5ff; background:none; }
-body.kirana-page .selected-banner { margin:0; border-radius:0 0 15px 15px; }
-@media(max-width:1000px) {
-  body.kirana-page > header.site-header > .container { flex-wrap:wrap; justify-content:center; }
-  body.kirana-page .site-header .logo { justify-content:center; }
-  body.kirana-page .site-header .navbar { justify-content:center; flex-wrap:wrap; gap:12px 20px; }
-}
-@media(max-width:600px) {
-  body.kirana-page > header.site-header { padding:10px !important; }
-  body.kirana-page > header.site-header > .container { flex-direction:column; gap:8px; }
-  body.kirana-page .site-header .logo { flex-direction:column; gap:6px; }
-  body.kirana-page .site-header .logo img { width:min(88vw,300px) !important; min-width:0; max-height:75px; }
-  body.kirana-page .site-header .logo-text { border-left:0; padding-left:0; text-align:center; }
-  body.kirana-page .site-header .logo-text p { white-space:normal; font-size:11px; }
-  body.kirana-page .site-header .navbar {
-    display:flex;
-    flex-wrap:nowrap;
-    justify-content:space-between;
-    align-items:center;
-    width:100%;
-    gap:clamp(4px, 1.5vw, 9px);
-    padding:5px 0 2px;
-    overflow:visible;
-  }
-  body.kirana-page .site-header .navbar a {
-    font-size:clamp(9px, 2.8vw, 12px);
-    line-height:1.2;
-    letter-spacing:-.2px;
-    padding:0;
-    white-space:nowrap;
-  }
-  body.kirana-page .selected-banner {
-    aspect-ratio:2.85 / 1;
-    margin-top:10px;
-    border-radius:10px;
-    background:#071729;
-  }
-}
-
-
-
-/* Compact mobile header: reduce logo, vertical space and navigation gaps */
-@media (max-width: 600px) {
-  body.kirana-page > header.site-header {
-    padding: 5px 8px !important;
-  }
-  body.kirana-page > header.site-header > .container {
-    gap: 5px;
-  }
-  body.kirana-page .site-header .logo {
-    gap: 3px;
-  }
-  body.kirana-page .site-header .logo img {
-    width: min(78vw, 260px) !important;
-    min-width: 0;
-    max-height: 65px;
-  }
-  body.kirana-page .site-header .logo-text p {
-    font-size: 10px;
-    line-height: 1.25;
-  }
-  body.kirana-page .site-header .navbar {
-    gap: 8px 12px;
-    padding: 2px 0;
-  }
-  body.kirana-page .site-header .navbar a {
-    font-size: 12px;
-  }
-}
-
 </style>
 </head>
-<body class="kirana-page">
-<header class="site-header">
-  <div class="container">
-    <a href="index.html" class="logo" aria-label="PVRajCMS Group Home">
-      <img src="logo.png" alt="PVRajCMS Group Logo">
-      <div class="logo-text">
-        <p>Engineering • Technology • Digital Innovation</p>
-      </div>
-    </a>
-    <nav class="navbar" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="services.html">Services</a>
-      <a href="projects.html">Projects</a>
-      <a href="contact.html">Contact</a>
-      <a href="kirana.html" aria-current="page">PV MART</a>
-    </nav>
-  </div>
+<body>
+<header>
+ <div class="header-inner">
+  <a class="brand" href="index.html" aria-label="PVRajCMS Group home">
+   <img src="logo.png" alt="PVRajCMS Group Logo">
+   <span class="brand-tagline">PV MART · Aapki Apni Online Dukaan</span>
+  </a>
+  <nav aria-label="Store navigation">
+   <a href="#shop">Shop Now</a><a href="#categories">Categories</a><a href="#cart-panel">My Cart (<span id="cartCount">0</span>)</a><a href="#contact">Contact</a>
+  </nav>
+ </div>
 </header>
-<div class="wrap">
-  <div class="selected-banner">
-    <img src="pvmart-banner.jpg" alt="PVRAJCMS MART — Ghar Ka Samaan, Aapke Dwaar Pe!" onerror="this.closest('.selected-banner').style.display='none'">
+<section class="hero">
+ <div class="hero-inner">
+  <div><span class="hero-tag">GROCERY • FASHION • BEAUTY • MOBILE</span>
+   <h1>Har Zaroorat Ka Samaan, Ek Hi Jagah!</h1>
+   <p>Kirana, kapde, cosmetics, mobile accessories aur ghar ke products — PV MART par apni pasand ka samaan chunein aur order taiyar karein.</p>
+   <a href="#shop" style="display:inline-block;background:#ffcf58;color:#172536;text-decoration:none;padding:11px 17px;border-radius:9px;font-weight:800">Shopping Shuru Karein ↓</a>
   </div>
-</div>
+  <div class="hero-art" aria-hidden="true">🛒🛍️</div>
+ </div>
+</section>
+<div class="searchbar"><input id="search" placeholder="Product ya category search karein..." aria-label="Search products"></div>
 <main>
-
-<section class="panel">
-  <h3>🛍️ Dukaan ke Samaan</h3>
-  <div class="tools">
-    <input id="search" placeholder="Samaan khojein, jaise aata, sabun, khal..." aria-label="Product search">
-  </div>
+ <section class="panel" id="shop">
+  <h2>🛍️ Products Explore Karein</h2>
   <div class="categories" id="categories"></div>
   <div class="products" id="products"></div>
-  <p class="note">Demo catalog: products aur prices sample hain. Live karne se pehle apni dukaan ke actual brand, pack size, rate aur stock update karein. Kuch cheezein local availability ke hisaab se rakhein.</p>
-</section>
-
-<aside class="panel">
-  <h3>🧺 Aapka Cart</h3>
-  <div id="cart">
-    <div class="cart-empty">Abhi cart khaali hai. Product add karein.</div>
-  </div>
-
-  <div class="total">
-    <span>Total</span>
-    <span id="total">₹0</span>
-  </div>
-
-  <h3 style="margin-top:8px">📍 Delivery Details</h3>
-
+  <p class="note">Demo catalog: yahan diye gaye products aur prices sirf sample hain. Website live karne se pehle actual product, brand, pack size, price aur stock update karein.</p>
+ </section>
+ <aside class="panel" id="cart-panel">
+  <h2>🧺 Aapka Cart</h2><div id="cart"><div class="cart-empty">Abhi cart khaali hai. Product add karein.</div></div>
+  <div class="total"><span>Total</span><span id="total">₹0</span></div>
+  <h2 style="margin-top:8px">📍 Delivery Details</h2>
   <form id="orderForm">
-    <label for="customer">Aapka naam *</label>
-    <input id="customer" required autocomplete="name" placeholder="Naam likhein">
-
-    <label for="phone">Mobile number *</label>
-    <input id="phone" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10 digit mobile number">
-
-    <label for="address">Poora delivery address *</label>
-    <textarea id="address" required placeholder="Gaon, mohalla, ghar ka pata"></textarea>
-
-    <label for="landmark">Paas ki pehchaan (optional)</label>
-    <input id="landmark" placeholder="Jaise school ke paas">
-
-    <label>Payment ka tareeka *</label>
-
-    <div class="payment-options">
-      <label class="payment-option">
-        <input type="radio" name="payment" value="upi" checked>
-        <span>
-          <strong>UPI — PhonePe / Google Pay</strong>
-          Payment ko bank/UPI app mein verify kiya jayega.
-        </span>
-      </label>
-
-      <label class="payment-option">
-        <input type="radio" name="payment" value="cod">
-        <span>
-          <strong>Cash on Delivery</strong>
-          Samaan milne par cash dein.
-        </span>
-      </label>
-    </div>
-
-    <button type="submit" class="primary">Order Details Taiyar Karein</button>
+   <label for="customer">Aapka naam *</label><input id="customer" required autocomplete="name" placeholder="Naam likhein">
+   <label for="phone">Mobile number *</label><input id="phone" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10 digit mobile number">
+   <label for="address">Poora delivery address *</label><textarea id="address" required placeholder="Gaon, mohalla, ghar ka pata"></textarea>
+   <label for="landmark">Paas ki pehchaan (optional)</label><input id="landmark" placeholder="Jaise school ke paas">
+   <label>Payment ka tareeka *</label>
+   <div class="payment-options">
+    <label class="payment-option"><input type="radio" name="payment" value="upi" checked><span><strong>UPI — PhonePe / Google Pay</strong>Payment bank/UPI app mein verify karein.</span></label>
+    <label class="payment-option"><input type="radio" name="payment" value="cod"><span><strong>Cash on Delivery</strong>Samaan milne par cash dein.</span></label>
+   </div>
+   <button type="submit" class="primary">Order Details Taiyar Karein</button>
   </form>
-
   <div id="status" role="status"></div>
-
-  <button id="payButton" class="primary" style="display:none" type="button">
-    UPI App se Payment Karein
-  </button>
-
-  <button id="sendButton" class="secondary" style="display:none" type="button">
-    WhatsApp par Order Bhejein
-  </button>
-
-  <div class="warning">
-    <strong>Live karne se pehle:</strong>
-    Code mein apni asli UPI ID aur dukaan ka WhatsApp number set karein.
-    UPI screenshot ko payment confirmation na maanein—bank/UPI app mein payment verify karein.
-  </div>
-
-  <p class="note">Yeh starter version order database mein save nahi karta. Customer ko order shop tak bhejne ke liye configured WhatsApp button use karna hoga.</p>
-</aside>
+  <button id="payButton" class="primary" style="display:none" type="button">UPI App se Payment Karein</button>
+  <button id="sendButton" class="secondary" style="display:none" type="button">WhatsApp par Order Bhejein</button>
+  <div class="warning"><strong>Live karne se pehle:</strong> Neeche code mein apni asli UPI ID aur shop WhatsApp number set karein. UPI payment ko bank/UPI app mein verify karein; screenshot ko akela proof na maanein.</div>
+  <p class="note">Yeh starter version order database mein save nahi karta. Order shop tak bhejne ke liye WhatsApp button use hoga.</p>
+ </aside>
 </main>
-
-<footer>
-  <strong>PVRAJCMS MART</strong> · Aapki Apni Online Dukaan<br>
-  Grocery • Household Essentials • Pashu Aahar<br>
-  PVrajCMS Group
-</footer>
-
+<footer id="contact"><strong>PV MART</strong> · Aapki Apni Online Dukaan<br>Grocery • Fashion • Beauty • Mobile Accessories • Home Essentials<br>Part of PVRajCMS Group</footer>
 <script>
-/* SETUP: Replace these with your real shop details before publishing. */
+/* SETUP: publish karne se pehle apni asli details daalein. */
 const SHOP_UPI_ID = "YOUR-UPI-ID@bank";
 const SHOP_WHATSAPP = "91XXXXXXXXXX";
-const SHOP_NAME = "PVRAJCMS MART";
+const SHOP_NAME = "PV MART";
 
-/* Demo product catalog */
+/* Sample catalog. Rates/stock ko apne actual products ke mutabik update karein. */
 const productsData = [
-{id:1,name:"Aata",detail:"5 kg bag",price:152,emoji:"🌾",cat:"Anaj & Daal"},
-{id:2,name:"Aata",detail:"10 kg bag",price:300,emoji:"🌾",cat:"Anaj & Daal"},
-{id:3,name:"Chawal",detail:"5 kg bag",price:275,emoji:"🍚",cat:"Anaj & Daal"},
-{id:4,name:"Chawal",detail:"1 kg",price:58,emoji:"🍚",cat:"Anaj & Daal"},
-{id:5,name:"Arhar Daal",detail:"1 kg",price:150,emoji:"🫘",cat:"Anaj & Daal"},
-{id:6,name:"Masoor Daal",detail:"1 kg",price:105,emoji:"🫘",cat:"Anaj & Daal"},
-{id:7,name:"Chana Daal",detail:"1 kg",price:90,emoji:"🫘",cat:"Anaj & Daal"},
-{id:8,name:"Moong Daal",detail:"1 kg",price:125,emoji:"🫘",cat:"Anaj & Daal"},
-{id:9,name:"Chana",detail:"1 kg",price:85,emoji:"🫘",cat:"Anaj & Daal"},
-{id:10,name:"Cooking Oil",detail:"1 litre",price:135,emoji:"🫗",cat:"Tel, Masale & Kitchen"},
-{id:11,name:"Sarson Tel",detail:"1 litre",price:160,emoji:"🫗",cat:"Tel, Masale & Kitchen"},
-{id:12,name:"Cheeni",detail:"1 kg",price:46,emoji:"🧂",cat:"Tel, Masale & Kitchen"},
-{id:13,name:"Namak",detail:"1 kg",price:22,emoji:"🧂",cat:"Tel, Masale & Kitchen"},
-{id:14,name:"Haldi Powder",detail:"100 g",price:30,emoji:"🟡",cat:"Tel, Masale & Kitchen"},
-{id:15,name:"Mirch Powder",detail:"100 g",price:40,emoji:"🌶️",cat:"Tel, Masale & Kitchen"},
-{id:16,name:"Dhaniya Powder",detail:"100 g",price:28,emoji:"🌿",cat:"Tel, Masale & Kitchen"},
-{id:17,name:"Chai Patti",detail:"250 g",price:125,emoji:"🍵",cat:"Tel, Masale & Kitchen"},
-{id:18,name:"Besan",detail:"1 kg",price:95,emoji:"🟨",cat:"Anaj & Daal"},
-{id:19,name:"Biscuit",detail:"1 packet",price:10,emoji:"🍪",cat:"Snacks & Drinks"},
-{id:20,name:"Namkeen",detail:"1 packet",price:20,emoji:"🥨",cat:"Snacks & Drinks"},
-{id:21,name:"Noodles",detail:"1 packet",price:15,emoji:"🍜",cat:"Snacks & Drinks"},
-{id:22,name:"Toffee",detail:"1 piece",price:1,emoji:"🍬",cat:"Snacks & Drinks"},
-{id:23,name:"Cold Drink",detail:"600 ml",price:40,emoji:"🥤",cat:"Snacks & Drinks"},
-{id:24,name:"Sabun",detail:"1 piece",price:35,emoji:"🧼",cat:"Personal Care"},
-{id:25,name:"Shampoo Sachet",detail:"1 sachet",price:2,emoji:"🧴",cat:"Personal Care"},
-{id:26,name:"Toothpaste",detail:"100 g",price:65,emoji:"🪥",cat:"Personal Care"},
-{id:27,name:"Toothbrush",detail:"1 piece",price:25,emoji:"🪥",cat:"Personal Care"},
-{id:28,name:"Washing Powder",detail:"1 kg",price:90,emoji:"🫧",cat:"Safai & Ghar"},
-{id:29,name:"Bartaan Bar",detail:"1 piece",price:15,emoji:"🧽",cat:"Safai & Ghar"},
-{id:30,name:"Phenyl",detail:"500 ml",price:65,emoji:"🧴",cat:"Safai & Ghar"},
-{id:31,name:"Matchbox",detail:"1 box",price:2,emoji:"🔥",cat:"Safai & Ghar"},
-{id:32,name:"Agarbatti",detail:"1 packet",price:20,emoji:"🪔",cat:"Safai & Ghar"},
-{id:33,name:"Doodh",detail:"500 ml pouch",price:30,emoji:"🥛",cat:"Dairy & Daily"},
-{id:34,name:"Dahi",detail:"500 g",price:40,emoji:"🥣",cat:"Dairy & Daily"},
-{id:35,name:"Pashu Aahar Dana",detail:"1 kg",price:32,emoji:"🐄",cat:"Pashu Aahar"},
-{id:36,name:"Chokar",detail:"1 kg",price:24,emoji:"🌾",cat:"Pashu Aahar"},
-{id:37,name:"Sarson Khal",detail:"1 kg",price:30,emoji:"🌿",cat:"Pashu Aahar"},
-{id:38,name:"Binola Khal",detail:"1 kg",price:36,emoji:"🌱",cat:"Pashu Aahar"},
-{id:39,name:"Chana Churi",detail:"1 kg",price:28,emoji:"🐄",cat:"Pashu Aahar"},
-{id:40,name:"Mineral Mixture",detail:"1 kg pack",price:120,emoji:"🧂",cat:"Pashu Aahar"},
-{id:41,name:"Calcium Supplement",detail:"1 kg pack",price:150,emoji:"🐄",cat:"Pashu Aahar"},
-{id:42,name:"Poultry Feed",detail:"1 kg",price:48,emoji:"🐔",cat:"Pashu Aahar"},
-{id:43,name:"Bhusa",detail:"Local stock / bundle",price:100,emoji:"🌾",cat:"Pashu Aahar"},
-{id:44,name:"Gur",detail:"1 kg",price:60,emoji:"🟤",cat:"Anaj & Daal"},
-{id:45,name:"Suji",detail:"500 g",price:30,emoji:"🌾",cat:"Anaj & Daal"},
-{id:46,name:"Maida",detail:"1 kg",price:45,emoji:"🌾",cat:"Anaj & Daal"}
+{id:1,name:"Aata",detail:"5 kg bag",price:152,emoji:"🌾",cat:"Kirana & Grocery"},
+{id:2,name:"Chawal",detail:"5 kg bag",price:275,emoji:"🍚",cat:"Kirana & Grocery"},
+{id:3,name:"Arhar Daal",detail:"1 kg",price:150,emoji:"🫘",cat:"Kirana & Grocery"},
+{id:4,name:"Masoor Daal",detail:"1 kg",price:105,emoji:"🫘",cat:"Kirana & Grocery"},
+{id:5,name:"Cooking Oil",detail:"1 litre",price:135,emoji:"🫗",cat:"Kirana & Grocery"},
+{id:6,name:"Sarson Tel",detail:"1 litre",price:160,emoji:"🫗",cat:"Kirana & Grocery"},
+{id:7,name:"Cheeni",detail:"1 kg",price:46,emoji:"🧂",cat:"Kirana & Grocery"},
+{id:8,name:"Namak",detail:"1 kg",price:22,emoji:"🧂",cat:"Kirana & Grocery"},
+{id:9,name:"Haldi Powder",detail:"100 g",price:30,emoji:"🟡",cat:"Kirana & Grocery"},
+{id:10,name:"Chai Patti",detail:"250 g",price:125,emoji:"🍵",cat:"Kirana & Grocery"},
+{id:11,name:"Biscuit",detail:"1 packet",price:10,emoji:"🍪",cat:"Kirana & Grocery"},
+{id:12,name:"Namkeen",detail:"1 packet",price:20,emoji:"🥨",cat:"Kirana & Grocery"},
+{id:13,name:"Men's T-Shirt",detail:"Sample listing · size select karein",price:299,emoji:"👕",cat:"Clothes & Fashion"},
+{id:14,name:"Men's Shirt",detail:"Sample listing · size select karein",price:499,emoji:"👔",cat:"Clothes & Fashion"},
+{id:15,name:"Jeans",detail:"Sample listing · size select karein",price:699,emoji:"👖",cat:"Clothes & Fashion"},
+{id:16,name:"Kurti",detail:"Sample listing · size select karein",price:399,emoji:"👗",cat:"Clothes & Fashion"},
+{id:17,name:"Saree",detail:"Sample listing",price:799,emoji:"🥻",cat:"Clothes & Fashion"},
+{id:18,name:"Slippers",detail:"Sample listing · size select karein",price:199,emoji:"🩴",cat:"Clothes & Fashion"},
+{id:19,name:"Face Cream",detail:"Sample listing · pack size verify karein",price:120,emoji:"🧴",cat:"Beauty & Cosmetics"},
+{id:20,name:"Lipstick",detail:"Sample listing",price:149,emoji:"💄",cat:"Beauty & Cosmetics"},
+{id:21,name:"Perfume",detail:"Sample listing",price:249,emoji:"🌸",cat:"Beauty & Cosmetics"},
+{id:22,name:"Shampoo",detail:"Sample listing · bottle",price:180,emoji:"🧴",cat:"Beauty & Cosmetics"},
+{id:23,name:"Face Wash",detail:"Sample listing",price:99,emoji:"🫧",cat:"Beauty & Cosmetics"},
+{id:24,name:"Moisturizer",detail:"Sample listing",price:160,emoji:"🧴",cat:"Beauty & Cosmetics"},
+{id:25,name:"Mobile Phone",detail:"Listing placeholder · price/stock confirm karein",price:8999,emoji:"📱",cat:"Mobiles & Electronics"},
+{id:26,name:"Mobile Cover",detail:"Model select karein",price:149,emoji:"📱",cat:"Mobiles & Electronics"},
+{id:27,name:"Charger",detail:"Compatible model verify karein",price:299,emoji:"🔌",cat:"Mobiles & Electronics"},
+{id:28,name:"Earphones",detail:"Sample listing",price:199,emoji:"🎧",cat:"Mobiles & Electronics"},
+{id:29,name:"USB Cable",detail:"Connector type select karein",price:99,emoji:"🔌",cat:"Mobiles & Electronics"},
+{id:30,name:"Power Bank",detail:"Sample listing · capacity verify karein",price:999,emoji:"🔋",cat:"Mobiles & Electronics"},
+{id:31,name:"Washing Powder",detail:"1 kg",price:90,emoji:"🫧",cat:"Home & Cleaning"},
+{id:32,name:"Bartaan Bar",detail:"1 piece",price:15,emoji:"🧽",cat:"Home & Cleaning"},
+{id:33,name:"Phenyl",detail:"500 ml",price:65,emoji:"🧴",cat:"Home & Cleaning"},
+{id:34,name:"Kitchen Storage Box",detail:"Sample listing",price:129,emoji:"🥣",cat:"Home & Cleaning"},
+{id:35,name:"Water Bottle",detail:"1 piece",price:99,emoji:"🧴",cat:"Home & Cleaning"},
+{id:36,name:"Notebook",detail:"1 piece",price:40,emoji:"📓",cat:"Stationery & Books"},
+{id:37,name:"Pen Pack",detail:"5 pens",price:50,emoji:"🖊️",cat:"Stationery & Books"},
+{id:38,name:"Pencil Pack",detail:"10 pencils",price:40,emoji:"✏️",cat:"Stationery & Books"},
+{id:39,name:"School Bag",detail:"Sample listing",price:399,emoji:"🎒",cat:"Stationery & Books"},
+{id:40,name:"Baby Diapers",detail:"Pack size confirm karein",price:299,emoji:"🧸",cat:"Baby Care"},
+{id:41,name:"Baby Wipes",detail:"Sample listing",price:99,emoji:"🧻",cat:"Baby Care"},
+{id:42,name:"Baby Lotion",detail:"Sample listing",price:149,emoji:"🧴",cat:"Baby Care"},
+{id:43,name:"Pashu Aahar Dana",detail:"1 kg",price:32,emoji:"🐄",cat:"Animal Feed & Agriculture"},
+{id:44,name:"Chokar",detail:"1 kg",price:24,emoji:"🌾",cat:"Animal Feed & Agriculture"},
+{id:45,name:"Sarson Khal",detail:"1 kg",price:30,emoji:"🌿",cat:"Animal Feed & Agriculture"},
+{id:46,name:"Poultry Feed",detail:"1 kg",price:48,emoji:"🐔",cat:"Animal Feed & Agriculture"}
 ];
-
-let activeCat = "Sabhi";
-const cart = {};
-let currentOrder = null;
-
-const money = n => "₹" + n.toLocaleString("en-IN");
-const categories = ["Sabhi", ...new Set(productsData.map(p => p.cat))];
-
-function renderCategories() {
-  document.getElementById("categories").innerHTML =
-    categories.map(c =>
-      `<button type="button" class="cat ${c === activeCat ? "active" : ""}" onclick="setCat(${JSON.stringify(c)})">${c}</button>`
-    ).join("");
+let activeCat="Sabhi";const cart={};let currentOrder=null;
+const money=n=>"₹"+n.toLocaleString("en-IN");
+const categories=["Sabhi",...new Set(productsData.map(p=>p.cat))];
+function renderCategories(){document.getElementById("categories").innerHTML=categories.map(c=>`<button type="button" class="cat ${c===activeCat?"active":""}" onclick="setCat(${JSON.stringify(c)})">${c}</button>`).join("")}
+function setCat(c){activeCat=c;renderCategories();renderProducts()}
+function renderProducts(){
+ const q=document.getElementById("search").value.trim().toLowerCase();
+ const filtered=productsData.filter(p=>(activeCat==="Sabhi"||p.cat===activeCat)&&(`${p.name} ${p.detail} ${p.cat}`).toLowerCase().includes(q));
+ document.getElementById("products").innerHTML=filtered.length?filtered.map(p=>`<article class="product"><div class="product-emoji">${p.emoji}</div><h3>${p.name}</h3><div class="small">${p.detail}</div><div class="small">${p.cat}</div><div class="price">${money(p.price)}</div><button class="add" type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi product nahi mila. Doosra naam search karein.</p>"
 }
-
-function setCat(c) {
-  activeCat = c;
-  renderCategories();
-  renderProducts();
+function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart()}
+function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart()}
+function getTotal(){return productsData.reduce((s,p)=>s+p.price*(cart[p.id]||0),0)}
+function renderCart(){
+ const chosen=productsData.filter(p=>cart[p.id]);
+ document.getElementById("cart").innerHTML=chosen.length?chosen.map(p=>`<div class="cart-row"><div><div class="cart-name">${p.name} — ${p.detail}</div><div class="qty"><button type="button" onclick="changeQty(${p.id},-1)" aria-label="Quantity kam karein">−</button><span>${cart[p.id]}</span><button type="button" onclick="changeQty(${p.id},1)" aria-label="Quantity badhayein">+</button></div></div><div class="cart-price">${money(p.price*cart[p.id])}</div></div>`).join(""):'<div class="cart-empty">Abhi cart khaali hai. Product add karein.</div>';
+ document.getElementById("total").textContent=money(getTotal());
+ document.getElementById("cartCount").textContent=Object.values(cart).reduce((a,b)=>a+b,0);
+ document.getElementById("status").style.display="none";document.getElementById("payButton").style.display="none";document.getElementById("sendButton").style.display="none";currentOrder=null;
 }
-
-function renderProducts() {
-  const q = document.getElementById("search").value.trim().toLowerCase();
-
-  const filtered = productsData.filter(p =>
-    (activeCat === "Sabhi" || p.cat === activeCat) &&
-    (`${p.name} ${p.detail} ${p.cat}`).toLowerCase().includes(q)
-  );
-
-  document.getElementById("products").innerHTML = filtered.length
-    ? filtered.map(p => `
-      <article class="product">
-        <div class="emoji">${p.emoji}</div>
-        <h4>${p.name}</h4>
-        <div class="small">${p.detail}</div>
-        <div class="small">${p.cat}</div>
-        <div class="price">${money(p.price)}</div>
-        <button class="add" type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button>
-      </article>
-    `).join("")
-    : "<p>Koi product nahi mila. Doosra naam khojein.</p>";
-}
-
-function addToCart(id) {
-  cart[id] = (cart[id] || 0) + 1;
-  renderCart();
-}
-
-function changeQty(id, d) {
-  cart[id] = (cart[id] || 0) + d;
-  if (cart[id] <= 0) delete cart[id];
-  renderCart();
-}
-
-function getTotal() {
-  return productsData.reduce((s, p) => s + p.price * (cart[p.id] || 0), 0);
-}
-
-function renderCart() {
-  const chosen = productsData.filter(p => cart[p.id]);
-
-  document.getElementById("cart").innerHTML = chosen.length
-    ? chosen.map(p => `
-      <div class="cart-row">
-        <div>
-          <div class="cart-name">${p.name} — ${p.detail}</div>
-          <div class="qty">
-            <button type="button" onclick="changeQty(${p.id},-1)" aria-label="Quantity kam karein">−</button>
-            <span>${cart[p.id]}</span>
-            <button type="button" onclick="changeQty(${p.id},1)" aria-label="Quantity badhayein">+</button>
-          </div>
-        </div>
-        <div class="cart-price">${money(p.price * cart[p.id])}</div>
-      </div>
-    `).join("")
-    : '<div class="cart-empty">Abhi cart khaali hai. Product add karein.</div>';
-
-  document.getElementById("total").textContent = money(getTotal());
-  document.getElementById("status").style.display = "none";
-  document.getElementById("payButton").style.display = "none";
-  document.getElementById("sendButton").style.display = "none";
-  currentOrder = null;
-}
-
-document.getElementById("search").addEventListener("input", renderProducts);
-
-document.getElementById("orderForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  if (getTotal() <= 0) {
-    alert("Pehle cart mein product add karein.");
-    return;
-  }
-
-  const phone = document.getElementById("phone").value.trim();
-
-  if (!/^[6-9]\d{9}$/.test(phone)) {
-    alert("Sahi 10 digit mobile number likhein.");
-    return;
-  }
-
-  const payment = document.querySelector('input[name="payment"]:checked').value;
-
-  const items = productsData.filter(p => cart[p.id]).map(p => ({
-    name:p.name,
-    detail:p.detail,
-    qty:cart[p.id],
-    price:p.price,
-    subtotal:p.price * cart[p.id]
-  }));
-
-  const orderId = "PVM" + Date.now().toString().slice(-7);
-
-  currentOrder = {
-    orderId,
-    customer:document.getElementById("customer").value.trim(),
-    phone,
-    address:document.getElementById("address").value.trim(),
-    landmark:document.getElementById("landmark").value.trim(),
-    payment,
-    items,
-    total:getTotal()
-  };
-
-  const lines = items.map(i =>
-    `- ${i.name} (${i.detail}) x ${i.qty} = ${money(i.subtotal)}`
-  ).join("\n");
-
-  currentOrder.message =
-    `New order — ${SHOP_NAME}\n` +
-    `Order ID: ${orderId}\n` +
-    `Name: ${currentOrder.customer}\n` +
-    `Mobile: ${phone}\n` +
-    `Address: ${currentOrder.address}\n` +
-    `Landmark: ${currentOrder.landmark || "N/A"}\n\n` +
-    `Items:\n${lines}\n\n` +
-    `Total: ${money(currentOrder.total)}\n` +
-    `Payment: ${payment === "upi" ? "UPI (verify payment manually)" : "Cash on Delivery"}`;
-
-  const status = document.getElementById("status");
-  status.style.display = "block";
-  status.textContent =
-    `Order summary ready (${orderId}), total ${money(currentOrder.total)}. WhatsApp button se shop ko order bhejein. Order tab tak shop ko nahi milega jab tak WhatsApp par send na karein.`;
-
-  document.getElementById("sendButton").style.display = "block";
-
-  const payButton = document.getElementById("payButton");
-  payButton.style.display = payment === "upi" ? "block" : "none";
-  payButton.textContent = "UPI App se " + money(currentOrder.total) + " Pay Karein";
-
-  payButton.onclick = () => {
-    if (SHOP_UPI_ID === "YOUR-UPI-ID@bank") {
-      alert("Pehle code mein SHOP_UPI_ID ko apni asli UPI ID se replace karein.");
-      return;
-    }
-
-    const params = new URLSearchParams({
-      pa:SHOP_UPI_ID,
-      pn:SHOP_NAME,
-      am:currentOrder.total.toFixed(2),
-      cu:"INR",
-      tn:"Order " + currentOrder.orderId
-    });
-
-    window.location.href = "upi://pay?" + params.toString();
-  };
-
-  document.getElementById("sendButton").onclick = () => {
-    if (SHOP_WHATSAPP === "91XXXXXXXXXX") {
-      alert("Pehle code mein SHOP_WHATSAPP ko dukaan ke WhatsApp number se replace karein.");
-      return;
-    }
-
-    window.open(
-      "https://wa.me/" + SHOP_WHATSAPP + "?text=" + encodeURIComponent(currentOrder.message),
-      "_blank",
-      "noopener"
-    );
-  };
+document.getElementById("search").addEventListener("input",renderProducts);
+document.getElementById("orderForm").addEventListener("submit",function(e){
+ e.preventDefault();if(getTotal()<=0){alert("Pehle cart mein product add karein.");return}
+ const phone=document.getElementById("phone").value.trim();if(!/^[6-9]\d{9}$/.test(phone)){alert("Sahi 10 digit mobile number likhein.");return}
+ const payment=document.querySelector('input[name="payment"]:checked').value;
+ const items=productsData.filter(p=>cart[p.id]).map(p=>({name:p.name,detail:p.detail,qty:cart[p.id],price:p.price,subtotal:p.price*cart[p.id]}));
+ const orderId="PVM"+Date.now().toString().slice(-7);
+ currentOrder={orderId,customer:document.getElementById("customer").value.trim(),phone,address:document.getElementById("address").value.trim(),landmark:document.getElementById("landmark").value.trim(),payment,items,total:getTotal()};
+ const lines=items.map(i=>`- ${i.name} (${i.detail}) x ${i.qty} = ${money(i.subtotal)}`).join("\n");
+ currentOrder.message=`New order — ${SHOP_NAME}\nOrder ID: ${orderId}\nName: ${currentOrder.customer}\nMobile: ${phone}\nAddress: ${currentOrder.address}\nLandmark: ${currentOrder.landmark||"N/A"}\n\nItems:\n${lines}\n\nTotal: ${money(currentOrder.total)}\nPayment: ${payment==="upi"?"UPI (payment verify manually)":"Cash on Delivery"}`;
+ const status=document.getElementById("status");status.style.display="block";status.textContent=`Order summary ready (${orderId}), total ${money(currentOrder.total)}. WhatsApp button se shop ko order bhejein.`;
+ document.getElementById("sendButton").style.display="block";
+ const payButton=document.getElementById("payButton");payButton.style.display=payment==="upi"?"block":"none";payButton.textContent="UPI App se "+money(currentOrder.total)+" Pay Karein";
+ payButton.onclick=()=>{if(SHOP_UPI_ID==="YOUR-UPI-ID@bank"){alert("Pehle SHOP_UPI_ID mein apni asli UPI ID daalein.");return}const params=new URLSearchParams({pa:SHOP_UPI_ID,pn:SHOP_NAME,am:currentOrder.total.toFixed(2),cu:"INR",tn:"Order "+currentOrder.orderId});window.location.href="upi://pay?"+params.toString()};
+ document.getElementById("sendButton").onclick=()=>{if(SHOP_WHATSAPP==="91XXXXXXXXXX"){alert("Pehle SHOP_WHATSAPP mein shop ka WhatsApp number daalein.");return}window.open("https://wa.me/"+SHOP_WHATSAPP+"?text="+encodeURIComponent(currentOrder.message),"_blank","noopener")};
 });
-
-renderCategories();
-renderProducts();
-renderCart();
+renderCategories();renderProducts();renderCart();
 </script>
 </body>
 </html>
