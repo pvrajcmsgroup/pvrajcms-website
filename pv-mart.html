@@ -49,7 +49,7 @@ button{font:inherit;cursor:pointer;border:0;border-radius:9px;padding:10px 11px;
 .cart-name{font-weight:700;font-size:13px}.qty{display:flex;align-items:center;gap:8px;margin-top:6px}.qty button{padding:3px 9px;background:#edf2f6;color:var(--navy)}
 .cart-price{font-size:13px;font-weight:700;text-align:right}
 .total{display:flex;justify-content:space-between;padding:15px 0;font-size:18px;font-weight:800}
-.checkout-start{width:100%;background:#13865c;color:#fff;font-size:16px;padding:14px;margin:0 0 14px}
+.checkout-start{display:block;width:100%;background:#13865c;color:#fff;font-size:16px;padding:15px;margin:14px 0 16px;border:2px solid #0e704b;box-shadow:0 3px 0 #0a573a;letter-spacing:.1px}.checkout-start:hover{background:#0e704b}.checkout-start:focus{outline:3px solid #ffcf58;outline-offset:2px}
 #checkoutSection{display:none;border-top:1px solid var(--line);padding-top:14px;margin-top:4px}
 #orderPreview{display:none;border:1px solid #b7dfc9;background:#f3fbf6;border-radius:12px;padding:14px;margin-top:12px}
 .preview-line{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #dcece2;font-size:13px}
@@ -68,6 +68,26 @@ textarea{resize:vertical;min-height:72px}
 .preview-line{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #dceee4;font-size:13px}
 .preview-address{font-size:13px;white-space:pre-line;margin:8px 0}
 .preview-total{display:flex;justify-content:space-between;font-size:18px;font-weight:800;margin-top:12px}
+
+#cartPage{display:none;max-width:1400px;margin:22px auto;padding:0 18px 36px}
+.cart-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+.cart-main-card,.cart-summary-card{background:#fff;border:1px solid #d9e0e7;border-radius:8px;padding:22px}
+.cart-page-title{font-size:30px;font-weight:500;margin:0 0 20px;color:#111}
+.cart-page-item{display:grid;grid-template-columns:130px minmax(0,1fr) 100px;gap:18px;padding:20px 0;border-top:1px solid #ddd;align-items:center}
+.cart-page-emoji{height:110px;background:#f0f8f3;border-radius:8px;display:grid;place-items:center;font-size:48px}
+.cart-page-item h3{font-size:17px;font-weight:500;margin:0 0 8px;line-height:1.35}
+.cart-stock{color:#16803c;font-size:12px;margin:6px 0}
+.cart-page-price{text-align:right;font-size:17px;font-weight:700;align-self:start}
+.cart-page-controls{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.cart-page-controls button{background:#f4f6f8;border:1px solid #c9d1d9;border-radius:18px;padding:5px 12px}
+.cart-page-controls .remove-item{background:white;border:0;color:#1765a8;text-decoration:underline;font-size:12px}
+.cart-subtotal{font-size:18px;margin-bottom:16px;line-height:1.5}
+.proceed-buy{width:100%;background:#ffd814;color:#111;border-radius:24px;padding:12px;font-weight:500}
+.proceed-buy:hover{background:#f7ca00}
+.cart-page-empty{padding:28px 0;font-size:16px;color:#596675}
+.cart-page-back{display:inline-block;margin-bottom:12px;color:#1765a8;text-decoration:none;font-size:14px}
+@media(max-width:760px){#cartPage{padding:0 10px;margin-top:12px}.cart-layout{grid-template-columns:1fr}.cart-page-title{font-size:25px}.cart-main-card,.cart-summary-card{padding:14px}.cart-page-item{grid-template-columns:82px minmax(0,1fr);gap:12px;padding:15px 0}.cart-page-emoji{height:82px;font-size:36px}.cart-page-price{grid-column:2;text-align:left;grid-row:2}.cart-page-item h3{font-size:14px}}
+
 footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font-size:12px;line-height:1.7}
 
 .category-section{max-width:1400px;margin:20px auto 0;padding:0 16px}
@@ -122,10 +142,25 @@ footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font
       <a href="sarson-tel.html">🫗 Sarson Tel</a>
      </div>
     </div>
-    <a href="index.html" class="main-website-link" title="PVRajCMS Group Main Website">Main Website</a><a href="#offers">Offers</a><a href="#cart-panel">My Cart (<span id="cartCount">0</span>)</a><a href="#contact">Contact</a>
+    <a href="index.html" class="main-website-link" title="PVRajCMS Group Main Website">Main Website</a><a href="#offers">Offers</a><a href="#cartPage" id="myCartLink">My Cart (<span id="cartCount">0</span>)</a><a href="#contact">Contact</a>
   </nav>
  </div>
 </header>
+<section id="cartPage" aria-label="Shopping Cart">
+ <a href="#shop" class="cart-page-back" id="backToShop">← Continue shopping</a>
+ <div class="cart-layout">
+  <div class="cart-main-card">
+   <h1 class="cart-page-title">Shopping Cart</h1>
+   <div id="cartPageItems"><div class="cart-page-empty">Your cart is empty. Add products to continue shopping.</div></div>
+   <div style="text-align:right;border-top:1px solid #ddd;padding-top:14px;font-size:20px;font-weight:700">Subtotal (<span id="cartPageCount">0</span> items): <span id="cartPageTotal">₹0</span></div>
+  </div>
+  <aside class="cart-summary-card">
+   <div class="cart-subtotal">Subtotal (<span id="cartSideCount">0</span> items): <strong id="cartSideTotal">₹0</strong></div>
+   <button type="button" class="proceed-buy" id="proceedBuyButton">Proceed to Buy</button>
+   <p class="note">Delivery address aur payment option agle step mein bharein.</p>
+  </aside>
+ </div>
+</section>
 <section class="hero">
  <div class="hero-inner">
   <div><span class="hero-tag">GROCERY • FASHION • BEAUTY • FOOD PRODUCTS</span>
@@ -167,7 +202,7 @@ footer{text-align:center;padding:24px 16px;background:#eaf0f5;color:#5b6a7b;font
  <aside class="panel" id="cart-panel">
   <h2>🧺 Aapka Cart</h2><div id="cart"><div class="cart-empty">Abhi cart khaali hai. Product add karein.</div></div>
   <div class="total"><span>Total</span><span id="total">₹0</span></div>
-  <button id="checkoutButton" class="checkout-start" type="button">🛍️ Buy Now / Checkout</button>
+  <button id="checkoutButton" class="checkout-start" type="button">🛒 CHECKOUT / BUY NOW — Aage Badhein</button>
   <div id="checkoutSection">
   <h2 style="margin-top:8px">📍 Delivery Details</h2>
   <form id="orderForm">
@@ -399,17 +434,48 @@ function renderProducts(){
  const filtered=productsData.filter(p=>(activeCat==="Sabhi"||p.cat===activeCat)&&(`${p.name} ${p.detail} ${p.cat}`).toLowerCase().includes(q));
  document.getElementById("products").innerHTML=filtered.length?filtered.map(p=>`<article class="product"><div class="product-emoji">${p.emoji}</div><h3>${p.name}</h3><div class="small">${p.detail}</div><div class="small">${p.cat}</div><div class="price">${money(p.price)}</div><button class="add" type="button" onclick="addToCart(${p.id})">🛒 My Cart mein jodein</button></article>`).join(""):"<p>Koi product nahi mila. Doosra naam search karein.</p>"
 }
+function showCartPage(){
+ document.getElementById("cartPage").style.display="block";
+ document.querySelector(".hero").style.display="none";
+ document.getElementById("categories-section").style.display="none";
+ document.getElementById("pv-foods").style.display="none";
+ document.querySelector(".searchbar").style.display="none";
+ document.querySelector("main").style.display="none";
+ document.querySelector("footer").style.display="none";
+ renderCartPage();window.scrollTo({top:0,behavior:"smooth"});
+}
+function showShopPage(){
+ document.getElementById("cartPage").style.display="none";
+ document.querySelector(".hero").style.display="";
+ document.getElementById("categories-section").style.display="";
+ document.getElementById("pv-foods").style.display="";
+ document.querySelector(".searchbar").style.display="";
+ document.querySelector("main").style.display="grid";
+ document.querySelector("footer").style.display="";
+}
+function renderCartPage(){
+ const chosen=productsData.filter(p=>cart[p.id]);
+ const count=Object.values(cart).reduce((a,b)=>a+b,0), total=getTotal();
+ document.getElementById("cartPageCount").textContent=count;
+ document.getElementById("cartSideCount").textContent=count;
+ document.getElementById("cartPageTotal").textContent=money(total);
+ document.getElementById("cartSideTotal").textContent=money(total);
+ document.getElementById("cartPageItems").innerHTML=chosen.length?chosen.map(p=>`<article class="cart-page-item"><div class="cart-page-emoji">${p.emoji}</div><div><h3>${p.name} — ${p.detail}</h3><div class="cart-stock">In stock (sample catalog)</div><div class="small">Sold by PV MART</div><div class="cart-page-controls"><button type="button" onclick="changeQty(${p.id},-1);renderCartPage()" aria-label="Decrease quantity">−</button><strong>${cart[p.id]}</strong><button type="button" onclick="changeQty(${p.id},1);renderCartPage()" aria-label="Increase quantity">+</button><button type="button" class="remove-item" onclick="cart[${p.id}]=0;delete cart[${p.id}];renderCart();renderCartPage()">Delete</button></div></div><div class="cart-page-price">${money(p.price*cart[p.id])}</div></article>`).join(""):'<div class="cart-page-empty">Your cart is empty. <a href="#shop" id="emptyShopLink">Continue shopping</a></div>';
+}
+document.getElementById("myCartLink").addEventListener("click",function(e){e.preventDefault();showCartPage()});
+document.getElementById("backToShop").addEventListener("click",function(e){e.preventDefault();showShopPage();document.getElementById("shop").scrollIntoView({behavior:"smooth",block:"start"})});
+document.getElementById("proceedBuyButton").addEventListener("click",function(){if(getTotal()<=0){alert("Pehle cart mein product add karein.");return}showShopPage();document.getElementById("checkoutSection").style.display="block";document.getElementById("orderForm").scrollIntoView({behavior:"smooth",block:"start"})});
 function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart();const count=document.getElementById("cartCount");count.textContent=Object.values(cart).reduce((a,b)=>a+b,0);const status=document.getElementById("status");status.style.display="block";status.textContent="Product Cart mein add ho gaya. Ab Buy Now / Checkout par click karein.";document.getElementById("checkoutButton").scrollIntoView({behavior:"smooth",block:"nearest"})}
-function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart()}
+function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart();if(getTotal()<=0){document.getElementById("checkoutSection").style.display="none"}}
 function getTotal(){return productsData.reduce((s,p)=>s+p.price*(cart[p.id]||0),0)}
 function renderCart(){
  const chosen=productsData.filter(p=>cart[p.id]);
  document.getElementById("cart").innerHTML=chosen.length?chosen.map(p=>`<div class="cart-row"><div><div class="cart-name">${p.name} — ${p.detail}</div><div class="qty"><button type="button" onclick="changeQty(${p.id},-1)" aria-label="Quantity kam karein">−</button><span>${cart[p.id]}</span><button type="button" onclick="changeQty(${p.id},1)" aria-label="Quantity badhayein">+</button></div></div><div class="cart-price">${money(p.price*cart[p.id])}</div></div>`).join(""):'<div class="cart-empty">Abhi cart khaali hai. Product add karein.</div>';
  document.getElementById("total").textContent=money(getTotal());
  document.getElementById("cartCount").textContent=Object.values(cart).reduce((a,b)=>a+b,0);
- document.getElementById("status").style.display="none";document.getElementById("payButton").style.display="none";document.getElementById("sendButton").style.display="none";document.getElementById("orderPreview").style.display="none";currentOrder=null;
+ document.getElementById("status").style.display="none";document.getElementById("payButton").style.display="none";document.getElementById("sendButton").style.display="none";document.getElementById("orderPreview").style.display="none";currentOrder=null;if(document.getElementById("cartPage").style.display==="block")renderCartPage();
 }
-document.getElementById("checkoutButton").addEventListener("click",function(){if(getTotal()<=0){alert("Pehle product ko My Cart mein add karein.");return}const section=document.getElementById("checkoutSection");section.style.display="block";section.scrollIntoView({behavior:"smooth",block:"start"});});
+document.getElementById("checkoutButton").addEventListener("click",function(){if(getTotal()<=0){alert("Pehle product ko My Cart mein add karein.");document.getElementById("shop").scrollIntoView({behavior:"smooth",block:"start"});return}const section=document.getElementById("checkoutSection");section.style.display="block";document.getElementById("orderForm").scrollIntoView({behavior:"smooth",block:"start"});});
 document.getElementById("search").addEventListener("input",renderProducts);
 document.getElementById("orderForm").addEventListener("submit",function(e){
  e.preventDefault();if(getTotal()<=0){alert("Pehle cart mein product add karein.");return}
