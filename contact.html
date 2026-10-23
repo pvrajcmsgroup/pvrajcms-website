@@ -9,13 +9,14 @@
     <meta name="author" content="PVRajCMS Group">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Shared compact horizontal brand header */
-        .brand-header {
+        body.contact-page { overflow-x: hidden; }
+        /* Compact horizontal header consistent with the About and Projects pages */
+        body.contact-page .site-header {
             padding: 3px 12px !important;
             background: #071422;
             border-bottom: 1px solid rgba(255,255,255,.12);
         }
-        .brand-header .header-container {
+        body.contact-page .site-header > .container {
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
@@ -25,88 +26,116 @@
             width: 100%;
             max-width: 1400px;
             margin: 0 auto;
+            padding: 0;
         }
-        .brand-header .brand-logo-link {
+        body.contact-page .site-header .logo {
             display: flex;
             flex: 0 1 360px;
             min-width: 0;
             align-items: center;
+            gap: 10px;
             text-decoration: none;
         }
-        .brand-header .brand-logo {
+        body.contact-page .site-header .logo img {
             display: block;
-            width: 360px;
+            width: min(28vw, 360px);
             max-width: 100%;
-            max-height: 82px;
+            max-height: 72px;
             height: auto;
             object-fit: contain;
             object-position: left center;
         }
-        .brand-header .brand-name-block {
+        body.contact-page .site-header .logo-text {
             flex: 0 1 auto;
             min-width: 0;
             margin-right: auto;
         }
-        .brand-header .brand-tagline {
+        body.contact-page .site-header .logo-text p {
+            margin: 0;
             color: #d6e6f7;
             font-size: 12px;
-            line-height: 1.5;
+            line-height: 1.4;
             white-space: nowrap;
         }
-        .brand-header .main-nav {
+        body.contact-page .site-header .navbar {
             display: flex;
             flex: 1 1 auto;
             align-items: center;
             justify-content: flex-end;
             flex-wrap: nowrap;
-            gap: 7px;
+            gap: 16px;
             width: auto;
             min-width: 0;
             margin-left: auto;
         }
-        .brand-header .main-nav a {
+        body.contact-page .site-header .navbar a {
             font-size: 14px;
             white-space: nowrap;
             flex-shrink: 0;
         }
-        .brand-header .main-nav a.mart-nav-button {
+        body.contact-page .site-header .navbar a[aria-current="page"] {
+            color: #59c7f5;
+        }
+
+        /* Contact page content and readable enquiry cards */
+        body.contact-page main { min-width: 0; }
+        body.contact-page .contact {
+            box-sizing: border-box;
+            width: min(100% - 32px, 1100px);
+            margin: 0 auto;
+            padding: 38px 0 76px;
+        }
+        body.contact-page .contact h1 {
+            margin-top: 10px;
+            color: #10243a;
+            line-height: 1.2;
+        }
+        body.contact-page .contact h2 {
+            margin-top: 32px;
+            color: #10243a;
+        }
+        body.contact-page .contact-box {
+            box-sizing: border-box;
+            margin: 14px 0;
+            padding: 20px 22px;
+            border: 1px solid #d8e5f1;
+            border-left: 4px solid #258fc4;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #0b1c31, #123557);
+            color: #edf6ff;
+            box-shadow: 0 8px 22px rgba(7,20,34,.10);
+            overflow-wrap: anywhere;
+        }
+        body.contact-page .contact-box h3 {
+            margin-top: 0;
+            color: #fff;
+        }
+        body.contact-page .contact-box p { color: #e0ecf8; }
+        body.contact-page .contact-box a { overflow-wrap: anywhere; }
+        body.contact-page .contact-box .email-button {
+            display: inline-block;
+            margin-top: 6px;
+        }
+        body.contact-page .contact > p { line-height: 1.75; }
+        body.contact-page .contact .header-cta {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 7px 9px;
-            border: 1px solid #43c5f5;
-            border-radius: 7px;
-            background: linear-gradient(135deg, #147eaf, #0b5f91);
-            color: #fff;
-            font-weight: 800;
-            font-size: 13px;
-            letter-spacing: .2px;
-            line-height: 1.2;
-            text-decoration: none;
-            white-space: nowrap;
-            box-shadow: 0 4px 14px rgba(43,155,208,.22);
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow-wrap: anywhere;
         }
-        .brand-header .main-nav a.mart-nav-button:hover {
-            background: linear-gradient(135deg, #22a8df, #117bb5);
-            border-color: #8be0ff;
-            color: #fff;
-        }
-        .brand-header .main-nav a.mart-nav-button:focus-visible {
-            outline: 3px solid #5ecbff;
-            outline-offset: 3px;
-        }
+
         @media (max-width: 1050px) {
-            .brand-header .header-container {
+            body.contact-page .site-header > .container {
                 flex-wrap: wrap;
                 justify-content: center;
             }
-            .brand-header .brand-logo-link {
+            body.contact-page .site-header .logo {
                 flex: 0 1 360px;
             }
-            .brand-header .brand-name-block {
-                margin-right: 0;
-            }
-            .brand-header .main-nav {
+            body.contact-page .site-header .logo-text { margin-right: 0; }
+            body.contact-page .site-header .navbar {
                 flex: 1 1 100%;
                 justify-content: center;
                 flex-wrap: wrap;
@@ -115,33 +144,31 @@
             }
         }
         @media (max-width: 700px) {
-            .brand-header {
-                padding: 10px !important;
-            }
-            .brand-header .header-container {
+            body.contact-page .site-header { padding: 10px !important; }
+            body.contact-page .site-header > .container {
                 flex-direction: column;
                 gap: 8px;
                 padding: 0 !important;
             }
-            .brand-header .brand-logo-link {
+            body.contact-page .site-header .logo {
                 flex: 0 1 auto;
                 width: 100%;
                 justify-content: center;
             }
-            .brand-header .brand-logo {
+            body.contact-page .site-header .logo img {
                 width: min(88vw, 300px);
                 max-height: 75px;
                 margin: 0 auto;
             }
-            .brand-header .brand-name-block {
+            body.contact-page .site-header .logo-text {
                 width: 100%;
                 text-align: center;
             }
-            .brand-header .brand-tagline {
+            body.contact-page .site-header .logo-text p {
                 font-size: 11px;
                 white-space: normal;
             }
-            .brand-header .main-nav {
+            body.contact-page .site-header .navbar {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
@@ -149,45 +176,41 @@
                 width: 100%;
                 margin: 0;
             }
-            .brand-header .main-nav a {
+            body.contact-page .site-header .navbar a {
                 font-size: 13px;
                 line-height: 1.35;
             }
-            .brand-header .main-nav a.mart-nav-button {
-                padding: 7px 9px;
-                font-size: 12px;
+            body.contact-page .contact {
+                width: min(100% - 24px, 1100px);
+                padding: 30px 0 54px;
             }
+            body.contact-page .contact-box { padding: 16px; }
         }
         @media (max-width: 380px) {
-            .brand-header .main-nav {
-                gap: 7px 9px;
+            body.contact-page .site-header .navbar { gap: 7px 9px; }
+            body.contact-page .site-header .navbar a { font-size: 12px; }
+            body.contact-page .contact {
+                width: calc(100% - 20px);
+                padding-top: 24px;
             }
-            .brand-header .main-nav a {
-                font-size: 12px;
-            }
-            .brand-header .main-nav a.mart-nav-button {
-                padding: 6px 8px;
-                font-size: 11px;
-            }
+            body.contact-page .contact-box { padding: 14px 12px; }
         }
     </style>
 </head>
-<body>
-<header class="brand-header">
-    <div class="header-container">
-        <a href="index.html" class="brand-logo-link">
-            <img src="logo.png" alt="PVRajCMS Group Logo" class="brand-logo">
+<body class="contact-page">
+<header class="site-header">
+    <div class="container">
+        <a href="index.html" class="logo" aria-label="PVRajCMS Group Home">
+            <img src="logo.png" alt="PVRajCMS Group Logo">
+            <div class="logo-text"><p>Engineering • Technology • Digital Innovation</p></div>
         </a>
-        <div class="brand-name-block">
-            <div class="brand-tagline">Engineering • Technology • Digital Innovation</div>
-        </div>
-        <nav class="main-nav" aria-label="Main navigation">
+        <nav class="navbar" aria-label="Main navigation">
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
             <a href="services.html">Services</a>
             <a href="projects.html">Projects</a>
-            <a href="contact.html" class="active">Contact</a>
-            <a href="kirana.html" class="mart-nav-button">PV MART</a>
+            <a href="contact.html" aria-current="page">Contact</a>
+            <a href="kirana.html">PV MART</a>
         </nav>
     </div>
 </header>
