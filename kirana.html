@@ -25,7 +25,7 @@ nav{display:flex;align-items:center;justify-content:flex-end;gap:16px;flex-wrap:
 .hero-inner{background:linear-gradient(115deg,#071729,#0d4b50);border-radius:16px;padding:clamp(24px,5vw,48px);color:white}
 .hero h1{font-size:clamp(28px,5vw,44px);margin:0 0 10px}.hero p{line-height:1.6;margin:0;color:#e1f1f2}
 .wrap{max-width:1150px;margin:18px auto;padding:0 15px 35px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.toolbar select{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;background:#fff;min-width:190px;color:var(--ink)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.catalog-layout{display:grid;grid-template-columns:205px minmax(0,1fr);gap:18px;align-items:start}.category-sidebar{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px;position:sticky;top:12px}.category-sidebar h3{margin:3px 0 10px;font-size:16px}.category-list{display:flex;flex-direction:column;gap:6px}.category-btn{width:100%;text-align:left;margin:0;background:#f3f7fa;color:var(--ink);padding:10px 11px;font-size:13px;border:1px solid transparent}.category-btn.active{background:#e7f8f0;color:#08734b;border-color:#a7dfc3}.catalog-main{min-width:0}.toolbar input{width:100%;min-width:0}.results-label{font-size:13px;color:var(--muted);margin:-5px 0 12px}.category-sidebar .category-btn:hover{background:#eaf3f8}
 input{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;background:white}
 #search{flex:1;min-width:220px}
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
@@ -56,7 +56,7 @@ input{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;back
 .primary-btn{width:100%;margin-top:16px;background:var(--green);padding:13px}
 #orderResult{display:none;margin-top:16px;padding:16px;border:1px solid #a9dfc3;background:#f0fbf5;border-radius:12px;line-height:1.6}
 .order-line{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #d7eade;font-size:13px}
-@media(max-width:760px){.cart-layout{grid-template-columns:1fr}.cart-summary{position:static}.form-grid{grid-template-columns:1fr}.payment-options{grid-template-columns:1fr}}
+@media(max-width:760px){.catalog-layout{grid-template-columns:1fr;gap:12px}.category-sidebar{position:static}.category-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.category-btn{font-size:12px;padding:10px 8px}.cart-layout{grid-template-columns:1fr}.cart-summary{position:static}.form-grid{grid-template-columns:1fr}.payment-options{grid-template-columns:1fr}}
 footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size:13px;line-height:1.7}
 @media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:850px){.brand img{width:220px}nav{gap:11px}}
@@ -96,9 +96,27 @@ button.click-feedback, a.click-feedback, .product.click-feedback, .payment-optio
  <p>Rozmarra ka kirana samaan ek jagah — aata, chawal, daal, tel, cheeni, namak, masale aur snacks.</p>
 </div></section>
 <main class="wrap">
- <div class="toolbar"><input id="search" type="search" placeholder="Chawal, Basmati, daal search karein..." aria-label="Kirana products search"><select id="categoryFilter" aria-label="Category chunein"><option value="all">Sabhi Categories</option><option value="rice">Chawal / Rice</option><option value="flour">Aata & Flour</option><option value="pulses">Daal & Beans</option><option value="oil">Tel</option><option value="spices">Masale</option><option value="snacks">Snacks & Others</option></select></div>
- <h2 id="products">Kirana ke Products</h2>
- <div class="grid" id="productGrid"></div>
+ <div class="catalog-layout">
+  <aside class="category-sidebar" aria-label="Product categories">
+   <h3>🛍️ Categories</h3>
+   <div class="category-list" id="categoryList">
+    <button type="button" class="category-btn active" data-category="all">🛒 Sabhi Products</button>
+    <button type="button" class="category-btn" data-category="rice">🍚 Chawal</button>
+    <button type="button" class="category-btn" data-category="flour">🌾 Aata & Flour</button>
+    <button type="button" class="category-btn" data-category="pulses">🫘 Daal & Beans</button>
+    <button type="button" class="category-btn" data-category="dryfruits">🥜 Dry Fruits</button>
+    <button type="button" class="category-btn" data-category="oil">🫗 Tel</button>
+    <button type="button" class="category-btn" data-category="spices">🌶️ Masale</button>
+    <button type="button" class="category-btn" data-category="snacks">🍪 Snacks & Others</button>
+   </div>
+  </aside>
+  <section class="catalog-main">
+   <div class="toolbar"><input id="search" type="search" placeholder="Product ya category search karein..." aria-label="Kirana products search"></div>
+   <h2 id="products">Kirana ke Products</h2>
+   <p class="results-label" id="resultsLabel">Sabhi categories ke products</p>
+   <div class="grid" id="productGrid"></div>
+  </section>
+ </div>
  <section class="panel" id="cart">
   <h2>🧺 Aapka Cart</h2><div id="cartItems">Abhi cart khaali hai.</div>
   <div class="cart-layout">
@@ -148,39 +166,59 @@ const SHOP_NAME = "PV MART";
 const SHOP_UPI_ID = "YOUR-UPI-ID@bank";
 const SHOP_WHATSAPP = "91XXXXXXXXXX";
 const products = [
- {id:2,name:"Chawal (Regular)",detail:"5 kg bag",price:275,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
+ // Chawal / Rice — prices are sample prices; update before going live.
+ {id:2,name:"Regular Rice (Rozana Chawal)",detail:"5 kg bag",price:275,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
  {id:28,name:"Basmati Rice",detail:"1 kg",price:120,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
- {id:29,name:"Mungra Rice",detail:"1 kg",price:65,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
- {id:30,name:"Sona Masoori Rice",detail:"1 kg",price:75,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
- {id:31,name:"Local / Daily Rice",detail:"1 kg",price:55,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
- {id:1,name:"Aata",detail:"5 kg bag",price:152,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
+ {id:29,name:"Sona Masoori Rice",detail:"1 kg",price:75,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
+ {id:30,name:"Kolam Rice",detail:"1 kg",price:80,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
+ {id:31,name:"Jeera Samba Rice",detail:"1 kg",price:95,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
+ {id:34,name:"Parboiled / Usna Rice",detail:"1 kg",price:65,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
+ // Aata and flour
+ {id:1,name:"Aata (Wheat Flour)",detail:"5 kg bag",price:152,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
  {id:32,name:"Chakki Fresh Aata",detail:"1 kg",price:38,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
  {id:33,name:"Multigrain Aata",detail:"1 kg",price:65,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
- {id:3,name:"Arhar Daal",detail:"1 kg",price:150,emoji:"🫘"},
- {id:4,name:"Masoor Daal",detail:"1 kg",price:105,emoji:"🫘"},
- {id:5,name:"Moong Daal",detail:"1 kg",price:125,emoji:"🫘"},
- {id:6,name:"Urad Daal",detail:"1 kg",price:135,emoji:"🫘"},
- {id:7,name:"Rajma",detail:"1 kg",price:145,emoji:"🫘"},
- {id:8,name:"Kabuli Chana",detail:"1 kg",price:110,emoji:"🫘"},
- {id:9,name:"Cooking Oil",detail:"1 litre",price:135,emoji:"🫗"},
- {id:10,name:"Sarson Tel",detail:"1 litre",price:160,emoji:"🫗"},
- {id:11,name:"Cheeni",detail:"1 kg",price:46,emoji:"🧂"},
- {id:12,name:"Namak",detail:"1 kg",price:22,emoji:"🧂"},
- {id:13,name:"Haldi Powder",detail:"100 g",price:30,emoji:"🟡"},
- {id:14,name:"Chai Patti",detail:"250 g",price:125,emoji:"🍵"},
- {id:15,name:"Biscuit",detail:"1 packet",price:10,emoji:"🍪"},
- {id:16,name:"Namkeen",detail:"1 packet",price:20,emoji:"🥨"},
- {id:17,name:"Besan",detail:"1 kg",price:95,emoji:"🌾"},
- {id:18,name:"Poha",detail:"500 g",price:35,emoji:"🌾"},
- {id:19,name:"Suji",detail:"1 kg",price:48,emoji:"🌾"},
- {id:20,name:"Maida",detail:"1 kg",price:42,emoji:"🌾"},
- {id:21,name:"Gur",detail:"1 kg",price:65,emoji:"🟤"},
- {id:22,name:"Shahad",detail:"250 g",price:140,emoji:"🍯"},
- {id:23,name:"Jeera",detail:"100 g",price:38,emoji:"🌿"},
- {id:24,name:"Rai / Sarson Dana",detail:"100 g",price:20,emoji:"🌿"},
- {id:25,name:"Hing",detail:"10 g",price:35,emoji:"🧂"},
- {id:26,name:"Garam Masala",detail:"100 g",price:55,emoji:"🌶️"},
- {id:27,name:"Sugar-Free Tea Biscuits",detail:"1 pack",price:30,emoji:"🍪"}
+ {id:35,name:"Besan",detail:"1 kg",price:95,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
+ {id:36,name:"Maida",detail:"1 kg",price:42,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
+ {id:37,name:"Suji / Rava",detail:"1 kg",price:48,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
+ {id:38,name:"Poha",detail:"500 g",price:35,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
+ // Daal, pulses and beans
+ {id:3,name:"Chana Daal",detail:"1 kg",price:85,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
+ {id:4,name:"Arhar / Toor Daal",detail:"1 kg",price:150,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
+ {id:5,name:"Moong Daal (Dhuli)",detail:"1 kg",price:125,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
+ {id:39,name:"Moong Sabut",detail:"1 kg",price:115,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
+ {id:6,name:"Urad Daal",detail:"1 kg",price:135,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
+ {id:40,name:"Masoor Daal (Dhuli)",detail:"1 kg",price:105,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
+ {id:41,name:"Masoor Sabut",detail:"1 kg",price:95,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
+ {id:42,name:"Kala Chana",detail:"1 kg",price:75,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
+ {id:8,name:"Kabuli Chana",detail:"1 kg",price:110,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
+ {id:43,name:"Safed Matar",detail:"1 kg",price:65,emoji:"🟢",category:"pulses",categoryLabel:"Daal & Beans"},
+ {id:44,name:"Hara Matar (Dry)",detail:"1 kg",price:90,emoji:"🟢",category:"pulses",categoryLabel:"Daal & Beans"},
+ {id:7,name:"Rajma",detail:"1 kg",price:145,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
+ {id:45,name:"Lobia / Black-Eyed Peas",detail:"1 kg",price:110,emoji:"🫘",category:"pulses",categoryLabel:"Daal & Beans"},
+ // Dry fruits
+ {id:46,name:"Badam (Almonds)",detail:"250 g",price:220,emoji:"🥜",category:"dryfruits",categoryLabel:"Dry Fruits"},
+ {id:47,name:"Kaju (Cashews)",detail:"250 g",price:260,emoji:"🥜",category:"dryfruits",categoryLabel:"Dry Fruits"},
+ {id:48,name:"Kishmish (Raisins)",detail:"250 g",price:100,emoji:"🍇",category:"dryfruits",categoryLabel:"Dry Fruits"},
+ {id:49,name:"Akhrot (Walnuts)",detail:"250 g",price:280,emoji:"🌰",category:"dryfruits",categoryLabel:"Dry Fruits"},
+ {id:50,name:"Pista (Pistachios)",detail:"100 g",price:140,emoji:"🥜",category:"dryfruits",categoryLabel:"Dry Fruits"},
+ {id:51,name:"Khajoor (Dates)",detail:"250 g",price:120,emoji:"🌴",category:"dryfruits",categoryLabel:"Dry Fruits"},
+ {id:52,name:"Anjeer (Dried Fig)",detail:"100 g",price:150,emoji:"🟤",category:"dryfruits",categoryLabel:"Dry Fruits"},
+ // Oil, spices and daily essentials
+ {id:9,name:"Cooking Oil",detail:"1 litre",price:135,emoji:"🫗",category:"oil",categoryLabel:"Tel"},
+ {id:10,name:"Sarson Tel",detail:"1 litre",price:160,emoji:"🫗",category:"oil",categoryLabel:"Tel"},
+ {id:11,name:"Cheeni",detail:"1 kg",price:46,emoji:"🧂",category:"snacks",categoryLabel:"Daily Essentials"},
+ {id:12,name:"Namak",detail:"1 kg",price:22,emoji:"🧂",category:"snacks",categoryLabel:"Daily Essentials"},
+ {id:13,name:"Haldi Powder",detail:"100 g",price:30,emoji:"🟡",category:"spices",categoryLabel:"Masale"},
+ {id:23,name:"Jeera",detail:"100 g",price:38,emoji:"🌿",category:"spices",categoryLabel:"Masale"},
+ {id:24,name:"Rai / Sarson Dana",detail:"100 g",price:20,emoji:"🌿",category:"spices",categoryLabel:"Masale"},
+ {id:25,name:"Hing",detail:"10 g",price:35,emoji:"🧂",category:"spices",categoryLabel:"Masale"},
+ {id:26,name:"Garam Masala",detail:"100 g",price:55,emoji:"🌶️",category:"spices",categoryLabel:"Masale"},
+ {id:14,name:"Chai Patti",detail:"250 g",price:125,emoji:"🍵",category:"snacks",categoryLabel:"Daily Essentials"},
+ {id:15,name:"Biscuit",detail:"1 packet",price:10,emoji:"🍪",category:"snacks",categoryLabel:"Snacks & Others"},
+ {id:16,name:"Namkeen",detail:"1 packet",price:20,emoji:"🥨",category:"snacks",categoryLabel:"Snacks & Others"},
+ {id:21,name:"Gur",detail:"1 kg",price:65,emoji:"🟤",category:"snacks",categoryLabel:"Daily Essentials"},
+ {id:22,name:"Shahad",detail:"250 g",price:140,emoji:"🍯",category:"snacks",categoryLabel:"Daily Essentials"},
+ {id:27,name:"Sugar-Free Tea Biscuits",detail:"1 pack",price:30,emoji:"🍪",category:"snacks",categoryLabel:"Snacks & Others"}
 ];
 const cart = {};
 let currentOrder = null;
@@ -189,8 +227,11 @@ function cartCount(){return Object.values(cart).reduce((a,b)=>a+b,0)}
 function cartTotal(){return products.reduce((sum,p)=>sum+p.price*(cart[p.id]||0),0)}
 function renderProducts(){
  const q=document.getElementById("search").value.trim().toLowerCase();
- const list=products.filter(p=>(p.name+" "+p.detail).toLowerCase().includes(q));
- document.getElementById("productGrid").innerHTML=list.length?list.map(p=>`<article class="product"><div class="emoji">${p.emoji}</div><h3>${p.name}</h3><div class="detail">${p.detail}</div><div class="price">${money(p.price)}</div><button type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi kirana product nahi mila.</p>";
+ const activeButton=document.querySelector(".category-btn.active");
+ const category=activeButton?activeButton.dataset.category:"all";
+ const list=products.filter(p=>(p.name+" "+p.detail+" "+(p.categoryLabel||"")).toLowerCase().includes(q)&&(category==="all"||p.category===category));
+ document.getElementById("resultsLabel").textContent=(category==="all"?"Sabhi categories":(activeButton?activeButton.textContent.trim():"Selected category"))+" · "+list.length+" products";
+ document.getElementById("productGrid").innerHTML=list.length?list.map(p=>`<article class="product"><div class="emoji">${p.emoji}</div><div class="product-category">${p.categoryLabel||"Grocery"}</div><h3>${p.name}</h3><div class="detail">${p.detail}</div><div class="price">${money(p.price)}</div><button type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi kirana product nahi mila.</p>";
 }
 function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart();}
 function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart();}
@@ -205,7 +246,11 @@ function renderCart(){
  if(cartCount()===0){document.getElementById("checkoutPanel").style.display="none";document.getElementById("orderResult").style.display="none";document.getElementById("sendOrderButton").style.display="none";document.getElementById("payUpiButton").style.display="none";currentOrder=null;}
 }
 document.getElementById("search").addEventListener("input",renderProducts);
-document.getElementById("categoryFilter").addEventListener("change",renderProducts);
+document.querySelectorAll(".category-btn").forEach(button=>button.addEventListener("click",()=>{
+ document.querySelectorAll(".category-btn").forEach(b=>b.classList.remove("active"));
+ button.classList.add("active");
+ renderProducts();
+}));
 document.getElementById("checkoutButton").addEventListener("click",()=>{
  if(cartCount()===0){alert("Pehle cart mein product add karein.");return;}
  document.getElementById("checkoutPanel").style.display="block";
