@@ -36,6 +36,10 @@ input{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;back
 .category-bar{display:flex;flex-direction:column;gap:6px;margin:0}.category-btn{background:#f1f5f9;color:#16334c;border:1px solid transparent;border-radius:10px;padding:11px 10px;font-size:12px;margin:0;text-align:left;width:100%;line-height:1.25}.category-btn.active{background:#e4f7ef;color:#087e57;border-color:#9cdec2}.category-btn:hover{border-color:#9cdec2}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .product{background:white;border:1px solid var(--line);border-radius:13px;padding:13px;display:flex;flex-direction:column;gap:8px;min-width:0}
 .emoji{height:90px;background:linear-gradient(135deg,#eef5fa,#f4f8fc);border-radius:10px;display:grid;place-items:center;font-size:42px}
+
+.product-photo-wrap{height:150px;overflow:hidden;border-radius:10px;background:#f5f7fa;display:flex;align-items:center;justify-content:center}
+.photo-fallback{font-size:12px;color:#64748b;padding:8px;text-align:center}.product-photo{width:100%;height:100%;object-fit:contain;display:block;padding:5px}
+
 .product h3{font-size:15px;line-height:1.35;margin:0}.detail{font-size:12px;color:var(--muted)}
 .price{font-weight:800;font-size:18px;color:var(--green)}button{font:inherit;font-weight:700;cursor:pointer;border:0;border-radius:9px;padding:10px;background:var(--navy);color:white;margin-top:auto}
 .panel{background:white;border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:20px}
@@ -376,6 +380,35 @@ function setCategory(c){activeCategory=c;renderCategories();renderProducts();doc
 const money = n => "₹" + n.toLocaleString("en-IN");
 function cartCount(){return Object.values(cart).reduce((a,b)=>a+b,0)}
 function cartTotal(){return products.reduce((sum,p)=>sum+p.price*(cart[p.id]||0),0)}
+
+function productImage(p){
+ const n=(p.name+" "+p.detail+" "+p.category).toLowerCase();
+ const phonePhotos=[
+  "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=700&q=80",
+  "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=700&q=80",
+  "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=700&q=80",
+  "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=700&q=80"
+ ];
+ const laptopPhotos=[
+  "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=800&q=80"
+ ];
+ const desktopPhotos=[
+  "https://images.unsplash.com/photo-1587831990711-23ca6441447b?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=800&q=80"
+ ];
+ if(n.includes("laptop")||n.includes("macbook")) return laptopPhotos[(p.id||0)%laptopPhotos.length];
+ if(n.includes("desktop")||n.includes("assembled")||n.includes("all-in-one")) return desktopPhotos[(p.id||0)%desktopPhotos.length];
+ if(n.includes("monitor")) return "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=800&q=80";
+ if(p.category==="Mobile Accessories") return "https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=700&q=80";
+ if(p.category==="Mobiles & Tablets") {
+   let idx=(p.id||0)%phonePhotos.length;
+   if(p.brand==="Apple") idx=0;
+   return phonePhotos[idx];
+ }
+ return "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=700&q=80";
+}
 function renderProducts(){
  const q=document.getElementById("search").value.trim().toLowerCase();
  const isMobiles=activeCategory==="Mobiles & Tablets";
@@ -388,7 +421,7 @@ function renderProducts(){
  if(isMobiles && anyMobileFilterActive()) list=list.filter(matchesMobileFilters);
  if(isComputers && anyComputerFilterActive()) list=list.filter(matchesComputerFilters);
  document.getElementById("productCount").textContent=(activeCategory==="All Products"?"Sabhi categories":activeCategory)+" · "+list.length+" products";
- document.getElementById("productGrid").innerHTML=list.length?list.map(p=>`<article class="product"><div class="emoji" aria-hidden="true">${p.emoji}</div><h3>${p.name}</h3><div class="detail">${p.category} · ${p.detail}</div><div class="price">${money(p.price)}</div><button type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi electronics product nahi mila. Filters clear karke dobara dekhein.</p>";
+ document.getElementById("productGrid").innerHTML=list.length?list.map(p=>`<article class="product"><div class="product-photo-wrap"><img class="product-photo" src="${productImage(p)}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span class=\'photo-fallback\'>Photo unavailable</span>')"></div><h3>${p.name}</h3><div class="detail">${p.category} · ${p.detail}</div><div class="price">${money(p.price)}</div><button type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi electronics product nahi mila. Filters clear karke dobara dekhein.</p>";
 }
 function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart();}
 function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart();}
