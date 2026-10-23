@@ -689,9 +689,29 @@ body.kirana-page .selected-banner { margin:0; border-radius:0 0 15px 15px; }
   body.kirana-page .site-header .logo img { width:min(88vw,300px) !important; min-width:0; max-height:75px; }
   body.kirana-page .site-header .logo-text { border-left:0; padding-left:0; text-align:center; }
   body.kirana-page .site-header .logo-text p { white-space:normal; font-size:11px; }
-  body.kirana-page .site-header .navbar { gap:10px 15px; }
-  body.kirana-page .site-header .navbar a { font-size:13px; }
-  body.kirana-page .selected-banner { aspect-ratio:2 / 1; }
+  body.kirana-page .site-header .navbar {
+    display:flex;
+    flex-wrap:nowrap;
+    justify-content:space-between;
+    align-items:center;
+    width:100%;
+    gap:clamp(4px, 1.5vw, 9px);
+    padding:5px 0 2px;
+    overflow:visible;
+  }
+  body.kirana-page .site-header .navbar a {
+    font-size:clamp(9px, 2.8vw, 12px);
+    line-height:1.2;
+    letter-spacing:-.2px;
+    padding:0;
+    white-space:nowrap;
+  }
+  body.kirana-page .selected-banner {
+    aspect-ratio:2.85 / 1;
+    margin-top:10px;
+    border-radius:10px;
+    background:#071729;
+  }
 }
 
 </style>
@@ -717,7 +737,7 @@ body.kirana-page .selected-banner { margin:0; border-radius:0 0 15px 15px; }
 </header>
 <div class="wrap">
   <div class="selected-banner">
-    <img src="pvmart-banner.jpg" alt="PVRAJCMS MART — Ghar Ka Samaan, Aapke Dwaar Pe!">
+    <img src="pvmart-banner.jpg" alt="PVRAJCMS MART — Ghar Ka Samaan, Aapke Dwaar Pe!" onerror="this.closest('.selected-banner').style.display='none'">
   </div>
 </div>
 <main>
