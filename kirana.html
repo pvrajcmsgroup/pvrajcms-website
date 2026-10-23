@@ -596,194 +596,130 @@ footer {
 }
 
 
-
-/* =========================================================
-   PV MART HEADER — aligned with PVRajCMS About/Home headers
-   ========================================================= */
-body > header {
-  background: #071422;
-  color: #fff;
-  padding: 3px 12px !important;
-  border-bottom: 1px solid rgba(255,255,255,.12);
+/* Shared PVRajCMS header — matched to Contact/About page */
+body.kirana-page > header.site-header {
+  background:#071422;
+  padding:3px 12px !important;
+  border-bottom:1px solid rgba(255,255,255,.12);
+  color:#fff;
 }
-body > header > .wrap {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
+body.kirana-page > header.site-header > .container {
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  width:100%;
+  max-width:1400px;
+  margin:0 auto;
 }
-body > header .topbar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
+body.kirana-page .site-header .logo {
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:14px;
+  flex:0 1 auto;
+  min-width:0;
+  width:auto;
+  text-decoration:none;
+  color:#fff;
 }
-body > header .brand {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 14px;
-  flex: 0 1 auto;
-  min-width: 0;
-  width: auto;
-  text-decoration: none;
+body.kirana-page .site-header .logo img {
+  display:block;
+  width:min(28vw,360px) !important;
+  min-width:230px;
+  height:auto !important;
+  max-height:72px;
+  object-fit:contain;
+  object-position:left center;
+  flex-shrink:0;
 }
-body > header .group-logo {
-  display: block;
-  width: min(25vw, 330px) !important;
-  min-width: 210px;
-  max-width: 100%;
-  height: auto !important;
-  max-height: 58px;
-  object-fit: contain;
-  object-position: left center;
-  flex-shrink: 0;
+body.kirana-page .site-header .logo-text {
+  display:block;
+  text-align:left;
+  margin:0;
+  padding-left:14px;
+  border-left:1px solid rgba(255,255,255,.18);
+  min-width:0;
 }
-body > header .brand-text {
-  display: block;
-  flex: 0 1 auto;
-  min-width: 0;
-  margin: 0;
-  padding-left: 14px;
-  border-left: 1px solid rgba(255,255,255,.18);
-  text-align: left;
+body.kirana-page .site-header .logo-text p {
+  margin:0;
+  color:#d6e6f7;
+  font-size:12px;
+  line-height:1.5;
+  white-space:nowrap;
+  letter-spacing:.5px;
+  font-weight:400;
 }
-body > header .brand-text strong,
-body > header .brand-text .unity {
-  display: none !important;
+body.kirana-page .site-header .navbar {
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  flex:0 0 auto;
+  flex-wrap:nowrap;
+  gap:16px;
+  width:auto;
+  margin:0;
+  padding:5px 0;
+  border:0;
 }
-body > header .brand-text small {
-  display: block;
-  margin: 0;
-  padding: 0;
-  color: #d6e6f7;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.5;
-  white-space: nowrap;
-  letter-spacing: .5px;
-  text-transform: none;
+body.kirana-page .site-header .navbar a {
+  display:inline;
+  background:none;
+  border:0;
+  border-radius:0;
+  padding:0;
+  color:#f2f7ff;
+  font-size:14px;
+  font-weight:700;
+  text-decoration:none;
+  white-space:nowrap;
 }
-body > header .main-nav {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  flex: 0 0 auto;
-  flex-wrap: nowrap;
-  gap: 16px;
-  width: auto;
-  margin: 0;
-  padding: 5px 0;
+body.kirana-page .site-header .navbar a:hover { color:#8bd5ff; background:none; }
+body.kirana-page .selected-banner { margin:0; border-radius:0 0 15px 15px; }
+@media(max-width:1000px) {
+  body.kirana-page > header.site-header > .container { flex-wrap:wrap; justify-content:center; }
+  body.kirana-page .site-header .logo { justify-content:center; }
+  body.kirana-page .site-header .navbar { justify-content:center; flex-wrap:wrap; gap:12px 20px; }
 }
-body > header .main-nav a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  color: #d6e6f7;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.4;
-  text-decoration: none;
-  white-space: nowrap;
-}
-body > header .main-nav a:hover {
-  background: transparent;
-  color: #5ecbff;
-}
-body > header .selected-banner {
-  margin: 16px 0 0;
-}
-@media (max-width: 1000px) {
-  body > header > .wrap {
-    width: 100%;
-  }
-  body > header .topbar {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  body > header .brand {
-    justify-content: center;
-  }
-  body > header .main-nav {
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px 20px;
-    width: 100%;
-    margin: 8px 0 0;
-  }
-}
-@media (max-width: 600px) {
-  body > header {
-    padding: 10px !important;
-  }
-  body > header .topbar {
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
-  body > header .brand {
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    width: 100%;
-  }
-  body > header .group-logo {
-    width: min(88vw, 300px) !important;
-    min-width: 0;
-    max-height: 65px;
-  }
-  body > header .brand-text {
-    border-left: 0;
-    padding-left: 0;
-    text-align: center;
-  }
-  body > header .brand-text small {
-    white-space: normal;
-    font-size: 11px;
-  }
-  body > header .main-nav {
-    gap: 10px 15px;
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  body > header .main-nav a {
-    font-size: 14px;
-  }
+@media(max-width:600px) {
+  body.kirana-page > header.site-header { padding:10px !important; }
+  body.kirana-page > header.site-header > .container { flex-direction:column; gap:8px; }
+  body.kirana-page .site-header .logo { flex-direction:column; gap:6px; }
+  body.kirana-page .site-header .logo img { width:min(88vw,300px) !important; min-width:0; max-height:75px; }
+  body.kirana-page .site-header .logo-text { border-left:0; padding-left:0; text-align:center; }
+  body.kirana-page .site-header .logo-text p { white-space:normal; font-size:11px; }
+  body.kirana-page .site-header .navbar { gap:10px 15px; }
+  body.kirana-page .site-header .navbar a { font-size:13px; }
+  body.kirana-page .selected-banner { aspect-ratio:2 / 1; }
 }
 
 </style>
 </head>
-<body>
-<header>
-  <div class="wrap">
-    <div class="topbar">
-      <a class="brand" href="index.html" aria-label="PVrajCMS Group Home">
-        <img class="group-logo" src="logo.png" alt="PVrajCMS Group logo">
-        <span class="brand-text">
-          <strong>PV MART</strong>
-          <span class="unity">Powered by CMS Group</span>
-          <small>Engineering • Technology • Digital Innovation</small>
-        </span>
-      </a>
-      <nav class="main-nav" aria-label="Main navigation">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
-        <a href="projects.html">Projects</a>
-        <a href="contact.html">Contact</a>
-        <a href="kirana.html" aria-current="page">PV MART</a>
-      </nav>
-    </div>
-    <div class="selected-banner">
-      <img src="pvmart-banner.jpg" alt="PVRAJCMS MART — Ghar Ka Samaan, Aapke Dwaar Pe!">
-    </div>
+<body class="kirana-page">
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="logo" aria-label="PVRajCMS Group Home">
+      <img src="logo.png" alt="PVRajCMS Group Logo">
+      <div class="logo-text">
+        <p>Engineering • Technology • Digital Innovation</p>
+      </div>
+    </a>
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+      <a href="kirana.html" aria-current="page">PV MART</a>
+    </nav>
   </div>
 </header>
+<div class="wrap">
+  <div class="selected-banner">
+    <img src="pvmart-banner.jpg" alt="PVRAJCMS MART — Ghar Ka Samaan, Aapke Dwaar Pe!">
+  </div>
+</div>
 <main>
 
 <section class="panel">
