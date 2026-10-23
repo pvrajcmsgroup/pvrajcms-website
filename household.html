@@ -1,3 +1,125 @@
-<!DOCTYPE html><html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PVRAJCMS MART | Home Essentials</title><style>
-:root{--navy:#0d2545;--green:#13865c;--gold:#ffcf58;--ink:#172536;--muted:#667487;--line:#e5eaf0;--bg:#f5f8fb}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}header{background:linear-gradient(135deg,#0d2545,#16466a);color:#fff;padding:22px 16px}.wrap{max-width:1100px;margin:auto}.nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.nav a{display:inline-block;text-decoration:none;border-radius:999px;padding:9px 12px;background:#ffffff18;border:1px solid #ffffff45;color:#fff;font-size:13px;font-weight:bold}.nav a.back{background:var(--green);border-color:var(--green)}.nav a.current{background:var(--gold);color:var(--navy);border-color:var(--gold)}.hero{padding:24px 0 8px}h1{margin:0;font-size:clamp(25px,4vw,36px)}.sub{color:#d9e9f5;line-height:1.6}main{max-width:1100px;margin:24px auto;padding:0 16px 40px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.product{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}.emoji{font-size:30px}.product h3{font-size:16px}.product p{font-size:12px;color:var(--muted);line-height:1.5}.notice{background:#fff8df;border:1px solid #f1dda0;border-radius:12px;padding:12px;margin:16px 0;font-size:13px;line-height:1.5}footer{text-align:center;background:#eaf0f5;color:#5b6a7b;padding:22px;font-size:12px}@media(max-width:650px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-</style></head><body><header><div class="wrap"><div style="font-size:14px;font-weight:bold">PVRAJCMS MART · Ghar Ka Samaan, Aapke Dwaar Pe!</div><nav class="nav"><a class="back" href="kirana.html">← Main Shop</a><a href="kirana.html">🛒 Kirana Store</a><a class="" href="clothes.html">👕 Clothing Store</a><a class="current" href="household.html">🏠 Home Essentials</a><a class="" href="animal-feed.html">🐄 Animal Feed</a></nav><div class="hero"><h1>🏠 Home Essentials</h1><div class="sub">घर का सामान<br>Safai, kitchen aur daily-use products.</div></div></div></header><main><h2>Home Essentials | घर का सामान</h2><div class="notice"><strong>Demo page:</strong> Yeh category page abhi starter design hai. Product photos, actual prices, stock aur order/cart feature publish karne se pehle update karne honge.</div><section class="grid"><article class="product"><div class="emoji">🏠</div><h3>Washing Powder</h3><p>Product details aur actual price jald update ki jayegi.</p></article><article class="product"><div class="emoji">🏠</div><h3>Bartaan Bar</h3><p>Product details aur actual price jald update ki jayegi.</p></article><article class="product"><div class="emoji">🏠</div><h3>Phenyl</h3><p>Product details aur actual price jald update ki jayegi.</p></article><article class="product"><div class="emoji">🏠</div><h3>Agarbatti</h3><p>Product details aur actual price jald update ki jayegi.</p></article></section></main><footer><strong>PVRAJCMS MART</strong><br>PVrajCMS Group</footer></body></html>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PV MART | Home & Kitchen Store</title>
+<meta name="description" content="PV MART Home & Kitchen: kitchenware, cleaning supplies, storage and daily household essentials.">
+<style>
+:root{--navy:#0d2545;--green:#13865c;--gold:#ffcf58;--ink:#172536;--muted:#667487;--line:#e5eaf0;--bg:#f5f8fb}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}a{color:inherit}
+header{background:linear-gradient(125deg,#071729,#0d4b50);color:#fff}.wrap{max-width:1240px;margin:auto;padding:0 16px}.header-inner{padding:16px 0 22px}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.brand{font-size:22px;font-weight:900}.brand span{color:var(--gold)}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.nav a{display:inline-block;text-decoration:none;border-radius:999px;padding:9px 12px;background:#ffffff18;border:1px solid #ffffff45;color:#fff;font-size:13px;font-weight:bold}.nav a:hover,.nav a:focus{background:var(--gold);color:var(--navy)}
+.hero{padding:26px 0 8px;display:flex;justify-content:space-between;align-items:center;gap:18px}.hero h1{font-size:clamp(28px,4vw,44px);line-height:1.12;margin:0 0 10px}.hero p{margin:0;line-height:1.65;color:#e0f0f2;max-width:690px}.hero-art{font-size:clamp(55px,8vw,92px);white-space:nowrap}
+main{max-width:1240px;margin:22px auto;padding:0 16px 40px}.toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;margin-bottom:16px}.search{width:100%;padding:13px 14px;border:1px solid #d7e0e8;border-radius:11px;font:inherit;background:#fff}.cart-jump{border:0;border-radius:10px;background:var(--navy);color:#fff;padding:13px 16px;font-weight:800;cursor:pointer}
+.categories{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}.cat{border:1px solid #d5e0e8;background:#fff;color:#30445b;border-radius:999px;padding:9px 13px;font-size:12px;font-weight:800;cursor:pointer}.cat.active{background:var(--green);border-color:var(--green);color:#fff}
+.section-title{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:20px 0 12px}.section-title h2{font-size:22px;margin:0}.muted{color:var(--muted);font-size:12px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.product{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:7px;min-width:0;box-shadow:0 4px 16px #122b4206}.product-emoji{height:92px;display:grid;place-items:center;background:#f0f8f3;border-radius:10px;font-size:42px}.product h3{font-size:15px;line-height:1.35;margin:3px 0 0}.product p{font-size:12px;color:var(--muted);line-height:1.45;margin:0}.product .price{font-size:18px;font-weight:900;color:var(--green)}.stock{font-size:11px;color:#16803c}.add{margin-top:auto;border:0;border-radius:9px;background:var(--navy);color:#fff;padding:10px;font-weight:800;cursor:pointer}
+.notice{background:#fff8df;border:1px solid #f1dda0;border-radius:12px;padding:12px;margin:16px 0;font-size:12px;line-height:1.55;color:#604b12}
+.cart-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.7fr);gap:16px;align-items:start;margin-top:28px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}.panel h2{font-size:21px;margin:0 0 12px}.empty{padding:16px 0;color:var(--muted);font-size:14px}
+.cart-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.cart-name{font-weight:800;font-size:14px}.cart-detail{font-size:12px;color:var(--muted);margin-top:4px}.qty{display:flex;align-items:center;gap:8px;margin-top:8px}.qty button{border:1px solid #d9e1e8;background:#f3f6f8;border-radius:7px;padding:4px 10px;cursor:pointer;font-weight:900}.row-price{text-align:right;font-size:14px;font-weight:800;white-space:nowrap}.remove{display:inline-block;background:none;border:0;color:#a22;text-decoration:underline;padding:8px 0 0;cursor:pointer;font-size:12px}
+.total{display:flex;justify-content:space-between;gap:10px;padding:15px 0;font-size:18px;font-weight:900}.primary,.secondary{width:100%;border:0;border-radius:10px;padding:13px;font-weight:800;cursor:pointer;margin-top:9px}.primary{background:var(--green);color:#fff}.secondary{background:#edf3f7;color:var(--navy)}
+#checkoutSection{display:none;border-top:1px solid var(--line);padding-top:14px;margin-top:12px}label{display:block;font-size:12px;font-weight:800;margin:11px 0 5px}input,textarea,select{width:100%;border:1px solid #d7e0e8;border-radius:9px;padding:11px;font:inherit;background:#fff;color:var(--ink)}textarea{min-height:72px;resize:vertical}
+.payment-options{display:grid;gap:8px}.payment-option{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:12px}.payment-option input{width:auto;margin-top:2px}.payment-option strong{display:block;margin-bottom:3px}
+#status{display:none;background:#e9f8f0;color:#14563d;border-radius:10px;padding:12px;font-size:13px;line-height:1.5;margin-top:12px;white-space:pre-wrap}
+footer{text-align:center;background:#eaf0f5;color:#5b6a7b;padding:24px 16px;font-size:12px;line-height:1.8}
+@media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.cart-layout{grid-template-columns:1fr}}
+@media(max-width:620px){.wrap{padding:0 11px}.topline{align-items:flex-start}.brand{font-size:19px}.hero{padding-top:20px}.hero-art{display:none}.hero h1{font-size:30px}.hero p{font-size:14px}.nav{gap:7px}.nav a{font-size:11px;padding:8px 10px}main{padding:0 10px 28px;margin-top:14px}.toolbar{grid-template-columns:1fr}.cart-jump{width:100%}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product{padding:9px;gap:6px}.product-emoji{height:72px;font-size:34px}.product h3{font-size:13px}.product .price{font-size:16px}.add{font-size:12px;padding:9px 6px}.panel{padding:13px}.section-title h2{font-size:19px}}
+</style>
+</head>
+<body>
+<header><div class="wrap header-inner">
+  <div class="topline"><div class="brand"><span>PV</span> MART · Home & Kitchen</div><div style="font-size:12px;color:#e0f0f2">Ghar ka samaan, aapke dwaar pe!</div></div>
+  <nav class="nav" aria-label="Store navigation">
+    <a href="pv-mart.html">← Main Shop</a><a href="kirana.html">🛒 Kirana</a><a href="clothes.html">👕 Clothing</a><a href="electronics.html">📱 Electronics</a><a href="beauty-cosmetics.html">💄 Beauty</a><a href="household.html" aria-current="page">🏠 Home & Kitchen</a>
+  </nav>
+  <section class="hero"><div><h1>🏠 Home & Kitchen Store</h1><p>Kitchen ke bartan, safai ka samaan, storage aur rozmarra ke household essentials ek hi jagah par dekhein. Product add karein, cart banayein aur checkout karein.</p></div><div class="hero-art" aria-hidden="true">🍳 🧹</div></section>
+</div></header>
+<main>
+  <div class="toolbar"><input class="search" id="search" type="search" placeholder="Product search karein — jaise cooker, jhaadu..." aria-label="Search household products"><button class="cart-jump" id="cartJump" type="button">🧺 My Cart (<span id="cartCount">0</span>)</button></div>
+  <div class="categories" id="categories" aria-label="Product categories"></div>
+  <div class="section-title"><h2 id="sectionHeading">Home & Kitchen Products</h2><span class="muted" id="resultCount"></span></div>
+  <section class="grid" id="products" aria-live="polite"></section>
+  <div class="notice"><strong>Demo rate notice:</strong> Is page par diye gaye rates sample hain, live market prices nahi. Selling se pehle actual brand, pack size, MRP, selling price, stock aur delivery details verify karke update karein. UPI aur WhatsApp order ke liye neeche code mein apni shop details set karein.</div>
+  <section class="cart-layout" id="cartSection">
+    <div class="panel"><h2>🧺 My Cart</h2><div id="cartItems"><div class="empty">Abhi cart khaali hai. Kisi product par “Add to Cart” dabayein.</div></div><div class="total"><span>Cart Total</span><span id="cartTotal">₹0</span></div><button class="primary" id="checkoutButton" type="button">Checkout / Order Karein</button><button class="secondary" id="clearCartButton" type="button">Cart Khali Karein</button></div>
+    <aside class="panel"><h2>📦 Checkout Details</h2><p class="muted">Cart mein product add karne ke baad customer aur delivery details bharein.</p>
+      <div id="checkoutSection"><form id="orderForm">
+        <label for="customer">Customer ka naam *</label><input id="customer" name="customer" required autocomplete="name" placeholder="Apna naam">
+        <label for="phone">Mobile number *</label><input id="phone" name="phone" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" autocomplete="tel" placeholder="10 digit mobile number">
+        <label for="address">Poora delivery address *</label><textarea id="address" name="address" required minlength="8" autocomplete="street-address" placeholder="House no., gali, mohalla, gaon"></textarea>
+        <label for="city">Shehar / zila *</label><input id="city" name="city" required autocomplete="address-level2" placeholder="Shehar ya zila">
+        <label for="pincode">PIN code *</label><input id="pincode" name="pincode" required inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="postal-code" placeholder="6 digit PIN code">
+        <label for="landmark">Landmark (optional)</label><input id="landmark" name="landmark" placeholder="Jaise school ke paas">
+        <label>Payment method *</label><div class="payment-options">
+          <label class="payment-option"><input type="radio" name="payment" value="cod" checked><span><strong>Cash on Delivery (COD)</strong>Delivery par payment karein.</span></label>
+          <label class="payment-option"><input type="radio" name="payment" value="upi"><span><strong>UPI — PhonePe / Google Pay</strong>UPI app se payment; shop ko payment verify karni hogi.</span></label>
+        </div><button class="primary" type="submit">Order Summary Banayein</button>
+      </form></div>
+      <div id="status" role="status" aria-live="polite"></div><button class="primary" id="upiButton" type="button" style="display:none">UPI App se Payment Karein</button><button class="secondary" id="whatsappButton" type="button" style="display:none">WhatsApp par Order Bhejein</button>
+      <p class="muted">Note: Yeh static website order database mein save nahi karti. WhatsApp order bhejne ke liye valid shop WhatsApp number zaroor set karein. Payment ko apne UPI/bank app mein verify karein.</p>
+    </aside>
+  </section>
+</main>
+<footer><strong>PV MART · Home & Kitchen</strong><br>Retail Shopping • Kitchenware • Cleaning • Household Essentials<br>Part of PVRajCMS Group</footer>
+<script>
+/* Publish se pehle asli shop details daalein. */
+const SHOP_UPI_ID = "YOUR-UPI-ID@bank";
+const SHOP_WHATSAPP = "91XXXXXXXXXX";
+const SHOP_NAME = "PV MART";
+const productsData = [
+{id:1,name:"Washing Powder",detail:"1 kg pack · sample rate",price:90,emoji:"🫧",cat:"Cleaning"},
+{id:2,name:"Bartaan Bar",detail:"1 piece · sample rate",price:15,emoji:"🧽",cat:"Cleaning"},
+{id:3,name:"Phenyl",detail:"500 ml · sample rate",price:65,emoji:"🧴",cat:"Cleaning"},
+{id:4,name:"Agarbatti",detail:"1 packet · sample rate",price:25,emoji:"🪔",cat:"Daily Use"},
+{id:5,name:"Jhadu",detail:"1 piece · sample rate",price:70,emoji:"🧹",cat:"Cleaning"},
+{id:6,name:"Pocha / Mop",detail:"1 piece · sample rate",price:120,emoji:"🧹",cat:"Cleaning"},
+{id:7,name:"Dishwash Liquid",detail:"500 ml · sample rate",price:99,emoji:"🧴",cat:"Cleaning"},
+{id:8,name:"Toilet Cleaner",detail:"500 ml · sample rate",price:110,emoji:"🧴",cat:"Cleaning"},
+{id:9,name:"Dustbin",detail:"Medium size · sample rate",price:149,emoji:"🗑️",cat:"Storage & Home"},
+{id:10,name:"Kitchen Storage Box",detail:"1 piece · size verify karein",price:129,emoji:"🥣",cat:"Storage & Home"},
+{id:11,name:"Water Bottle",detail:"1 piece · capacity verify karein",price:99,emoji:"🧴",cat:"Storage & Home"},
+{id:12,name:"Lunch Box",detail:"1 piece · sample rate",price:179,emoji:"🍱",cat:"Storage & Home"},
+{id:13,name:"Pressure Cooker",detail:"3 litre · brand/specification verify karein",price:1299,emoji:"🍲",cat:"Kitchenware"},
+{id:14,name:"Frying Pan",detail:"1 piece · sample rate",price:349,emoji:"🍳",cat:"Kitchenware"},
+{id:15,name:"Tawa",detail:"1 piece · material/size verify karein",price:299,emoji:"🥘",cat:"Kitchenware"},
+{id:16,name:"Stainless Steel Plate",detail:"1 piece · sample rate",price:99,emoji:"🍽️",cat:"Kitchenware"},
+{id:17,name:"Steel Glass",detail:"1 piece · sample rate",price:55,emoji:"🥛",cat:"Kitchenware"},
+{id:18,name:"Spoon Set",detail:"6 pieces · sample rate",price:149,emoji:"🥄",cat:"Kitchenware"},
+{id:19,name:"Mug Set",detail:"2 pieces · sample rate",price:149,emoji:"☕",cat:"Kitchenware"},
+{id:20,name:"Chopping Board",detail:"1 piece · sample rate",price:119,emoji:"🪵",cat:"Kitchenware"},
+{id:21,name:"Kitchen Knife",detail:"1 piece · sample rate",price:79,emoji:"🔪",cat:"Kitchenware"},
+{id:22,name:"Gas Lighter",detail:"1 piece · sample rate",price:65,emoji:"🔥",cat:"Kitchenware"},
+{id:23,name:"Scrub Pad",detail:"Pack · sample rate",price:25,emoji:"🧽",cat:"Cleaning"},
+{id:24,name:"Garbage Bags",detail:"1 pack · sample rate",price:75,emoji:"🗑️",cat:"Cleaning"},
+{id:25,name:"Plastic Basket",detail:"1 piece · size verify karein",price:89,emoji:"🧺",cat:"Storage & Home"},
+{id:26,name:"Cloth Hangers",detail:"Pack · sample rate",price:99,emoji:"🪝",cat:"Storage & Home"},
+{id:27,name:"Door Mat",detail:"1 piece · sample rate",price:149,emoji:"🏠",cat:"Storage & Home"},
+{id:28,name:"LED Bulb",detail:"9 W · brand/warranty verify karein",price:99,emoji:"💡",cat:"Daily Use"},
+{id:29,name:"Extension Board",detail:"4 socket · safety/specification verify karein",price:299,emoji:"🔌",cat:"Daily Use"},
+{id:30,name:"Mosquito Repellent",detail:"Pack · label/variant verify karein",price:95,emoji:"🦟",cat:"Daily Use"},
+{id:31,name:"Room Freshener",detail:"1 unit · sample rate",price:120,emoji:"🌸",cat:"Daily Use"},
+{id:32,name:"Matchbox Pack",detail:"Pack · sample rate",price:20,emoji:"🔥",cat:"Daily Use"}
+];
+const money=n=>"₹"+n.toLocaleString("en-IN");
+let activeCategory="All";const cart={};let currentOrder=null;
+const categories=["All",...new Set(productsData.map(p=>p.cat))];
+function renderCategories(){const wrap=document.getElementById("categories");wrap.innerHTML=categories.map(c=>`<button type="button" class="cat ${c===activeCategory?"active":""}" data-category="${c}">${c==="All"?"Sabhi Products":c}</button>`).join("");wrap.querySelectorAll("button").forEach(btn=>btn.addEventListener("click",()=>{activeCategory=btn.dataset.category;renderCategories();renderProducts()}))}
+function renderProducts(){const q=document.getElementById("search").value.trim().toLowerCase();const list=productsData.filter(p=>(activeCategory==="All"||p.cat===activeCategory)&&`${p.name} ${p.detail} ${p.cat}`.toLowerCase().includes(q));document.getElementById("sectionHeading").textContent=activeCategory==="All"?"Home & Kitchen Products":activeCategory+" Products";document.getElementById("resultCount").textContent=`${list.length} products`;document.getElementById("products").innerHTML=list.length?list.map(p=>`<article class="product"><div class="product-emoji" aria-hidden="true">${p.emoji}</div><h3>${p.name}</h3><p>${p.detail}</p><div class="stock">Sample catalog · availability confirm karein</div><div class="price">${money(p.price)}</div><button type="button" class="add" data-add="${p.id}">🛒 Add to Cart</button></article>`).join(""):`<p>Koi product nahi mila. Doosra naam search karein.</p>`;document.querySelectorAll("[data-add]").forEach(btn=>btn.addEventListener("click",()=>addToCart(Number(btn.dataset.add))))}
+function getCount(){return Object.values(cart).reduce((a,b)=>a+b,0)}
+function getTotal(){return productsData.reduce((sum,p)=>sum+p.price*(cart[p.id]||0),0)}
+function renderCart(){const chosen=productsData.filter(p=>cart[p.id]);document.getElementById("cartCount").textContent=getCount();document.getElementById("cartTotal").textContent=money(getTotal());document.getElementById("cartItems").innerHTML=chosen.length?chosen.map(p=>`<div class="cart-row"><div><div class="cart-name">${p.name}</div><div class="cart-detail">${p.detail}</div><div class="qty"><button type="button" data-qty="${p.id}" data-delta="-1" aria-label="Decrease ${p.name}">−</button><strong>${cart[p.id]}</strong><button type="button" data-qty="${p.id}" data-delta="1" aria-label="Increase ${p.name}">+</button></div><button class="remove" type="button" data-remove="${p.id}">Remove</button></div><div class="row-price">${money(p.price*cart[p.id])}</div></div>`).join(""):`<div class="empty">Abhi cart khaali hai. Kisi product par “Add to Cart” dabayein.</div>`;document.querySelectorAll("[data-qty]").forEach(btn=>btn.addEventListener("click",()=>changeQty(Number(btn.dataset.qty),Number(btn.dataset.delta))));document.querySelectorAll("[data-remove]").forEach(btn=>btn.addEventListener("click",()=>{delete cart[btn.dataset.remove];renderCart()}));if(getTotal()===0){document.getElementById("checkoutSection").style.display="none";document.getElementById("status").style.display="none";document.getElementById("upiButton").style.display="none";document.getElementById("whatsappButton").style.display="none";currentOrder=null}}
+function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart()}
+function changeQty(id,delta){cart[id]=(cart[id]||0)+delta;if(cart[id]<=0)delete cart[id];renderCart()}
+document.getElementById("search").addEventListener("input",renderProducts);
+document.getElementById("cartJump").addEventListener("click",()=>document.getElementById("cartSection").scrollIntoView({behavior:"smooth"}));
+document.getElementById("checkoutButton").addEventListener("click",()=>{if(getTotal()<=0){alert("Pehle cart mein product add karein.");document.getElementById("products").scrollIntoView({behavior:"smooth"});return}document.getElementById("checkoutSection").style.display="block";document.getElementById("checkoutSection").scrollIntoView({behavior:"smooth",block:"start"})});
+document.getElementById("clearCartButton").addEventListener("click",()=>{Object.keys(cart).forEach(k=>delete cart[k]);renderCart()});
+document.getElementById("orderForm").addEventListener("submit",e=>{e.preventDefault();if(getTotal()<=0){alert("Pehle cart mein product add karein.");return}const phone=document.getElementById("phone").value.trim(),pin=document.getElementById("pincode").value.trim();if(!/^[6-9]\d{9}$/.test(phone)){alert("Sahi 10 digit mobile number likhein.");return}if(!/^\d{6}$/.test(pin)){alert("Sahi 6 digit PIN code likhein.");return}const payment=document.querySelector('input[name="payment"]:checked').value;const items=productsData.filter(p=>cart[p.id]).map(p=>({name:p.name,qty:cart[p.id],price:p.price,subtotal:p.price*cart[p.id]}));const orderId="PVMH"+Date.now().toString().slice(-7),customer=document.getElementById("customer").value.trim(),address=document.getElementById("address").value.trim(),city=document.getElementById("city").value.trim(),landmark=document.getElementById("landmark").value.trim();const lines=items.map(i=>`- ${i.name} x ${i.qty} = ${money(i.subtotal)}`).join("\n");currentOrder={orderId,customer,phone,address,city,pin,landmark,payment,items,total:getTotal(),message:`New Order — ${SHOP_NAME}\nOrder ID: ${orderId}\nName: ${customer}\nMobile: ${phone}\nAddress: ${address}, ${city} - ${pin}\nLandmark: ${landmark||"N/A"}\n\nItems:\n${lines}\n\nTotal: ${money(getTotal())}\nPayment: ${payment==="cod"?"Cash on Delivery":"UPI (payment verify manually)"}`};const status=document.getElementById("status");status.style.display="block";status.textContent=`Order summary ready!\nOrder ID: ${orderId}\nItems: ${items.length}\nTotal: ${money(currentOrder.total)}\nPayment: ${payment==="cod"?"Cash on Delivery":"UPI — payment verification pending"}\n\nOrder database mein save nahi hua hai. WhatsApp button se shop ko bhejein.`;const upiButton=document.getElementById("upiButton");upiButton.style.display=payment==="upi"?"block":"none";upiButton.textContent=`UPI App se ${money(currentOrder.total)} Pay Karein`;document.getElementById("whatsappButton").style.display="block";document.getElementById("whatsappButton").textContent="WhatsApp par Order Bhejein";status.scrollIntoView({behavior:"smooth",block:"nearest"})});
+document.getElementById("upiButton").addEventListener("click",()=>{if(!currentOrder)return;if(SHOP_UPI_ID==="YOUR-UPI-ID@bank"){alert("Pehle code mein SHOP_UPI_ID ko apni asli UPI ID se replace karein.");return}const params=new URLSearchParams({pa:SHOP_UPI_ID,pn:SHOP_NAME,am:currentOrder.total.toFixed(2),cu:"INR",tn:"Order "+currentOrder.orderId});window.location.href="upi://pay?"+params.toString()});
+document.getElementById("whatsappButton").addEventListener("click",()=>{if(!currentOrder)return;if(SHOP_WHATSAPP==="91XXXXXXXXXX"){alert("Pehle code mein SHOP_WHATSAPP ko country code ke saath apne shop WhatsApp number se replace karein.");return}window.open("https://wa.me/"+SHOP_WHATSAPP+"?text="+encodeURIComponent(currentOrder.message),"_blank","noopener")});
+renderCategories();renderProducts();renderCart();
+</script>
+</body>
+</html>
