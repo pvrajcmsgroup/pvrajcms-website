@@ -37,7 +37,7 @@ main{max-width:1400px;margin:18px auto;padding:0 16px 40px}
 .products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .product{background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0;transition:box-shadow .18s,transform .18s}
 .product:hover{box-shadow:0 7px 22px #0d25451a;transform:translateY(-2px)}
-.product-visual{height:94px;background:linear-gradient(135deg,#eef8f4,#f5f7fb);border-radius:10px;display:grid;place-items:center;font-size:42px}
+.product-visual{height:118px;background:linear-gradient(135deg,#eef8f4,#f5f7fb);border-radius:10px;display:grid;place-items:center;overflow:hidden}.product-visual img{width:100%;height:100%;object-fit:cover;display:block}
 .product h3{font-size:15px;line-height:1.35;margin:0}.detail{font-size:12px;color:var(--muted);line-height:1.45}
 .price{font-size:18px;font-weight:800;color:var(--green)}.old-price{font-size:12px;color:#8893a1;text-decoration:line-through;margin-left:5px}
 .product-options{display:grid;grid-template-columns:1fr 1fr;gap:7px}.product-options label{font-size:11px;color:var(--muted);display:block;margin-bottom:3px}.product-options select{width:100%;min-width:0;padding:7px;border:1px solid #d7e0e8;border-radius:7px;background:#fff}
@@ -174,6 +174,16 @@ function renderCategories(){
  document.getElementById("categoryList").innerHTML=categories.map(c=>`<button type="button" class="cat-btn ${activeCategory===c.id?"active":""}" data-cat="${c.id}">${c.label}</button>`).join("");
  document.querySelectorAll("[data-cat]").forEach(btn=>btn.addEventListener("click",()=>{activeCategory=btn.dataset.cat;renderCategories();renderProducts();}));
 }
+function productPhoto(p){
+ const text=(p.name+" "+p.sub).toLowerCase();
+ if(text.includes("shoe")||text.includes("flats")||text.includes("sandal")) return "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80";
+ if(text.includes("jeans")||text.includes("denim")) return "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=600&q=80";
+ if(text.includes("saree")||text.includes("kurti")||text.includes("kurta")||text.includes("suit set")||text.includes("dupatta")||text.includes("dress")) return "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80";
+ if(text.includes("hoodie")||text.includes("cardigan")||text.includes("jacket")) return "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=80";
+ if(text.includes("t-shirt")||text.includes("t shirt")||text.includes("polo")) return "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80";
+ if(text.includes("shirt")) return "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=600&q=80";
+ return "https://images.unsplash.com/photo-1551232864-3f0890e580d9?auto=format&fit=crop&w=600&q=80";
+}
 function renderProducts(){
  const q=document.getElementById("search").value.trim().toLowerCase();
  const sort=document.getElementById("sort").value;
@@ -181,7 +191,7 @@ function renderProducts(){
  if(sort==="low")list.sort((a,b)=>a.price-b.price);if(sort==="high")list.sort((a,b)=>b.price-a.price);if(sort==="name")list.sort((a,b)=>a.name.localeCompare(b.name));
  document.getElementById("resultLine").textContent=`${list.length} products found`;
  document.getElementById("products").innerHTML=list.length?list.map(p=>`<article class="product" data-product="${p.id}">
-  <div class="product-visual">${p.emoji}</div><h3>${p.name}</h3><div class="detail">${p.sub} · ${p.detail}</div>
+  <div class="product-visual"><img src="${productPhoto(p)}" alt="${p.name}" loading="lazy" onerror="this.remove()"></div><h3>${p.name}</h3><div class="detail">${p.sub} · ${p.detail}</div>
   <div class="price">${money(p.price)}</div>
   <div class="product-options"><div><label for="size-${p.id}">Size</label><select id="size-${p.id}" aria-label="${p.name} size">${p.sizes.map(s=>`<option>${s}</option>`).join("")}</select></div><div><label for="color-${p.id}">Colour</label><select id="color-${p.id}" aria-label="${p.name} colour">${p.colors.map(c=>`<option>${c}</option>`).join("")}</select></div></div>
   <button class="add-btn" type="button" data-add="${p.id}">+ Add to Cart</button></article>`).join(""):`<p>No products found. Search ya category badal kar dekhein.</p>`;
