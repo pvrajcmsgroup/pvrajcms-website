@@ -207,11 +207,11 @@ const productsData = [
 {id:44,name:"Chokar",detail:"1 kg",price:24,emoji:"🌾",cat:"Animal Feed & Agriculture"},
 {id:45,name:"Sarson Khal",detail:"1 kg",price:30,emoji:"🌿",cat:"Animal Feed & Agriculture"},
 {id:46,name:"Poultry Feed",detail:"1 kg",price:48,emoji:"🐔",cat:"Animal Feed & Agriculture"},
-{id:47,name:"PV Foods & Agro Sarson Tel",detail:"1 litre · sample listing; actual pack/price confirm karein",price:170,emoji:"🫗",cat:"PV Foods & Agro"},
-{id:48,name:"PV Foods & Agro Aata",detail:"5 kg · sample listing; actual pack/price confirm karein",price:180,emoji:"🌾",cat:"PV Foods & Agro"},
-{id:49,name:"PV Foods & Agro Haldi Powder",detail:"100 g · sample listing; actual pack/price confirm karein",price:35,emoji:"🟡",cat:"PV Foods & Agro"},
-{id:50,name:"PV Foods & Agro Mirch Powder",detail:"100 g · sample listing; actual pack/price confirm karein",price:40,emoji:"🌶️",cat:"PV Foods & Agro"},
-{id:51,name:"PV Foods & Agro Dhaniya Powder",detail:"100 g · sample listing; actual pack/price confirm karein",price:35,emoji:"🌿",cat:"PV Foods & Agro"}
+{id:47,name:"PV Foods & Agro Sarson Tel",detail:"1 litre · sample listing; actual pack/price confirm karein",price:170,emoji:"🫗",cat:"Sarson Tel"},
+{id:48,name:"PV Foods & Agro Aata",detail:"5 kg · sample listing; actual pack/price confirm karein",price:180,emoji:"🌾",cat:"Aata & Flour"},
+{id:49,name:"PV Foods & Agro Haldi Powder",detail:"100 g · sample listing; actual pack/price confirm karein",price:35,emoji:"🟡",cat:"Masale & Spices"},
+{id:50,name:"PV Foods & Agro Mirch Powder",detail:"100 g · sample listing; actual pack/price confirm karein",price:40,emoji:"🌶️",cat:"Masale & Spices"},
+{id:51,name:"PV Foods & Agro Dhaniya Powder",detail:"100 g · sample listing; actual pack/price confirm karein",price:35,emoji:"🌿",cat:"Masale & Spices"}
 ];
 const categoryCardsData=[
  {name:"Kirana & Grocery",icon:"🛒",desc:"Daily essentials"},
@@ -223,7 +223,11 @@ const categoryCardsData=[
  {name:"Stationery & Books",icon:"📚",desc:"School & office"},
  {name:"Baby Care",icon:"🧸",desc:"Baby essentials"},
  {name:"Animal Feed & Agriculture",icon:"🐄",desc:"Feed & farm needs"},
- {name:"PV Foods & Agro",icon:"🌾",desc:"Sarson tel, aata & masale"}
+ {name:"Sarson Tel",icon:"🫗",desc:"Mustard oil & oil packs"},
+ {name:"Aata & Flour",icon:"🌾",desc:"Freshly milled flour"},
+ {name:"Masale & Spices",icon:"🌶️",desc:"Whole & ground spices"},
+ {name:"Wholesale Orders",icon:"📦",desc:"Bulk orders for shops"},
+ {name:"PV Foods & Agro",icon:"🏷️",desc:"Our own food brand"}
 ];
 let activeCat="Sabhi";const cart={};let currentOrder=null;
 const money=n=>"₹"+n.toLocaleString("en-IN");
@@ -234,10 +238,18 @@ function renderCategoryCards(){
  wrap.innerHTML=categoryCardsData.map(c=>`<button type="button" class="category-card" onclick="chooseCategory(${JSON.stringify(c.name)})"><span class="cat-icon">${c.icon}</span><span><strong>${c.name}</strong><small>${c.desc}</small></span></button>`).join("");
 }
 function chooseCategory(name){
- const categoryMap={"Kirana & Grocery":"Kirana & Grocery","Clothes & Fashion":"Clothes & Fashion","Beauty & Cosmetics":"Beauty & Cosmetics","Mobiles & Electronics":"Mobiles & Electronics","Home & Kitchen":"Home & Cleaning","Cleaning & Household":"Home & Cleaning","Stationery & Books":"Stationery & Books","Baby Care":"Baby Care","Animal Feed & Agriculture":"Animal Feed & Agriculture"};
+ const categoryMap={"Home & Kitchen":"Home & Cleaning","Cleaning & Household":"Home & Cleaning"};
  const mapped=categoryMap[name]||name;
- activeCat=productsData.some(p=>p.cat===mapped)?mapped:"Sabhi";
- document.getElementById("search").value="";
+ if(name==="PV Foods & Agro"){
+   activeCat="Sabhi";
+   document.getElementById("search").value="PV Foods & Agro";
+ } else if(name==="Wholesale Orders"){
+   activeCat="Sabhi";
+   document.getElementById("search").value="";
+ } else {
+   activeCat=productsData.some(p=>p.cat===mapped)?mapped:"Sabhi";
+   document.getElementById("search").value="";
+ }
  renderCategories();renderProducts();
  document.getElementById("shop").scrollIntoView({behavior:"smooth",block:"start"});
 }
