@@ -61,7 +61,8 @@ input{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;back
 .primary-btn{width:100%;margin-top:16px;background:var(--green);padding:13px}
 #orderResult{display:none;margin-top:16px;padding:16px;border:1px solid #a9dfc3;background:#f0fbf5;border-radius:12px;line-height:1.6}
 .order-line{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #d7eade;font-size:13px}
-@media(max-width:1050px){.shop-layout{grid-template-columns:170px minmax(0,1fr)}.cart-sidebar{grid-column:1/-1;position:static;max-height:none;overflow:visible}.cart-sidebar .cart-layout{grid-template-columns:minmax(0,1fr) 280px}.products-area{max-height:none;overflow:visible;overscroll-behavior:auto;scrollbar-gutter:auto}}@media(max-width:760px){.shop-layout{grid-template-columns:1fr}.category-sidebar{position:static;max-height:none}.category-bar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.category-btn{font-size:12px}.cart-sidebar{grid-column:auto;position:static;max-height:none;overflow:visible}.cart-sidebar .cart-layout{grid-template-columns:1fr}.cart-layout{grid-template-columns:1fr}.cart-summary{position:static}.products-area{max-height:none;overflow:visible;overscroll-behavior:auto}.form-grid{grid-template-columns:1fr}.payment-options{grid-template-columns:1fr}}
+ .mobile-filters{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px;margin:0 0 14px}.mobile-filters[hidden]{display:none!important}.filter-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.filter-heading h3{margin:0;font-size:18px}.clear-filters{background:#eef3f8;color:var(--navy);padding:8px 12px;margin:0}.filter-search{margin:12px 0}.filter-search input{width:100%}.filter-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.filter-grid label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700;min-width:0}.filter-grid select{width:100%;min-width:0;border:1px solid #d7e0e8;border-radius:9px;padding:8px;background:#fff;font:inherit;font-weight:400}.filter-grid select[multiple]{min-height:90px}.filter-hint{font-size:11px;color:var(--muted);margin:10px 0 0;line-height:1.5}
+@media(max-width:1050px){.shop-layout{grid-template-columns:170px minmax(0,1fr)}.cart-sidebar{grid-column:1/-1;position:static;max-height:none;overflow:visible}.cart-sidebar .cart-layout{grid-template-columns:minmax(0,1fr) 280px}.products-area{max-height:none;overflow:visible;overscroll-behavior:auto;scrollbar-gutter:auto}}@media(max-width:760px){.filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.shop-layout{grid-template-columns:1fr}.category-sidebar{position:static;max-height:none}.category-bar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.category-btn{font-size:12px}.cart-sidebar{grid-column:auto;position:static;max-height:none;overflow:visible}.cart-sidebar .cart-layout{grid-template-columns:1fr}.cart-layout{grid-template-columns:1fr}.cart-summary{position:static}.products-area{max-height:none;overflow:visible;overscroll-behavior:auto}.form-grid{grid-template-columns:1fr}.payment-options{grid-template-columns:1fr}}
 footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size:13px;line-height:1.7}
 @media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:850px){.brand img{width:220px}nav{gap:11px}}
@@ -157,9 +158,9 @@ const SHOP_NAME = "PV MART";
 const SHOP_UPI_ID = "YOUR-UPI-ID@bank";
 const SHOP_WHATSAPP = "91XXXXXXXXXX";
 const products = [
- {id:1,name:"Android Smartphone",category:"Mobiles & Tablets",detail:"4G smartphone · demo listing",price:8999,emoji:"📱"},
- {id:2,name:"5G Smartphone",category:"Mobiles & Tablets",detail:"5G smartphone · demo listing",price:14999,emoji:"📱"},
- {id:3,name:"Tablet",category:"Mobiles & Tablets",detail:"Wi-Fi tablet · demo listing",price:9999,emoji:"📲"},
+ {id:1,name:"Vivo Android Smartphone",category:"Mobiles & Tablets",detail:"Vivo · 4G smartphone · 4GB RAM · 128GB · 5000mAh · MediaTek Helio · Android",price:8999,emoji:"📱",brand:"Vivo",ram:"4GB",storage:"128GB",battery:"5000–5499mAh",processor:"MediaTek Helio",network:"4G",os:"Android"},
+ {id:2,name:"Samsung 5G Smartphone",category:"Mobiles & Tablets",detail:"Samsung · 5G smartphone · 8GB RAM · 128GB · 5000mAh · Qualcomm Snapdragon · Android",price:14999,emoji:"📱",brand:"Samsung",ram:"8GB",storage:"128GB",battery:"5000–5499mAh",processor:"Qualcomm Snapdragon",network:"5G",os:"Android"},
+ {id:3,name:"Apple iPhone",category:"Mobiles & Tablets",detail:"Apple · smartphone · 8GB RAM · 256GB · Apple A-series · iOS",price:49999,emoji:"📲",brand:"Apple",ram:"8GB",storage:"256GB",battery:"4500–4999mAh",processor:"Apple A-series",network:"5G",os:"iOS"},
  {id:4,name:"Phone Cover",category:"Mobile Accessories",detail:"Multiple models · demo listing",price:199,emoji:"📱"},
  {id:5,name:"Tempered Glass",category:"Mobile Accessories",detail:"Screen protector · demo listing",price:99,emoji:"🛡️"},
  {id:6,name:"USB-C Charger",category:"Mobile Accessories",detail:"Fast charger · demo listing",price:499,emoji:"🔌"},
@@ -205,9 +206,9 @@ const products = [
  {id:46,name:"Digital Weighing Scale",category:"Home Electronics",detail:"Personal scale · demo listing",price:899,emoji:"⚖️"},
  {id:47,name:"Electric Trimmer",category:"Personal Electronics",detail:"Grooming trimmer · demo listing",price:799,emoji:"🪒"},
  {id:48,name:"Hair Dryer",category:"Personal Electronics",detail:"Hair dryer · demo listing",price:999,emoji:"💨"},
- {id:49,name:"Budget Smartphone",category:"Mobiles & Tablets",detail:"Entry-level phone · demo listing",price:5999,emoji:"📱"},
- {id:50,name:"Premium Smartphone",category:"Mobiles & Tablets",detail:"Higher storage option · demo listing",price:24999,emoji:"📱"},
- {id:51,name:"4G Feature Phone",category:"Mobiles & Tablets",detail:"Basic calling phone · demo listing",price:1299,emoji:"☎️"},
+ {id:49,name:"Redmi Budget Smartphone",category:"Mobiles & Tablets",detail:"Redmi · entry-level phone · 4GB RAM · 64GB · 5000mAh · MediaTek Helio · 4G · Android",price:5999,emoji:"📱",brand:"Redmi",ram:"4GB",storage:"64GB",battery:"5000–5499mAh",processor:"MediaTek Helio",network:"4G",os:"Android"},
+ {id:50,name:"OnePlus Premium Smartphone",category:"Mobiles & Tablets",detail:"OnePlus · higher storage option · 12GB RAM · 256GB · 5000mAh · Qualcomm Snapdragon · 5G · Android",price:24999,emoji:"📱",brand:"OnePlus",ram:"12GB",storage:"256GB",battery:"5000–5499mAh",processor:"Qualcomm Snapdragon",network:"5G",os:"Android"},
+ {id:51,name:"Nokia 4G Feature Phone",category:"Mobiles & Tablets",detail:"Nokia · basic calling phone · 4G · Other OS",price:1299,emoji:"☎️",brand:"Nokia",ram:"2GB",storage:"32GB",battery:"Under 4000mAh",processor:"Unisoc",network:"4G",os:"Other"},
  {id:52,name:"Tablet Cover",category:"Mobile Accessories",detail:"Protective tablet case · demo listing",price:399,emoji:"📲"},
  {id:53,name:"Car Mobile Holder",category:"Mobile Accessories",detail:"Dashboard / vent holder · demo listing",price:249,emoji:"📱"},
  {id:54,name:"Wireless Charger",category:"Mobile Accessories",detail:"For compatible phones · demo listing",price:799,emoji:"🔋"},
@@ -271,9 +272,12 @@ function cartCount(){return Object.values(cart).reduce((a,b)=>a+b,0)}
 function cartTotal(){return products.reduce((sum,p)=>sum+p.price*(cart[p.id]||0),0)}
 function renderProducts(){
  const q=document.getElementById("search").value.trim().toLowerCase();
- const list=products.filter(p=>(activeCategory==="All Products"||p.category===activeCategory)&&(p.name+" "+p.detail+" "+p.category).toLowerCase().includes(q));
+ const isMobiles=activeCategory==="Mobiles & Tablets";
+ document.getElementById("mobileFilters").hidden=!isMobiles;
+ let list=products.filter(p=>(activeCategory==="All Products"||p.category===activeCategory)&&(p.name+" "+p.detail+" "+p.category).toLowerCase().includes(q));
+ if(isMobiles && anyMobileFilterActive()) list=list.filter(matchesMobileFilters);
  document.getElementById("productCount").textContent=(activeCategory==="All Products"?"Sabhi categories":activeCategory)+" · "+list.length+" products";
-  document.getElementById("productGrid").innerHTML=list.length?list.map(p=>`<article class="product"><div class="emoji" aria-hidden="true">${p.emoji}</div><h3>${p.name}</h3><div class="detail">${p.category} · ${p.detail}</div><div class="price">${money(p.price)}</div><button type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi electronics product nahi mila.</p>";
+ document.getElementById("productGrid").innerHTML=list.length?list.map(p=>`<article class="product"><div class="emoji" aria-hidden="true">${p.emoji}</div><h3>${p.name}</h3><div class="detail">${p.category} · ${p.detail}</div><div class="price">${money(p.price)}</div><button type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi electronics product nahi mila. Filters clear karke dobara dekhein.</p>";
 }
 function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart();}
 function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart();}
@@ -335,6 +339,33 @@ document.getElementById("checkoutForm").addEventListener("submit",e=>{
  document.getElementById("payUpiButton").onclick=()=>{if(!currentOrder)return;if(SHOP_UPI_ID==="YOUR-UPI-ID@bank"){alert("UPI ID baad mein add karenge. Abhi order summary taiyar hai.");return;}const params=new URLSearchParams({pa:SHOP_UPI_ID,pn:SHOP_NAME,am:currentOrder.total.toFixed(2),cu:"INR",tn:"Order "+currentOrder.orderId});window.location.href="upi://pay?"+params.toString();};
  document.getElementById("orderResult").scrollIntoView({behavior:"smooth",block:"start"});
 });
+
+const mobileFilterIds = ["brandFilter","ramFilter","storageFilter","batteryFilter","processorFilter","networkFilter","osFilter"];
+function selectedValues(id){return Array.from(document.getElementById(id).selectedOptions).map(o=>o.value);}
+function matchesMobileFilters(p){
+ if(!p.brand && !p.ram && !p.storage && !p.processor && !p.network && !p.os) return false;
+ const brandQuery=document.getElementById("brandSearch").value.trim().toLowerCase();
+ if(brandQuery && !(p.brand||"").toLowerCase().includes(brandQuery)) return false;
+ const checks=[["brandFilter","brand"],["ramFilter","ram"],["storageFilter","storage"],["batteryFilter","battery"],["processorFilter","processor"],["networkFilter","network"],["osFilter","os"]];
+ for(const [filter,key] of checks){const values=selectedValues(filter);if(values.length && !values.includes(p[key])) return false;}
+ const range=document.getElementById("priceFilter").value;
+ if(range){const [min,max]=range.split("-").map(Number);if(p.price<min || p.price>max) return false;}
+ return true;
+}
+function anyMobileFilterActive(){
+ return document.getElementById("brandSearch").value.trim()!=="" ||
+ mobileFilterIds.some(id=>selectedValues(id).length>0) ||
+ document.getElementById("priceFilter").value!=="";
+}
+function clearMobileFilters(){
+ document.getElementById("brandSearch").value="";
+ mobileFilterIds.forEach(id=>Array.from(document.getElementById(id).options).forEach(o=>o.selected=false));
+ document.getElementById("priceFilter").value="";
+ renderProducts();
+}
+document.getElementById("clearMobileFilters").addEventListener("click",clearMobileFilters);
+["brandSearch","priceFilter",...mobileFilterIds].forEach(id=>document.getElementById(id).addEventListener("input",renderProducts));
+
 renderCategories();renderProducts();renderCart();
 </script>
 </body>
