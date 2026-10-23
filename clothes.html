@@ -53,6 +53,21 @@ footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size
 @media(max-width:1100px){.shop-layout{grid-template-columns:175px minmax(0,1fr)}.cart-panel{grid-column:1/-1;position:static}.cart-items{max-height:none}.products{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:760px){header{padding:9px 12px}.header-inner{align-items:flex-start;flex-direction:column;gap:10px}.brand{gap:9px;max-width:100%}.brand img{width:190px;max-width:48vw;max-height:52px}.brand-divider{height:30px}.brand-tagline{white-space:normal;min-width:0}.brand-mark{font-size:clamp(20px,5vw,27px)}.brand-subtitle{font-size:10px;line-height:1.25}nav{width:100%;gap:12px}nav a{font-size:12px;padding:7px 0}.dropdown-menu{left:0;max-width:85vw}.hero{padding:0 10px}.hero-inner{min-height:150px;padding:24px 20px}.hero h1{font-size:28px}.shop-layout{grid-template-columns:1fr}.side-cats{position:static}.cat-list{display:flex;overflow-x:auto;padding-bottom:5px}.cat-btn{white-space:nowrap;width:auto;flex:0 0 auto}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.cart-panel{grid-column:auto}.cart-items{max-height:350px}main{padding:0 10px 30px}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}}
 @media(max-width:380px){.products{gap:8px}.product{padding:9px}.product-visual{height:70px;font-size:34px}.product h3{font-size:13px}.price{font-size:16px}}
+/* Scroll fix: page and full category list remain reachable */
+html, body { height:auto; min-height:100%; overflow-y:auto; }
+body { overflow-x:hidden; }
+main { overflow:visible; }
+.shop-layout { align-items:start; }
+.side-cats { position:sticky; top:12px; min-height:0; }
+.cat-list { max-height:calc(100vh - 135px); overflow-y:auto; overflow-x:hidden; overscroll-behavior:contain; padding-right:5px; scrollbar-width:thin; }
+.cat-list::-webkit-scrollbar { width:7px; }
+.cat-list::-webkit-scrollbar-thumb { background:#b8c8d4; border-radius:8px; }
+.cat-list::-webkit-scrollbar-track { background:#f3f6f8; }
+@media(max-width:760px){
+  .side-cats { position:static; }
+  .cat-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); max-height:360px; overflow-y:auto; overflow-x:hidden; }
+  .cat-btn { white-space:normal; width:100%; min-width:0; }
+}
 </style>
 </head>
 <body>
