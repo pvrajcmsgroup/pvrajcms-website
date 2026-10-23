@@ -22,7 +22,7 @@
             flex-wrap: nowrap;
             align-items: center;
             justify-content: space-between;
-            gap: 14px;
+            gap: 12px;
             width: 100%;
             max-width: 1400px;
             margin: 0 auto;
@@ -30,23 +30,22 @@
         }
         body.contact-page .site-header .logo {
             display: flex;
-            flex: 0 1 360px;
+            flex: 0 1 300px;
             min-width: 0;
             align-items: center;
-            gap: 10px;
             text-decoration: none;
         }
         body.contact-page .site-header .logo img {
             display: block;
-            width: min(28vw, 360px);
+            width: min(25vw, 300px);
             max-width: 100%;
-            max-height: 72px;
+            max-height: 68px;
             height: auto;
             object-fit: contain;
             object-position: left center;
         }
         body.contact-page .site-header .logo-text {
-            flex: 0 1 auto;
+            flex: 0 1 245px;
             min-width: 0;
             margin-right: auto;
         }
@@ -55,7 +54,7 @@
             color: #d6e6f7;
             font-size: 12px;
             line-height: 1.4;
-            white-space: nowrap;
+            white-space: normal;
         }
         body.contact-page .site-header .navbar {
             display: flex;
@@ -63,7 +62,7 @@
             align-items: center;
             justify-content: flex-end;
             flex-wrap: nowrap;
-            gap: 16px;
+            gap: clamp(9px, 1.25vw, 18px);
             width: auto;
             min-width: 0;
             margin-left: auto;
@@ -87,12 +86,12 @@
         }
         body.contact-page .contact h1 {
             margin-top: 10px;
-            color: #10243a;
+            color: #f2f7ff;
             line-height: 1.2;
         }
         body.contact-page .contact h2 {
             margin-top: 32px;
-            color: #10243a;
+            color: #d8edff;
         }
         body.contact-page .contact-box {
             box-sizing: border-box;
@@ -132,9 +131,12 @@
                 justify-content: center;
             }
             body.contact-page .site-header .logo {
-                flex: 0 1 360px;
+                flex: 0 1 300px;
             }
-            body.contact-page .site-header .logo-text { margin-right: 0; }
+            body.contact-page .site-header .logo-text {
+                flex: 0 1 245px;
+                margin-right: 0;
+            }
             body.contact-page .site-header .navbar {
                 flex: 1 1 100%;
                 justify-content: center;
@@ -161,6 +163,7 @@
                 margin: 0 auto;
             }
             body.contact-page .site-header .logo-text {
+                flex: 0 1 auto;
                 width: 100%;
                 text-align: center;
             }
@@ -202,8 +205,8 @@
     <div class="container">
         <a href="index.html" class="logo" aria-label="PVRajCMS Group Home">
             <img src="logo.png" alt="PVRajCMS Group Logo">
-            <div class="logo-text"><p>Engineering • Technology • Digital Innovation</p></div>
         </a>
+        <div class="logo-text"><p>Engineering • Technology • Digital Innovation</p></div>
         <nav class="navbar" aria-label="Main navigation">
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
