@@ -25,7 +25,21 @@ nav{display:flex;align-items:center;justify-content:flex-end;gap:16px;flex-wrap:
 .hero-inner{background:linear-gradient(115deg,#071729,#0d4b50);border-radius:16px;padding:clamp(24px,5vw,48px);color:white}
 .hero h1{font-size:clamp(28px,5vw,44px);margin:0 0 10px}.hero p{line-height:1.6;margin:0;color:#e1f1f2}
 .wrap{max-width:1150px;margin:18px auto;padding:0 15px 35px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.catalog-layout{display:grid;grid-template-columns:205px minmax(0,1fr);gap:18px;align-items:start}.category-sidebar{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px;position:sticky;top:12px}.category-sidebar h3{margin:3px 0 10px;font-size:16px}.category-list{display:flex;flex-direction:column;gap:6px}.category-btn{width:100%;text-align:left;margin:0;background:#f3f7fa;color:var(--ink);padding:10px 11px;font-size:13px;border:1px solid transparent}.category-btn.active{background:#e7f8f0;color:#08734b;border-color:#a7dfc3}.catalog-main{min-width:0}.toolbar input{width:100%;min-width:0}.results-label{font-size:13px;color:var(--muted);margin:-5px 0 12px}.category-sidebar .category-btn:hover{background:#eaf3f8}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.catalog-layout{display:grid;grid-template-columns:205px minmax(0,1fr);gap:18px;align-items:start}
+/* Desktop shopping layout: categories, products, and live cart side-by-side */
+.catalog-layout{grid-template-columns:190px minmax(0,1fr) 290px;gap:14px}
+.cart-sidebar{margin-top:0;position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto;padding:14px;min-width:0}
+.cart-sidebar h2{font-size:19px;margin:2px 0 10px}
+.cart-sidebar #cartItems{max-height:42vh;overflow:auto;padding-right:3px}
+.cart-sidebar .cart-layout{grid-template-columns:1fr;gap:8px}
+.cart-sidebar .cart-summary{position:static;padding:12px}
+.cart-sidebar .total{font-size:16px;padding:8px 0}
+.cart-sidebar .cart-row{font-size:12px;gap:6px}
+.cart-sidebar .qty{flex-wrap:wrap;gap:5px}
+.cart-sidebar .qty button{padding:5px 8px;font-size:12px}
+.cart-sidebar .checkout-btn,.cart-sidebar .secondary-btn{padding:11px;font-size:13px}
+@media(max-width:1050px){.catalog-layout{grid-template-columns:170px minmax(0,1fr) 260px;gap:10px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.category-sidebar{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px;position:sticky;top:12px}.category-sidebar h3{margin:3px 0 10px;font-size:16px}.category-list{display:flex;flex-direction:column;gap:6px}.category-btn{width:100%;text-align:left;margin:0;background:#f3f7fa;color:var(--ink);padding:10px 11px;font-size:13px;border:1px solid transparent}.category-btn.active{background:#e7f8f0;color:#08734b;border-color:#a7dfc3}.catalog-main{min-width:0}.toolbar input{width:100%;min-width:0}.results-label{font-size:13px;color:var(--muted);margin:-5px 0 12px}.category-sidebar .category-btn:hover{background:#eaf3f8}
 input{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;background:white}
 #search{flex:1;min-width:220px}
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
@@ -69,6 +83,8 @@ button:active, a:active, .payment-option:active { transform: scale(.97); box-sha
 button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, .payment-option:focus-within { outline: 3px solid #ffd814; outline-offset: 3px; }
 button.click-feedback, a.click-feedback, .product.click-feedback, .payment-option.click-feedback { box-shadow: 0 0 0 3px #ffd814, 0 5px 14px rgba(7,23,41,.18); filter: brightness(1.08); }
 
+
+@media(max-width:760px){.catalog-layout{grid-template-columns:1fr;gap:12px}.cart-sidebar{position:static;max-height:none;overflow:visible}.cart-sidebar #cartItems{max-height:280px}.cart-sidebar .cart-layout{grid-template-columns:1fr}.category-sidebar{position:static}}
 </style>
 </head>
 <body>
@@ -121,8 +137,7 @@ button.click-feedback, a.click-feedback, .product.click-feedback, .payment-optio
    <p class="results-label" id="resultsLabel">Sabhi categories ke products</p>
    <div class="grid" id="productGrid"></div>
   </section>
- </div>
- <section class="panel" id="cart">
+ <aside class="panel cart-sidebar" id="cart">
   <h2>🧺 Aapka Cart</h2><div id="cartItems">Abhi cart khaali hai.</div>
   <div class="cart-layout">
    <div>
@@ -136,7 +151,8 @@ button.click-feedback, a.click-feedback, .product.click-feedback, .payment-optio
    </aside>
   </div>
   <p class="note">Yeh demo catalog hai. Rates sample hain; live karne se pehle actual price, brand, pack size aur stock update karein.</p>
- </section>
+ </aside>
+ </div>
  <section class="panel" id="checkoutPanel">
   <h2>📍 Delivery Address & Payment</h2>
   <p class="note">Checkout ke liye apna sahi delivery address bharein. * wale fields zaroori hain.</p>
