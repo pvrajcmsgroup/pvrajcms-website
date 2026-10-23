@@ -1,250 +1,252 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="PVRAJCMS MART Electronics Store - Mobile, laptops, computers and electronic products.">
-  <title>Electronics Store | PVRAJCMS MART</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7f8;
-      color: #183333;
-    }
-    header {
-      background: #075e54;
-      color: white;
-      padding: 22px 16px;
-      text-align: center;
-    }
-    header h1 { margin: 0 0 8px; font-size: 27px; }
-    header p { margin: 0; }
-    .topbar {
-      padding: 14px;
-      background: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .back {
-      display: inline-block;
-      background: #075e54;
-      color: white;
-      padding: 11px 15px;
-      border-radius: 7px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .container { max-width: 1100px; margin: auto; padding: 18px; }
-    .search {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #ccd7d7;
-      border-radius: 8px;
-      font-size: 16px;
-      margin-bottom: 18px;
-    }
-    .categories {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-    .category {
-      background: white;
-      padding: 18px 8px;
-      text-align: center;
-      border-radius: 10px;
-      cursor: pointer;
-      border: 1px solid #e0e8e8;
-      font-weight: bold;
-    }
-    .category span { display: block; font-size: 30px; margin-bottom: 8px; }
-    h2 { font-size: 21px; }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    .product {
-      background: white;
-      padding: 16px;
-      border-radius: 10px;
-      border: 1px solid #e0e8e8;
-      text-align: center;
-    }
-    .emoji { font-size: 44px; margin: 6px 0 12px; }
-    .product h3 { font-size: 17px; margin: 8px 0; }
-    .product p { color: #536565; font-size: 14px; min-height: 36px; }
-    .price { color: #087b54; font-size: 19px; font-weight: bold; }
-    .note {
-      background: #fff8df;
-      border: 1px solid #f0df9d;
-      border-radius: 8px;
-      padding: 14px;
-      line-height: 1.6;
-      margin-top: 24px;
-    }
-    footer {
-      text-align: center;
-      padding: 22px;
-      background: #123e3b;
-      color: white;
-      margin-top: 30px;
-    }
-    @media (max-width: 650px) {
-      .products { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .categories { grid-template-columns: 1fr; }
-      header h1 { font-size: 23px; }
-      .container { padding: 12px; }
-    }
-    @media (max-width: 360px) {
-      .products { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electronics Store | PV MART</title>
+<meta name="description" content="PV MART Electronics Store - mobiles, accessories, computers, home electronics and gadgets.">
+<style>
+:root{--navy:#0d2545;--green:#13865c;--gold:#ffcf58;--ink:#172536;--muted:#667487;--line:#e5eaf0;--bg:#f5f8fb}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:#071422;color:#fff;padding:10px 18px;border-top:4px solid #f3f5f8}
+.header-inner{max-width:1320px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:62px}
+.brand{display:flex;align-items:center;gap:16px;min-width:0;color:white;text-decoration:none}
+.brand img{display:block;width:295px;max-width:32vw;height:auto;max-height:66px;object-fit:contain;object-position:left center}
+.brand-divider{height:30px;width:1px;background:#526172;flex:0 0 1px}
+.brand-tagline{font-size:12px;white-space:nowrap;color:#f4f7fb;font-weight:500}
+nav{display:flex;align-items:center;justify-content:flex-end;gap:16px;flex-wrap:wrap}nav a,nav .drop-label{color:white;text-decoration:none;font-size:13px;font-weight:700;white-space:nowrap}
+.dropdown{position:relative;display:inline-flex;align-items:center}
+.drop-label{cursor:pointer;padding:10px 0;display:inline-block}
+.dropdown-menu{display:none;position:absolute;top:100%;left:-12px;min-width:205px;padding:8px;background:#fff;border:1px solid #dfe6ee;border-radius:10px;box-shadow:0 12px 28px #0003;z-index:50}
+.dropdown-menu a{display:block;color:#172536;padding:10px 12px;border-radius:7px;font-size:13px}
+.dropdown-menu a:hover,.dropdown-menu a:focus{background:#eef5fa;color:#0d4b50}
+.dropdown:hover .dropdown-menu,.dropdown:focus-within .dropdown-menu{display:block}
+.hero{max-width:1150px;margin:18px auto;padding:0 15px}
+.hero-inner{background:linear-gradient(115deg,#071729,#0d4b50);border-radius:16px;padding:clamp(24px,5vw,48px);color:white}
+.hero h1{font-size:clamp(28px,5vw,44px);margin:0 0 10px}.hero p{line-height:1.6;margin:0;color:#e1f1f2}
+.wrap{max-width:1150px;margin:18px auto;padding:0 15px 35px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+input{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;background:white}
+#search{flex:1;min-width:220px}
+.category-bar{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}.category-btn{background:#eaf2f7;color:#16334c;border:1px solid #d7e2ea;border-radius:999px;padding:8px 12px;font-size:12px;margin:0}.category-btn.active{background:var(--navy);color:white}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.product{background:white;border:1px solid var(--line);border-radius:13px;padding:13px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.emoji{height:90px;background:linear-gradient(135deg,#eef5fa,#f4f8fc);border-radius:10px;display:grid;place-items:center;font-size:42px}
+.product h3{font-size:15px;line-height:1.35;margin:0}.detail{font-size:12px;color:var(--muted)}
+.price{font-weight:800;font-size:18px;color:var(--green)}button{font:inherit;font-weight:700;cursor:pointer;border:0;border-radius:9px;padding:10px;background:var(--navy);color:white;margin-top:auto}
+.panel{background:white;border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:20px}
+.cart-row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:10px 0;font-size:14px}
+.qty{display:flex;align-items:center;gap:7px;margin-top:6px}.qty button{padding:4px 10px;margin:0;background:#edf2f6;color:var(--navy)}
+.total{display:flex;justify-content:space-between;font-size:19px;font-weight:800;padding:14px 0}
+.note{font-size:12px;color:var(--muted);line-height:1.6}
+.cart-layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:18px;align-items:start}
+.cart-summary{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:16px;position:sticky;top:12px}
+.checkout-btn{display:block;width:100%;background:#ffd814;color:#172536;border-radius:999px;padding:13px;margin-top:8px;font-weight:800}
+.checkout-btn:hover{background:#f7ca00}
+.secondary-btn{display:block;width:100%;background:#edf2f6;color:var(--navy);padding:12px;margin-top:10px}
+#checkoutPanel{display:none;scroll-margin-top:18px}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}
+.form-grid .full{grid-column:1/-1}
+.payment-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.payment-option{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff;cursor:pointer;font-size:13px;line-height:1.45}
+.payment-option input{width:auto;margin-top:3px;padding:0}
+.payment-option strong{display:block;margin-bottom:4px}
+.field-label{display:block;font-weight:700;font-size:13px;margin:12px 0 6px}
+.form-grid input,.form-grid textarea{width:100%;min-width:0}
+.form-grid textarea{min-height:75px;resize:vertical}
+.primary-btn{width:100%;margin-top:16px;background:var(--green);padding:13px}
+#orderResult{display:none;margin-top:16px;padding:16px;border:1px solid #a9dfc3;background:#f0fbf5;border-radius:12px;line-height:1.6}
+.order-line{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #d7eade;font-size:13px}
+@media(max-width:760px){.cart-layout{grid-template-columns:1fr}.cart-summary{position:static}.form-grid{grid-template-columns:1fr}.payment-options{grid-template-columns:1fr}}
+footer{text-align:center;padding:22px;background:#eaf0f5;color:#5b6a7b;font-size:13px;line-height:1.7}
+@media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:850px){.brand img{width:220px}nav{gap:11px}}
+@media(max-width:600px){header{padding:10px 12px}.header-inner{display:flex;align-items:flex-start;flex-direction:column;gap:8px}.brand{gap:9px;flex-wrap:wrap}.brand img{width:190px;max-width:60vw;max-height:52px}.brand-divider{height:24px}.brand-tagline{font-size:11px;white-space:normal}nav{justify-content:flex-start;gap:12px;width:100%}nav a,nav .drop-label{font-size:12px}.dropdown-menu{left:0;max-width:85vw}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product{padding:9px}.emoji{height:58px}.product h3{font-size:13px}.wrap,.hero{padding-left:10px;padding-right:10px}}
+</style>
 </head>
 <body>
-
 <header>
-  <h1>PVRAJCMS MART</h1>
-  <p>Electronics Store | इलेक्ट्रॉनिक्स स्टोर</p>
-  <p style="margin-top:8px;">Technology Aapke Ghar Tak!</p>
+ <div class="header-inner">
+  <a class="brand" href="pv-mart.html" aria-label="PV MART Home">
+   <img src="logo.png" alt="PVRajCMS Group logo">
+   <span class="brand-divider" aria-hidden="true"></span>
+   <span class="brand-tagline">PV MART · Aapki Apni Online Dukaan</span>
+  </a>
+  <nav aria-label="Main navigation">
+   <a href="pv-mart.html">PV MART Home</a>
+   <a href="pv-mart.html#shop">Shop Now</a>
+   <div class="dropdown"><a class="drop-label" href="pv-mart.html#categories" aria-haspopup="true">Categories⌄</a>
+    <div class="dropdown-menu">
+     <a href="kirana.html">Kirana</a><a href="clothes.html">Clothes &amp; Fashion</a><a href="electronics.html">Electronics</a><a href="beauty.html">Beauty &amp; Cosmetics</a><a href="household.html">Home &amp; Kitchen</a><a href="stationery.html">Stationery &amp; Books</a><a href="baby-care.html">Baby Care</a><a href="animal-feed.html">Animal Feed &amp; Agriculture</a><a href="pv-foods.html">PV Foods &amp; Agro</a><a href="sarson-tel.html">Sarson Tel</a>
+    </div>
+   </div>
+   <a href="pv-mart.html#offers">Offers</a><a href="#cart">My Cart (<span id="count">0</span>)</a><a href="contact.html">Contact</a>
+  </nav>
+ </div>
 </header>
-
-<div class="topbar">
-  <a class="back" href="kirana.html">← Main Shop</a>
-  <strong>Electronics Collection</strong>
-</div>
-
-<main class="container">
-  <input
-    type="search"
-    id="search"
-    class="search"
-    placeholder="Search product... / सामान खोजें"
-    aria-label="Search products"
-  >
-
-  <h2>Shop by Category | श्रेणी चुनें</h2>
-
-  <div class="categories">
-    <div class="category" data-category="mobile" role="button" tabindex="0">
-      <span>📱</span>
-      Mobile Store<br>मोबाइल स्टोर
-    </div>
-    <div class="category" data-category="computer" role="button" tabindex="0">
-      <span>💻</span>
-      Laptop & Computer<br>लैपटॉप और कंप्यूटर
-    </div>
-    <div class="category" data-category="electronics" role="button" tabindex="0">
-      <span>🔌</span>
-      Electronics<br>इलेक्ट्रॉनिक सामान
-    </div>
+<section class="hero"><div class="hero-inner">
+ <h1>📱 Electronics & Gadgets Store</h1>
+ <p>Mobiles, accessories, computers, audio devices aur ghar ke electronics — sab ek jagah.</p>
+</div></section>
+<main class="wrap">
+ <div class="toolbar"><input id="search" type="search" placeholder="Electronics search karein — charger, earphones, laptop..." aria-label="Electronics products search"></div>
+ <h2 id="products">Electronics ke Products</h2>
+ <div class="category-bar" id="categoryBar" aria-label="Electronics categories"></div>
+ <div class="grid" id="productGrid"></div>
+ <section class="panel" id="cart">
+  <h2>🧺 Aapka Cart</h2><div id="cartItems">Abhi cart khaali hai.</div>
+  <div class="cart-layout">
+   <div>
+    <div class="total"><span>Subtotal</span><span id="total">₹0</span></div>
+    <p class="note">Delivery charge abhi calculate nahi kiya gaya. Order confirm karne se pehle shop se final total confirm hoga.</p>
+   </div>
+   <aside class="cart-summary">
+    <div style="font-size:16px;margin-bottom:12px">Subtotal (<span id="summaryCount">0</span> items): <strong id="summaryTotal">₹0</strong></div>
+    <button class="checkout-btn" type="button" id="checkoutButton">Proceed to Buy</button>
+    <button class="secondary-btn" type="button" id="continueShopping">Continue Shopping</button>
+   </aside>
   </div>
-
-  <h2 id="sectionTitle">All Products | सभी सामान</h2>
-  <div class="products" id="products"></div>
-
-  <div class="note">
-    <strong>Important Notice | जरूरी सूचना</strong><br>
-    ये केवल नमूना उत्पाद और अनुमानित कीमतें हैं, वास्तविक बिक्री की पुष्टि नहीं।
-    खरीदने से पहले उपलब्धता, सही कीमत, वारंटी और डिलीवरी की जानकारी विक्रेता से जांचें।
-    अभी इस पेज पर ऑनलाइन भुगतान या ऑर्डर बुकिंग चालू नहीं है।
-  </div>
+  <p class="note">Yeh demo electronics catalog hai. Rates sample hain; live karne se pehle actual brand, model, warranty, price aur stock update karein. Product emojis illustrative hain; real product photos baad mein add kar sakte hain.</p>
+ </section>
+ <section class="panel" id="checkoutPanel">
+  <h2>📍 Delivery Address & Payment</h2>
+  <p class="note">Checkout ke liye apna sahi delivery address bharein. * wale fields zaroori hain.</p>
+  <form id="checkoutForm">
+   <div class="form-grid">
+    <div><label class="field-label" for="customerName">Full Name *</label><input id="customerName" name="customerName" required autocomplete="name" placeholder="Aapka poora naam"></div>
+    <div><label class="field-label" for="customerPhone">Mobile Number *</label><input id="customerPhone" name="customerPhone" required inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" autocomplete="tel" placeholder="10 digit mobile number"></div>
+    <div class="full"><label class="field-label" for="address">House / Street / Mohalla / Village *</label><textarea id="address" name="address" required minlength="8" autocomplete="street-address" placeholder="House number, gali, mohalla ya gaon"></textarea></div>
+    <div><label class="field-label" for="city">City / District *</label><input id="city" name="city" required autocomplete="address-level2" placeholder="Shehar / zila"></div>
+    <div><label class="field-label" for="state">State *</label><input id="state" name="state" required autocomplete="address-level1" value="Uttar Pradesh"></div>
+    <div><label class="field-label" for="pincode">PIN Code *</label><input id="pincode" name="pincode" required inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="postal-code" placeholder="6 digit PIN code"></div>
+    <div><label class="field-label" for="landmark">Landmark (optional)</label><input id="landmark" name="landmark" placeholder="School, mandir ya koi paas ki jagah"></div>
+    <div class="full"><label class="field-label">Payment Method *</label>
+     <div class="payment-options">
+      <label class="payment-option"><input type="radio" name="paymentMethod" value="cod" checked><span><strong>Cash on Delivery (COD)</strong>Delivery milne par cash dein.</span></label>
+      <label class="payment-option"><input type="radio" name="paymentMethod" value="upi"><span><strong>UPI — PhonePe / Google Pay</strong>UPI option select karein. UPI ID baad mein configure hogi.</span></label>
+     </div>
+    </div>
+   </div>
+   <button class="primary-btn" type="submit">Place Order / Order Summary Dekhein</button>
+  </form>
+  <div id="orderResult" role="status" aria-live="polite"></div>
+  <button class="checkout-btn" id="sendOrderButton" type="button" style="display:none">WhatsApp par Order Bhejein</button>
+  <button class="secondary-btn" id="payUpiButton" type="button" style="display:none">UPI App se Payment Karein</button>
+  <p class="note">Note: WhatsApp number aur UPI ID abhi add nahi ki gayi hai. Is version mein order browser/database mein permanently save nahi hota.</p>
+ </section>
 </main>
-
-<footer>
-  <strong>PVRAJCMS MART</strong>
-  <p>Ghar Ka Samaan, Aapke Dwaar Pe!</p>
-  <p>© <span id="year"></span> PVRAJCMS Group</p>
-</footer>
-
+<footer><strong>PV MART</strong> · Electronics & Gadgets<br>Part of PVRajCMS Group</footer>
 <script>
-  const items = [
-    {name:"Smartphone", hindi:"स्मार्टफोन", desc:"मोबाइल फोन", price:"₹8,000 से", icon:"📱", cat:"mobile"},
-    {name:"Premium Smartphone", hindi:"प्रीमियम मोबाइल", desc:"अधिक फीचर वाला फोन", price:"₹15,000 से", icon:"📲", cat:"mobile"},
-    {name:"Mobile Charger", hindi:"मोबाइल चार्जर", desc:"चार्जिंग एक्सेसरी", price:"₹250 से", icon:"🔌", cat:"mobile"},
-    {name:"USB Cable", hindi:"यूएसबी केबल", desc:"चार्जिंग और डेटा केबल", price:"₹100 से", icon:"〰️", cat:"mobile"},
-    {name:"Earphones", hindi:"ईयरफोन", desc:"वायर्ड ऑडियो एक्सेसरी", price:"₹200 से", icon:"🎧", cat:"mobile"},
-    {name:"Power Bank", hindi:"पावर बैंक", desc:"मोबाइल चार्ज करने के लिए", price:"₹800 से", icon:"🔋", cat:"mobile"},
-    {name:"Laptop", hindi:"लैपटॉप", desc:"काम, पढ़ाई और कोडिंग", price:"₹25,000 से", icon:"💻", cat:"computer"},
-    {name:"Desktop Computer", hindi:"डेस्कटॉप कंप्यूटर", desc:"ऑफिस और घर के काम के लिए", price:"₹20,000 से", icon:"🖥️", cat:"computer"},
-    {name:"Computer Monitor", hindi:"कंप्यूटर मॉनिटर", desc:"कंप्यूटर स्क्रीन", price:"₹4,000 से", icon:"🖥️", cat:"computer"},
-    {name:"Keyboard", hindi:"कीबोर्ड", desc:"टाइपिंग के लिए", price:"₹300 से", icon:"⌨️", cat:"computer"},
-    {name:"Computer Mouse", hindi:"माउस", desc:"कंप्यूटर कंट्रोल", price:"₹150 से", icon:"🖱️", cat:"computer"},
-    {name:"Printer", hindi:"प्रिंटर", desc:"दस्तावेज प्रिंट करने के लिए", price:"₹4,000 से", icon:"🖨️", cat:"computer"},
-    {name:"Smart TV", hindi:"स्मार्ट टीवी", desc:"घर में मनोरंजन के लिए", price:"₹10,000 से", icon:"📺", cat:"electronics"},
-    {name:"Bluetooth Speaker", hindi:"ब्लूटूथ स्पीकर", desc:"वायरलेस म्यूजिक", price:"₹500 से", icon:"🔊", cat:"electronics"},
-    {name:"Mixer Grinder", hindi:"मिक्सर ग्राइंडर", desc:"रसोई के लिए", price:"₹1,500 से", icon:"🥣", cat:"electronics"},
-    {name:"Electric Kettle", hindi:"इलेक्ट्रिक केतली", desc:"पानी गर्म करने के लिए", price:"₹600 से", icon:"☕", cat:"electronics"},
-    {name:"Extension Board", hindi:"एक्सटेंशन बोर्ड", desc:"अनेक प्लग के लिए", price:"₹250 से", icon:"🔌", cat:"electronics"},
-    {name:"LED Bulb", hindi:"एलईडी बल्ब", desc:"घर की रोशनी के लिए", price:"₹100 से", icon:"💡", cat:"electronics"}
-  ];
-
-  let activeCategory = "all";
-
-  function renderProducts() {
-    const query = document.getElementById("search").value.trim().toLowerCase();
-    const filtered = items.filter(item => {
-      const matchesCategory = activeCategory === "all" || item.cat === activeCategory;
-      const matchesSearch = (item.name + " " + item.hindi + " " + item.desc)
-        .toLowerCase().includes(query);
-      return matchesCategory && matchesSearch;
-    });
-
-    document.getElementById("sectionTitle").textContent =
-      activeCategory === "all" ? "All Products | सभी सामान" :
-      activeCategory === "mobile" ? "Mobile Store | मोबाइल स्टोर" :
-      activeCategory === "computer" ? "Laptop & Computer | लैपटॉप और कंप्यूटर" :
-      "Electronics | इलेक्ट्रॉनिक सामान";
-
-    const products = document.getElementById("products");
-    products.innerHTML = "";
-
-    if (!filtered.length) {
-      products.innerHTML = "<p>कोई सामान नहीं मिला। दूसरी खोज करें।</p>";
-      return;
-    }
-
-    filtered.forEach(item => {
-      const card = document.createElement("article");
-      card.className = "product";
-      card.innerHTML = `
-        <div class="emoji" aria-hidden="true">${item.icon}</div>
-        <h3>${item.name}</h3>
-        <strong>${item.hindi}</strong>
-        <p>${item.desc}</p>
-        <div class="price">${item.price}</div>
-      `;
-      products.appendChild(card);
-    });
-  }
-
-  document.getElementById("search").addEventListener("input", renderProducts);
-
-  document.querySelectorAll(".category").forEach(button => {
-    function chooseCategory() {
-      activeCategory = button.dataset.category;
-      renderProducts();
-      document.getElementById("sectionTitle").scrollIntoView({behavior:"smooth", block:"start"});
-    }
-    button.addEventListener("click", chooseCategory);
-    button.addEventListener("keydown", event => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        chooseCategory();
-      }
-    });
-  });
-
-  document.getElementById("year").textContent = new Date().getFullYear();
-  renderProducts();
+const SHOP_NAME = "PV MART";
+// Apni details baad mein yahan set karein. Abhi placeholders jaan-boojhkar rakhe hain.
+const SHOP_UPI_ID = "YOUR-UPI-ID@bank";
+const SHOP_WHATSAPP = "91XXXXXXXXXX";
+const products = [
+ {id:1,name:"Android Smartphone",category:"Mobiles & Tablets",detail:"4G smartphone · demo listing",price:8999,emoji:"📱"},
+ {id:2,name:"5G Smartphone",category:"Mobiles & Tablets",detail:"5G smartphone · demo listing",price:14999,emoji:"📱"},
+ {id:3,name:"Tablet",category:"Mobiles & Tablets",detail:"Wi-Fi tablet · demo listing",price:9999,emoji:"📲"},
+ {id:4,name:"Phone Cover",category:"Mobile Accessories",detail:"Multiple models · demo listing",price:199,emoji:"📱"},
+ {id:5,name:"Tempered Glass",category:"Mobile Accessories",detail:"Screen protector · demo listing",price:99,emoji:"🛡️"},
+ {id:6,name:"USB-C Charger",category:"Mobile Accessories",detail:"Fast charger · demo listing",price:499,emoji:"🔌"},
+ {id:7,name:"Charging Cable",category:"Mobile Accessories",detail:"USB-C cable · demo listing",price:149,emoji:"🔗"},
+ {id:8,name:"Power Bank",category:"Mobile Accessories",detail:"10000 mAh · demo listing",price:999,emoji:"🔋"},
+ {id:9,name:"Wired Earphones",category:"Audio & Speakers",detail:"3.5 mm / USB-C options · demo listing",price:299,emoji:"🎧"},
+ {id:10,name:"Bluetooth Earbuds",category:"Audio & Speakers",detail:"Wireless earbuds · demo listing",price:1299,emoji:"🎧"},
+ {id:11,name:"Bluetooth Headphones",category:"Audio & Speakers",detail:"Over-ear · demo listing",price:1599,emoji:"🎧"},
+ {id:12,name:"Bluetooth Speaker",category:"Audio & Speakers",detail:"Portable speaker · demo listing",price:999,emoji:"🔊"},
+ {id:13,name:"Smart TV 32 inch",category:"TV & Home Entertainment",detail:"HD LED TV · demo listing",price:10999,emoji:"📺"},
+ {id:14,name:"Smart TV 43 inch",category:"TV & Home Entertainment",detail:"Full HD / 4K options · demo listing",price:21999,emoji:"📺"},
+ {id:15,name:"TV Remote",category:"TV & Home Entertainment",detail:"Compatible models · demo listing",price:249,emoji:"🎛️"},
+ {id:16,name:"HDMI Cable",category:"TV & Home Entertainment",detail:"1.5 metre · demo listing",price:199,emoji:"🔌"},
+ {id:17,name:"Laptop",category:"Computers & Office",detail:"Entry-level laptop · demo listing",price:32999,emoji:"💻"},
+ {id:18,name:"Desktop Keyboard",category:"Computers & Office",detail:"USB keyboard · demo listing",price:499,emoji:"⌨️"},
+ {id:19,name:"Wireless Mouse",category:"Computers & Office",detail:"USB receiver · demo listing",price:399,emoji:"🖱️"},
+ {id:20,name:"Laptop Backpack",category:"Computers & Office",detail:"Laptop carry bag · demo listing",price:799,emoji:"🎒"},
+ {id:21,name:"USB Flash Drive 32GB",category:"Storage & Networking",detail:"USB storage · demo listing",price:349,emoji:"💾"},
+ {id:22,name:"Memory Card 64GB",category:"Storage & Networking",detail:"MicroSD · demo listing",price:499,emoji:"💾"},
+ {id:23,name:"Wi-Fi Router",category:"Storage & Networking",detail:"Dual-band options · demo listing",price:1499,emoji:"📶"},
+ {id:24,name:"LAN Cable",category:"Storage & Networking",detail:"5 metre · demo listing",price:199,emoji:"🔌"},
+ {id:25,name:"Extension Board",category:"Power & Cables",detail:"4 socket · demo listing",price:499,emoji:"🔌"},
+ {id:26,name:"Surge Protector",category:"Power & Cables",detail:"Multi-plug protection · demo listing",price:699,emoji:"⚡"},
+ {id:27,name:"Rechargeable Emergency Light",category:"Power & Cables",detail:"LED emergency light · demo listing",price:599,emoji:"🔦"},
+ {id:28,name:"LED Bulb 9W",category:"Home Electronics",detail:"LED bulb · demo listing",price:99,emoji:"💡"},
+ {id:29,name:"LED Bulb 12W",category:"Home Electronics",detail:"LED bulb · demo listing",price:139,emoji:"💡"},
+ {id:30,name:"Electric Kettle",category:"Home Electronics",detail:"1.5 litre · demo listing",price:999,emoji:"🫖"},
+ {id:31,name:"Mixer Grinder",category:"Home Electronics",detail:"Kitchen appliance · demo listing",price:2499,emoji:"🥣"},
+ {id:32,name:"Induction Cooktop",category:"Home Electronics",detail:"Electric cooktop · demo listing",price:2299,emoji:"🍳"},
+ {id:33,name:"Electric Iron",category:"Home Electronics",detail:"Dry iron · demo listing",price:699,emoji:"♨️"},
+ {id:34,name:"Table Fan",category:"Home Electronics",detail:"Table fan · demo listing",price:1499,emoji:"🌀"},
+ {id:35,name:"Room Heater",category:"Home Electronics",detail:"Seasonal appliance · demo listing",price:1999,emoji:"🔥"},
+ {id:36,name:"CCTV Camera",category:"Security & Smart Home",detail:"Indoor Wi-Fi camera · demo listing",price:1799,emoji:"📹"},
+ {id:37,name:"Smart Plug",category:"Security & Smart Home",detail:"Wi-Fi smart plug · demo listing",price:799,emoji:"🔌"},
+ {id:38,name:"Smart Watch",category:"Wearables",detail:"Fitness features · demo listing",price:1499,emoji:"⌚"},
+ {id:39,name:"Fitness Band",category:"Wearables",detail:"Activity tracker · demo listing",price:999,emoji:"⌚"},
+ {id:40,name:"Power Adapter",category:"Mobile Accessories",detail:"Compatible adapter · demo listing",price:299,emoji:"🔌"},
+ {id:41,name:"Webcam",category:"Computers & Office",detail:"USB webcam · demo listing",price:1299,emoji:"📷"},
+ {id:42,name:"Printer Ink / Cartridge",category:"Computers & Office",detail:"Model compatibility must be checked",price:799,emoji:"🖨️"},
+ {id:43,name:"Mini Projector",category:"TV & Home Entertainment",detail:"Portable projector · demo listing",price:4999,emoji:"📽️"},
+ {id:44,name:"Gaming Controller",category:"Gaming & Accessories",detail:"Compatible devices · demo listing",price:1299,emoji:"🎮"},
+ {id:45,name:"Gaming Headset",category:"Gaming & Accessories",detail:"Microphone headset · demo listing",price:1599,emoji:"🎧"},
+ {id:46,name:"Digital Weighing Scale",category:"Home Electronics",detail:"Personal scale · demo listing",price:899,emoji:"⚖️"},
+ {id:47,name:"Electric Trimmer",category:"Personal Electronics",detail:"Grooming trimmer · demo listing",price:799,emoji:"🪒"},
+ {id:48,name:"Hair Dryer",category:"Personal Electronics",detail:"Hair dryer · demo listing",price:999,emoji:"💨"}
+];
+const cart = {};
+let currentOrder = null;
+let activeCategory = "All Products";
+const categories = ["All Products", ...new Set(products.map(p=>p.category))];
+function renderCategories(){document.getElementById("categoryBar").innerHTML=categories.map(c=>`<button type="button" class="category-btn ${c===activeCategory?"active":""}" onclick="setCategory('${c.replace(/'/g,"\\'")}')">${c}</button>`).join("");}
+function setCategory(c){activeCategory=c;renderCategories();renderProducts();}
+const money = n => "₹" + n.toLocaleString("en-IN");
+function cartCount(){return Object.values(cart).reduce((a,b)=>a+b,0)}
+function cartTotal(){return products.reduce((sum,p)=>sum+p.price*(cart[p.id]||0),0)}
+function renderProducts(){
+ const q=document.getElementById("search").value.trim().toLowerCase();
+ const list=products.filter(p=>(activeCategory==="All Products"||p.category===activeCategory)&&(p.name+" "+p.detail+" "+p.category).toLowerCase().includes(q));
+ document.getElementById("productGrid").innerHTML=list.length?list.map(p=>`<article class="product"><div class="emoji" aria-hidden="true">${p.emoji}</div><h3>${p.name}</h3><div class="detail">${p.category} · ${p.detail}</div><div class="price">${money(p.price)}</div><button type="button" onclick="addToCart(${p.id})">+ Cart mein jodein</button></article>`).join(""):"<p>Koi electronics product nahi mila.</p>";
+}
+function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart();}
+function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];renderCart();}
+function renderCart(){
+ const chosen=products.filter(p=>cart[p.id]);
+ document.getElementById("cartItems").innerHTML=chosen.length?chosen.map(p=>`<div class="cart-row"><div><strong>${p.name}</strong><div class="detail">${p.detail}</div><div class="qty"><button type="button" onclick="changeQty(${p.id},-1)" aria-label="Quantity kam karein">−</button><span>${cart[p.id]}</span><button type="button" onclick="changeQty(${p.id},1)" aria-label="Quantity badhayein">+</button><button type="button" onclick="changeQty(${p.id},-${cart[p.id]})" style="background:#fff0f0;color:#a11">Remove</button></div></div><strong>${money(p.price*cart[p.id])}</strong></div>`).join(""):"<p class="note">Cart khaali hai. Pehle product add karein.</p>";
+ document.getElementById("total").textContent=money(cartTotal());
+ document.getElementById("summaryTotal").textContent=money(cartTotal());
+ document.getElementById("summaryCount").textContent=cartCount();
+ document.getElementById("count").textContent=cartCount();
+ const checkout=document.getElementById("checkoutButton");checkout.disabled=cartCount()===0;checkout.style.opacity=cartCount()===0?".55":"1";
+ if(cartCount()===0){document.getElementById("checkoutPanel").style.display="none";document.getElementById("orderResult").style.display="none";document.getElementById("sendOrderButton").style.display="none";document.getElementById("payUpiButton").style.display="none";currentOrder=null;}
+}
+document.getElementById("search").addEventListener("input",renderProducts);
+document.getElementById("checkoutButton").addEventListener("click",()=>{
+ if(cartCount()===0){alert("Pehle cart mein product add karein.");return;}
+ document.getElementById("checkoutPanel").style.display="block";
+ document.getElementById("checkoutPanel").scrollIntoView({behavior:"smooth",block:"start"});
+});
+document.getElementById("continueShopping").addEventListener("click",()=>document.getElementById("products").scrollIntoView({behavior:"smooth",block:"start"}));
+document.getElementById("checkoutForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ if(cartCount()===0){alert("Pehle cart mein product add karein.");return;}
+ const phone=document.getElementById("customerPhone").value.trim();
+ const pin=document.getElementById("pincode").value.trim();
+ if(!/^[6-9]\d{9}$/.test(phone)){alert("Sahi 10 digit mobile number bharein.");return;}
+ if(!/^\d{6}$/.test(pin)){alert("Sahi 6 digit PIN code bharein.");return;}
+ const payment=document.querySelector('input[name="paymentMethod"]:checked').value;
+ const items=products.filter(p=>cart[p.id]).map(p=>({name:p.name,detail:p.detail,qty:cart[p.id],price:p.price,subtotal:p.price*cart[p.id]}));
+ const orderId="PVM"+Date.now().toString().slice(-8);
+ currentOrder={orderId,customer:document.getElementById("customerName").value.trim(),phone,address:document.getElementById("address").value.trim(),city:document.getElementById("city").value.trim(),state:document.getElementById("state").value.trim(),pincode:pin,landmark:document.getElementById("landmark").value.trim(),payment,items,total:cartTotal()};
+ const itemHtml=items.map(i=>`<div class="order-line"><span>${i.name} (${i.detail}) × ${i.qty}</span><strong>${money(i.subtotal)}</strong></div>`).join("");
+ const addressHtml=`${currentOrder.address}, ${currentOrder.city}, ${currentOrder.state} - ${currentOrder.pincode}${currentOrder.landmark?", Landmark: "+currentOrder.landmark:""}`;
+ document.getElementById("orderResult").innerHTML=`<h3 style="margin-top:0">Order Summary Ready</h3><p><strong>Order ID:</strong> ${orderId}</p><p><strong>Name:</strong> ${currentOrder.customer}<br><strong>Mobile:</strong> ${phone}</p><p><strong>Delivery Address:</strong><br>${addressHtml}</p><h4>Items</h4>${itemHtml}<div class="total"><span>Total</span><span>${money(currentOrder.total)}</span></div><p><strong>Payment:</strong> ${payment==="cod"?"Cash on Delivery":"UPI (payment must be verified)"}</p><p class="note">Yeh summary is browser mein taiyar hui hai; abhi order database mein save nahi hua.</p>`;
+ document.getElementById("orderResult").style.display="block";
+ const send=document.getElementById("sendOrderButton");send.style.display="block";send.textContent=payment==="cod"?"Confirm COD Order on WhatsApp":"WhatsApp par Order Bhejein";
+ document.getElementById("payUpiButton").style.display=payment==="upi"?"block":"none";
+ const lines=items.map(i=>`- ${i.name} (${i.detail}) x ${i.qty} = ${money(i.subtotal)}`).join("\n");
+ currentOrder.message=`New order — ${SHOP_NAME}\nOrder ID: ${orderId}\nName: ${currentOrder.customer}\nMobile: ${phone}\nDelivery Address: ${addressHtml}\n\nItems:\n${lines}\n\nTotal: ${money(currentOrder.total)}\nPayment: ${payment==="upi"?"UPI (verify manually)":"Cash on Delivery"}`;
+ send.onclick=()=>{if(!currentOrder)return;if(SHOP_WHATSAPP==="91XXXXXXXXXX"){alert("WhatsApp number baad mein add karenge. Abhi order summary taiyar hai.");return;}window.open("https://wa.me/"+SHOP_WHATSAPP+"?text="+encodeURIComponent(currentOrder.message),"_blank","noopener");};
+ document.getElementById("payUpiButton").onclick=()=>{if(!currentOrder)return;if(SHOP_UPI_ID==="YOUR-UPI-ID@bank"){alert("UPI ID baad mein add karenge. Abhi order summary taiyar hai.");return;}const params=new URLSearchParams({pa:SHOP_UPI_ID,pn:SHOP_NAME,am:currentOrder.total.toFixed(2),cu:"INR",tn:"Order "+currentOrder.orderId});window.location.href="upi://pay?"+params.toString();};
+ document.getElementById("orderResult").scrollIntoView({behavior:"smooth",block:"start"});
+});
+renderCategories();renderProducts();renderCart();
 </script>
-
 </body>
 </html>
