@@ -25,13 +25,13 @@ nav{display:flex;align-items:center;justify-content:flex-end;gap:16px;flex-wrap:
 .hero-inner{background:linear-gradient(115deg,#071729,#0d4b50);border-radius:16px;padding:clamp(24px,5vw,48px);color:white}
 .hero h1{font-size:clamp(28px,5vw,44px);margin:0 0 10px}.hero p{line-height:1.6;margin:0;color:#e1f1f2}
 .wrap{max-width:1150px;margin:18px auto;padding:0 15px 35px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.toolbar select{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;background:#fff;min-width:190px;color:var(--ink)}
 input{font:inherit;padding:12px;border:1px solid #d7e0e8;border-radius:10px;background:white}
 #search{flex:1;min-width:220px}
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .product{background:white;border:1px solid var(--line);border-radius:13px;padding:13px;display:flex;flex-direction:column;gap:8px;min-width:0}
 .emoji{height:70px;background:#f0f8f3;border-radius:10px;display:grid;place-items:center;font-size:36px}
-.product h3{font-size:15px;line-height:1.35;margin:0}.detail{font-size:12px;color:var(--muted)}
+.product h3{font-size:15px;line-height:1.35;margin:0}.detail{font-size:12px;color:var(--muted)}.product-category{font-size:10px;font-weight:800;letter-spacing:.4px;color:#13865c;background:#eaf8f0;border-radius:999px;padding:4px 7px;align-self:flex-start}
 .price{font-weight:800;font-size:18px;color:var(--green)}button{font:inherit;font-weight:700;cursor:pointer;border:0;border-radius:9px;padding:10px;background:var(--navy);color:white;margin-top:auto}
 .panel{background:white;border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:20px}
 .cart-row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:10px 0;font-size:14px}
@@ -96,7 +96,7 @@ button.click-feedback, a.click-feedback, .product.click-feedback, .payment-optio
  <p>Rozmarra ka kirana samaan ek jagah — aata, chawal, daal, tel, cheeni, namak, masale aur snacks.</p>
 </div></section>
 <main class="wrap">
- <div class="toolbar"><input id="search" type="search" placeholder="Kirana ka samaan search karein..." aria-label="Kirana products search"></div>
+ <div class="toolbar"><input id="search" type="search" placeholder="Chawal, Basmati, daal search karein..." aria-label="Kirana products search"><select id="categoryFilter" aria-label="Category chunein"><option value="all">Sabhi Categories</option><option value="rice">Chawal / Rice</option><option value="flour">Aata & Flour</option><option value="pulses">Daal & Beans</option><option value="oil">Tel</option><option value="spices">Masale</option><option value="snacks">Snacks & Others</option></select></div>
  <h2 id="products">Kirana ke Products</h2>
  <div class="grid" id="productGrid"></div>
  <section class="panel" id="cart">
@@ -148,8 +148,14 @@ const SHOP_NAME = "PV MART";
 const SHOP_UPI_ID = "YOUR-UPI-ID@bank";
 const SHOP_WHATSAPP = "91XXXXXXXXXX";
 const products = [
- {id:2,name:"Chawal",detail:"5 kg bag",price:275,emoji:"🍚"},
- {id:1,name:"Aata",detail:"5 kg bag",price:152,emoji:"🌾"},
+ {id:2,name:"Chawal (Regular)",detail:"5 kg bag",price:275,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
+ {id:28,name:"Basmati Rice",detail:"1 kg",price:120,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
+ {id:29,name:"Mungra Rice",detail:"1 kg",price:65,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
+ {id:30,name:"Sona Masoori Rice",detail:"1 kg",price:75,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
+ {id:31,name:"Local / Daily Rice",detail:"1 kg",price:55,emoji:"🍚",category:"rice",categoryLabel:"Chawal / Rice"},
+ {id:1,name:"Aata",detail:"5 kg bag",price:152,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
+ {id:32,name:"Chakki Fresh Aata",detail:"1 kg",price:38,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
+ {id:33,name:"Multigrain Aata",detail:"1 kg",price:65,emoji:"🌾",category:"flour",categoryLabel:"Aata & Flour"},
  {id:3,name:"Arhar Daal",detail:"1 kg",price:150,emoji:"🫘"},
  {id:4,name:"Masoor Daal",detail:"1 kg",price:105,emoji:"🫘"},
  {id:5,name:"Moong Daal",detail:"1 kg",price:125,emoji:"🫘"},
@@ -199,6 +205,7 @@ function renderCart(){
  if(cartCount()===0){document.getElementById("checkoutPanel").style.display="none";document.getElementById("orderResult").style.display="none";document.getElementById("sendOrderButton").style.display="none";document.getElementById("payUpiButton").style.display="none";currentOrder=null;}
 }
 document.getElementById("search").addEventListener("input",renderProducts);
+document.getElementById("categoryFilter").addEventListener("change",renderProducts);
 document.getElementById("checkoutButton").addEventListener("click",()=>{
  if(cartCount()===0){alert("Pehle cart mein product add karein.");return;}
  document.getElementById("checkoutPanel").style.display="block";
