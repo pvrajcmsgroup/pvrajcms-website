@@ -81,7 +81,10 @@ footer{background:var(--navy);color:#dbe6f0;padding:17px;text-align:center;font-
 .checkout input{width:100%;padding:10px;border:1px solid var(--line);border-radius:7px}
 @media(max-width:1100px){.layout{height:auto;min-height:0;overflow:visible;grid-template-columns:180px minmax(0,1fr);grid-template-rows:auto}.sidebar,.middle,.cartcol,.hero,.features{grid-row:auto;max-height:none;overflow:visible}.cartcol{grid-column:1/-1}.products{grid-template-columns:repeat(3,minmax(0,1fr))}.features{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){header{padding:12px}.header-inner{justify-content:center}.brand{justify-content:center;min-width:0}.brand img{width:120px;max-height:55px}.brand-copy strong{font-size:20px}nav{justify-content:center;gap:12px}nav>a,.dropbtn{font-size:12px}.dropmenu{left:50%;right:auto;transform:translateX(-50%)}.wrap{padding:10px}.layout{display:flex;flex-direction:column}.hero{width:100%;padding:22px 17px;display:block}.hero-art{display:none}.hero h1{font-size:27px}.sidebar,.middle,.cartcol,.features{width:100%}.categories{grid-template-columns:repeat(2,minmax(0,1fr))}.catbtn{font-size:12px}.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product img{height:105px}.info{padding:8px}.product h3{font-size:12px}.rate{font-size:10px}.features{grid-template-columns:repeat(2,1fr)}.products-heading h2{font-size:18px}}
-</style>
+
+.pack-select{width:100%;padding:9px 10px;margin:5px 0 9px;border:1px solid #cbd8cf;border-radius:9px;background:#fff;color:#173b2a;font:inherit;font-weight:600}
+.weight-label{display:block;font-size:12px;color:#617267;font-weight:700;margin-top:7px}
+.demo-note{display:block;color:#8a6a24;font-size:10px;line-height:1.4;margin:2px 0 8px}</style>
 </head>
 <body>
 <header>
@@ -169,22 +172,9 @@ footer{background:var(--navy);color:#dbe6f0;padding:17px;text-align:center;font-
 <footer>© 2026 PV MART | PVRajCMS Group. All Rights Reserved.</footer>
 
 <script>
-const products=[
-{id:1,name:"Chakki Atta",weight:"5 kg",cat:"Chakki Atta",wholesale:170,retail:200,price:200,img:"https://images.unsplash.com/photo-1627485937980-221c88ac04f9?auto=format&fit=crop&w=600&q=80"},
-{id:2,name:"Basmati Rice",weight:"1 kg",cat:"Rice (Chawal)",wholesale:90,retail:120,price:120,img:"https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80"},
-{id:3,name:"Sona Masoori Rice",weight:"5 kg",cat:"Rice (Chawal)",wholesale:280,retail:320,price:320,img:"https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=600&q=80"},
-{id:4,name:"Chana Dal",weight:"1 kg",cat:"Dal & Pulses",wholesale:80,retail:100,price:100,img:"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=600&q=80"},
-{id:5,name:"Arhar Dal",weight:"1 kg",cat:"Dal & Pulses",wholesale:120,retail:150,price:150,img:"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=600&q=80"},
-{id:6,name:"Urad Dal",weight:"1 kg",cat:"Dal & Pulses",wholesale:110,retail:140,price:140,img:"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=600&q=80"},
-{id:7,name:"Desi Ghee",weight:"1 kg",cat:"Desi Ghee",wholesale:480,retail:550,price:550,img:"https://images.unsplash.com/photo-1638108149393-fbbd818959a2?auto=format&fit=crop&w=600&q=80"},
-{id:8,name:"Haldi Powder",weight:"100 g",cat:"Masale",wholesale:25,retail:35,price:35,img:"https://images.unsplash.com/photo-1615485500704-8e990f9900f3?auto=format&fit=crop&w=600&q=80"},
-{id:9,name:"Lal Mirch Powder",weight:"100 g",cat:"Masale",wholesale:30,retail:45,price:45,img:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80"},
-{id:10,name:"Dhaniya Powder",weight:"100 g",cat:"Masale",wholesale:25,retail:35,price:35,img:"https://images.unsplash.com/photo-1599909533605-7f8c8c5f6a31?auto=format&fit=crop&w=600&q=80"},
-{id:11,name:"Garam Masala",weight:"100 g",cat:"Masale",wholesale:40,retail:55,price:55,img:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80"},
-{id:12,name:"Jeera",weight:"100 g",cat:"Masale",wholesale:50,retail:70,price:70,img:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80"}
-];
+const products=[{"id":1,"name":"Chakki Atta","cat":"Chakki Atta","img":"https://images.unsplash.com/photo-1627485937980-221c88ac04f9?auto=format&fit=crop&w=600&q=80","variants":[{"weight":"5 kg","buy":150,"wholesale":170,"retail":200},{"weight":"10 kg","buy":300,"wholesale":330,"retail":380},{"weight":"50 kg","buy":1450,"wholesale":1600,"retail":1850}]},{"id":2,"name":"Basmati Rice","cat":"Rice (Chawal)","img":"https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80","variants":[{"weight":"5 kg","buy":400,"wholesale":450,"retail":550},{"weight":"10 kg","buy":800,"wholesale":880,"retail":1050},{"weight":"50 kg","buy":3800,"wholesale":4200,"retail":5000}]},{"id":3,"name":"Sona Masoori Rice","cat":"Rice (Chawal)","img":"https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=600&q=80","variants":[{"weight":"5 kg","buy":250,"wholesale":280,"retail":320},{"weight":"10 kg","buy":500,"wholesale":540,"retail":620},{"weight":"50 kg","buy":2400,"wholesale":2600,"retail":3000}]},{"id":4,"name":"Chana Dal","cat":"Dal & Pulses","img":"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=600&q=80","variants":[{"weight":"5 kg","buy":340,"wholesale":380,"retail":450},{"weight":"10 kg","buy":680,"wholesale":740,"retail":870},{"weight":"50 kg","buy":3250,"wholesale":3500,"retail":4200}]},{"id":5,"name":"Arhar Dal","cat":"Dal & Pulses","img":"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=600&q=80","variants":[{"weight":"5 kg","buy":520,"wholesale":570,"retail":680},{"weight":"10 kg","buy":1040,"wholesale":1100,"retail":1300},{"weight":"50 kg","buy":5000,"wholesale":5300,"retail":6200}]},{"id":6,"name":"Urad Dal","cat":"Dal & Pulses","img":"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=600&q=80","variants":[{"weight":"5 kg","buy":470,"wholesale":520,"retail":630},{"weight":"10 kg","buy":940,"wholesale":1000,"retail":1200},{"weight":"50 kg","buy":4500,"wholesale":4800,"retail":5700}]},{"id":7,"name":"Desi Ghee","cat":"Desi Ghee","img":"https://images.unsplash.com/photo-1638108149393-fbbd818959a2?auto=format&fit=crop&w=600&q=80","variants":[{"weight":"2 L","buy":850,"wholesale":960,"retail":1100},{"weight":"5 L","buy":2100,"wholesale":2350,"retail":2700}]},{"id":8,"name":"Haldi Powder","cat":"Masale","img":"https://images.unsplash.com/photo-1615485500704-8e990f9900f3?auto=format&fit=crop&w=600&q=80","variants":[{"weight":"5 kg","buy":900,"wholesale":1050,"retail":1300},{"weight":"10 kg","buy":1800,"wholesale":2050,"retail":2500},{"weight":"50 kg","buy":8500,"wholesale":9700,"retail":12000}]},{"id":9,"name":"Lal Mirch Powder","cat":"Masale","img":"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80","variants":[{"weight":"5 kg","buy":1100,"wholesale":1300,"retail":1600},{"weight":"10 kg","buy":2200,"wholesale":2500,"retail":3100},{"weight":"50 kg","buy":10500,"wholesale":12000,"retail":15000}]},{"id":10,"name":"Dhaniya Powder","cat":"Masale","img":"https://images.unsplash.com/photo-1599909533605-7f8c8c5f6a31?auto=format&fit=crop&w=600&q=80","variants":[{"weight":"5 kg","buy":850,"wholesale":1000,"retail":1250},{"weight":"10 kg","buy":1700,"wholesale":1950,"retail":2400},{"weight":"50 kg","buy":8000,"wholesale":9300,"retail":11500}]},{"id":11,"name":"Garam Masala","cat":"Masale","img":"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80","variants":[{"weight":"5 kg","buy":1600,"wholesale":1850,"retail":2200},{"weight":"10 kg","buy":3200,"wholesale":3500,"retail":4200},{"weight":"50 kg","buy":15500,"wholesale":17000,"retail":20500}]},{"id":12,"name":"Jeera","cat":"Masale","img":"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80","variants":[{"weight":"5 kg","buy":2200,"wholesale":2500,"retail":3000},{"weight":"10 kg","buy":4400,"wholesale":4800,"retail":5700},{"weight":"50 kg","buy":21000,"wholesale":23000,"retail":27500}]}];
 const categoryList=["Sabhi Products","Chakki Atta","Rice (Chawal)","Dal & Pulses","Desi Ghee","Masale"];
-let active="Sabhi Products",cart={};
+let active="Sabhi Products",cart={},selectedVariant={};
 const money=n=>"₹"+n.toLocaleString("en-IN");
 
 function renderCategories(){
@@ -197,25 +187,35 @@ function renderProducts(){
  const q=document.getElementById("search").value.toLowerCase().trim();
  const shown=products.filter(p=>(active==="Sabhi Products"||p.cat===active)&&(p.name+" "+p.cat+" "+p.weight).toLowerCase().includes(q));
  document.getElementById("productCount").textContent=shown.length+" products";
- document.getElementById("products").innerHTML=shown.length?shown.map(p=>`
+ document.getElementById("products").innerHTML=shown.length?shown.map(p=>{
+ const v=p.variants[selectedVariant[p.id]||0];
+ return `
  <article class="product">
  <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x400/eaf3ed/174d35?text=PV+Foods+Agro'">
- <div class="info"><span class="pill">${p.cat}</span><h3>${p.name}</h3><div class="weight">${p.weight}</div>
- <div class="rate"><span>Thok Rate</span><strong>${money(p.wholesale)}</strong></div>
- <div class="rate"><span>Futkar Rate</span><strong>${money(p.retail)}</strong></div>
+ <div class="info"><span class="pill">${p.cat}</span><h3>${p.name}</h3>
+ <label class="weight-label" for="pack-${p.id}">Pack Size</label>
+ <select class="pack-select" id="pack-${p.id}" onchange="selectPack(${p.id},this.value)">
+ ${p.variants.map((x,i)=>`<option value="${i}" ${i===(selectedVariant[p.id]||0)?"selected":""}>${x.weight}</option>`).join("")}
+ </select>
+ <div class="rate"><span>Buy Price</span><strong>${money(v.buy)}</strong></div>
+ <div class="rate"><span>Thok Rate</span><strong>${money(v.wholesale)}</strong></div>
+ <div class="rate"><span>Futkar Rate</span><strong>${money(v.retail)}</strong></div>
  <div class="return">↻ Return: 7 din (policy confirm karein)</div>
- <div class="price">${money(p.price)}</div>
- <button class="btn add" type="button" onclick="addToCart(${p.id})">🛒 Add to Cart</button></div></article>`).join(""):'<p>Koi product nahi mila.</p>';
+ <div class="price">${money(v.retail)}</div><small class="demo-note">Demo rate — asli rate upload se pehle update karein</small>
+ <button class="btn add" type="button" onclick="addToCart(${p.id})">🛒 Add to Cart</button></div></article>`;
+ }).join(""):'<p>Koi product nahi mila.</p>';
 }
-function addToCart(id){cart[id]=(cart[id]||0)+1;renderCart()}
-function changeQty(id,delta){cart[id]=(cart[id]||0)+delta;if(cart[id]<=0)delete cart[id];renderCart()}
-function countItems(){return Object.values(cart).reduce((a,b)=>a+b,0)}
-function total(){return products.reduce((s,p)=>s+p.price*(cart[p.id]||0),0)}
+function selectPack(id,value){selectedVariant[id]=Number(value);renderProducts()}
+function chosen(p){return p.variants[selectedVariant[p.id]||0]}
+function addToCart(id){const p=products.find(x=>x.id===id),v=chosen(p);const key=id+"-"+v.weight;cart[key]=cart[key]||{id,weight:v.weight,price:v.retail,name:p.name};cart[key].qty=(cart[key].qty||0)+1;renderCart()}
+function changeQty(key,delta){if(!cart[key])return;cart[key].qty+=delta;if(cart[key].qty<=0)delete cart[key];renderCart()}
+function countItems(){return Object.values(cart).reduce((a,b)=>a+b.qty,0)}
+function total(){return Object.values(cart).reduce((s,item)=>s+item.price*item.qty,0)}
 function renderCart(){
- const items=products.filter(p=>cart[p.id]);
- document.getElementById("cartItems").innerHTML=items.length?items.map(p=>`
- <div class="cartitem"><strong>${p.name}</strong><span>${money(p.price)} each</span>
- <div class="qty"><button type="button" onclick="changeQty(${p.id},-1)">−</button><span>${cart[p.id]}</span><button type="button" onclick="changeQty(${p.id},1)">+</button><strong>${money(p.price*cart[p.id])}</strong></div></div>`).join(""):'<p class="muted">Cart khaali hai. Pehle product add karein.</p>';
+ const items=Object.entries(cart);
+ document.getElementById("cartItems").innerHTML=items.length?items.map(([key,item])=>`
+ <div class="cartitem"><strong>${item.name} (${item.weight})</strong><span>${money(item.price)} each</span>
+ <div class="qty"><button type="button" onclick="changeQty('${key}',-1)">−</button><span>${item.qty}</span><button type="button" onclick="changeQty('${key}',1)">+</button><strong>${money(item.price*item.qty)}</strong></div></div>`).join(""):'<p class="muted">Cart khaali hai. Pehle product add karein.</p>';
  document.getElementById("total").textContent=money(total());
  document.getElementById("total2").textContent=money(total());
  document.getElementById("navCount").textContent=countItems();
