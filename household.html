@@ -9,14 +9,14 @@
 .site-header{background:#061525;color:white;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .brand-area{display:flex;align-items:center;gap:14px}.logo-text{font-weight:900;font-size:clamp(20px,2.6vw,34px);letter-spacing:-1px}.logo-text .pv{color:#25d8d1}.logo-text .cms{color:#fff}.mart-title{border-left:1px solid #6d8295;padding-left:15px}.mart-title strong{font-size:clamp(20px,2.4vw,31px);display:block}.mart-title small{color:var(--gold);font-size:11px}
 .main-nav{display:flex;gap:15px;flex-wrap:wrap;align-items:center}.main-nav a{color:white;text-decoration:none;font-weight:bold;font-size:12px}.main-nav a:hover{color:var(--gold)}
-.hero{max-width:1200px;margin:18px auto;background:linear-gradient(115deg,#071b2e,#0b4c4c);border-radius:17px;color:#fff;padding:34px 38px;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:185px}.hero h1{font-size:clamp(28px,3.5vw,44px);margin:0 0 12px}.hero p{margin:0;line-height:1.6}.hero-icon{font-size:clamp(56px,7vw,84px);white-space:nowrap}
+.hero{width:100%;margin:0 0 14px;background:linear-gradient(115deg,#071b2e,#0b4c4c);border-radius:17px;color:#fff;padding:24px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:145px}.hero h1{font-size:clamp(23px,2.4vw,32px);margin:0 0 10px}.hero p{margin:0;line-height:1.6}.hero-icon{font-size:clamp(38px,4vw,60px);white-space:nowrap}
 main{max-width:1200px;margin:0 auto;padding:0 0 36px}.shop-layout{display:grid;grid-template-columns:190px minmax(0,1fr) 270px;gap:14px;align-items:start}
 .panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;min-width:0}
 /* Desktop: keep Categories and Cart in place; only the central product grid scrolls. */
 @media(min-width:1001px){
   .category-panel,.cart-panel{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow-y:auto;overscroll-behavior:contain}
-  .shop-layout>section{min-height:0}
-  .product-grid{max-height:calc(100vh - 300px);overflow-y:auto;overflow-x:hidden;align-content:start;padding-right:5px;overscroll-behavior:contain;scrollbar-gutter:stable}
+  .shop-layout>section{min-height:0;max-height:calc(100vh - 24px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding-right:5px;scrollbar-gutter:stable}
+  .product-grid{overflow:visible;max-height:none;align-content:start}
 }.panel h2{font-size:17px;margin:3px 0 13px}
 .cat-list{display:grid;gap:7px}.cat-btn{border:0;border-radius:10px;text-align:left;padding:12px 10px;background:#f0f4f8;color:#172536;font-weight:700;font-size:12px;cursor:pointer}.cat-btn.active{background:#def7ed;color:#08744e;border:1px solid #91dfc0}
 .search{width:100%;border:1px solid #d2dce6;border-radius:10px;background:#fff;padding:13px;margin-bottom:12px}
@@ -28,7 +28,7 @@ main{max-width:1200px;margin:0 auto;padding:0 0 36px}.shop-layout{display:grid;g
 .notice{margin:16px 0 0;padding:10px 12px;border-radius:10px;background:#fff8df;border:1px solid #f0dfa9;color:#66521a;font-size:11px;line-height:1.5}
 footer{text-align:center;background:#e8eef4;padding:22px;color:#667487;font-size:12px;margin-top:28px}
 @media(max-width:1000px){main{padding:0 14px}.shop-layout{grid-template-columns:175px minmax(0,1fr)}.cart-panel{grid-column:1/-1}.product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.cart-panel-inner{display:grid;grid-template-columns:1fr 1fr;gap:18px}}
-@media(max-width:650px){.site-header{padding:12px}.brand-area{gap:8px}.logo-text{font-size:18px}.mart-title{padding-left:9px}.mart-title strong{font-size:20px}.main-nav{gap:10px}.main-nav a{font-size:11px}.hero{margin:10px;padding:22px 18px;min-height:0}.hero-icon{display:none}.hero h1{font-size:29px}main{padding:0 10px}.shop-layout{grid-template-columns:1fr}.category-panel{order:0}.category-panel .cat-list{display:flex;overflow:auto;padding-bottom:3px}.cat-btn{white-space:nowrap;padding:10px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cart-panel{grid-column:auto}.cart-panel-inner{display:block}.products-heading h2{font-size:19px}}
+@media(max-width:650px){.site-header{padding:12px}.brand-area{gap:8px}.logo-text{font-size:18px}.mart-title{padding-left:9px}.mart-title strong{font-size:20px}.main-nav{gap:10px}.main-nav a{font-size:11px}.hero{margin:0 0 12px;padding:22px 18px;min-height:0}.hero-icon{display:none}.hero h1{font-size:29px}main{padding:0 10px}.shop-layout{grid-template-columns:1fr}.category-panel{order:0}.category-panel .cat-list{display:flex;overflow:auto;padding-bottom:3px}.cat-btn{white-space:nowrap;padding:10px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cart-panel{grid-column:auto}.cart-panel-inner{display:block}.products-heading h2{font-size:19px}}
 </style>
 </head>
 <body>
@@ -36,10 +36,10 @@ footer{text-align:center;background:#e8eef4;padding:22px;color:#667487;font-size
  <div class="brand-area"><div class="logo-text"><span class="pv">PV</span><span class="cms">RajCMS</span><div style="font-size:10px;letter-spacing:5px;text-align:center">GROUP</div></div><div class="mart-title"><strong><span style="color:#27d5c7">PV</span> MART</strong><small>Aapki Apni Online Dukaan</small></div></div>
  <nav class="main-nav"><a href="pv-mart.html">PV MART Home</a><a href="pv-mart.html#shop">Shop Now</a><a href="pv-mart.html#categories-section">Categories⌄</a><a href="pv-mart.html#offers">Offers</a><a href="#cart">My Cart (<span id="navCount">0</span>)</a><a href="contact.html">Contact</a></nav>
 </header>
-<section class="hero"><div><h1>🏠 Home & Kitchen Store</h1><p>Kitchen ke bartan, safai ka samaan aur ghar ki rozmarra zarooratein ek jagah — PV MART par.</p></div><div class="hero-icon" aria-hidden="true">🍳 🧹</div></section>
+
 <main><div class="shop-layout">
  <aside class="panel category-panel"><h2>🛍️ Categories</h2><div class="cat-list" id="catList"></div></aside>
- <section><input class="search" id="search" type="search" placeholder="Product, brand ya category search karein..." aria-label="Search products">
+ <section><section class="hero"><div><h1>🏠 Home & Kitchen Store</h1><p>Kitchen ke bartan, safai ka samaan aur ghar ki rozmarra zarooratein ek jagah — PV MART par.</p></div><div class="hero-icon" aria-hidden="true">🍳 🧹</div></section><input class="search" id="search" type="search" placeholder="Product, brand ya category search karein..." aria-label="Search products">
   <div class="products-heading"><h2 id="heading">Home & Kitchen Products</h2><span class="muted" id="count"></span></div><div class="product-grid" id="products"></div>
  </section>
  <aside class="panel cart-panel" id="cart"><h2>🛒 Aapka Cart</h2><div class="cart-panel-inner"><div><div id="cartItems" class="cart-empty">Cart khaali hai. Pehle product add karein.</div><div class="subtotal"><span>Subtotal</span><span id="total">₹0</span></div><p class="hint">Delivery charge abhi calculate nahi kiya gaya. Order confirm karne se pehle final total confirm hoga.</p></div>
