@@ -63,6 +63,25 @@ input,select{padding:13px;border:1px solid var(--border);border-radius:10px;back
 footer{text-align:center;padding:25px;color:#6b7b8d;font-size:12px}
 @media(max-width:1050px){header{flex-wrap:wrap}.logo{width:220px;max-width:35vw}nav{margin-left:0;width:100%;gap:15px}.layout{grid-template-columns:170px minmax(0,1fr)}.cartbox{position:static;grid-column:1/-1}.productgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){header{padding:12px;gap:9px}.logo{width:145px;max-width:38vw}.brand-divider{height:42px}.brandtext{min-width:0}.brandtext h2{font-size:23px}.brandtext p{font-size:10px}nav{gap:12px;padding:5px 0}nav a{font-size:11px}.layout{grid-template-columns:1fr}.panel{position:static;max-height:none}.catlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}.hero{padding:18px;min-height:120px}.hero h1{font-size:23px}.hero p{font-size:13px}.heroicons{font-size:32px}.toolbar{flex-wrap:wrap}#search{min-width:100%}#sort{width:100%}.products-heading{font-size:17px}.productgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.product{padding:10px}.product h3{font-size:13px}.price{font-size:11px}.retail{font-size:16px}.cartbox{grid-column:auto}}
+
+/* Checkout address form */
+.modal-backdrop{display:none;position:fixed;inset:0;background:#061625b8;z-index:9999;overflow:auto;padding:24px 12px;align-items:center;justify-content:center}
+.modal-backdrop.open{display:flex}
+.checkout-modal{width:min(680px,100%);background:#fff;border-radius:18px;padding:22px;box-shadow:0 20px 60px #0004;max-height:calc(100vh - 48px);overflow:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.modal-head h2{margin:0;font-size:23px;color:#102b4c}
+.close-modal{border:0;background:#edf2f7;border-radius:9px;padding:8px 12px;cursor:pointer}
+.checkout-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.checkout-form label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:bold;color:#34465a}
+.checkout-form input,.checkout-form textarea,.checkout-form select{width:100%;padding:11px;border:1px solid #cfd9e5;border-radius:9px;font-size:14px}
+.checkout-form .full{grid-column:1/-1}
+.checkout-form textarea{min-height:70px;resize:vertical}
+.order-review{background:#f4f8fb;border:1px solid #dce5ef;border-radius:12px;padding:14px;margin:16px 0}
+.order-review h3{margin:0 0 10px}
+.review-line{display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:5px 0}
+.submit-order{width:100%;background:#12865b;color:white;border:0;padding:13px;border-radius:10px;font-weight:bold;cursor:pointer}
+@media(max-width:520px){.checkout-modal{padding:16px}.checkout-form{grid-template-columns:1fr}.checkout-form .full{grid-column:auto}.modal-head h2{font-size:20px}}
+
 </style>
 </head>
 <body>
@@ -108,6 +127,29 @@ footer{text-align:center;padding:25px;color:#6b7b8d;font-size:12px}
     </aside>
   </div>
 </main>
+
+<div class="modal-backdrop" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+ <div class="checkout-modal">
+  <div class="modal-head"><h2 id="checkoutTitle">📦 Delivery & Customer Details</h2><button class="close-modal" type="button" onclick="closeCheckout()">✕ Close</button></div>
+  <p class="small">Sir, order confirm karne ke liye apna naam, mobile number aur poora delivery address bhariye.</p>
+  <form id="checkoutForm" onsubmit="submitOrder(event)">
+   <div class="checkout-form">
+    <label>Customer Name *<input name="customerName" required autocomplete="name" placeholder="Aapka poora naam"></label>
+    <label>Mobile Number *<input name="phone" required type="tel" inputmode="numeric" pattern="[0-9+ ()-]{10,16}" autocomplete="tel" placeholder="10 digit mobile number"></label>
+    <label class="full">House / Flat / Shop No. *<input name="house" required autocomplete="address-line1" placeholder="House number, building"></label>
+    <label class="full">Street / Mohalla / Landmark *<input name="street" required autocomplete="address-line2" placeholder="Gali, mohalla, nearby landmark"></label>
+    <label>Village / Area / City *<input name="city" required autocomplete="address-level2" placeholder="City ya gaon"></label>
+    <label>State *<input name="state" required autocomplete="address-level1" value="Uttar Pradesh"></label>
+    <label>PIN Code *<input name="pincode" required inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="postal-code" placeholder="6 digit PIN code"></label>
+    <label>Delivery preference<select name="delivery"><option>Standard delivery (confirm later)</option><option>Call before delivery</option><option>Self pickup (confirm first)</option></select></label>
+    <label class="full">Order note (optional)<textarea name="note" placeholder="Quantity, delivery instructions ya koi note"></textarea></label>
+   </div>
+   <div class="order-review"><h3>Order Summary</h3><div id="reviewItems"></div><div class="review-line"><strong>Subtotal</strong><strong id="reviewSubtotal">₹0</strong></div><div class="review-line"><span>Delivery charge</span><span>Seller confirm karega</span></div><p class="small">Final amount delivery charge aur stock confirm hone ke baad tay hoga. Abhi koi online payment nahi li ja rahi.</p></div>
+   <button class="submit-order" type="submit">Confirm Details & Prepare Order</button>
+  </form>
+ </div>
+</div>
+
 <footer>© PV MART | A PVrajCMS Group Initiative</footer>
 
 <script>
@@ -224,24 +266,38 @@ function clearCart(){cart={};renderCart();}
 function checkout(){
  const entries=Object.entries(cart);
  if(!entries.length){alert("Sir, pehle cart mein product add karein.");return;}
- const lines=entries.map(([id,q])=>{
-  const p=products.find(x=>x.id===Number(id));
-  return `${p.name} (${p.unit}) x ${q} = ${money(p.retail*q)}`;
- });
- const total=entries.reduce((s,[id,q])=>s+products.find(p=>p.id===Number(id)).retail*q,0);
- const message=`Namaste PV MART, mujhe Animal Feed ka order dena hai:\n\n${lines.join("\n")}\n\nEstimated subtotal: ${money(total)}\nKripya stock, final price aur delivery charge confirm karein.`;
- const whatsappNumber=""; // Apna WhatsApp business number country code ke saath dalein, jaise 91XXXXXXXXXX
- if(!whatsappNumber){
-  alert("Order summary tayyar hai. OK dabane par ise copy kar sakte hain.");
-  if(navigator.clipboard && navigator.clipboard.writeText){
-   navigator.clipboard.writeText(message).then(()=>alert("Order summary copy ho gayi. Ab ise WhatsApp par seller ko bhej sakte hain.")).catch(()=>window.prompt("Order summary copy karein:",message));
-  }else{
-   window.prompt("Order summary copy karein:",message);
-  }
-  return;
- }
- window.open("https://wa.me/"+whatsappNumber+"?text="+encodeURIComponent(message),"_blank");
+ const modal=document.getElementById("checkoutModal");
+ const lines=entries.map(([id,q])=>{const p=products.find(x=>x.id===Number(id));return `<div class="review-line"><span>${esc(p.name)} × ${q}</span><strong>${money(p.retail*q)}</strong></div>`;});
+ const total=entries.reduce((sum,[id,q])=>sum+products.find(p=>p.id===Number(id)).retail*q,0);
+ document.getElementById("reviewItems").innerHTML=lines.join("");
+ document.getElementById("reviewSubtotal").textContent=money(total);
+ modal.classList.add("open");
+ document.body.style.overflow="hidden";
 }
+function closeCheckout(){
+ document.getElementById("checkoutModal").classList.remove("open");
+ document.body.style.overflow="";
+}
+document.getElementById("checkoutModal").addEventListener("click",function(e){if(e.target===this)closeCheckout();});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeCheckout();});
+function submitOrder(event){
+ event.preventDefault();
+ const form=document.getElementById("checkoutForm");
+ if(!form.reportValidity())return;
+ const data=new FormData(form);
+ const entries=Object.entries(cart);
+ if(!entries.length){closeCheckout();alert("Cart khaali hai. Pehle products add karein.");return;}
+ const lines=entries.map(([id,q])=>{const p=products.find(x=>x.id===Number(id));return `${p.name} (${p.unit}) x ${q} = ${money(p.retail*q)}`;});
+ const total=entries.reduce((sum,[id,q])=>sum+products.find(p=>p.id===Number(id)).retail*q,0);
+ const message=`PV MART ANIMAL FEED ORDER REQUEST\n\nCustomer: ${data.get("customerName")}\nMobile: ${data.get("phone")}\nAddress: ${data.get("house")}, ${data.get("street")}, ${data.get("city")}, ${data.get("state")} - ${data.get("pincode")}\nDelivery preference: ${data.get("delivery")}\nNote: ${data.get("note")||"None"}\n\nORDER ITEMS\n${lines.join("\n")}\n\nSubtotal: ${money(total)}\nDelivery charge: To be confirmed\nFinal total: Seller confirmation required\n\nPlease confirm stock, final prices and delivery.`;
+ closeCheckout();
+ const whatsappNumber=""; // Seller ka WhatsApp number country code ke saath yahan dalein, jaise 91XXXXXXXXXX
+ if(whatsappNumber){window.open("https://wa.me/"+whatsappNumber+"?text="+encodeURIComponent(message),"_blank");}
+ else if(navigator.clipboard&&navigator.clipboard.writeText){
+  navigator.clipboard.writeText(message).then(()=>window.alert("Order details copy ho gayi hain. Ab WhatsApp par PV MART ko bhej sakte hain. Order abhi submit nahi hua hai.")).catch(()=>window.prompt("Order details copy karein:",message));
+ }else{window.prompt("Order details copy karein:",message);}
+}
+
 document.getElementById("search").addEventListener("input",renderProducts);
 document.getElementById("sort").addEventListener("change",renderProducts);
 renderCategories();
