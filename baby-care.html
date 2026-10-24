@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby Care Store | PV MART</title>
+<style>
+:root{--navy:#071a2c;--green:#13865c;--gold:#ffcf58;--bg:#f4f7fb;--line:#dce5ed}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:#172536}
+button,input,select{font:inherit}
+header{background:var(--navy);color:white;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:180px;height:55px;object-fit:contain}
+.divider{height:48px;border-left:1px solid #6d8295}
+.brand h1{font-size:25px;margin:0}
+.brand small{color:var(--gold)}
+nav{display:flex;gap:15px;flex-wrap:wrap}
+nav a{color:white;text-decoration:none;font-weight:bold}
+nav a:hover{color:var(--gold)}
+.hero{margin:14px 16px 0;background:linear-gradient(110deg,#064e3b,#13865c,#8ac9a8);color:white;padding:25px;border-radius:12px}
+.hero h2{margin:0 0 8px;font-size:30px}
+.hero p{margin:0}
+.search{margin:14px 16px;display:flex;gap:8px}
+.search input{flex:1;min-width:0;padding:12px;border:1px solid var(--line);border-radius:8px}
+.layout{display:grid;grid-template-columns:205px minmax(0,1fr) 245px;gap:14px;padding:0 16px 20px;align-items:start}
+.panel{background:white;border:1px solid var(--line);border-radius:10px;padding:14px}
+.panel h3{margin:0 0 12px}
+.sidebar button{display:block;width:100%;text-align:left;background:white;border:0;border-radius:6px;padding:9px 7px;cursor:pointer;color:#26374a}
+.sidebar button:hover,.sidebar button.active{background:#e2f4eb;color:#087344;font-weight:bold}
+.products-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.products-head h3{margin:0}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.product{background:white;border:1px solid var(--line);border-radius:10px;overflow:hidden;min-width:0}
+.product img{width:100%;height:145px;object-fit:cover;background:#eef2f6}
+.product-info{padding:10px}
+.product h4{font-size:14px;line-height:1.35;min-height:38px;margin:0 0 7px}
+.category-tag{font-size:11px;color:#637489}
+.price{font-weight:bold;color:#087344;margin:8px 0}
+.old{font-size:11px;color:#8995a3;text-decoration:line-through;font-weight:normal}
+.product button,.primary{width:100%;border:0;border-radius:6px;padding:9px;background:var(--green);color:white;cursor:pointer;font-weight:bold}
+.product button:hover,.primary:hover{background:#086a45}
+.cart-item{border-bottom:1px solid var(--line);padding:10px 0;font-size:13px}
+.qty{display:flex;gap:8px;align-items:center;margin-top:7px}
+.qty button{border:1px solid var(--line);background:#f4f7fb;border-radius:4px;cursor:pointer}
+.total{font-size:18px;font-weight:bold;margin:14px 0}
+.note{font-size:12px;color:#657487;line-height:1.5}
+select{max-width:100%;padding:8px;border:1px solid var(--line);border-radius:6px;background:white}
+.empty{padding:30px;text-align:center;color:#637489}
+footer{text-align:center;padding:18px;color:#68788b;font-size:12px}
+@media(max-width:1050px){.layout{grid-template-columns:175px minmax(0,1fr)}.cart{grid-column:1/-1}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){header{padding:10px}.brand img{width:115px;height:45px}.brand h1{font-size:20px}.hero{margin:10px;padding:20px}.hero h2{font-size:24px}.search{margin:10px}.layout{display:flex;flex-direction:column;padding:0 10px;width:100%}.sidebar,.catalog,.cart{width:100%}.sidebar{order:0}.catalog{order:1}.cart{order:2}.category-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product img{height:125px}.product-info{padding:8px}.product h4{font-size:13px}.main-nav{gap:10px;font-size:13px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <a href="index.html"><img src="logo.png" alt="PVRajCMS Group Logo"></a>
+    <span class="divider"></span>
+    <div class="brand-title"><h1>PV MART</h1><small>Baby Care Store</small></div>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="kirana.html">Kirana</a>
+    <a href="household.html">Home & Kitchen</a>
+    <a href="stationery.html">Stationery & Books</a>
+    <a href="baby-care.html">Baby Care</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>Everything for Your Little One</h2>
+  <p>Baby care essentials, feeding products, clothing, baby food and more.</p>
+</section>
+
+<div class="search">
+  <input id="search" type="search" placeholder="Search baby products, brands or categories..." oninput="renderProducts()">
+  <select id="sort" onchange="renderProducts()">
+    <option value="default">Sort: Recommended</option>
+    <option value="low">Price: Low to High</option>
+    <option value="high">Price: High to Low</option>
+    <option value="name">Name: A to Z</option>
+  </select>
+</div>
+
+<div class="layout">
+  <aside class="panel sidebar">
+    <h3>Categories</h3>
+    <div class="category-list" id="categories"></div>
+  </aside>
+
+  <main class="catalog">
+    <div class="panel">
+      <div class="products-head">
+        <h3 id="heading">All Baby Care Products</h3>
+        <span id="count" class="note">150 products</span>
+      </div>
+      <div id="products" class="grid"></div>
+    </div>
+  </main>
+
+  <aside class="panel cart">
+    <h3>🛒 Your Cart (<span id="cartCount">0</span>)</h3>
+    <div id="cartItems"><p class="note">Your cart is empty.</p></div>
+    <div class="total">Total: ₹<span id="total">0</span></div>
+    <button class="primary" onclick="checkout()">Proceed to Checkout</button>
+    <p class="note">Demo store: checkout does not collect payment. Confirm product availability and price before selling.</p>
+  </aside>
+</div>
+
+<footer>© PV MART | A PVRajCMS Group Store</footer>
+
+<script>
+const categoryData = [
+ {name:"Diapers & Pants",items:["Baby Diapers Small Pack","Baby Diapers Medium Pack","Baby Diapers Large Pack","Baby Pants Diapers","Newborn Diapers","Overnight Diapers","Reusable Cloth Diapers","Diaper Changing Mat","Diaper Rash Cream","Diaper Disposal Bags"],base:199},
+ {name:"Baby Wipes & Hygiene",items:["Baby Wet Wipes","Sensitive Skin Wipes","Cotton Balls","Baby Cotton Buds","Soft Tissue Pack","Baby Hand Wipes","Changing Sheets","Baby Laundry Detergent","Baby Laundry Liquid","Hygiene Travel Kit"],base:49},
+ {name:"Bath & Skincare",items:["Gentle Baby Soap","Baby Shampoo","Baby Body Wash","Baby Lotion","Baby Moisturising Cream","Baby Massage Oil","Baby Powder","Baby Petroleum Jelly","Baby Sunscreen","Baby Bath Gift Set"],base:75},
+ {name:"Baby Food",items:["Baby Cereal Stage 1","Baby Cereal Stage 2","Rice Cereal","Wheat Baby Cereal","Oats Baby Cereal","Fruit Puree Pack","Vegetable Puree Pack","Baby Snack Puffs","Teething Rusks","Baby Food Variety Pack"],base:99},
+ {name:"Formula Milk",items:["Infant Formula Stage 1","Follow-on Formula Stage 2","Growing-up Formula Stage 3","Specialist Formula - Ask Doctor","Ready-to-Feed Formula","Formula Travel Pack","Formula Storage Container","Formula Measuring Scoop","Formula Dispenser","Feeding Preparation Kit"],base:299},
+ {name:"Feeding Bottles",items:["Baby Feeding Bottle 60ml","Baby Feeding Bottle 125ml","Baby Feeding Bottle 250ml","Anti-Colic Feeding Bottle","Wide-Neck Feeding Bottle","Bottle Teat Pack","Bottle Cleaning Brush","Bottle Drying Rack","Bottle Sterilising Container","Bottle Carry Bag"],base:99},
+ {name:"Feeding Accessories",items:["Baby Bib Pack","Silicone Feeding Spoon","Baby Bowl Set","Suction Bowl","Sippy Cup","Straw Training Cup","Snack Cup","Food Storage Pots","Baby Plate Set","Portable Feeding Set"],base:79},
+ {name:"Baby Clothing",items:["Newborn Cotton Vest","Baby Onesie","Baby Sleepsuit","Baby Romper","Baby T-Shirt","Baby Leggings","Baby Cotton Cap","Baby Socks Pack","Baby Mittens","Baby Clothing Gift Set"],base:99},
+ {name:"Bedding & Towels",items:["Baby Cotton Towel","Hooded Baby Towel","Baby Blanket","Soft Swaddle Wrap","Muslin Cloth Pack","Baby Bedsheet","Baby Pillow","Waterproof Mattress Protector","Baby Sleeping Bag","Baby Bedding Set"],base:149},
+ {name:"Health & Safety",items:["Digital Baby Thermometer","Baby Nail Clipper","Baby Nail File","Nasal Aspirator","Baby Medicine Dropper","Baby Safety Lock","Corner Protectors","Cabinet Safety Latch","Baby First-Aid Pouch","Baby Grooming Kit"],base:99},
+ {name:"Toys & Teethers",items:["Soft Rattle Toy","Baby Teether","Textured Teether","Soft Plush Toy","Stacking Cups","Baby Activity Toy","Soft Cloth Book","Bath Toys Set","Sensory Toy","Baby Play Mat"],base:99},
+ {name:"Travel & Carry",items:["Baby Diaper Bag","Compact Changing Mat","Baby Stroller Organiser","Baby Carrier","Baby Sling","Bottle Insulated Bag","Travel Wipes Case","Portable Changing Kit","Baby Car Seat Mirror","Travel Essentials Kit"],base:199},
+ {name:"Maternity & Mom Care",items:["Maternity Pads","Nursing Pads","Nursing Pillow","Breast Milk Storage Bags","Breast Milk Storage Bottles","Nursing Cover","Maternity Belt","Nipple Care Cream","Postpartum Care Kit","Mom & Baby Gift Set"],base:129},
+ {name:"Laundry & Cleaning",items:["Baby Laundry Bar","Baby Stain Remover","Bottle Washing Liquid","Baby-Safe Cleaning Wipes","Toy Cleaning Spray","Bottle Cleaning Sponge","Laundry Mesh Bag","Reusable Cleaning Cloth","Bottle Drying Mat","Cleaning Starter Kit"],base:69},
+ {name:"Baby Accessories",items:["Pacifier","Pacifier Case","Pacifier Clip","Baby Hair Brush","Soft Baby Comb","Baby Bib Set","Baby Mittens Set","Baby Caps Set","Baby Keepsake Box","Newborn Essentials Kit"],base:59}
+];
+
+const products = [];
+let id = 1;
+categoryData.forEach((cat,ci)=>{
+  cat.items.forEach((name,ii)=>{
+    products.push({
+      id:id++, name, category:cat.name,
+      price:cat.base + ii*17 + (ci%3)*25,
+      image:photoFor(ci,ii),
+      description:"Baby care product"
+    });
+  });
+});
+
+function photoFor(c,i){
+  const photos=[
+   "photo-1519689680058-324335c77eba",
+   "photo-1604917877934-07d8d248d396",
+   "photo-1587654780291-39c9404d746b",
+   "photo-1516627145497-ae6968895b74",
+   "photo-1555252333-9f8e92e65df9",
+   "photo-1544776193-352d25ca82cd",
+   "photo-1591348278863-a8fb3887e2aa",
+   "photo-1519238263530-99bdd11df2ea",
+   "photo-1519689680058-324335c77eba",
+   "photo-1516627145497-ae6968895b74",
+   "photo-1596461404969-9ae70f2830c1",
+   "photo-1516627145497-ae6968895b74",
+   "photo-1555252333-9f8e92e65df9",
+   "photo-1587654780291-39c9404d746b",
+   "photo-1519689680058-324335c77eba"
+  ];
+  return "https://images.unsplash.com/"+photos[c]+"?auto=format&fit=crop&w=500&q=75";
+}
+
+let activeCategory = "All";
+let cart = {};
+
+function renderCategories(){
+  const el=document.getElementById("categories");
+  const names=["All",...categoryData.map(c=>c.name)];
+  el.innerHTML=names.map(n=>
+    `<button class="${activeCategory===n?'active':''}" onclick="setCategory(${JSON.stringify(n)})">${n}</button>`
+  ).join("");
+}
+function setCategory(name){
+  activeCategory=name;
+  renderCategories();
+  renderProducts();
+}
+function renderProducts(){
+  const q=document.getElementById("search").value.toLowerCase().trim();
+  const sort=document.getElementById("sort").value;
+  let list=products.filter(p=>
+    (activeCategory==="All"||p.category===activeCategory)&&
+    (p.name+" "+p.category).toLowerCase().includes(q)
+  );
+  if(sort==="low")list.sort((a,b)=>a.price-b.price);
+  if(sort==="high")list.sort((a,b)=>b.price-a.price);
+  if(sort==="name")list.sort((a,b)=>a.name.localeCompare(b.name));
+  document.getElementById("heading").textContent=activeCategory==="All"?"All Baby Care Products":activeCategory;
+  document.getElementById("count").textContent=list.length+" products";
+  document.getElementById("products").innerHTML=list.length?list.map(p=>`
+    <article class="product">
+      <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/500x400?text=Baby+Care'">
+      <div class="product-info">
+        <div class="category-tag">${p.category}</div>
+        <h4>${p.name}</h4>
+        <div class="price">₹${p.price} <span class="old">₹${Math.round(p.price*1.15)}</span></div>
+        <button onclick="addToCart(${p.id})">Add to Cart</button>
+      </div>
+    </article>`).join(""):`<div class="empty">No products found. Try another search.</div>`;
+}
+function addToCart(id){
+  cart[id]=(cart[id]||0)+1;
+  renderCart();
+}
+function changeQty(id,delta){
+  cart[id]=(cart[id]||0)+delta;
+  if(cart[id]<=0)delete cart[id];
+  renderCart();
+}
+function renderCart(){
+  const entries=Object.entries(cart);
+  const count=entries.reduce((sum,[id,qty])=>sum+qty,0);
+  const total=entries.reduce((sum,[id,qty])=>sum+products.find(p=>p.id===Number(id)).price*qty,0);
+  document.getElementById("cartCount").textContent=count;
+  document.getElementById("total").textContent=total.toLocaleString("en-IN");
+  document.getElementById("cartItems").innerHTML=entries.length?entries.map(([id,qty])=>{
+    const p=products.find(x=>x.id===Number(id));
+    return `<div class="cart-item"><strong>${p.name}</strong><br>₹${p.price} × ${qty}
+      <div class="qty"><button onclick="changeQty(${id},-1)">−</button><span>${qty}</span><button onclick="changeQty(${id},1)">+</button></div></div>`;
+  }).join(""):`<p class="note">Your cart is empty.</p>`;
+}
+function checkout(){
+  const entries=Object.entries(cart);
+  if(!entries.length){alert("Please add a product to your cart first.");return;}
+  const lines=entries.map(([id,qty])=>{
+    const p=products.find(x=>x.id===Number(id));
+    return `${p.name} x ${qty} = ₹${p.price*qty}`;
+  });
+  const total=entries.reduce((sum,[id,qty])=>sum+products.find(p=>p.id===Number(id)).price*qty,0);
+  alert("ORDER SUMMARY\n\n"+lines.join("\n")+"\n\nTotal: ₹"+total+"\n\nThis is a demo checkout. Please contact the store to confirm your order.");
+}
+renderCategories();
+renderProducts();
+</script>
+</body>
+</html>
