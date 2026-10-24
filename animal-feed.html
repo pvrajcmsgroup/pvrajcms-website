@@ -101,7 +101,7 @@ footer{text-align:center;padding:25px;color:#6b7b8d;font-size:12px}
     <a href="pv-mart.html#shop">Shop Now</a>
     <div class="nav-dropdown" id="navCategoryDropdown">
       <button class="nav-trigger" type="button" aria-expanded="false" onclick="toggleCategoryMenu()">Categories⌄</button>
-      <div class="nav-menu" id="navCategoryMenu" aria-label="All Animal Feed Categories"></div>
+      <div class="nav-menu" id="navCategoryMenu" aria-label="PV MART Main Categories"></div>
     </div>
     <a href="pv-mart.html#offers">Offers</a>
     <a href="#cart">My Cart (<span id="navCount">0</span>)</a>
@@ -227,16 +227,33 @@ function toggleCategoryMenu(){
 function renderNavCategories(){
  const box=document.getElementById("navCategoryMenu");
  box.innerHTML="";
- [{name:"All Products",icon:"🛍️"},...categoryData].forEach(cat=>{
+ // PV MART ki main categories; Animal Feed ki subcategories yahan nahi dikhengi.
+ const mainCategories=[
+  {name:"Kirana",icon:"🛒",href:"pv-mart.html#shop"},
+  {name:"Clothes & Fashion",icon:"👕",href:"pv-mart.html#shop"},
+  {name:"Electronics",icon:"📱",href:"pv-mart.html#shop"},
+  {name:"Beauty & Cosmetics",icon:"💄",href:"pv-mart.html#shop"},
+  {name:"Home & Kitchen",icon:"🏠",href:"pv-mart.html#shop"},
+  {name:"Stationery & Books",icon:"📚",href:"pv-mart.html#shop"},
+  {name:"Baby Care",icon:"🧸",href:"pv-mart.html#shop"},
+  {name:"Animal Feed & Agriculture",icon:"🐄",href:"animal-feed.html"},
+  {name:"PV Foods & Agro",icon:"🌾",href:"pv-mart.html#shop"},
+  {name:"Sarson Tel",icon:"🛢️",href:"pv-mart.html#shop"}
+ ];
+ mainCategories.forEach(cat=>{
   const b=document.createElement("button");
   b.type="button";
   b.textContent=cat.icon+"  "+cat.name;
   b.onclick=()=>{
-   selectedCategory=cat.name;
-   renderCategories();renderProducts();
    document.getElementById("navCategoryDropdown").classList.remove("open");
    document.querySelector(".nav-trigger").setAttribute("aria-expanded","false");
-   document.getElementById("products").scrollIntoView({behavior:"smooth",block:"start"});
+   if(cat.name==="Animal Feed & Agriculture"){
+    selectedCategory="All Products";
+    renderCategories();renderProducts();
+    document.getElementById("products").scrollIntoView({behavior:"smooth",block:"start"});
+   }else{
+    window.location.href=cat.href;
+   }
   };
   box.appendChild(b);
  });
