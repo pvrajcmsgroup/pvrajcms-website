@@ -1,136 +1,37 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beauty & Cosmetics | PV MART</title>
-<meta name="description" content="PV MART पर Beauty & Cosmetics products देखें।">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beauty & Cosmetics Store | PV MART</title>
 <style>
-:root{--green:#087a45;--dark:#073b2a;--gold:#f4b942;--bg:#f5f8f4;--line:#dce8dd}
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:#173b2b}
-a{text-decoration:none;color:inherit}
-.topbar{background:var(--dark);color:#fff;text-align:center;padding:8px 12px;font-size:13px}
-header{background:#fff;border-bottom:1px solid var(--line);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:52px;height:52px;border-radius:50%;background:#eaf5eb;display:grid;place-items:center;font-size:25px;border:1px solid #d5e8d6}
-.brand h1{font-size:23px;margin:0;color:var(--green)}
-.brand p{font-size:12px;margin:4px 0 0;color:#a66a0a;font-weight:bold;letter-spacing:1px}
-nav{display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:14px;font-weight:700}
-nav a:hover{color:var(--green)}
-.searchrow{padding:16px 5%;display:flex;gap:10px}
-.searchrow input{width:100%;padding:13px 15px;border:1px solid var(--line);border-radius:12px;font-size:15px;outline-color:var(--green)}
-.hero{margin:4px 5% 22px;border-radius:20px;padding:30px clamp(20px,5vw,56px);background:linear-gradient(120deg,#073b2a,#087a45 68%,#c3df83);color:#fff;position:relative;overflow:hidden}
-.hero:after{content:"💄  🧴  🌸";position:absolute;right:25px;bottom:18px;font-size:clamp(30px,5vw,58px);opacity:.95}
-.eyebrow{color:#ffe29a;font-size:12px;font-weight:bold;letter-spacing:2px}
-.hero h2{font-size:clamp(28px,4vw,43px);margin:12px 0;max-width:650px}
-.hero p{max-width:600px;line-height:1.7;margin:0 0 18px}
-.btn{display:inline-block;border:0;border-radius:10px;padding:11px 16px;background:var(--gold);color:#173b2b;font-weight:bold;cursor:pointer}
-.container{padding:0 5% 42px}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin:22px 0 15px}
-.section-head h2{margin:0;color:var(--dark);font-size:25px}
-.section-head p{margin:6px 0 0;color:#627368;font-size:14px}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.chip{border:1px solid #d5e5d7;background:#fff;padding:9px 13px;border-radius:30px;font-size:13px;cursor:pointer;color:#20583a}
-.chip.active,.chip:hover{background:var(--green);color:#fff}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 5px 18px #123d2b0a;display:flex;flex-direction:column;min-width:0}
-.product-art{height:125px;border-radius:13px;background:linear-gradient(145deg,#f8f1e8,#f0f7ef);display:grid;place-items:center;font-size:52px;margin-bottom:13px}
-.card h3{font-size:16px;margin:0 0 7px;color:#16472f}
-.meta{font-size:12px;color:#6b7e70;margin-bottom:10px}
-.price{font-size:18px;color:var(--green);font-weight:800;margin:0 0 12px}
-.card .btn{margin-top:auto;width:100%}
-.smallnote{color:#64756a;font-size:12px;line-height:1.6;margin:18px 0 0}
-.empty{display:none;background:#fff;border:1px dashed #b8cfbd;padding:25px;text-align:center;border-radius:14px;color:#607468}
-footer{background:var(--dark);color:#e8f3e9;padding:25px 5%;text-align:center;font-size:13px}
-footer p{margin:7px 0}
-@media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:650px){header{padding:12px 4%;justify-content:center;text-align:center}.brand{justify-content:center;width:100%}.brand h1{font-size:21px}nav{justify-content:center;gap:12px}.searchrow{padding:12px 4%}.hero{margin:4px 4% 18px;padding:24px 18px}.hero:after{right:12px;bottom:10px;font-size:28px}.hero p{max-width:85%}.container{padding:0 4% 30px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{padding:11px}.product-art{height:100px;font-size:43px}.card h3{font-size:14px}.price{font-size:16px}.section-head h2{font-size:22px}}
-@media(max-width:360px){.grid{grid-template-columns:1fr}.hero h2{font-size:27px}}
-</style>
-</head>
+:root{--navy:#061727;--green:#10875c;--mint:#e2f7ee;--line:#d6e1eb;--bg:#f3f6fa;--text:#142338;--muted:#64748b;--gold:#ffe681}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}button,input{font:inherit}.topbar{min-height:92px;background:var(--navy);color:#fff;display:flex;align-items:center;gap:16px;padding:10px 18px}.logo{width:300px;max-width:30%;height:auto;max-height:65px;object-fit:contain}.brand{border-left:1px solid #617082;padding-left:15px;min-width:160px}.brand h1{font-size:29px;margin:0;color:#21d4b5}.brand h1 span{color:#fff}.brand small{display:block;color:#ffe36c;font-size:11px;margin-top:4px}.nav{margin-left:auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap}.nav a{color:white;text-decoration:none;font-size:12px;font-weight:bold}.layout{max-width:1500px;margin:12px auto;padding:0 12px;display:grid;grid-template-columns:190px minmax(0,1fr) 270px;gap:14px;align-items:start}.panel{background:white;border:1px solid var(--line);border-radius:15px;padding:14px}.sidebar{max-height:calc(100vh - 112px);overflow-y:auto;position:sticky;top:10px}.panel h3{margin:3px 0 13px;font-size:17px}.cat{display:block;padding:12px 10px;margin:6px 0;background:#eef2f6;border-radius:11px;color:#142338;text-decoration:none;font-size:12px;font-weight:bold;border:1px solid transparent}.cat.active,.cat:hover{background:#e0f7ee;border-color:#8ee0bf;color:#08744e}.main{min-width:0}.hero{background:linear-gradient(115deg,#073e32,#0b504e);color:#fff;border-radius:18px;min-height:150px;padding:25px 20px;display:flex;align-items:center;justify-content:space-between;gap:15px}.hero h2{font-size:31px;margin:0 0 10px}.hero p{font-size:15px;line-height:1.6;margin:0;max-width:680px}.hero-art{font-size:48px;white-space:nowrap}.search{width:100%;margin:14px 0 19px;border:1px solid #cbd8e5;border-radius:12px;padding:13px;background:#fff;outline:none}.search:focus{border-color:#16885d;box-shadow:0 0 0 3px #d7f5e8}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 12px}.section-title h2{font-size:22px;margin:0}.count{font-size:12px;color:var(--muted);white-space:nowrap}.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}.filter{border:1px solid #cfe1d6;background:#fff;color:#244135;border-radius:22px;padding:8px 13px;font-size:12px;cursor:pointer}.filter.active{background:#087e4d;color:#fff;border-color:#087e4d}.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.product{background:#fff;border:1px solid #d9e3ed;border-radius:15px;padding:10px;min-width:0;display:flex;flex-direction:column}.product-image{height:100px;border-radius:10px;background:linear-gradient(135deg,#f8e9e8,#f2f5ef);display:flex;align-items:center;justify-content:center;font-size:45px;margin-bottom:8px}.tag{align-self:flex-start;font-size:10px;color:#087c52;background:#e4f7ee;border-radius:20px;padding:4px 8px;margin-bottom:6px}.product h3{font-size:13px;line-height:1.35;margin:0 0 5px}.desc{font-size:11px;color:var(--muted);margin-bottom:8px}.price{font-size:17px;font-weight:bold;color:#078451;margin-top:auto;margin-bottom:8px}.add{border:0;border-radius:9px;background:#10875c;color:white;padding:10px 5px;font-size:12px;font-weight:bold;cursor:pointer}.add:hover{background:#086a46}.cart{position:sticky;top:10px}.cart p{font-size:12px;color:var(--muted);line-height:1.5}.subtotal{display:flex;justify-content:space-between;font-weight:bold;margin:25px 0 18px}.cartbox{border:1px solid #d6e1eb;border-radius:15px;padding:12px;background:#f8fafc}.cart-line{font-size:13px;display:flex;justify-content:space-between;gap:8px;margin:9px 0}.cart-line button{border:0;background:#ffe9e9;border-radius:5px;cursor:pointer}.buy,.clear{width:100%;border:0;border-radius:25px;padding:14px 8px;font-weight:bold;cursor:pointer;margin-top:8px}.buy{background:var(--gold);color:#66521b}.clear{background:#edf2f6;color:#142338;border-radius:10px}.empty{color:var(--muted);font-size:12px}.notice{font-size:11px;color:var(--muted);line-height:1.5;margin-top:12px}.no-results{display:none;padding:25px;background:white;border-radius:12px;color:var(--muted)}@media(max-width:1050px){.layout{grid-template-columns:165px minmax(0,1fr)}.cart{position:static;grid-column:2}.products{grid-template-columns:repeat(3,minmax(0,1fr))}.logo{width:220px}}@media(max-width:700px){.topbar{padding:10px;gap:10px;flex-wrap:wrap}.logo{width:135px;max-width:35%;max-height:48px}.brand{padding-left:10px;min-width:0}.brand h1{font-size:22px}.nav{width:100%;margin:0;gap:13px;justify-content:center}.nav a{font-size:11px}.layout{display:flex;flex-direction:column;padding:0 10px;margin:10px auto;width:100%}.sidebar,.main,.cart{width:100%;max-width:100%;position:static;max-height:none}.sidebar{display:block}.sidebar-list{display:flex;overflow-x:auto;gap:6px;padding-bottom:4px}.cat{white-space:nowrap;margin:0;padding:10px}.hero{padding:20px 15px;min-height:140px}.hero h2{font-size:25px}.hero p{font-size:13px}.hero-art{font-size:34px}.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.product{padding:8px}.product-image{height:90px}.section-title h2{font-size:19px}.cart{order:3}.main{order:2}.sidebar{order:1}}@media(max-width:360px){.hero-art{display:none}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.product h3{font-size:12px}}
+</style></head>
 <body>
-<div class="topbar">PV MART • आपके रोज़मर्रा के सामान के लिए आपका अपना स्टोर</div>
-<header>
-  <a class="brand" href="pv-mart.html" aria-label="PV MART Home">
-    <div class="logo">🛍️</div>
-    <div><h1>PV MART</h1><p>BEAUTY & COSMETICS</p></div>
-  </a>
-  <nav aria-label="Main navigation">
-    <a href="pv-mart.html">Home</a>
-    <a href="kirana.html">Kirana Store</a>
-    <a href="animal-feed.html">Animal Feed</a>
-    <a href="pv-foods-agro.html">PV Foods & Agro</a>
-  </nav>
-</header>
-<div class="searchrow">
-  <input id="search" type="search" placeholder="Beauty products खोजें — shampoo, face wash, cream..." aria-label="Search products">
+<header class="topbar"><img class="logo" src="logo.png" alt="PVRajCMS Group logo" onerror="this.style.display='none'"><div class="brand"><h1>PV <span>MART</span></h1><small>Aapki Apni Online Dukaan</small></div><nav class="nav"><a href="pv-mart.html">PV MART Home</a><a href="#products">Shop Now</a><a href="#categories">Categories⌄</a><a href="#offers">Offers</a><a href="#cart">My Cart (<span id="navCount">0</span>)</a><a href="contact.html">Contact</a></nav></header>
+<div class="layout">
+<aside class="panel sidebar" id="categories"><h3>🛍️ Categories</h3><div class="sidebar-list"><a class="cat" href="pv-mart.html">🛒 Sabhi Products</a><a class="cat" href="#skin">🧴 Skin Care</a><a class="cat" href="#hair">🪮 Hair Care</a><a class="cat" href="#bath">🧼 Bath & Body</a><a class="cat" href="#makeup">💄 Makeup</a><a class="cat" href="#oral">🪥 Oral Care</a><a class="cat" href="#fragrance">🌸 Fragrance</a><a class="cat" href="#products">🎁 Beauty Combos</a></div></aside>
+<main class="main"><section class="hero"><div><h2>🧴 Beauty & Cosmetics Store</h2><p>Shampoo, face wash, cream, makeup aur daily personal-care products — sab ek jagah, PV MART par.</p></div><div class="hero-art">💄 🧴 🌸</div></section>
+<input id="search" class="search" type="search" placeholder="Product, brand ya category search karein..." aria-label="Search beauty products">
+<div class="section-title"><h2>Beauty & Personal Care Products</h2><span class="count"><span id="shown">12</span> products</span></div>
+<div class="filters"><button class="filter active" data-filter="All">सभी</button><button class="filter" data-filter="Skin Care">Skin Care</button><button class="filter" data-filter="Hair Care">Hair Care</button><button class="filter" data-filter="Bath & Body">Bath & Body</button><button class="filter" data-filter="Makeup">Makeup</button><button class="filter" data-filter="Oral Care">Oral Care</button></div>
+<div class="products" id="products">
+<article class="product" data-category="Skin Care" data-name="face wash"><div class="product-image">🧴</div><span class="tag">Skin Care</span><h3>Daily Face Wash</h3><div class="desc">100 ml · Demo rate</div><div class="price">₹99</div><button class="add" data-name="Daily Face Wash" data-price="99">🛒 Add to Cart</button></article>
+<article class="product" data-category="Skin Care" data-name="moisturizing cream"><div class="product-image">🫙</div><span class="tag">Skin Care</span><h3>Moisturizing Cream</h3><div class="desc">50 g · Demo rate</div><div class="price">₹120</div><button class="add" data-name="Moisturizing Cream" data-price="120">🛒 Add to Cart</button></article>
+<article class="product" data-category="Skin Care" data-name="sunscreen lotion"><div class="product-image">☀️</div><span class="tag">Skin Care</span><h3>Sunscreen Lotion</h3><div class="desc">100 ml · Demo rate</div><div class="price">₹199</div><button class="add" data-name="Sunscreen Lotion" data-price="199">🛒 Add to Cart</button></article>
+<article class="product" data-category="Hair Care" data-name="shampoo"><div class="product-image">🧴</div><span class="tag">Hair Care</span><h3>Daily Use Shampoo</h3><div class="desc">180 ml · Demo rate</div><div class="price">₹110</div><button class="add" data-name="Daily Use Shampoo" data-price="110">🛒 Add to Cart</button></article>
+<article class="product" data-category="Hair Care" data-name="hair oil"><div class="product-image">🫗</div><span class="tag">Hair Care</span><h3>Hair Oil</h3><div class="desc">200 ml · Demo rate</div><div class="price">₹95</div><button class="add" data-name="Hair Oil" data-price="95">🛒 Add to Cart</button></article>
+<article class="product" data-category="Hair Care" data-name="conditioner"><div class="product-image">🧴</div><span class="tag">Hair Care</span><h3>Hair Conditioner</h3><div class="desc">180 ml · Demo rate</div><div class="price">₹145</div><button class="add" data-name="Hair Conditioner" data-price="145">🛒 Add to Cart</button></article>
+<article class="product" data-category="Bath & Body" data-name="body wash"><div class="product-image">🧼</div><span class="tag">Bath & Body</span><h3>Body Wash</h3><div class="desc">250 ml · Demo rate</div><div class="price">₹160</div><button class="add" data-name="Body Wash" data-price="160">🛒 Add to Cart</button></article>
+<article class="product" data-category="Bath & Body" data-name="body lotion"><div class="product-image">🧴</div><span class="tag">Bath & Body</span><h3>Body Lotion</h3><div class="desc">200 ml · Demo rate</div><div class="price">₹175</div><button class="add" data-name="Body Lotion" data-price="175">🛒 Add to Cart</button></article>
+<article class="product" data-category="Makeup" data-name="lipstick"><div class="product-image">💄</div><span class="tag">Makeup</span><h3>Everyday Lipstick</h3><div class="desc">1 piece · Demo rate</div><div class="price">₹149</div><button class="add" data-name="Everyday Lipstick" data-price="149">🛒 Add to Cart</button></article>
+<article class="product" data-category="Makeup" data-name="compact powder"><div class="product-image">🪞</div><span class="tag">Makeup</span><h3>Compact Powder</h3><div class="desc">1 piece · Demo rate</div><div class="price">₹135</div><button class="add" data-name="Compact Powder" data-price="135">🛒 Add to Cart</button></article>
+<article class="product" data-category="Oral Care" data-name="toothpaste"><div class="product-image">🪥</div><span class="tag">Oral Care</span><h3>Fresh Mint Toothpaste</h3><div class="desc">150 g · Demo rate</div><div class="price">₹75</div><button class="add" data-name="Fresh Mint Toothpaste" data-price="75">🛒 Add to Cart</button></article>
+<article class="product" data-category="Fragrance" data-name="body perfume"><div class="product-image">🌸</div><span class="tag">Fragrance</span><h3>Body Perfume</h3><div class="desc">100 ml · Demo rate</div><div class="price">₹220</div><button class="add" data-name="Body Perfume" data-price="220">🛒 Add to Cart</button></article>
+</div><div class="no-results" id="noResults">Koi product nahi mila. Dusra naam search karein.</div><p class="notice">Note: Dikhaye gaye product rates demo/sample hain. Bechne se pehle actual brand, pack size aur price update karein.</p></main>
+<aside class="panel cart" id="cart"><h3>🛒 Aapka Cart</h3><div id="cartItems"><p class="empty">Cart khaali hai. Pehle product add karein.</p></div><div class="subtotal"><span>Subtotal</span><span>₹<span id="subtotal">0</span></span></div><p>Delivery charge abhi calculate nahi kiya gaya. Order confirm karne se pehle final total confirm hoga.</p><div class="cartbox"><div>Subtotal (<span id="itemCount">0</span> items): <b>₹<span id="boxSubtotal">0</span></b></div><button class="buy" id="buy">Proceed to Buy</button><button class="clear" id="clear">Clear Cart</button></div></aside>
 </div>
-<section class="hero">
-  <div class="eyebrow">CARE • BEAUTY • EVERYDAY ESSENTIALS</div>
-  <h2>Beauty & Cosmetics</h2>
-  <p>अपनी रोज़मर्रा की beauty और personal-care जरूरतों के लिए products देखें। Product rates अभी sample हैं; बिक्री से पहले वास्तविक कीमत और pack size अपडेट करें।</p>
-  <a class="btn" href="#products">Products देखें ↓</a>
-</section>
-<main class="container">
-  <div class="section-head">
-    <div><h2 id="products">Beauty & Personal Care</h2><p>अपनी जरूरत के अनुसार category चुनें।</p></div>
-    <div id="count" aria-live="polite">12 products</div>
-  </div>
-  <div class="chips" id="chips">
-    <button class="chip active" data-cat="All">सभी</button>
-    <button class="chip" data-cat="Skin Care">Skin Care</button>
-    <button class="chip" data-cat="Hair Care">Hair Care</button>
-    <button class="chip" data-cat="Bath & Body">Bath & Body</button>
-    <button class="chip" data-cat="Makeup">Makeup</button>
-    <button class="chip" data-cat="Oral Care">Oral Care</button>
-  </div>
-  <div class="grid" id="grid"></div>
-  <div class="empty" id="empty">इस खोज में कोई product नहीं मिला। दूसरा नाम खोजें।</div>
-  <p class="smallnote">महत्वपूर्ण: ये demo listings और अनुमानित sample prices हैं, live stock या confirmed selling prices नहीं। Publish करने से पहले सही brand, pack size, MRP और selling price भरें।</p>
-</main>
-<footer>
-  <strong>PV MART — Beauty & Cosmetics</strong>
-  <p>PV MART का हिस्सा • Product details और prices खरीदारी से पहले verify करें।</p>
-  <p><a href="pv-mart.html">← PV MART Home</a></p>
-</footer>
 <script>
-const products=[
-{id:1,name:"Face Wash",detail:"100 ml · sample rate",price:99,emoji:"🧴",cat:"Skin Care"},
-{id:2,name:"Moisturizing Cream",detail:"100 g · sample rate",price:149,emoji:"🫙",cat:"Skin Care"},
-{id:3,name:"Sunscreen Lotion",detail:"50 g · sample rate",price:199,emoji:"☀️",cat:"Skin Care"},
-{id:4,name:"Shampoo",detail:"180 ml · sample rate",price:120,emoji:"🧴",cat:"Hair Care"},
-{id:5,name:"Hair Oil",detail:"200 ml · sample rate",price:110,emoji:"🫗",cat:"Hair Care"},
-{id:6,name:"Hair Conditioner",detail:"180 ml · sample rate",price:145,emoji:"🧴",cat:"Hair Care"},
-{id:7,name:"Bathing Soap",detail:"1 piece · sample rate",price:35,emoji:"🧼",cat:"Bath & Body"},
-{id:8,name:"Body Lotion",detail:"200 ml · sample rate",price:165,emoji:"🧴",cat:"Bath & Body"},
-{id:9,name:"Deodorant",detail:"150 ml · sample rate",price:199,emoji:"🌸",cat:"Bath & Body"},
-{id:10,name:"Lipstick",detail:"1 piece · sample rate",price:149,emoji:"💄",cat:"Makeup"},
-{id:11,name:"Kajal",detail:"1 piece · sample rate",price:75,emoji:"🖊️",cat:"Makeup"},
-{id:12,name:"Toothpaste",detail:"150 g · sample rate",price:95,emoji:"🪥",cat:"Oral Care"}
-];
-let active="All";
-const money=n=>"₹"+n.toLocaleString("en-IN");
-function render(){
- const q=document.getElementById("search").value.trim().toLowerCase();
- const list=products.filter(p=>(active==="All"||p.cat===active)&&(`${p.name} ${p.detail} ${p.cat}`).toLowerCase().includes(q));
- document.getElementById("grid").innerHTML=list.map(p=>`<article class="card"><div class="product-art" aria-hidden="true">${p.emoji}</div><h3>${p.name}</h3><div class="meta">${p.cat} · ${p.detail}</div><div class="price">${money(p.price)}</div><button class="btn" onclick="orderProduct(${p.id})">WhatsApp पर पूछें</button></article>`).join("");
- document.getElementById("count").textContent=`${list.length} products`;
- document.getElementById("empty").style.display=list.length?"none":"block";
-}
-document.querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{active=b.dataset.cat;document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x===b));render()}));
-document.getElementById("search").addEventListener("input",render);
-function orderProduct(id){
- const p=products.find(x=>x.id===id);
- const msg=`Namaste PV MART, mujhe ${p.name} (${p.detail}) ke baare mein jankari chahiye. Website par dikhaya sample rate ${money(p.price)} hai. Kripya actual price aur availability confirm karein.`;
- if(navigator.share){navigator.share({title:"PV MART Product Inquiry",text:msg}).catch(()=>copyMessage(msg))}
- else copyMessage(msg);
-}
-function copyMessage(msg){
- if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(msg).then(()=>alert("Product inquiry text copy ho gaya. Apne PV MART WhatsApp number par paste karke bhej sakte hain." )).catch(()=>prompt("Message copy karein:",msg))}
- else prompt("Message copy karein:",msg)
-}
-render();
-</script>
-</body>
-</html>
+const cart={};const money=n=>Number(n).toLocaleString('en-IN');function renderCart(){const el=document.getElementById('cartItems');let total=0,count=0;el.innerHTML='';Object.values(cart).forEach(p=>{total+=p.price*p.qty;count+=p.qty;const row=document.createElement('div');row.className='cart-line';row.innerHTML=`<span>${p.name}<br>₹${money(p.price)} × ${p.qty}</span><span><button aria-label="Remove one ${p.name}">−</button> <b>₹${money(p.price*p.qty)}</b> <button aria-label="Add one ${p.name}">+</button></span>`;const buttons=row.querySelectorAll('button');buttons[0].onclick=()=>{p.qty--;if(p.qty<=0)delete cart[p.name];renderCart()};buttons[1].onclick=()=>{p.qty++;renderCart()};el.appendChild(row)});if(!count)el.innerHTML='<p class="empty">Cart khaali hai. Pehle product add karein.</p>';document.getElementById('subtotal').textContent=money(total);document.getElementById('boxSubtotal').textContent=money(total);document.getElementById('itemCount').textContent=count;document.getElementById('navCount').textContent=count}
+document.querySelectorAll('.add').forEach(b=>b.addEventListener('click',()=>{const n=b.dataset.name,p=Number(b.dataset.price);if(!cart[n])cart[n]={name:n,price:p,qty:0};cart[n].qty++;renderCart()}));document.getElementById('clear').onclick=()=>{Object.keys(cart).forEach(k=>delete cart[k]);renderCart()};document.getElementById('buy').onclick=()=>{if(!Object.keys(cart).length){alert('Sir, pehle cart mein product add karein.');return}let lines=Object.values(cart).map(p=>`${p.name} x ${p.qty} = ₹${p.price*p.qty}`);let total=Object.values(cart).reduce((s,p)=>s+p.price*p.qty,0);let message='PV MART Beauty & Cosmetics Order Inquiry\n'+lines.join('\n')+'\nSubtotal: ₹'+total+'\nPlease confirm availability and final delivery charges.';const url='https://wa.me/?text='+encodeURIComponent(message);window.open(url,'_blank')};
+let currentFilter='All';function filterProducts(){const q=document.getElementById('search').value.toLowerCase().trim();let visible=0;document.querySelectorAll('.product').forEach(card=>{const matchCat=currentFilter==='All'||card.dataset.category===currentFilter;const matchText=(card.dataset.name+' '+card.dataset.category+' '+card.innerText).toLowerCase().includes(q);const show=matchCat&&matchText;card.style.display=show?'flex':'none';if(show)visible++});document.getElementById('shown').textContent=visible;document.getElementById('noResults').style.display=visible?'none':'block'}document.querySelectorAll('.filter').forEach(b=>b.onclick=()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentFilter=b.dataset.filter;filterProducts()});document.getElementById('search').addEventListener('input',filterProducts);renderCart();
+</script></body></html>
