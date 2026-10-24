@@ -20,6 +20,13 @@ button,input,select{font:inherit}
 .nav{display:flex;align-items:center;gap:18px}
 .nav a{font-size:12px;font-weight:bold;text-decoration:none;color:#fff;white-space:nowrap}
 .nav a:hover{color:#40dfc2}
+.nav-dropdown{position:relative;display:inline-flex;align-items:center}
+.nav-dropdown-toggle{display:inline-flex;align-items:center;gap:4px;background:transparent;border:0;color:#fff;font-size:12px;font-weight:bold;cursor:pointer;padding:10px 0;white-space:nowrap}
+.nav-dropdown-toggle:hover{color:#40dfc2}
+.nav-dropdown-menu{display:none;position:absolute;top:100%;right:0;min-width:230px;max-width:280px;max-height:75vh;overflow-y:auto;background:#fff;border:1px solid #dce5ed;border-radius:8px;padding:6px 0;box-shadow:0 8px 25px rgba(0,0,0,.18);z-index:9999}
+.nav-dropdown.open .nav-dropdown-menu{display:block}
+.nav-dropdown-menu a{display:block;padding:11px 16px;color:#102033;text-decoration:none;font-size:13px;font-weight:bold;white-space:normal}
+.nav-dropdown-menu a:hover{background:#e2f6ed;color:#087b50}
 .page-layout{display:grid;grid-template-columns:190px minmax(0,1fr) 270px;gap:14px;max-width:1600px;margin:0 auto;padding:12px 16px 16px;height:calc(100vh - 92px);min-height:500px}
 .sidebar,.cart-panel{background:#fff;border:1px solid var(--border);border-radius:15px;padding:14px;align-self:start;max-height:calc(100vh - 116px);overflow-y:auto}
 .sidebar h3,.cart-panel h3{font-size:16px;margin:4px 0 12px}
@@ -111,7 +118,21 @@ footer{text-align:center;font-size:11px;color:#718096;padding:12px}
   <nav class="nav">
     <a href="index.html">PV MART Home</a>
     <a href="kirana.html">Shop Now</a>
-    <a href="index.html">Categories⌄</a>
+    <div class="nav-dropdown" id="storeDropdown">
+      <button type="button" class="nav-dropdown-toggle" onclick="toggleStoreDropdown(event)" aria-haspopup="true" aria-expanded="false">Categories ⌄</button>
+      <div class="nav-dropdown-menu" aria-label="Store categories">
+        <a href="kirana.html">🛒 Kirana</a>
+        <a href="clothes.html">👕 Clothes &amp; Fashion</a>
+        <a href="electronics.html">📱 Electronics</a>
+        <a href="beauty-cosmetics.html">💄 Beauty &amp; Cosmetics</a>
+        <a href="household.html">🏠 Home &amp; Kitchen</a>
+        <a href="stationery.html">📚 Stationery &amp; Books</a>
+        <a href="baby-care.html">🧸 Baby Care</a>
+        <a href="animal-feed.html">🐄 Animal Feed &amp; Agriculture</a>
+        <a href="pv-foods.html">🌾 PV Foods &amp; Agro</a>
+        <a href="sarson-tel.html">🛢️ Sarson Tel</a>
+      </div>
+    </div>
     <a href="index.html">Offers</a>
     <a href="#cart">My Cart (<span id="navCartCount">0</span>)</a>
     <a href="contact.html">Contact</a>
@@ -297,6 +318,20 @@ function checkout(){
  const total=entries.reduce((s,[id,q])=>s+products.find(p=>p.id===Number(id)).price*q,0);
  alert("ORDER SUMMARY\n\n"+lines.join("\n")+"\n\nSubtotal: ₹"+total+"\n\nYeh demo checkout hai. Order confirm karne se pehle store se price aur availability confirm karein.");
 }
+function toggleStoreDropdown(event){
+  event.stopPropagation();
+  const dropdown=document.getElementById("storeDropdown");
+  const button=dropdown.querySelector(".nav-dropdown-toggle");
+  const isOpen=dropdown.classList.toggle("open");
+  button.setAttribute("aria-expanded",String(isOpen));
+}
+document.addEventListener("click",function(event){
+  const dropdown=document.getElementById("storeDropdown");
+  if(dropdown&&!dropdown.contains(event.target)){
+    dropdown.classList.remove("open");
+    dropdown.querySelector(".nav-dropdown-toggle").setAttribute("aria-expanded","false");
+  }
+});
 renderCategories();
 renderProducts();
 renderCart();
