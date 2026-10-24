@@ -1,3 +1,253 @@
-<!DOCTYPE html><html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PVRAJCMS MART | Animal Feed</title><style>
-:root{--navy:#0d2545;--green:#13865c;--gold:#ffcf58;--ink:#172536;--muted:#667487;--line:#e5eaf0;--bg:#f5f8fb}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}header{background:linear-gradient(135deg,#0d2545,#16466a);color:#fff;padding:22px 16px}.wrap{max-width:1100px;margin:auto}.nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.nav a{display:inline-block;text-decoration:none;border-radius:999px;padding:9px 12px;background:#ffffff18;border:1px solid #ffffff45;color:#fff;font-size:13px;font-weight:bold}.nav a.back{background:var(--green);border-color:var(--green)}.nav a.current{background:var(--gold);color:var(--navy);border-color:var(--gold)}.hero{padding:24px 0 8px}h1{margin:0;font-size:clamp(25px,4vw,36px)}.sub{color:#d9e9f5;line-height:1.6}main{max-width:1100px;margin:24px auto;padding:0 16px 40px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.product{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}.emoji{font-size:30px}.product h3{font-size:16px}.product p{font-size:12px;color:var(--muted);line-height:1.5}.notice{background:#fff8df;border:1px solid #f1dda0;border-radius:12px;padding:12px;margin:16px 0;font-size:13px;line-height:1.5}footer{text-align:center;background:#eaf0f5;color:#5b6a7b;padding:22px;font-size:12px}@media(max-width:650px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-</style></head><body><header><div class="wrap"><div style="font-size:14px;font-weight:bold">PVRAJCMS MART · Ghar Ka Samaan, Aapke Dwaar Pe!</div><nav class="nav"><a class="back" href="kirana.html">← Main Shop</a><a href="kirana.html">🛒 Kirana Store</a><a class="" href="clothes.html">👕 Clothing Store</a><a class="" href="household.html">🏠 Home Essentials</a><a class="current" href="animal-feed.html">🐄 Animal Feed</a></nav><div class="hero"><h1>🐄 Animal Feed</h1><div class="sub">पशु आहार<br>Pashuon ke liye khal, chokar, dana aur doosra aahar.</div></div></div></header><main><h2>Animal Feed | पशु आहार</h2><div class="notice"><strong>Demo page:</strong> Yeh category page abhi starter design hai. Product photos, actual prices, stock aur order/cart feature publish karne se pehle update karne honge.</div><section class="grid"><article class="product"><div class="emoji">🐄</div><h3>Pashu Aahar Dana</h3><p>Product details aur actual price jald update ki jayegi.</p></article><article class="product"><div class="emoji">🐄</div><h3>Chokar</h3><p>Product details aur actual price jald update ki jayegi.</p></article><article class="product"><div class="emoji">🐄</div><h3>Sarson Khal</h3><p>Product details aur actual price jald update ki jayegi.</p></article><article class="product"><div class="emoji">🐄</div><h3>Binola Khal</h3><p>Product details aur actual price jald update ki jayegi.</p></article></section></main><footer><strong>PVRAJCMS MART</strong><br>PVrajCMS Group</footer></body></html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animal Feed Store | PV MART</title>
+<style>
+:root{--navy:#102b4c;--blue:#194768;--green:#07875e;--bg:#f3f7fb;--border:#dce5ef}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:#172b43}
+header{background:linear-gradient(110deg,var(--navy),var(--blue));color:white;padding:20px max(calc((100% - 1200px)/2),18px)}
+.brand{font-weight:bold;font-size:15px;margin-bottom:16px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:25px}
+nav a{color:white;text-decoration:none;border:1px solid #ffffff55;border-radius:25px;padding:10px 13px;font-size:13px}
+nav a.active{background:#ffce55;color:#152b44;border-color:#ffce55}
+h1{font-size:34px;margin:8px 0}
+header p{margin:8px 0}
+main{max-width:1200px;margin:28px auto;padding:0 16px}
+.notice{background:#fff8df;border:1px solid #f4d580;border-radius:12px;padding:13px;margin:18px 0;font-size:13px;line-height:1.6}
+.toolbar{display:flex;gap:10px;margin:18px 0;flex-wrap:wrap}
+input,select,button{font:inherit}
+input,select{padding:12px;border:1px solid var(--border);border-radius:9px;background:white;min-width:0}
+#search{flex:1;min-width:180px}
+.layout{display:grid;grid-template-columns:190px minmax(0,1fr) 245px;gap:16px;align-items:start}
+.panel,.product,.cartbox{background:white;border:1px solid var(--border);border-radius:14px}
+.panel,.cartbox{padding:15px}
+.panel h3,.cartbox h3{margin:3px 0 13px}
+.catbtn{display:block;width:100%;text-align:left;background:white;border:0;border-radius:8px;padding:10px 8px;cursor:pointer;color:#31465d;margin:3px 0;font-size:13px}
+.catbtn:hover,.catbtn.selected{background:#e4f5ed;color:#08764f;font-weight:bold}
+.productgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.product{padding:13px;display:flex;flex-direction:column;min-width:0}
+.emoji{font-size:30px;margin-bottom:9px}
+.product h3{font-size:15px;margin:0 0 8px;line-height:1.4}
+.meta{font-size:12px;color:#62748a;line-height:1.7}
+.price{font-size:13px;line-height:1.8;margin:9px 0}
+.retail{font-size:18px;font-weight:bold;color:#087b55}
+.stock{font-size:11px;color:#087b55;margin-bottom:10px}
+.add{margin-top:auto;background:var(--green);color:white;border:0;border-radius:8px;padding:10px;cursor:pointer;font-weight:bold}
+.add:hover{background:#056d4b}
+.cartbox{position:sticky;top:12px}
+.cartitem{border-bottom:1px solid #e9eef4;padding:12px 0;font-size:13px}
+.cartitem strong{display:block;margin-bottom:5px}
+.qtyrow{display:flex;align-items:center;gap:9px;margin-top:8px}
+.qtyrow button{border:1px solid var(--border);background:#f5f8fb;border-radius:5px;padding:4px 9px;cursor:pointer}
+.remove{margin-left:auto;color:#b42318!important}
+.totalrow{display:flex;justify-content:space-between;margin:12px 0;font-size:14px}
+.total{font-size:20px;font-weight:bold;color:#087b55}
+.checkout{width:100%;background:#087b55;color:white;border:0;padding:12px;border-radius:9px;cursor:pointer;font-weight:bold}
+.small{font-size:11px;color:#6b7b8d;line-height:1.6}
+.empty{padding:24px 8px;text-align:center;color:#718096;font-size:13px}
+#count{background:#e3f5eb;color:#087b55;border-radius:20px;padding:3px 8px}
+footer{text-align:center;padding:25px;color:#6b7b8d;font-size:12px}
+@media(max-width:950px){.layout{grid-template-columns:160px minmax(0,1fr)}.cartbox{position:static;grid-column:1/-1}.productgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){header{padding:18px}h1{font-size:28px}main{padding:0 12px;margin:20px auto}.layout{grid-template-columns:1fr}.panel{padding:12px}.catlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}.productgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.product{padding:10px}.product h3{font-size:13px}.price{font-size:12px}.retail{font-size:16px}.cartbox{grid-column:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">PVRAJCMS MART · Ghar Ka Samaan, Aapke Dwaar Pe!</div>
+  <nav>
+    <a href="pv-mart.html">← Main Shop</a>
+    <a href="kirana.html">🛒 Kirana Store</a>
+    <a href="clothes.html">👕 Clothing Store</a>
+    <a href="household.html">🏠 Home Essentials</a>
+    <a href="animal-feed.html" class="active">🐄 Animal Feed</a>
+    <a href="baby-care.html">🍼 Baby Care</a>
+  </nav>
+  <h1>🐄 Animal Feed</h1>
+  <p>पशु आहार</p>
+  <p>Pashuon ke liye khal, chokar, dana aur doosra aahaar.</p>
+</header>
+
+<main>
+  <h2>Animal Feed | पशु आहार</h2>
+  <div class="notice">
+    <strong>Demo store:</strong> Neeche diye gaye rates udaharan ke liye hain, live market prices nahi. Order lene se pehle actual rates, availability aur delivery details confirm karein.
+  </div>
+
+  <div class="toolbar">
+    <input id="search" placeholder="🔍 Product search karein..." aria-label="Search products">
+    <select id="sort" aria-label="Sort products">
+      <option value="default">Default order</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+      <option value="name">Name: A to Z</option>
+    </select>
+  </div>
+
+  <div class="layout">
+    <aside class="panel">
+      <h3>Categories</h3>
+      <div class="catlist" id="categories"></div>
+    </aside>
+
+    <section>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 13px">
+        <strong id="resultTitle">All Products</strong>
+        <span id="resultCount" class="small">150 products</span>
+      </div>
+      <div id="products" class="productgrid"></div>
+    </section>
+
+    <aside class="cartbox" id="cart">
+      <h3>🛒 My Cart <span id="count">0</span></h3>
+      <div id="cartItems"><div class="empty">Aapka cart abhi khaali hai.</div></div>
+      <div class="totalrow"><span>Subtotal</span><strong id="subtotal">₹0</strong></div>
+      <div class="totalrow"><span>Delivery</span><strong id="delivery">Confirm later</strong></div>
+      <div class="totalrow"><span>Total</span><span class="total" id="grandTotal">₹0</span></div>
+      <button class="checkout" onclick="checkout()">Place Order</button>
+      <p class="small">Order request demo hai. Payment automatically nahi liya jayega. Seller se price aur delivery confirm hogi.</p>
+    </aside>
+  </div>
+</main>
+<footer>© PV MART | A PVrajCMS Group Initiative</footer>
+
+<script>
+const categoryData = [
+ {name:"Pashu Aahar Dana",icon:"🐄",base:850,unit:"50 kg bag",items:["Dairy Cattle Feed","Standard Cattle Feed","High Energy Cattle Feed","Calf Starter Feed","Calf Grower Feed","Buffalo Feed","Milch Animal Feed","Dry Cattle Feed","Cattle Feed Pellets","Balanced Cattle Feed"]},
+ {name:"Chokar",icon:"🌾",base:650,unit:"40 kg bag",items:["Wheat Chokar","Fine Wheat Bran","Coarse Wheat Bran","Rice Bran","Rice Polish","Maize Bran","Gram Churi","Wheat Middlings","Mustard Bran Mix","Bran Feed Mix"]},
+ {name:"Sarson Khal",icon:"🌱",base:1100,unit:"50 kg bag",items:["Mustard Oil Cake","Mustard Khal Powder","Mustard Khal Cake","Expeller Mustard Khal","Mustard Khal Granules","Mustard Khal Feed Mix","Premium Sarson Khal","Standard Sarson Khal","Mustard Meal","Mustard Cake Mix"]},
+ {name:"Binola Khal",icon:"🌿",base:1400,unit:"50 kg bag",items:["Cottonseed Cake","Cottonseed Meal","Binola Khal Powder","Binola Khal Cake","Cottonseed Feed Mix","Cottonseed Pellets","Cottonseed Meal Standard","Cottonseed Cake Premium","Cottonseed Khal Mix","Cottonseed Protein Feed"]},
+ {name:"Dairy Feed",icon:"🥛",base:1000,unit:"50 kg bag",items:["Dairy Feed Standard","Dairy Feed Premium","Milk Yield Feed","Lactation Feed","Dairy Pellet Feed","High Protein Dairy Feed","Buffalo Milk Feed","Dairy Concentrate","Dairy Feed Mash","Daily Nutrition Feed"]},
+ {name:"Poultry Feed",icon:"🐔",base:1250,unit:"25 kg bag",items:["Broiler Starter Feed","Broiler Finisher Feed","Layer Starter Feed","Layer Grower Feed","Layer Mash Feed","Poultry Pellet Feed","Chick Starter Feed","Poultry Concentrate","Broiler Grower Feed","Poultry Feed Mix"]},
+ {name:"Goat & Sheep Feed",icon:"🐐",base:900,unit:"25 kg bag",items:["Goat Starter Feed","Goat Grower Feed","Sheep Feed Mix","Goat Pellet Feed","Breeding Goat Feed","Kid Starter Feed","Goat Concentrate","Sheep Maintenance Feed","Goat Mineral Feed","Goat Nutrition Mix"]},
+ {name:"Fish Feed",icon:"🐟",base:1600,unit:"25 kg bag",items:["Floating Fish Feed","Sinking Fish Feed","Fish Starter Feed","Carp Fish Feed","Tilapia Fish Feed","Fish Grower Pellets","Fish Finisher Feed","Pond Fish Feed","Fish Feed Crumble","Aquaculture Feed"]},
+ {name:"Mineral Mixture",icon:"🧂",base:350,unit:"5 kg pack",items:["Cattle Mineral Mixture","Dairy Mineral Mix","Calcium Supplement","Mineral Salt Mix","Trace Mineral Mix","Buffalo Mineral Mix","Calf Mineral Mix","Mineral Powder","Animal Salt Lick","Mineral Nutrition Pack"]},
+ {name:"Hara Chara",icon:"🌿",base:250,unit:"bundle",items:["Green Fodder Bundle","Berseem Fodder","Napier Grass","Green Maize Fodder","Jowar Green Fodder","Lucerne Fodder","Fresh Grass Bundle","Green Oat Fodder","Seasonal Green Fodder","Fresh Fodder Pack"]},
+ {name:"Sukha Chara",icon:"🌾",base:300,unit:"bundle",items:["Wheat Straw","Paddy Straw","Dry Grass Bundle","Dry Maize Stalk","Bajra Dry Fodder","Oat Hay","Dry Fodder Bale","Mixed Hay","Chopped Straw","Dry Fodder Pack"]},
+ {name:"Pet Food",icon:"🐕",base:500,unit:"5 kg pack",items:["Adult Dog Food","Puppy Food","Adult Cat Food","Kitten Food","Dog Food Chicken Mix","Dog Food Veg Mix","Pet Food Kibble","Small Breed Dog Food","Large Breed Dog Food","Pet Nutrition Mix"]},
+ {name:"Animal Supplements",icon:"💊",base:250,unit:"pack",items:["Cattle Vitamin Mix","Animal Electrolyte","Calf Nutrition Supplement","Dairy Energy Supplement","Animal Probiotic Mix","Animal Digestive Supplement","Vitamin Mineral Premix","Animal Feed Additive","Calcium Nutrition Pack","Animal Nutrition Powder"]},
+ {name:"Animal Care",icon:"🩺",base:120,unit:"piece",items:["Feed Measuring Scoop","Animal Feeding Bowl","Water Bucket","Feed Trough","Animal Grooming Brush","Milk Strainer","Feed Mixing Tub","Animal Water Bowl","Feed Handling Scoop","Farm Cleaning Brush"]},
+ {name:"Feed Storage",icon:"🪣",base:180,unit:"piece",items:["Feed Storage Bin","Feed Storage Bucket","Airtight Feed Container","Feed Carrying Bag","Grain Storage Drum","Feed Scoop Large","Feed Scoop Small","Storage Sack","Feed Container Lid","Farm Storage Tub"]}
+];
+
+let products=[];
+categoryData.forEach((cat,ci)=>{
+ cat.items.forEach((name,i)=>{
+  const wholesale=Math.round(cat.base+i*(cat.base*.035));
+  const retail=Math.round(wholesale*1.15/5)*5;
+  products.push({
+   id:ci*10+i+1,name,category:cat.name,icon:cat.icon,
+   wholesale,retail,unit:cat.unit,
+   stock: i%4===0 ? "Stock confirm karein" : "Availability confirm karein"
+  });
+ });
+});
+
+let selectedCategory="All Products";
+let cart={};
+const money=n=>"₹"+Number(n).toLocaleString("en-IN");
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function renderCategories(){
+ const box=document.getElementById("categories");
+ box.innerHTML="";
+ ["All Products",...categoryData.map(c=>c.name)].forEach(name=>{
+  const b=document.createElement("button");
+  b.className="catbtn"+(selectedCategory===name?" selected":"");
+  b.textContent=(name==="All Products"?"🛍️ ": (categoryData.find(c=>c.name===name)?.icon+" ")) + name;
+  b.onclick=()=>{selectedCategory=name;renderCategories();renderProducts();};
+  box.appendChild(b);
+ });
+}
+
+function visibleProducts(){
+ let list=products.filter(p=>(selectedCategory==="All Products"||p.category===selectedCategory)&&
+  (p.name+" "+p.category).toLowerCase().includes(document.getElementById("search").value.toLowerCase().trim()));
+ const sort=document.getElementById("sort").value;
+ if(sort==="low")list.sort((a,b)=>a.retail-b.retail);
+ if(sort==="high")list.sort((a,b)=>b.retail-a.retail);
+ if(sort==="name")list.sort((a,b)=>a.name.localeCompare(b.name));
+ return list;
+}
+
+function renderProducts(){
+ const list=visibleProducts();
+ document.getElementById("resultTitle").textContent=selectedCategory;
+ document.getElementById("resultCount").textContent=list.length+" products";
+ document.getElementById("products").innerHTML=list.length?list.map(p=>`
+  <article class="product">
+   <div class="emoji">${p.icon}</div>
+   <h3>${esc(p.name)}</h3>
+   <div class="meta">${esc(p.category)}<br>Unit: ${esc(p.unit)}</div>
+   <div class="price">
+    Thok rate: <strong>${money(p.wholesale)}</strong><br>
+    Futkar rate: <span class="retail">${money(p.retail)}</span>
+   </div>
+   <div class="stock">● ${esc(p.stock)}</div>
+   <button class="add" onclick="addToCart(${p.id})">+ Add to Cart</button>
+  </article>`).join(""):'<div class="empty">Koi product nahi mila.</div>';
+}
+
+function addToCart(id){
+ cart[id]=(cart[id]||0)+1;
+ renderCart();
+}
+function changeQty(id,delta){
+ cart[id]=(cart[id]||0)+delta;
+ if(cart[id]<=0)delete cart[id];
+ renderCart();
+}
+function renderCart(){
+ const entries=Object.entries(cart);
+ document.getElementById("count").textContent=entries.reduce((s,[id,q])=>s+q,0);
+ document.getElementById("cartItems").innerHTML=entries.length?entries.map(([id,q])=>{
+  const p=products.find(x=>x.id===Number(id));
+  return `<div class="cartitem">
+   <strong>${esc(p.name)}</strong>
+   <span>${money(p.retail)} × ${q}</span>
+   <div class="qtyrow">
+    <button onclick="changeQty(${p.id},-1)" aria-label="Decrease quantity">−</button>
+    <span>${q}</span>
+    <button onclick="changeQty(${p.id},1)" aria-label="Increase quantity">+</button>
+    <button class="remove" onclick="changeQty(${p.id},-${q})">Remove</button>
+   </div>
+  </div>`;
+ }).join(""):'<div class="empty">Aapka cart abhi khaali hai.</div>';
+ const subtotal=entries.reduce((s,[id,q])=>s+products.find(p=>p.id===Number(id)).retail*q,0);
+ document.getElementById("subtotal").textContent=money(subtotal);
+ document.getElementById("grandTotal").textContent=money(subtotal);
+ document.getElementById("delivery").textContent="Confirm later";
+}
+
+function checkout(){
+ const entries=Object.entries(cart);
+ if(!entries.length){alert("Sir, pehle cart mein product add karein.");return;}
+ const lines=entries.map(([id,q])=>{
+  const p=products.find(x=>x.id===Number(id));
+  return `${p.name} (${p.unit}) x ${q} = ${money(p.retail*q)}`;
+ });
+ const total=entries.reduce((s,[id,q])=>s+products.find(p=>p.id===Number(id)).retail*q,0);
+ const message=`Namaste PV MART, mujhe Animal Feed ka order dena hai:\n\n${lines.join("\n")}\n\nEstimated subtotal: ${money(total)}\nKripya stock, final price aur delivery charge confirm karein.`;
+ const whatsappNumber=""; // Apna WhatsApp business number country code ke saath dalein, jaise 91XXXXXXXXXX
+ if(!whatsappNumber){
+  alert("Order summary tayyar hai. OK dabane par ise copy kar sakte hain.");
+  if(navigator.clipboard && navigator.clipboard.writeText){
+   navigator.clipboard.writeText(message).then(()=>alert("Order summary copy ho gayi. Ab ise WhatsApp par seller ko bhej sakte hain.")).catch(()=>window.prompt("Order summary copy karein:",message));
+  }else{
+   window.prompt("Order summary copy karein:",message);
+  }
+  return;
+ }
+ window.open("https://wa.me/"+whatsappNumber+"?text="+encodeURIComponent(message),"_blank");
+}
+document.getElementById("search").addEventListener("input",renderProducts);
+document.getElementById("sort").addEventListener("change",renderProducts);
+renderCategories();
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
