@@ -1,0 +1,269 @@
+```html
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PV Foods & Agro | PV MART</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#203040}
+a{text-decoration:none;color:inherit}
+header{background:#10243a;color:white;padding:14px 20px}
+.head{max-width:1400px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:145px;max-height:55px;object-fit:contain}
+.brand strong{font-size:23px}
+nav{display:flex;gap:15px;align-items:center;flex-wrap:wrap}
+nav a, .dropbtn{color:white;font-weight:bold;font-size:14px}
+.dropdown{position:relative}
+.dropbtn{background:none;border:0;cursor:pointer;padding:8px 0}
+.dropmenu{display:none;position:absolute;right:0;top:100%;width:230px;background:white;color:#203040;border-radius:9px;box-shadow:0 5px 20px #0003;z-index:10;padding:7px}
+.dropmenu a{display:block;color:#203040;padding:10px;border-radius:6px}
+.dropmenu a:hover{background:#eaf6ef}
+.dropdown:hover .dropmenu,.dropdown:focus-within .dropmenu{display:block}
+.wrap{max-width:1400px;margin:auto;padding:20px}
+.hero{background:linear-gradient(110deg,#07563d,#32a46b);color:white;border-radius:17px;padding:32px}
+.hero h1{font-size:38px;margin:15px 0}
+.hero p{line-height:1.7}
+.btn{border:0;border-radius:8px;padding:11px 15px;font-weight:bold;cursor:pointer}
+.gold{background:#ffcf58;color:#10243a}
+.green{background:#13865c;color:white}
+.layout{display:grid;grid-template-columns:210px minmax(0,1fr) 270px;gap:16px;margin-top:20px;align-items:start}
+.panel{background:white;border:1px solid #e0e7e3;border-radius:13px;padding:16px;min-width:0}
+h2,h3{margin-top:0}
+.categories{display:grid;gap:7px}
+.catbtn{padding:10px;border:1px solid #dce5df;border-radius:7px;background:white;text-align:left;cursor:pointer}
+.catbtn.active{background:#eaf6ef;border-color:#72bd91;font-weight:bold}
+.search{width:100%;padding:12px;border:1px solid #d5dfd9;border-radius:8px;margin-bottom:14px}
+.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.product{border:1px solid #e0e7e3;border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.product img{width:100%;height:140px;object-fit:cover;background:#edf3ee}
+.info{padding:10px;display:flex;flex-direction:column;flex:1}
+.info h4{margin:0 0 8px}
+.price{font-weight:bold;color:#08754b;font-size:18px;margin:10px 0}
+.info button{margin-top:auto}
+.cartitem{border-bottom:1px solid #e0e7e3;padding:10px 0;font-size:14px}
+.qty{display:flex;gap:10px;align-items:center;margin-top:7px}
+.qty button{padding:4px 9px;cursor:pointer}
+.total{display:flex;justify-content:space-between;font-weight:bold;margin:15px 0}
+form{display:none;margin-top:18px}
+label{display:block;font-size:13px;font-weight:bold;margin:10px 0 5px}
+input,textarea,select{width:100%;padding:10px;border:1px solid #d5dfd9;border-radius:7px}
+textarea{min-height:65px}
+.payment label{display:flex;align-items:center;gap:8px;font-weight:normal}
+.payment input{width:auto}
+.note{font-size:12px;color:#667788;line-height:1.5}
+footer{text-align:center;padding:25px;color:#667788}
+@media(max-width:1000px){.layout{grid-template-columns:190px minmax(0,1fr)}.cartpanel{grid-column:1/-1}}
+@media(max-width:650px){
+ .wrap{padding:12px}.head{justify-content:center}
+ .brand img{width:100px}nav{justify-content:center;gap:12px}
+ .hero{padding:23px 17px}.hero h1{font-size:28px}
+ .layout{display:flex;flex-direction:column}
+ .sidebar,.middle,.cartpanel{width:100%}
+ .categories{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .product img{height:110px}.info{padding:8px}.info h4{font-size:13px}
+ .price{font-size:16px}
+}
+</style>
+</head>
+
+<body>
+<header>
+<div class="head">
+<a class="brand" href="pv-mart.html">
+<img src="logo.png" alt="PVRajCMS Group Logo">
+<span><strong>PV MART</strong><br><small>PV Foods & Agro Store</small></span>
+</a>
+<nav>
+<a href="pv-mart.html">PV MART Home</a>
+<a href="#shop">Shop Now</a>
+<div class="dropdown">
+<button class="dropbtn" type="button">Categories ▾</button>
+<div class="dropmenu">
+<a href="kirana.html">🛒 Kirana Store</a>
+<a href="clothes.html">👕 Clothes & Fashion</a>
+<a href="electronics.html">📱 Electronics</a>
+<a href="beauty-cosmetics.html">💄 Beauty & Cosmetics</a>
+<a href="household.html">🏠 Home & Kitchen</a>
+<a href="stationery.html">📚 Stationery & Books</a>
+<a href="baby-care.html">🧸 Baby Care</a>
+<a href="animal-feed.html">🐄 Animal Feed</a>
+<a href="pv-foods.html">🌾 PV Foods & Agro</a>
+<a href="sarson-tel.html">🫗 Sarson Tel</a>
+</div>
+</div>
+<a href="#cart">My Cart (<span id="count">0</span>)</a>
+<a href="contact.html">Contact</a>
+</nav>
+</div>
+</header>
+
+<div class="wrap">
+<section class="hero">
+<span>PV MART • FOOD • FARM • AGRO</span>
+<h1>🌾 PV Foods & Agro</h1>
+<p>Rozmarra ke food products aur kheti-pashu palan se jude products ek hi jagah.</p>
+<a class="btn gold" href="#shop">Shop Products ↓</a>
+</section>
+
+<h2 id="shop" style="margin-top:25px">Shop PV Foods & Agro</h2>
+
+<div class="layout">
+<aside class="panel sidebar">
+<h3>🗂️ Categories</h3>
+<div class="categories" id="categories"></div>
+<p class="note">Product prices demo hain. Publish karne se pehle actual rates update karein.</p>
+</aside>
+
+<main class="panel middle">
+<input class="search" id="search" type="search" placeholder="Product khojein: aata, tel, chawal...">
+<div class="products" id="products"></div>
+</main>
+
+<aside class="panel cartpanel" id="cart">
+<h3>🧺 Aapka Cart</h3>
+<div id="cartItems">Abhi cart khaali hai.</div>
+<div class="total"><span>Subtotal</span><span id="total">₹0</span></div>
+<button class="btn green" id="checkoutBtn" style="width:100%">Proceed to Buy</button>
+<button class="btn" id="clearBtn" style="width:100%;margin-top:8px">Clear Cart</button>
+
+<form id="checkoutForm">
+<h3>Delivery Details</h3>
+<label for="customer">Full Name *</label>
+<input id="customer" required>
+
+<label for="phone">Mobile Number *</label>
+<input id="phone" type="tel" pattern="[6-9][0-9]{9}" maxlength="10" required>
+
+<label for="address">Full Address *</label>
+<textarea id="address" required></textarea>
+
+<label for="city">City / Village *</label>
+<input id="city" required>
+
+<label for="pin">PIN Code *</label>
+<input id="pin" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required>
+
+<label>Payment Method</label>
+<div class="payment">
+<label><input type="radio" name="payment" value="Cash on Delivery" checked> Cash on Delivery</label>
+<label><input type="radio" name="payment" value="UPI"> UPI (details WhatsApp par confirm honge)</label>
+</div>
+<button class="btn green" type="submit" style="width:100%;margin-top:12px">Confirm Order on WhatsApp</button>
+<p class="note">WhatsApp number set karne ke baad hi order WhatsApp par khulega.</p>
+</form>
+</aside>
+</div>
+</div>
+
+<footer>© PV MART · PVRajCMS Group</footer>
+
+<script>
+const productsData=[
+{id:1,name:"Sarson Ka Tel",detail:"1 litre",price:160,cat:"Food Products",img:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80"},
+{id:2,name:"Aata (Wheat Flour)",detail:"5 kg",price:220,cat:"Food Products",img:"https://images.unsplash.com/photo-1627485937980-221c88ac04f9?auto=format&fit=crop&w=600&q=80"},
+{id:3,name:"Basmati Rice",detail:"1 kg",price:120,cat:"Food Products",img:"https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80"},
+{id:4,name:"Arhar Dal",detail:"1 kg",price:150,cat:"Food Products",img:"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=600&q=80"},
+{id:5,name:"Chana Dal",detail:"1 kg",price:90,cat:"Food Products",img:"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=600&q=80"},
+{id:6,name:"Haldi Powder",detail:"100 g",price:35,cat:"Masale",img:"https://images.unsplash.com/photo-1615485500704-8e990f9900f3?auto=format&fit=crop&w=600&q=80"},
+{id:7,name:"Lal Mirch Powder",detail:"100 g",price:45,cat:"Masale",img:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80"},
+{id:8,name:"Dhaniya Powder",detail:"100 g",price:30,cat:"Masale",img:"https://images.unsplash.com/photo-1599909533605-7f8c8c5f6a31?auto=format&fit=crop&w=600&q=80"},
+{id:9,name:"Gur (Jaggery)",detail:"1 kg",price:75,cat:"Food Products",img:"https://images.unsplash.com/photo-1587049352851-8d4e89133924?auto=format&fit=crop&w=600&q=80"},
+{id:10,name:"Sarson Dana",detail:"500 g",price:55,cat:"Agro Products",img:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80"},
+{id:11,name:"Sarson Khal",detail:"5 kg",price:180,cat:"Animal Feed",img:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80"},
+{id:12,name:"Chokar (Wheat Bran)",detail:"5 kg",price:130,cat:"Animal Feed",img:"https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=80"},
+{id:13,name:"Cattle Feed",detail:"5 kg",price:250,cat:"Animal Feed",img:"https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=600&q=80"},
+{id:14,name:"Poultry Feed",detail:"5 kg",price:300,cat:"Animal Feed",img:"https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=600&q=80"},
+{id:15,name:"Wheat Seeds",detail:"1 kg",price:65,cat:"Seeds & Farming",img:"https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=80"},
+{id:16,name:"Farm Compost",detail:"5 kg",price:95,cat:"Seeds & Farming",img:"https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80"}
+];
+
+const categoryList=["All Products","Food Products","Masale","Agro Products","Animal Feed","Seeds & Farming"];
+let activeCategory="All Products";
+let cartData={};
+const money=n=>"₹"+n.toLocaleString("en-IN");
+
+function showCategories(){
+ document.getElementById("categories").innerHTML=categoryList.map(c=>
+ `<button class="catbtn ${c===activeCategory?"active":""}" data-cat="${c}">${c}</button>`
+ ).join("");
+ document.querySelectorAll(".catbtn").forEach(b=>b.onclick=()=>{
+ activeCategory=b.dataset.cat;showCategories();showProducts();
+ });
+}
+
+function showProducts(){
+ const q=document.getElementById("search").value.toLowerCase().trim();
+ const shown=productsData.filter(p=>
+ (activeCategory==="All Products"||p.cat===activeCategory)&&
+ (p.name+" "+p.detail+" "+p.cat).toLowerCase().includes(q)
+ );
+ document.getElementById("products").innerHTML=shown.length?shown.map(p=>`
+ <article class="product">
+ <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/600x400/eaf3ed/174d35?text=PV+Foods+Agro'">
+ <div class="info"><h4>${p.name}</h4><small>${p.detail}</small>
+ <div class="price">${money(p.price)}</div>
+ <button class="btn green" onclick="addItem(${p.id})">+ Add to Cart</button>
+ </div></article>`).join(""):"<p>Koi product nahi mila.</p>";
+}
+
+function addItem(id){cartData[id]=(cartData[id]||0)+1;showCart()}
+function changeQty(id,delta){
+ cartData[id]=(cartData[id]||0)+delta;
+ if(cartData[id]<=0)delete cartData[id];
+ showCart();
+}
+function cartCount(){return Object.values(cartData).reduce((a,b)=>a+b,0)}
+function cartTotal(){return productsData.reduce((s,p)=>s+p.price*(cartData[p.id]||0),0)}
+
+function showCart(){
+ const items=productsData.filter(p=>cartData[p.id]);
+ document.getElementById("cartItems").innerHTML=items.length?items.map(p=>`
+ <div class="cartitem"><strong>${p.name}</strong><br>${money(p.price)} each
+ <div class="qty"><button onclick="changeQty(${p.id},-1)">−</button>
+ <span>${cartData[p.id]}</span><button onclick="changeQty(${p.id},1)">+</button>
+ <strong>${money(p.price*cartData[p.id])}</strong></div></div>`).join(""):"<p>Abhi cart khaali hai.</p>";
+ document.getElementById("total").textContent=money(cartTotal());
+ document.getElementById("count").textContent=cartCount();
+ document.getElementById("checkoutBtn").disabled=!cartCount();
+ if(!cartCount())document.getElementById("checkoutForm").style.display="none";
+}
+
+document.getElementById("search").addEventListener("input",showProducts);
+document.getElementById("clearBtn").onclick=()=>{cartData={};showCart()};
+document.getElementById("checkoutBtn").onclick=()=>{
+ if(!cartCount())return;
+ const f=document.getElementById("checkoutForm");
+ f.style.display=f.style.display==="block"?"none":"block";
+};
+
+document.getElementById("checkoutForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const phone=document.getElementById("phone").value.trim();
+ const pin=document.getElementById("pin").value.trim();
+ if(!/^[6-9][0-9]{9}$/.test(phone)){alert("Sahi 10 digit mobile number bharein.");return}
+ if(!/^[0-9]{6}$/.test(pin)){alert("Sahi 6 digit PIN Code bharein.");return}
+ const items=productsData.filter(p=>cartData[p.id]).map(p=>
+ `${p.name} x ${cartData[p.id]} = ${money(p.price*cartData[p.id])}`
+ ).join("\n");
+ const payment=document.querySelector('input[name="payment"]:checked').value;
+ const message=`PV Foods & Agro Order\nName: ${document.getElementById("customer").value}\nMobile: ${phone}\nAddress: ${document.getElementById("address").value}, ${document.getElementById("city").value} - ${pin}\nPayment: ${payment}\n\n${items}\n\nSubtotal: ${money(cartTotal())}`;
+ const whatsappNumber="";
+ if(!whatsappNumber){
+ alert("WhatsApp order activate karne ke liye code mein apna WhatsApp number country code ke saath bharein.");
+ return;
+ }
+ window.open("https://wa.me/"+whatsappNumber+"?text="+encodeURIComponent(message),"_blank");
+});
+
+showCategories();
+showProducts();
+showCart();
+</script>
+</body>
+</html>
+```
