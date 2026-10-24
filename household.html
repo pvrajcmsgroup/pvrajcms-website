@@ -9,6 +9,12 @@
 .site-header{background:#061525;color:white;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .brand-area{display:flex;align-items:center;gap:14px;min-width:0}.brand-logo{display:flex;align-items:center;text-decoration:none}.brand-logo img{display:block;width:300px;max-width:26vw;height:66px;object-fit:contain;object-position:left center}.brand-divider{height:54px;width:1px;background:#6d8295;flex:0 0 1px}.mart-title{padding-left:0;white-space:nowrap}.mart-title strong{font-size:clamp(20px,2.4vw,31px);display:block}.mart-title small{color:var(--gold);font-size:11px}
 .main-nav{display:flex;gap:15px;flex-wrap:wrap;align-items:center}.main-nav a{color:white;text-decoration:none;font-weight:bold;font-size:12px}.main-nav a:hover{color:var(--gold)}
+.nav-dropdown{position:relative;display:inline-flex;align-items:center}
+.nav-dropdown-toggle{display:inline-flex;align-items:center;gap:4px}
+.nav-dropdown-menu{display:none;position:absolute;top:100%;left:0;min-width:220px;max-width:270px;background:#fff;border:1px solid #dce5ed;border-radius:12px;padding:8px;box-shadow:0 12px 30px #00142630;z-index:1000}
+.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown:focus-within .nav-dropdown-menu{display:block}
+.main-nav .nav-dropdown-menu a{display:block;color:#172536;padding:10px 12px;border-radius:8px;font-size:13px;line-height:1.35;white-space:normal}
+.main-nav .nav-dropdown-menu a:hover,.main-nav .nav-dropdown-menu a:focus{background:#e7f7ef;color:#08744e}
 .hero{width:100%;margin:0 0 14px;background:linear-gradient(115deg,#071b2e,#0b4c4c);border-radius:17px;color:#fff;padding:24px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:145px}.hero h1{font-size:clamp(23px,2.4vw,32px);margin:0 0 10px}.hero p{margin:0;line-height:1.6}.hero-icon{font-size:clamp(38px,4vw,60px);white-space:nowrap}
 main{max-width:1200px;margin:0 auto;padding:0 0 36px}.shop-layout{display:grid;grid-template-columns:190px minmax(0,1fr) 270px;gap:14px;align-items:start}
 .panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;min-width:0}
@@ -28,13 +34,34 @@ main{max-width:1200px;margin:0 auto;padding:0 0 36px}.shop-layout{display:grid;g
 .notice{margin:16px 0 0;padding:10px 12px;border-radius:10px;background:#fff8df;border:1px solid #f0dfa9;color:#66521a;font-size:11px;line-height:1.5}
 footer{text-align:center;background:#e8eef4;padding:22px;color:#667487;font-size:12px;margin-top:28px}
 @media(max-width:1000px){main{padding:0 14px}.shop-layout{grid-template-columns:175px minmax(0,1fr)}.cart-panel{grid-column:1/-1}.product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.cart-panel-inner{display:grid;grid-template-columns:1fr 1fr;gap:18px}}
-@media(max-width:650px){.site-header{padding:12px}.brand-area{gap:8px;flex-wrap:wrap}.brand-logo img{width:clamp(135px,38vw,190px);max-width:42vw;height:45px}.brand-divider{height:38px}.mart-title strong{font-size:20px}.main-nav{gap:10px}.main-nav a{font-size:11px}.hero{margin:0 0 12px;padding:22px 18px;min-height:0}.hero-icon{display:none}.hero h1{font-size:29px}main{padding:0 10px}.shop-layout{grid-template-columns:1fr}.category-panel{order:0}.category-panel .cat-list{display:flex;overflow:auto;padding-bottom:3px}.cat-btn{white-space:nowrap;padding:10px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cart-panel{grid-column:auto}.cart-panel-inner{display:block}.products-heading h2{font-size:19px}}
+@media(max-width:650px){.site-header{padding:12px}.brand-area{gap:8px;flex-wrap:wrap}.brand-logo img{width:clamp(135px,38vw,190px);max-width:42vw;height:45px}.brand-divider{height:38px}.mart-title strong{font-size:20px}.main-nav{gap:10px}.main-nav a{font-size:11px}.nav-dropdown-menu{left:0;max-width:min(270px,85vw)}.hero{margin:0 0 12px;padding:22px 18px;min-height:0}.hero-icon{display:none}.hero h1{font-size:29px}main{padding:0 10px}.shop-layout{grid-template-columns:1fr}.category-panel{order:0}.category-panel .cat-list{display:flex;overflow:auto;padding-bottom:3px}.cat-btn{white-space:nowrap;padding:10px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cart-panel{grid-column:auto}.cart-panel-inner{display:block}.products-heading h2{font-size:19px}}
 </style>
 </head>
 <body>
 <header class="site-header">
  <div class="brand-area"><a class="brand-logo" href="pv-mart.html" aria-label="PVRajCMS Group home"><img src="logo.png" alt="PVRajCMS Group Logo"></a><span class="brand-divider" aria-hidden="true"></span><div class="mart-title"><strong><span style="color:#27d5c7">PV</span> MART</strong><small>Aapki Apni Online Dukaan</small></div></div>
- <nav class="main-nav"><a href="pv-mart.html">PV MART Home</a><a href="pv-mart.html#shop">Shop Now</a><a href="pv-mart.html#categories-section">Categories⌄</a><a href="pv-mart.html#offers">Offers</a><a href="#cart">My Cart (<span id="navCount">0</span>)</a><a href="contact.html">Contact</a></nav>
+ <nav class="main-nav">
+  <a href="pv-mart.html">PV MART Home</a>
+  <a href="pv-mart.html#shop">Shop Now</a>
+  <div class="nav-dropdown">
+    <a href="pv-mart.html#categories-section" class="nav-dropdown-toggle" aria-haspopup="true">Categories <span aria-hidden="true">⌄</span></a>
+    <div class="nav-dropdown-menu" aria-label="Store categories">
+      <a href="kirana.html">🛒 Kirana</a>
+      <a href="clothes.html">👕 Clothes &amp; Fashion</a>
+      <a href="electronics.html">📱 Electronics</a>
+      <a href="beauty-cosmetics.html">💄 Beauty &amp; Cosmetics</a>
+      <a href="household.html">🏠 Home &amp; Kitchen</a>
+      <a href="stationery.html">📚 Stationery &amp; Books</a>
+      <a href="baby-care.html">🧸 Baby Care</a>
+      <a href="animal-feed.html">🐄 Animal Feed &amp; Agriculture</a>
+      <a href="pv-foods.html">🌾 PV Foods &amp; Agro</a>
+      <a href="sarson-tel.html">🛢️ Sarson Tel</a>
+    </div>
+  </div>
+  <a href="pv-mart.html#offers">Offers</a>
+  <a href="#cart">My Cart (<span id="navCount">0</span>)</a>
+  <a href="contact.html">Contact</a>
+</nav>
 </header>
 
 <main><div class="shop-layout">
