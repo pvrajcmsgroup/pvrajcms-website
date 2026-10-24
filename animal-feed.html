@@ -116,7 +116,7 @@ footer{text-align:center;padding:25px;color:#6b7b8d;font-size:12px}
       <div class="catlist" id="categoryList"></div>
     </aside>
     <section class="center">
-      <div class="hero"><div><h1>🐄 Animal Feed Store</h1><p>Pashuon ke liye dana, khal, chokar aur farm supplies — sab ek jagah, PV MART par.</p></div><div class="heroicons">🐄 🌾</div></div>
+      <div class="hero"><div><h1>🐄 Animal Feed Store</h1><p>Pashuon ke liye dana, khal, chokar aur farm supplies — sab ek jagah, PV MART par.</p></div><div class="heroicons">🐄 🐃 🐐</div></div>
       <div class="toolbar">
         <input id="search" placeholder="Product, brand ya category search karein..." aria-label="Search products">
         <select id="sort" aria-label="Sort products"><option value="default">Default order</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option><option value="name">Name: A to Z</option></select>
@@ -181,24 +181,25 @@ const categoryData = [
  {name:"Feed Storage",icon:"🪣",base:180,unit:"piece",items:["Feed Storage Bin","Feed Storage Bucket","Airtight Feed Container","Feed Carrying Bag","Grain Storage Drum","Feed Scoop Large","Feed Scoop Small","Storage Sack","Feed Container Lid","Farm Storage Tub"]}
 ];
 
-const categoryPhotos = [
- "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1484557985045-edf25e08da73?auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1530053969600-caed2596d242?auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1476231682828-37e571bc172f?auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1499529112087-3cb3b73auto=format&fit=crop&w=640&q=80",
- "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=640&q=80"
+// Category-wise animal and farm photos. External photos need internet access.
+const photo = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=640&q=80`;
+const animalPhotos = {
+ cow: photo('photo-1516467508483-a7212febe31a'),
+ field: photo('photo-1500382017468-9049fed747ef'),
+ crops: photo('photo-1574323347407-f5e1ad6d020b'),
+ sheep: photo('photo-1484557985045-edf25e08da73'),
+ farm: photo('photo-1500595046743-cd271d694d30'),
+ chicken: photo('photo-1548550023-2bdb3c5beed7'),
+ goat: photo('photo-1484557985045-edf25e08da73'),
+ fish: photo('photo-1530053969600-caed2596d242'),
+ dog: photo('photo-1552053831-71594a27632d'),
+ grass: photo('photo-1476231682828-37e571bc172f')
+};
+const categoryPhotoKeys = [
+ 'cow','crops','cow','cow','cow','chicken','goat','fish',
+ 'cow','grass','grass','dog','cow','farm','farm'
 ];
+
 let products=[];
 categoryData.forEach((cat,ci)=>{
  cat.items.forEach((name,i)=>{
@@ -206,7 +207,7 @@ categoryData.forEach((cat,ci)=>{
   const retail=Math.round(wholesale*1.15/5)*5;
   products.push({
    id:ci*10+i+1,name,category:cat.name,icon:cat.icon,
-   image:categoryPhotos[ci] || categoryPhotos[0],
+   image:animalPhotos[categoryPhotoKeys[ci]] || animalPhotos.cow,
    wholesale,retail,unit:cat.unit,
    stock: i%4===0 ? "Stock confirm karein" : "Availability confirm karein"
   });
