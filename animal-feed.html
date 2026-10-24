@@ -17,9 +17,16 @@ header{background:#061625;color:white;padding:12px 18px;display:flex;align-items
 .brandtext h2 span{color:#29d2c5}
 .brandtext p{font-size:11px;color:#ffd34f;margin:6px 0 0}
 nav{display:flex;align-items:center;gap:17px;margin-left:auto;flex-wrap:wrap}
-nav a{color:white;text-decoration:none;font-size:12px;font-weight:bold;white-space:nowrap}
-nav a:hover{color:#ffd34f}
+nav a,nav .nav-trigger{color:white;text-decoration:none;font-size:12px;font-weight:bold;white-space:nowrap;background:none;border:0;padding:0;cursor:pointer}
+nav a:hover,nav .nav-trigger:hover{color:#ffd34f}
 nav .active{color:#ffd34f}
+.nav-dropdown{position:relative;display:inline-flex;align-items:center}
+.nav-menu{display:none;position:absolute;top:calc(100% + 18px);left:-14px;min-width:245px;max-height:65vh;overflow:auto;background:#fff;border:1px solid #dce5ef;border-radius:12px;padding:8px;box-shadow:0 14px 35px #00162c35;z-index:5000}
+.nav-dropdown.open .nav-menu{display:block}
+.nav-menu button{display:flex;align-items:center;gap:9px;width:100%;text-align:left;padding:10px;border:0;border-radius:8px;background:#fff;color:#102b4c;font-size:13px;cursor:pointer}
+.nav-menu button:hover{background:#e4f5ed;color:#087b55}
+.product-photo{width:100%;height:104px;object-fit:cover;border-radius:9px;margin-bottom:9px;background:#edf2f7}
+.product-photo-fallback{height:104px;display:flex;align-items:center;justify-content:center;border-radius:9px;background:#edf2f7;font-size:40px;margin-bottom:9px}
 main{max-width:1240px;margin:12px auto;padding:0 12px}
 .layout{display:grid;grid-template-columns:190px minmax(0,1fr) 270px;gap:14px;align-items:start}
 .panel,.product,.cartbox{background:white;border:1px solid var(--border);border-radius:14px}
@@ -61,8 +68,8 @@ input,select{padding:13px;border:1px solid var(--border);border-radius:10px;back
 .empty{padding:24px 8px;text-align:center;color:#718096;font-size:13px}
 #count{background:#e3f5eb;color:#087b55;border-radius:20px;padding:3px 8px}
 footer{text-align:center;padding:25px;color:#6b7b8d;font-size:12px}
-@media(max-width:1050px){header{flex-wrap:wrap}.logo{width:220px;max-width:35vw}nav{margin-left:0;width:100%;gap:15px}.layout{grid-template-columns:170px minmax(0,1fr)}.cartbox{position:static;grid-column:1/-1}.productgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:650px){header{padding:12px;gap:9px}.logo{width:145px;max-width:38vw}.brand-divider{height:42px}.brandtext{min-width:0}.brandtext h2{font-size:23px}.brandtext p{font-size:10px}nav{gap:12px;padding:5px 0}nav a{font-size:11px}.layout{grid-template-columns:1fr}.panel{position:static;max-height:none}.catlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}.hero{padding:18px;min-height:120px}.hero h1{font-size:23px}.hero p{font-size:13px}.heroicons{font-size:32px}.toolbar{flex-wrap:wrap}#search{min-width:100%}#sort{width:100%}.products-heading{font-size:17px}.productgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.product{padding:10px}.product h3{font-size:13px}.price{font-size:11px}.retail{font-size:16px}.cartbox{grid-column:auto}}
+@media(max-width:1050px){header{flex-wrap:wrap}.logo{width:220px;max-width:35vw}nav{margin-left:0;width:100%;gap:15px}.layout{grid-template-columns:170px minmax(0,1fr)}.cartbox{position:static;grid-column:1/-1}.productgrid{grid-template-columns:repeat(3,minmax(0,1fr))}.nav-menu{top:calc(100% + 8px)}}
+@media(max-width:650px){header{padding:12px;gap:9px}.logo{width:145px;max-width:38vw}.brand-divider{height:42px}.brandtext{min-width:0}.brandtext h2{font-size:23px}.brandtext p{font-size:10px}nav{gap:12px;padding:5px 0}nav a,nav .nav-trigger{font-size:11px}.nav-menu{position:fixed;top:130px;left:12px;right:12px;min-width:0;max-height:65vh}.layout{grid-template-columns:1fr}.panel{position:static;max-height:none}.catlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px}.hero{padding:18px;min-height:120px}.hero h1{font-size:23px}.hero p{font-size:13px}.heroicons{font-size:32px}.toolbar{flex-wrap:wrap}#search{min-width:100%}#sort{width:100%}.products-heading{font-size:17px}.productgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.product{padding:10px}.product h3{font-size:13px}.price{font-size:11px}.retail{font-size:16px}.product-photo{height:90px}.cartbox{grid-column:auto}}
 
 /* Checkout address form */
 .modal-backdrop{display:none;position:fixed;inset:0;background:#061625b8;z-index:9999;overflow:auto;padding:24px 12px;align-items:center;justify-content:center}
@@ -92,7 +99,10 @@ footer{text-align:center;padding:25px;color:#6b7b8d;font-size:12px}
   <nav>
     <a href="pv-mart.html">PV MART Home</a>
     <a href="pv-mart.html#shop">Shop Now</a>
-    <a href="#categories">Categories⌄</a>
+    <div class="nav-dropdown" id="navCategoryDropdown">
+      <button class="nav-trigger" type="button" aria-expanded="false" onclick="toggleCategoryMenu()">Categories⌄</button>
+      <div class="nav-menu" id="navCategoryMenu" aria-label="All Animal Feed Categories"></div>
+    </div>
     <a href="pv-mart.html#offers">Offers</a>
     <a href="#cart">My Cart (<span id="navCount">0</span>)</a>
     <a href="contact.html">Contact</a>
@@ -171,6 +181,24 @@ const categoryData = [
  {name:"Feed Storage",icon:"🪣",base:180,unit:"piece",items:["Feed Storage Bin","Feed Storage Bucket","Airtight Feed Container","Feed Carrying Bag","Grain Storage Drum","Feed Scoop Large","Feed Scoop Small","Storage Sack","Feed Container Lid","Farm Storage Tub"]}
 ];
 
+const categoryPhotos = [
+ "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1484557985045-edf25e08da73?auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1530053969600-caed2596d242?auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1476231682828-37e571bc172f?auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1499529112087-3cb3b73auto=format&fit=crop&w=640&q=80",
+ "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=640&q=80"
+];
 let products=[];
 categoryData.forEach((cat,ci)=>{
  cat.items.forEach((name,i)=>{
@@ -178,6 +206,7 @@ categoryData.forEach((cat,ci)=>{
   const retail=Math.round(wholesale*1.15/5)*5;
   products.push({
    id:ci*10+i+1,name,category:cat.name,icon:cat.icon,
+   image:categoryPhotos[ci] || categoryPhotos[0],
    wholesale,retail,unit:cat.unit,
    stock: i%4===0 ? "Stock confirm karein" : "Availability confirm karein"
   });
@@ -189,6 +218,35 @@ let cart={};
 const money=n=>"₹"+Number(n).toLocaleString("en-IN");
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
+function toggleCategoryMenu(){
+ const dropdown=document.getElementById("navCategoryDropdown");
+ const isOpen=dropdown.classList.toggle("open");
+ dropdown.querySelector(".nav-trigger").setAttribute("aria-expanded",String(isOpen));
+}
+function renderNavCategories(){
+ const box=document.getElementById("navCategoryMenu");
+ box.innerHTML="";
+ [{name:"All Products",icon:"🛍️"},...categoryData].forEach(cat=>{
+  const b=document.createElement("button");
+  b.type="button";
+  b.textContent=cat.icon+"  "+cat.name;
+  b.onclick=()=>{
+   selectedCategory=cat.name;
+   renderCategories();renderProducts();
+   document.getElementById("navCategoryDropdown").classList.remove("open");
+   document.querySelector(".nav-trigger").setAttribute("aria-expanded","false");
+   document.getElementById("products").scrollIntoView({behavior:"smooth",block:"start"});
+  };
+  box.appendChild(b);
+ });
+}
+document.addEventListener("click",function(e){
+ const dropdown=document.getElementById("navCategoryDropdown");
+ if(dropdown && !dropdown.contains(e.target)){
+  dropdown.classList.remove("open");
+  dropdown.querySelector(".nav-trigger").setAttribute("aria-expanded","false");
+ }
+});
 function renderCategories(){
  const box=document.getElementById("categoryList");
  box.innerHTML="";
@@ -217,7 +275,8 @@ function renderProducts(){
  document.getElementById("resultCount").textContent=list.length+" products";
  document.getElementById("products").innerHTML=list.length?list.map(p=>`
   <article class="product">
-   <div class="emoji">${p.icon}</div>
+   <img class="product-photo" src="${p.image}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+   <div class="product-photo-fallback" style="display:none">${p.icon}</div>
    <h3>${esc(p.name)}</h3>
    <div class="meta">${esc(p.category)}<br>Unit: ${esc(p.unit)}</div>
    <div class="price">
@@ -301,6 +360,7 @@ function submitOrder(event){
 document.getElementById("search").addEventListener("input",renderProducts);
 document.getElementById("sort").addEventListener("change",renderProducts);
 renderCategories();
+renderNavCategories();
 renderProducts();
 renderCart();
 </script>
