@@ -272,12 +272,18 @@ button:focus-visible, a:focus-visible, .cat:focus-visible, .category-card:focus-
   <button id="payButton" class="primary" style="display:none" type="button">UPI App se Payment Karein</button>
   <button id="sendButton" class="secondary" style="display:none" type="button">WhatsApp par Order Bhejein</button>
   <div class="warning"><strong>Live karne se pehle:</strong> Neeche code mein apni asli UPI ID aur shop WhatsApp number set karein. UPI payment ko bank/UPI app mein verify karein; screenshot ko akela proof na maanein.</div>
-  <p class="note">Yeh starter version order database mein save nahi karta. Order shop tak bhejne ke liye WhatsApp button use hoga.</p>
+  <p class="note">Order pehle PV Mart database mein save hota hai. Uske baad aap WhatsApp button se apne configured number par order bhej sakte hain. Automatic notification ke liye baad mein alag setup chahiye.</p>
   </div>
  </aside>
 </main>
 <footer id="contact"><strong>PV MART</strong> · Aapki Apni Online Dukaan<br>Retail Shopping • Grocery • Fashion • Electronics • Home Essentials<br><strong>PV Foods & Agro</strong> · Sarson Tel • Aata • Masale • Wholesale<br>Part of PVRajCMS Group</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+/* PV MART SUPABASE CONFIG: Publishable key browser mein use ke liye hoti hai. Secret/service_role key kabhi yahan na daalein. */
+const SUPABASE_URL = "https://fghdelwdeyadwilxdjkg.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable__3mJ-Xf7SMLOs2QP2INehA_zndmKDqg";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
 /* SETUP: publish karne se pehle apni asli details daalein. */
 const SHOP_UPI_ID = "YOUR-UPI-ID@bank";
 const SHOP_WHATSAPP = "91XXXXXXXXXX";
@@ -517,8 +523,9 @@ function renderCart(){
 }
 document.getElementById("checkoutButton").addEventListener("click",function(){if(getTotal()<=0){alert("Pehle product ko My Cart mein add karein.");document.getElementById("shop").scrollIntoView({behavior:"smooth",block:"start"});return}const section=document.getElementById("checkoutSection");section.style.display="block";document.getElementById("orderForm").scrollIntoView({behavior:"smooth",block:"start"});});
 document.getElementById("search").addEventListener("input",renderProducts);
-document.getElementById("orderForm").addEventListener("submit",function(e){
+document.getElementById("orderForm").addEventListener("submit",async function(e){
  e.preventDefault();if(getTotal()<=0){alert("Pehle cart mein product add karein.");return}
+ const submitButton=this.querySelector("button[type=submit]"); const originalButtonText=submitButton.textContent; submitButton.disabled=true; submitButton.textContent="Order save ho raha hai...";
  const phone=document.getElementById("phone").value.trim();if(!/^[6-9]\d{9}$/.test(phone)){alert("Sahi 10 digit mobile number likhein.");return}
  const pincode=document.getElementById("pincode").value.trim();if(!/^\d{6}$/.test(pincode)){alert("Sahi 6 digit PIN code likhein.");return}
  const payment=document.querySelector('input[name="payment"]:checked').value;
@@ -527,7 +534,19 @@ document.getElementById("orderForm").addEventListener("submit",function(e){
  currentOrder={orderId,customer:document.getElementById("customer").value.trim(),phone,address:document.getElementById("address").value.trim(),city:document.getElementById("city").value.trim(),state:document.getElementById("state").value.trim(),pincode,landmark:document.getElementById("landmark").value.trim(),payment,items,total:getTotal()};
  const lines=items.map(i=>`- ${i.name} (${i.detail}) x ${i.qty} = ${money(i.subtotal)}`).join("\n");
  currentOrder.message=`New order — ${SHOP_NAME}\nOrder ID: ${orderId}\nName: ${currentOrder.customer}\nMobile: ${phone}\nDelivery Address: ${currentOrder.address}, ${currentOrder.city}, ${currentOrder.state} - ${currentOrder.pincode}\nLandmark: ${currentOrder.landmark||"N/A"}\n\nItems:\n${lines}\n\nTotal: ${money(currentOrder.total)}\nPayment: ${payment==="upi"?"UPI (payment verify manually)":"Cash on Delivery"}`;
- const status=document.getElementById("status");status.style.display="block";status.textContent=payment==="cod"?`Order summary (${orderId}) ready hai. Total ${money(currentOrder.total)}. Shop ko order bhejne ke liye neeche WhatsApp button dabayein.`:`Order summary (${orderId}) ready hai. Total ${money(currentOrder.total)}. Pehle order WhatsApp par bhejein; UPI payment ke baad shop payment verify karegi.`;
+ const status=document.getElementById("status");status.style.display="block";status.textContent="Order database mein save ho raha hai...";
+ const dbOrder={order_number:orderId,customer_name:currentOrder.customer,customer_mobile:phone,delivery_address:currentOrder.address,city:currentOrder.city,district:currentOrder.city,state:currentOrder.state,pincode,landmark:currentOrder.landmark||null,items:items,subtotal:currentOrder.total,delivery_charge:0,total_amount:currentOrder.total,payment_method:payment.toUpperCase(),payment_status:"pending",order_status:"new"};
+ try {
+   const {error}=await supabaseClient.from("orders").insert([dbOrder]);
+   if(error) throw error;
+ } catch(err) {
+   console.error("PV Mart order save failed:",err);
+   status.textContent="Order database mein save nahi hua. Aapka order confirm nahi hua. Internet aur Supabase RLS policy check karke dobara try karein.";
+   alert("Order save nahi hua. Supabase mein orders INSERT policy check karein. Error: "+(err.message||"Unknown error"));
+   submitButton.disabled=false;submitButton.textContent=originalButtonText;return;
+ }
+ status.textContent=payment==="cod"?`Order ${orderId} database mein save ho gaya. Total ${money(currentOrder.total)}. Ab WhatsApp button dabakar order apne configured number par bhejein.`:`Order ${orderId} database mein save ho gaya. Total ${money(currentOrder.total)}. Ab WhatsApp button dabayein; UPI payment shop se verify hogi.`;
+ submitButton.textContent="Order Saved ✓";
  document.getElementById("previewOrderId").innerHTML="<strong>Order ID:</strong> "+orderId;
  document.getElementById("previewItems").innerHTML=items.map(i=>`<div class="preview-line"><span>${i.name} (${i.detail}) × ${i.qty}</span><strong>${money(i.subtotal)}</strong></div>`).join("");
  document.getElementById("previewTotal").textContent=money(currentOrder.total);
