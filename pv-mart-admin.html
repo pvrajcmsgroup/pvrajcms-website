@@ -102,7 +102,7 @@ function render(){
   el("processingCount").textContent=allOrders.filter(o=>o.order_status==="processing").length;
   el("totalValue").textContent=money(allOrders.reduce((sum,o)=>sum+Number(o.total_amount||0),0));
   if(!filtered.length){el("ordersBody").innerHTML='<tr><td colspan="8" class="empty">कोई ऑर्डर नहीं मिला।</td></tr>';return;}
-  el("ordersBody").innerHTML=filtered.map(o=>{const address=[o.delivery_address,o.landmark,o.city,o.district,o.state,o.pincode].filter(Boolean).join(", ");const status=o.order_status||"new";const pillClass=status==="cancelled"?"cancelled":status==="new"?"pending":"";return `<tr><td><b>${safe(o.order_number)}</b><div class="small">${safe(new Date(o.created_at).toLocaleString("en-IN"))}</div></td><td><b>${safe(o.customer_name)}</b><div>${safe(o.customer_mobile)}</div></td><td>${safe(address)}</td><td>${prettyItems(o.items)}</td><td><b>${money(o.total_amount)}</b></td><td>${safe(o.payment_method)}<div class="small">Payment: ${safe(o.payment_status)}</div></td><td><span class="pill ${pillClass}">${safe(status)}</span></td><td><div class="row-actions"><button class="secondary" data-status="processing" data-id="${safe(o.id)}">Process</button><button class="secondary" data-status="assigned" data-id="${safe(o.id)}">Assign</button><button class="primary" data-status="delivered" data-id="${safe(o.id)}">Delivered</button><button class="danger" data-status="cancelled" data-id="${safe(o.id)}">Cancel</button></div></td></tr>`;}).join("");
+  el("ordersBody").innerHTML=filtered.map(o=>{const address=[o.delivery_address,o.landmark,o.city,o.district,o.state,o.pincode].filter(Boolean).join(", ");const status=o.order_status||"new";const pillClass=status==="cancelled"?"cancelled":status==="new"?"pending":"";return `<tr><td><b>${safe(o.order_number)}</b><div class="small">${safe(new Date(o.created_at).toLocaleString("en-IN"))}</div></td><td><b>${safe(o.customer_name)}</b><div>${safe(o.customer_mobile)}</div></td><td>${safe(address)}</td><td>${prettyItems(o.items)}</td><td><b>${money(o.total_amount)}</b></td><td>${safe(o.payment_method)}<div class="small">Payment: ${safe(o.payment_status)}</div></td><td><span class="pill ${pillClass}">${safe(status)}</span><div class="small">Shop: ${safe(o.assigned_shop||"Not assigned")}</div></td><td><div class="row-actions"><button class="secondary" data-assign="${safe(o.id)}">Assign Priyanka Store</button><button class="secondary" data-whatsapp="${safe(o.id)}">WhatsApp</button><button class="secondary" data-status="processing" data-id="${safe(o.id)}">Process</button><button class="primary" data-status="delivered" data-id="${safe(o.id)}">Delivered</button><button class="danger" data-status="cancelled" data-id="${safe(o.id)}">Cancel</button></div></td></tr>`;}).join("");
 }
 async function loadOrders(){
   const {data:sessionData}=await supabaseClient.auth.getSession();
@@ -113,10 +113,44 @@ async function loadOrders(){
   if(error){el("message").textContent="ऑर्डर नहीं पढ़ पाए: "+error.message;el("ordersBody").innerHTML='<tr><td colspan="8" class="empty">RLS policies और login की जाँच करें।</td></tr>';return;}
   allOrders=data||[];render();el("message").textContent=`${allOrders.length} ऑर्डर लोड हुए।`;
 }
+const SHOP_NAME = "Priyanka Kirana Store";
+const SHOP_OWNER = "Pradeep Yadav";
+const SHOP_PHONE = "918299601184";
+const ADMIN_WHATSAPP = "917200682049";
+function orderMessage(o){
+  const items = Array.isArray(o.items)
+    ? o.items.map(i => `${i.name || i.title || i.product_name || "Item"} x ${i.quantity ?? i.qty ?? 1}`).join(", ")
+    : (o.items && typeof o.items==="object" ? Object.entries(o.items).map(([n,q])=>`${n} x ${q}`).join(", ") : String(o.items || "—"));
+  const address = [o.delivery_address,o.landmark,o.city,o.district,o.state,o.pincode].filter(Boolean).join(", ");
+  return `PV MART ORDER\\nOrder ID: ${o.order_number}\\nCustomer: ${o.customer_name}\\nMobile: ${o.customer_mobile}\\nAddress: ${address}\\nItems: ${items}\\nTotal: ₹${o.total_amount}\\nPayment: ${o.payment_method} (${o.payment_status})\\nStatus: ${o.order_status || "new"}\\nShop: ${o.assigned_shop || SHOP_NAME}\\nPlease confirm this order.`;
+}
+function openWhatsApp(phone, message){window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`,"_blank","noopener");}
+async function assignShop(id){
+  const o=allOrders.find(x=>String(x.id)===String(id)); if(!o)return;
+  if(!confirm(`Order ${o.order_number} को ${SHOP_NAME} (${SHOP_OWNER}) को assign करें?`))return;
+  const {error}=await supabaseClient.from("orders").update({
+    order_status:"assigned",
+    assigned_shop:SHOP_NAME,
+    assigned_shop_phone:SHOP_PHONE
+  }).eq("id",id);
+  if(error){alert("दुकान assign नहीं हुई: "+error.message+"। Supabase columns/RLS policy जाँचें।");return;}
+  await loadOrders();
+  const msg=orderMessage({...o,order_status:"assigned",assigned_shop:SHOP_NAME});
+  openWhatsApp(ADMIN_WHATSAPP,msg);
+  openWhatsApp(SHOP_PHONE,msg);
+  alert("Order assign हो गया। WhatsApp chats खुलेंगी—दोनों में Send दबाकर मैसेज भेजें।");
+}
+function sendOrderWhatsApp(id){
+  const o=allOrders.find(x=>String(x.id)===String(id)); if(!o)return;
+  const msg=orderMessage(o);
+  openWhatsApp(ADMIN_WHATSAPP,msg);
+  openWhatsApp(SHOP_PHONE,msg);
+  alert("WhatsApp chats खुलेंगी। मैसेज अपने-आप नहीं भेजा जाता—दोनों chats में Send दबाएँ।");
+}
 async function updateStatus(id,status){if(!confirm(`Order status "${status}" करना है?`))return;const {error}=await supabaseClient.from("orders").update({order_status:status}).eq("id",id);if(error){alert("Status update नहीं हुआ: "+error.message+"। RLS policy जाँचें।");return;}await loadOrders();}
 el("loginForm").addEventListener("submit",async event=>{event.preventDefault();const email=el("adminEmail").value.trim().toLowerCase();const password=el("adminPassword").value;if(email!==ADMIN_EMAIL){el("loginMessage").textContent="यह Admin Gmail स्वीकार नहीं है।";return;}el("loginMessage").textContent="Login हो रहा है…";const {error}=await supabaseClient.auth.signInWithPassword({email,password});if(error){el("loginMessage").textContent="Login नहीं हुआ: "+error.message;return;}el("adminPassword").value="";showLoggedIn(email);await loadOrders();});
 el("signOutBtn").addEventListener("click",async()=>{await supabaseClient.auth.signOut();allOrders=[];showLoggedOut("आप sign out हो गए हैं।");});
-el("refreshBtn").addEventListener("click",loadOrders);el("searchBtn").addEventListener("click",render);el("searchBox").addEventListener("input",render);el("statusFilter").addEventListener("change",render);el("ordersBody").addEventListener("click",event=>{const button=event.target.closest("button[data-status]");if(button)updateStatus(button.dataset.id,button.dataset.status);});
+el("refreshBtn").addEventListener("click",loadOrders);el("searchBtn").addEventListener("click",render);el("searchBox").addEventListener("input",render);el("statusFilter").addEventListener("change",render);el("ordersBody").addEventListener("click",event=>{const button=event.target.closest("button");if(!button)return;if(button.dataset.assign)assignShop(button.dataset.assign);else if(button.dataset.whatsapp)sendOrderWhatsApp(button.dataset.whatsapp);else if(button.dataset.status)updateStatus(button.dataset.id,button.dataset.status);});
 supabaseClient.auth.onAuthStateChange((_event,session)=>{const email=session?.user?.email?.toLowerCase();if(email===ADMIN_EMAIL){showLoggedIn(email);setTimeout(loadOrders,0);}else if(!session){showLoggedOut();}});
 (async()=>{const {data}=await supabaseClient.auth.getSession();if(data.session?.user?.email?.toLowerCase()===ADMIN_EMAIL){showLoggedIn(data.session.user.email);await loadOrders();}else{showLoggedOut();}})();
 </script>
