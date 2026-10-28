@@ -178,9 +178,9 @@ async function cancelOrder(id){
     return;
   }
 
-  const phone=String(o.customer_mobile||"").replace(/\\D/g,"");
+  const phone=String(o.customer_mobile||"").replace(/\D/g,"");
   const customerPhone=phone.startsWith("91")?phone:(phone.length===10?"91"+phone:phone);
-  const message=`नमस्ते ${o.customer_name||"Customer"},\\n\\nआपका PV Mart order ${o.order_number} cancel कर दिया गया है।\\nकारण: ${cleanReason}\\n\\nअसुविधा के लिए खेद है।\\nPV Mart`;
+  const message=`नमस्ते ${o.customer_name||"Customer"},\n\nआपका PV Mart order ${o.order_number} cancel कर दिया गया है।\nकारण: ${cleanReason}\n\nअसुविधा के लिए खेद है।\nPV Mart`;
   await loadOrders();
 
   if(!customerPhone){
