@@ -137,13 +137,13 @@ async function assignShop(id){
   const o=allOrders.find(x=>String(x.id)===String(id)); if(!o)return;
   if(!confirm(`Order ${o.order_number} को ${SHOP_NAME} (${SHOP_OWNER}) को assign करें?`))return;
   const {error}=await supabaseClient.from("orders").update({
-    order_status:"assigned",
+    order_status:"processing",
     assigned_shop:SHOP_NAME,
     assigned_shop_phone:SHOP_PHONE
   }).eq("id",id);
   if(error){alert("दुकान assign नहीं हुई: "+error.message+"। Supabase columns/RLS policy जाँचें।");return;}
   await loadOrders();
-  alert("Order Priyanka Kirana Store को assign हो गया। दुकान वाले को ऑर्डर भेजने के लिए अब WhatsApp बटन दबाएँ।");
+  alert("Order Priyanka Kirana Store को assign हो गया और Status Processing कर दिया गया है। अब WhatsApp बटन दबाकर दुकानदार को ऑर्डर भेजें। जब दुकानदार WhatsApp पर बताए कि सामान deliver हो गया है, तब Dashboard में Delivered दबाएँ।");
 }
 function sendOrderWhatsApp(id){
   const o=allOrders.find(x=>String(x.id)===String(id)); if(!o)return;
