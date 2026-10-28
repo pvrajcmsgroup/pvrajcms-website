@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PV Mart — Admin Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--ink:#162033;--muted:#68758a;--green:#10865b;--line:#e4eaf2;--navy:#11243b;--amber:#f4b400}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+header{background:var(--navy);color:white;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{font-size:24px;font-weight:800}.brand span{color:#5ee0a0}header p{margin:6px 0 0;color:#c7d3e4;font-size:13px}
+.wrap{max-width:1250px;margin:22px auto;padding:0 16px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+input,select,button{font:inherit}input,select{padding:11px 12px;border:1px solid #d4dce8;border-radius:9px;background:white;min-width:0}
+button{border:0;border-radius:9px;padding:11px 14px;font-weight:700;cursor:pointer}.primary{background:var(--green);color:#fff}.secondary{background:#e8eef7;color:#1c2d44}.danger{background:#fee2e2;color:#991b1b}
+.notice{background:#fff8dd;border:1px solid #f3df91;padding:12px 14px;border-radius:10px;margin-bottom:16px;font-size:14px;line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 3px 12px #1c2d4408}.stat .label{color:var(--muted);font-size:13px}.stat .num{font-size:27px;font-weight:800;margin-top:8px}
+.panel{background:white;border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 3px 12px #1c2d4408}
+.panel h2{margin:0 0 14px;font-size:19px}
+.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:850px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14px}th{background:#f7f9fc;color:#516076;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.small{font-size:12px;color:var(--muted);line-height:1.5}.pill{display:inline-block;padding:5px 8px;border-radius:999px;background:#e7f8ef;color:#126443;font-size:12px;font-weight:700}.pill.pending{background:#fff3cf;color:#8a5b00}.pill.cancelled{background:#fee2e2;color:#991b1b}
+.empty{text-align:center;color:var(--muted);padding:28px}
+.row-actions{display:flex;gap:6px;flex-wrap:wrap}.row-actions button{padding:7px 9px;font-size:12px}
+footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 12px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{padding:14px}.stat .num{font-size:22px}}
+@media(max-width:480px){header{padding:16px}.brand{font-size:21px}.wrap{padding:0 10px;margin:14px auto}.stats{gap:9px}.stat .num{font-size:20px}.toolbar input,.toolbar select{width:100%}.toolbar button{flex:1}}
+</style>
+</head>
+<body>
+<header>
+  <div><div class="brand">🛒 PV <span>MART</span> — Admin</div><p>New orders • Customer details • Order status</p></div>
+  <button class="secondary" id="refreshBtn">↻ Refresh Orders</button>
+</header>
+<main class="wrap">
+  <div class="notice"><b>Setup note:</b> यह dashboard `public.orders` टेबल से ऑर्डर पढ़ेगा। अभी आपकी टेबल पर सार्वजनिक पढ़ने की अनुमति नहीं है—यह सही सुरक्षा है। नीचे दिए गए SQL से केवल authenticated admin को पढ़ने की अनुमति मिलेगी। किसी भी हालत में service_role/secret key HTML में न डालें।</div>
+  <section class="stats">
+    <div class="stat"><div class="label">Total Orders</div><div class="num" id="totalCount">—</div></div>
+    <div class="stat"><div class="label">New Orders</div><div class="num" id="newCount">—</div></div>
+    <div class="stat"><div class="label">Processing</div><div class="num" id="processingCount">—</div></div>
+    <div class="stat"><div class="label">Total Order Value</div><div class="num" id="totalValue">—</div></div>
+  </section>
+  <section class="panel">
+    <h2>📦 Orders</h2>
+    <div class="toolbar">
+      <input id="searchBox" type="search" placeholder="Search order ID, name, mobile, PIN…">
+      <select id="statusFilter"><option value="">All statuses</option><option value="new">New</option><option value="processing">Processing</option><option value="assigned">Assigned to shop</option><option value="delivered">Delivered</option><option value="cancelled">Cancelled</option></select>
+      <button class="primary" id="searchBtn">Search</button>
+    </div>
+    <div id="message" class="small" role="status">Dashboard connection setup बाकी है।</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Order</th><th>Customer</th><th>Delivery Address</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="ordersBody"><tr><td colspan="8" class="empty">पहले Supabase setup पूरा करें।</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<footer>PV Mart • Admin Dashboard • Keep admin credentials private.</footer>
+<script>
+const SUPABASE_URL = "https://fghdelwdeyadwilxdjkg.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable__3mJ-Xf7SMLOs2QP2INehA_zndmKDqg";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+let allOrders = [];
+
+const el = id => document.getElementById(id);
+const money = value => new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:2}).format(Number(value||0));
+const safe = value => String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+function prettyItems(items){
+  if(Array.isArray(items)) return items.map(i => `${safe(i.name || i.title || i.product_name || "Item")} × ${safe(i.quantity ?? i.qty ?? 1)}`).join("<br>");
+  if(items && typeof items==="object") return Object.entries(items).map(([name,q])=>`${safe(name)} × ${safe(q)}`).join("<br>");
+  return safe(items || "—");
+}
+function render(){
+  const q=el("searchBox").value.trim().toLowerCase(), st=el("statusFilter").value;
+  const filtered=allOrders.filter(o=>{
+    const blob=[o.order_number,o.customer_name,o.customer_mobile,o.pincode,o.city,o.district].join(" ").toLowerCase();
+    return (!q||blob.includes(q))&&(!st||o.order_status===st);
+  });
+  el("totalCount").textContent=allOrders.length;
+  el("newCount").textContent=allOrders.filter(o=>o.order_status==="new").length;
+  el("processingCount").textContent=allOrders.filter(o=>o.order_status==="processing").length;
+  el("totalValue").textContent=money(allOrders.reduce((s,o)=>s+Number(o.total_amount||0),0));
+  if(!filtered.length){el("ordersBody").innerHTML='<tr><td colspan="8" class="empty">कोई ऑर्डर नहीं मिला।</td></tr>';return;}
+  el("ordersBody").innerHTML=filtered.map(o=>{
+    const address=[o.delivery_address,o.landmark,o.city,o.district,o.state,o.pincode].filter(Boolean).join(", ");
+    const status=o.order_status||"new";
+    const pillClass=status==="cancelled"?"cancelled":status==="new"?"pending":"";
+    return `<tr>
+      <td><b>${safe(o.order_number)}</b><div class="small">${safe(new Date(o.created_at).toLocaleString("en-IN"))}</div></td>
+      <td><b>${safe(o.customer_name)}</b><div>${safe(o.customer_mobile)}</div></td>
+      <td>${safe(address)}</td><td>${prettyItems(o.items)}</td>
+      <td><b>${money(o.total_amount)}</b></td>
+      <td>${safe(o.payment_method)}<div class="small">Payment: ${safe(o.payment_status)}</div></td>
+      <td><span class="pill ${pillClass}">${safe(status)}</span></td>
+      <td><div class="row-actions">
+        <button class="secondary" data-status="processing" data-id="${safe(o.id)}">Process</button>
+        <button class="secondary" data-status="assigned" data-id="${safe(o.id)}">Assign</button>
+        <button class="primary" data-status="delivered" data-id="${safe(o.id)}">Delivered</button>
+        <button class="danger" data-status="cancelled" data-id="${safe(o.id)}">Cancel</button>
+      </div></td></tr>`;
+  }).join("");
+}
+async function loadOrders(){
+  el("message").textContent="ऑर्डर लोड हो रहे हैं…";
+  const {data,error}=await supabaseClient.from("orders").select("*").order("created_at",{ascending:false}).limit(500);
+  if(error){
+    el("message").textContent="ऑर्डर नहीं पढ़ पाए: "+error.message+" | नीचे SQL setup करें और फिर refresh करें।";
+    el("ordersBody").innerHTML='<tr><td colspan="8" class="empty">Supabase admin access setup बाकी है।</td></tr>';
+    return;
+  }
+  allOrders=data||[]; render();
+  el("message").textContent=`${allOrders.length} ऑर्डर लोड हुए।`;
+}
+async function updateStatus(id,status){
+  if(!confirm(`Order status "${status}" करना है?`))return;
+  const {error}=await supabaseClient.from("orders").update({order_status:status}).eq("id",id);
+  if(error){alert("Status update नहीं हुआ: "+error.message+"। Admin policy setup जाँचें।");return;}
+  await loadOrders();
+}
+el("refreshBtn").addEventListener("click",loadOrders);
+el("searchBtn").addEventListener("click",render);
+el("searchBox").addEventListener("input",render);
+el("statusFilter").addEventListener("change",render);
+el("ordersBody").addEventListener("click",e=>{const b=e.target.closest("button[data-status]");if(b)updateStatus(b.dataset.id,b.dataset.status);});
+loadOrders();
+</script>
+</body>
+</html>
