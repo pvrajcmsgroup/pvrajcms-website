@@ -130,20 +130,36 @@ function orderMessage(o){
     ? o.items.map(i => `${i.name || i.title || i.product_name || "Item"} x ${i.quantity ?? i.qty ?? 1}`).join(", ")
     : (o.items && typeof o.items==="object" ? Object.entries(o.items).map(([n,q])=>`${n} x ${q}`).join(", ") : String(o.items || "—"));
   const address = [o.delivery_address,o.landmark,o.city,o.district,o.state,o.pincode].filter(Boolean).join(", ");
-  return `PV MART ORDER\nOrder ID: ${o.order_number}\nCustomer: ${o.customer_name}\nMobile: ${o.customer_mobile}\nAddress: ${address}\nItems: ${items}\nTotal: ₹${o.total_amount}\nPayment: ${o.payment_method} (${o.payment_status})\nStatus: ${o.order_status || "new"}\nShop: ${o.assigned_shop || SHOP_NAME}\nPlease confirm this order.`;
+  return `PV MART ORDER\nOrder ID: ${o.order_number}\nCustomer: ${o.customer_name}\nMobile: ${o.customer_mobile}\nAddress: ${address}\nItems: ${items}\nTotal: ₹${o.total_amount}\nPayment: ${o.payment_method} (${o.payment_status})\nStatus: ${o.order_status || "new"}\nShop: ${o.assigned_shop || SHOP_NAME}\nPlease confirm this order. After delivery, reply DELIVERED with the order ID.`;
 }
 function openWhatsApp(phone, message){window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`,"_blank","noopener");}
 async function assignShop(id){
   const o=allOrders.find(x=>String(x.id)===String(id)); if(!o)return;
   if(!confirm(`Order ${o.order_number} को ${SHOP_NAME} (${SHOP_OWNER}) को assign करें?`))return;
+
+  // Save the assignment record in order_assignments first.
+  // The shop ID confirmed in Supabase is 1.
+  const {error:assignmentError}=await supabaseClient.from("order_assignments").insert({
+    order_id:o.id,
+    shop_id:1
+  });
+  if(assignmentError){
+    alert("Assignment record save नहीं हुआ: "+assignmentError.message+"। Supabase में order_assignments INSERT policy/column types जाँचें। Order status नहीं बदला गया।");
+    return;
+  }
+
   const {error}=await supabaseClient.from("orders").update({
     order_status:"processing",
     assigned_shop:SHOP_NAME,
+    assigned_shop_id:1,
     assigned_shop_phone:SHOP_PHONE
   }).eq("id",id);
-  if(error){alert("दुकान assign नहीं हुई: "+error.message+"। Supabase columns/RLS policy जाँचें।");return;}
+  if(error){
+    alert("Assignment record सेव हुआ, लेकिन orders टेबल अपडेट नहीं हुई: "+error.message+"। स्क्रीनशॉट भेजें।");
+    return;
+  }
   await loadOrders();
-  alert("Order Priyanka Kirana Store को assign हो गया और Status Processing कर दिया गया है। अब WhatsApp बटन दबाकर दुकानदार को ऑर्डर भेजें। जब दुकानदार WhatsApp पर बताए कि सामान deliver हो गया है, तब Dashboard में Delivered दबाएँ।");
+  alert("Order Priyanka Kirana Store को assign हो गया और Processing status सेव हो गया। अब WhatsApp बटन दबाकर दुकानदार को ऑर्डर भेजें। डिलीवरी पूरी होने पर फिलहाल Admin Dashboard में Delivered दबाना होगा।");
 }
 function sendOrderWhatsApp(id){
   const o=allOrders.find(x=>String(x.id)===String(id)); if(!o)return;
