@@ -151,7 +151,48 @@ function sendOrderWhatsApp(id){
   openWhatsApp(SHOP_PHONE,msg);
   alert("Priyanka Kirana Store की WhatsApp chat खुली है। मैसेज भेजने के लिए Send दबाएँ।");
 }
-async function updateStatus(id,status){if(!confirm(`Order status "${status}" करना है?`))return;const {error}=await supabaseClient.from("orders").update({order_status:status}).eq("id",id);if(error){alert("Status update नहीं हुआ: "+error.message+"। RLS policy जाँचें।");return;}await loadOrders();}
+async function updateStatus(id,status){
+  if(status==="cancelled"){await cancelOrder(id);return;}
+  if(!confirm(`Order status "${status}" करना है?`))return;
+  const {error}=await supabaseClient.from("orders").update({order_status:status}).eq("id",id);
+  if(error){alert("Status update नहीं हुआ: "+error.message+"। RLS policy जाँचें।");return;}
+  await loadOrders();
+}
+async function cancelOrder(id){
+  const o=allOrders.find(x=>String(x.id)===String(id));
+  if(!o)return;
+  if(o.order_status==="cancelled"){alert("यह order पहले से Cancelled है।");return;}
+  const reason=prompt(`Order ${o.order_number} cancel करने का कारण लिखें:`);
+  if(reason===null)return;
+  const cleanReason=reason.trim();
+  if(!cleanReason){alert("कृपया cancellation का कारण लिखें।");return;}
+
+  // Open a blank tab immediately so the browser does not block WhatsApp after the database update.
+  const waTab=window.open("about:blank","_blank");
+  const {error}=await supabaseClient.from("orders")
+    .update({order_status:"cancelled"})
+    .eq("id",id);
+  if(error){
+    if(waTab)waTab.close();
+    alert("Order cancel नहीं हुआ: "+error.message+"। Supabase RLS policy जाँचें।");
+    return;
+  }
+
+  const phone=String(o.customer_mobile||"").replace(/\\D/g,"");
+  const customerPhone=phone.startsWith("91")?phone:(phone.length===10?"91"+phone:phone);
+  const message=`नमस्ते ${o.customer_name||"Customer"},\\n\\nआपका PV Mart order ${o.order_number} cancel कर दिया गया है।\\nकारण: ${cleanReason}\\n\\nअसुविधा के लिए खेद है।\\nPV Mart`;
+  await loadOrders();
+
+  if(!customerPhone){
+    if(waTab)waTab.close();
+    alert("Order cancel हो गया, लेकिन customer का mobile number उपलब्ध नहीं है।");
+    return;
+  }
+  const waUrl=`https://wa.me/${customerPhone}?text=${encodeURIComponent(message)}`;
+  if(waTab)waTab.location.href=waUrl;
+  else window.open(waUrl,"_blank","noopener");
+  alert("Order cancel हो गया। Customer की WhatsApp chat खुल गई है—message भेजने के लिए WhatsApp में Send दबाएँ।");
+}
 el("loginForm").addEventListener("submit",async event=>{event.preventDefault();const email=el("adminEmail").value.trim().toLowerCase();const password=el("adminPassword").value;if(email!==ADMIN_EMAIL){el("loginMessage").textContent="यह Admin Gmail स्वीकार नहीं है।";return;}el("loginMessage").textContent="Login हो रहा है…";const {error}=await supabaseClient.auth.signInWithPassword({email,password});if(error){el("loginMessage").textContent="Login नहीं हुआ: "+error.message;return;}el("adminPassword").value="";showLoggedIn(email);await loadOrders();});
 el("signOutBtn").addEventListener("click",async()=>{await supabaseClient.auth.signOut();allOrders=[];showLoggedOut("आप sign out हो गए हैं।");});
 el("refreshBtn").addEventListener("click",loadOrders);el("searchBtn").addEventListener("click",render);el("searchBox").addEventListener("input",render);el("statusFilter").addEventListener("change",render);el("ordersBody").addEventListener("click",event=>{const button=event.target.closest("button");if(!button)return;if(button.dataset.assign)assignShop(button.dataset.assign);else if(button.dataset.whatsapp)sendOrderWhatsApp(button.dataset.whatsapp);else if(button.dataset.status)updateStatus(button.dataset.id,button.dataset.status);});
