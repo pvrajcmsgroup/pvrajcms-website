@@ -125,13 +125,12 @@ async function loadOrders(){
 const SHOP_NAME = "Priyanka Kirana Store";
 const SHOP_OWNER = "Pradeep Yadav";
 const SHOP_PHONE = "918299601184";
-const ADMIN_WHATSAPP = "917200682049";
 function orderMessage(o){
   const items = Array.isArray(o.items)
     ? o.items.map(i => `${i.name || i.title || i.product_name || "Item"} x ${i.quantity ?? i.qty ?? 1}`).join(", ")
     : (o.items && typeof o.items==="object" ? Object.entries(o.items).map(([n,q])=>`${n} x ${q}`).join(", ") : String(o.items || "—"));
   const address = [o.delivery_address,o.landmark,o.city,o.district,o.state,o.pincode].filter(Boolean).join(", ");
-  return `PV MART ORDER\\nOrder ID: ${o.order_number}\\nCustomer: ${o.customer_name}\\nMobile: ${o.customer_mobile}\\nAddress: ${address}\\nItems: ${items}\\nTotal: ₹${o.total_amount}\\nPayment: ${o.payment_method} (${o.payment_status})\\nStatus: ${o.order_status || "new"}\\nShop: ${o.assigned_shop || SHOP_NAME}\\nPlease confirm this order.`;
+  return `PV MART ORDER\nOrder ID: ${o.order_number}\nCustomer: ${o.customer_name}\nMobile: ${o.customer_mobile}\nAddress: ${address}\nItems: ${items}\nTotal: ₹${o.total_amount}\nPayment: ${o.payment_method} (${o.payment_status})\nStatus: ${o.order_status || "new"}\nShop: ${o.assigned_shop || SHOP_NAME}\nPlease confirm this order.`;
 }
 function openWhatsApp(phone, message){window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`,"_blank","noopener");}
 async function assignShop(id){
@@ -144,17 +143,13 @@ async function assignShop(id){
   }).eq("id",id);
   if(error){alert("दुकान assign नहीं हुई: "+error.message+"। Supabase columns/RLS policy जाँचें।");return;}
   await loadOrders();
-  const msg=orderMessage({...o,order_status:"assigned",assigned_shop:SHOP_NAME});
-  openWhatsApp(ADMIN_WHATSAPP,msg);
-  openWhatsApp(SHOP_PHONE,msg);
-  alert("Order assign हो गया। WhatsApp chats खुलेंगी—दोनों में Send दबाकर मैसेज भेजें।");
+  alert("Order Priyanka Kirana Store को assign हो गया। दुकान वाले को ऑर्डर भेजने के लिए अब WhatsApp बटन दबाएँ।");
 }
 function sendOrderWhatsApp(id){
   const o=allOrders.find(x=>String(x.id)===String(id)); if(!o)return;
   const msg=orderMessage(o);
-  openWhatsApp(ADMIN_WHATSAPP,msg);
   openWhatsApp(SHOP_PHONE,msg);
-  alert("WhatsApp chats खुलेंगी। मैसेज अपने-आप नहीं भेजा जाता—दोनों chats में Send दबाएँ।");
+  alert("Priyanka Kirana Store की WhatsApp chat खुली है। मैसेज भेजने के लिए Send दबाएँ।");
 }
 async function updateStatus(id,status){if(!confirm(`Order status "${status}" करना है?`))return;const {error}=await supabaseClient.from("orders").update({order_status:status}).eq("id",id);if(error){alert("Status update नहीं हुआ: "+error.message+"। RLS policy जाँचें।");return;}await loadOrders();}
 el("loginForm").addEventListener("submit",async event=>{event.preventDefault();const email=el("adminEmail").value.trim().toLowerCase();const password=el("adminPassword").value;if(email!==ADMIN_EMAIL){el("loginMessage").textContent="यह Admin Gmail स्वीकार नहीं है।";return;}el("loginMessage").textContent="Login हो रहा है…";const {error}=await supabaseClient.auth.signInWithPassword({email,password});if(error){el("loginMessage").textContent="Login नहीं हुआ: "+error.message;return;}el("adminPassword").value="";showLoggedIn(email);await loadOrders();});
