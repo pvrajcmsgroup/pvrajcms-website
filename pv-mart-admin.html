@@ -54,6 +54,15 @@ footer{color:var(--muted);font-size:12px;text-align:center;padding:25px 12px}
     <div class="stat"><div class="label">Processing</div><div class="num" id="processingCount">—</div></div>
     <div class="stat"><div class="label">Total Order Value</div><div class="num" id="totalValue">—</div></div>
   </section>
+  <section class="panel" style="margin-bottom:16px">
+    <h2>🏪 Priyanka Kirana Store Details</h2>
+    <div style="display:flex;gap:18px;flex-wrap:wrap;line-height:1.7">
+      <div><b>Shop Name:</b> Priyanka Kirana Store</div>
+      <div><b>Shopkeeper:</b> Pradeep Yadav</div>
+      <div><b>Mobile:</b> <a href="tel:8299601184">8299601184</a></div>
+      <div><a href="https://wa.me/918299601184" target="_blank" rel="noopener">Open shopkeeper WhatsApp</a></div>
+    </div>
+  </section>
   <section class="panel">
     <h2>📦 Orders</h2>
     <div class="toolbar">
@@ -102,7 +111,7 @@ function render(){
   el("processingCount").textContent=allOrders.filter(o=>o.order_status==="processing").length;
   el("totalValue").textContent=money(allOrders.reduce((sum,o)=>sum+Number(o.total_amount||0),0));
   if(!filtered.length){el("ordersBody").innerHTML='<tr><td colspan="8" class="empty">कोई ऑर्डर नहीं मिला।</td></tr>';return;}
-  el("ordersBody").innerHTML=filtered.map(o=>{const address=[o.delivery_address,o.landmark,o.city,o.district,o.state,o.pincode].filter(Boolean).join(", ");const status=o.order_status||"new";const pillClass=status==="cancelled"?"cancelled":status==="new"?"pending":"";return `<tr><td><b>${safe(o.order_number)}</b><div class="small">${safe(new Date(o.created_at).toLocaleString("en-IN"))}</div></td><td><b>${safe(o.customer_name)}</b><div>${safe(o.customer_mobile)}</div></td><td>${safe(address)}</td><td>${prettyItems(o.items)}</td><td><b>${money(o.total_amount)}</b></td><td>${safe(o.payment_method)}<div class="small">Payment: ${safe(o.payment_status)}</div></td><td><span class="pill ${pillClass}">${safe(status)}</span><div class="small">Shop: ${safe(o.assigned_shop||"Not assigned")}</div></td><td><div class="row-actions"><button class="secondary" data-assign="${safe(o.id)}">Assign Priyanka Store</button><button class="secondary" data-whatsapp="${safe(o.id)}">WhatsApp</button><button class="secondary" data-status="processing" data-id="${safe(o.id)}">Process</button><button class="primary" data-status="delivered" data-id="${safe(o.id)}">Delivered</button><button class="danger" data-status="cancelled" data-id="${safe(o.id)}">Cancel</button></div></td></tr>`;}).join("");
+  el("ordersBody").innerHTML=filtered.map(o=>{const address=[o.delivery_address,o.landmark,o.city,o.district,o.state,o.pincode].filter(Boolean).join(", ");const status=o.order_status||"new";const pillClass=status==="cancelled"?"cancelled":status==="new"?"pending":"";return `<tr><td><b>${safe(o.order_number)}</b><div class="small">${safe(new Date(o.created_at).toLocaleString("en-IN"))}</div></td><td><b>${safe(o.customer_name)}</b><div>${safe(o.customer_mobile)}</div></td><td>${safe(address)}</td><td>${prettyItems(o.items)}</td><td><b>${money(o.total_amount)}</b></td><td>${safe(o.payment_method)}<div class="small">Payment: ${safe(o.payment_status)}</div></td><td><span class="pill ${pillClass}">${safe(status)}</span><div class="small" style="margin-top:6px"><b>Shop:</b> ${safe(o.assigned_shop||"Not assigned")}<br><b>Shopkeeper:</b> ${safe(o.assigned_shop ? SHOP_OWNER : SHOP_OWNER)}<br><b>Mobile:</b> <a href="tel:${SHOP_PHONE}" style="color:#126443">${SHOP_PHONE.replace(/^91/,"")}</a></div></td><td><div class="row-actions"><button class="secondary" data-assign="${safe(o.id)}">Assign Priyanka Store</button><button class="secondary" data-whatsapp="${safe(o.id)}">WhatsApp</button><button class="secondary" data-status="processing" data-id="${safe(o.id)}">Process</button><button class="primary" data-status="delivered" data-id="${safe(o.id)}">Delivered</button><button class="danger" data-status="cancelled" data-id="${safe(o.id)}">Cancel</button></div></td></tr>`;}).join("");
 }
 async function loadOrders(){
   const {data:sessionData}=await supabaseClient.auth.getSession();
