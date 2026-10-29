@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PV Mart Delivery Shop</title>
+<style>
+:root{--navy:#11243b;--green:#10865b;--bg:#f3f6fb;--ink:#162033;--muted:#68758a;--line:#e4eaf2}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+header{background:var(--navy);color:white;padding:22px 16px;text-align:center}header h1{margin:0;font-size:25px}header p{margin:8px 0 0;color:#d3deec;font-size:14px}
+main{max-width:760px;margin:24px auto;padding:0 14px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 4px 14px #11243b0a}
+h2{font-size:19px;margin:0 0 14px}label{display:block;font-weight:700;margin:12px 0 6px}input{width:100%;padding:13px;border:1px solid #ccd6e3;border-radius:9px;font-size:16px}
+button{border:0;border-radius:9px;padding:13px 16px;font-size:15px;font-weight:700;cursor:pointer}.primary{background:var(--green);color:white}.wide{width:100%;margin-top:14px}.muted{color:var(--muted);font-size:13px;line-height:1.5}.status{padding:12px;border-radius:9px;background:#eef5ff;margin-top:12px;line-height:1.5}.hidden{display:none!important}.order-detail{line-height:1.8;overflow-wrap:anywhere;white-space:pre-line}.warning{background:#fff8dd;border:1px solid #f3df91;padding:12px;border-radius:9px;font-size:13px;line-height:1.5}footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+</style></head><body>
+<header><h1>🛒 PV Mart Delivery Shop</h1><p>Priyanka Kirana Store • Order delivery update</p></header>
+<main>
+<section class="card"><h2>📦 ऑर्डर खोजें</h2><p class="muted">Order ID डालकर ऑर्डर खोजें। डिलीवरी अपडेट करने के लिए सुरक्षित सत्यापन आवश्यक है।</p>
+<label for="orderId">Order ID</label><input id="orderId" placeholder="जैसे PVM17814301" autocomplete="off">
+<button id="findBtn" class="primary wide">Find Order</button><div id="findMessage" class="status hidden" role="status"></div></section>
+<section id="orderCard" class="card hidden"><h2>ऑर्डर की जानकारी</h2><div id="orderDetails" class="order-detail"></div>
+<div class="warning" style="margin-top:14px">सुरक्षा: यह शुरुआती पेज अभी डेटाबेस में कोई बदलाव नहीं करता। Delivered अपडेट करने के लिए Supabase में सुरक्षित server-side verification (Edge Function/RPC) जोड़ना आवश्यक है।</div>
+<label for="deliveryCode">Delivery verification code</label><input id="deliveryCode" type="password" placeholder="दुकान को दिया गया गुप्त कोड" autocomplete="off">
+<button id="deliveredBtn" class="primary wide">Mark as Delivered</button><div id="deliveryMessage" class="status hidden" role="status"></div></section>
+<section class="card"><h2>🏪 दुकान</h2><div><b>Priyanka Kirana Store</b></div><div class="muted">दुकानदार: Pradeep Yadav</div><div class="muted">सुरक्षित database integration जोड़ने के बाद ही delivery status अपडेट होगा।</div></section>
+</main><footer>PV Mart • Delivery Shop • Keep verification codes private.</footer>
+<script>
+const SUPABASE_URL="https://fghdelwdeyadwilxdjkg.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable__3mJ-Xf7SMLOs2QP2INehA_zndmKDqg";
+const $=id=>document.getElementById(id);let foundOrder=null;
+function showMessage(id,text){const n=$(id);n.textContent=text;n.classList.remove("hidden");}
+async function findOrder(){
+ const num=$("orderId").value.trim();$("orderCard").classList.add("hidden");$("deliveryMessage").classList.add("hidden");foundOrder=null;
+ if(!num){showMessage("findMessage","कृपया Order ID डालें।");return;}showMessage("findMessage","ऑर्डर खोजा जा रहा है…");
+ try{
+  const r=await fetch(`${SUPABASE_URL}/rest/v1/orders?order_number=eq.${encodeURIComponent(num)}&select=order_number,customer_name,items,total_amount,payment_method,order_status,assigned_shop`,{headers:{"apikey":SUPABASE_PUBLISHABLE_KEY,"Authorization":`Bearer ${SUPABASE_PUBLISHABLE_KEY}`}});
+  const rows=await r.json();if(!r.ok){showMessage("findMessage","ऑर्डर नहीं खोज पाए। Supabase permissions/API setup की जाँच आवश्यक है।");return;}
+  if(!Array.isArray(rows)||!rows.length){showMessage("findMessage","ऑर्डर नहीं मिला, या पढ़ने की अनुमति नहीं है।");return;}
+  const o=rows[0];foundOrder=o;const items=Array.isArray(o.items)?o.items.map(i=>`${i.name||i.title||i.product_name||"Item"} × ${i.quantity??i.qty??1}`).join(", "):JSON.stringify(o.items||"—");
+  $("orderDetails").textContent=`Order ID: ${o.order_number}\nCustomer: ${o.customer_name||"—"}\nItems: ${items}\nTotal: ₹${o.total_amount??"—"}\nPayment: ${o.payment_method||"—"}\nStatus: ${o.order_status||"—"}\nShop: ${o.assigned_shop||"Not assigned"}`;
+  $("orderCard").classList.remove("hidden");showMessage("findMessage","ऑर्डर मिल गया।");
+ }catch(e){showMessage("findMessage","कनेक्शन में समस्या हुई। कृपया बाद में कोशिश करें।");}
+}
+$("findBtn").addEventListener("click",findOrder);$("orderId").addEventListener("keydown",e=>{if(e.key==="Enter")findOrder();});
+$("deliveredBtn").addEventListener("click",()=>{if(!foundOrder){showMessage("deliveryMessage","पहले Order ID खोजें।");return;}if(!$("deliveryCode").value.trim()){showMessage("deliveryMessage","कृपया Delivery verification code डालें।");return;}showMessage("deliveryMessage","अभी Delivered अपडेट सक्षम नहीं है। Supabase में सुरक्षित server-side verification बनाना होगा; यह पेज अभी कोई बदलाव नहीं करता।");});
+</script></body></html>
