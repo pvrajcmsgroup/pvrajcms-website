@@ -666,6 +666,24 @@
             background: #edf6fb;
             color: #0b6798 !important;
         }
+        /* Make Login the clear, attractive primary action */
+        .account-dropdown a:last-child {
+            margin-top: 5px;
+            color: #ffffff !important;
+            background: linear-gradient(135deg, #11a8e5, #075b9b);
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(7, 91, 155, .22);
+        }
+        .account-dropdown a:last-child:hover {
+            color: #ffffff !important;
+            background: linear-gradient(135deg, #27c2ff, #0877bd);
+            box-shadow: 0 6px 16px rgba(7, 119, 189, .32);
+            transform: translateY(-1px);
+        }
+        .account-dropdown a:last-child:focus-visible {
+            outline: 3px solid #42c8ff;
+            outline-offset: 2px;
+        }
         @media (max-width: 1000px) {
             .account-menu {
                 margin: 5px auto 0;
