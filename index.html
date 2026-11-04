@@ -666,23 +666,34 @@
             background: #edf6fb;
             color: #0b6798 !important;
         }
-        /* Make Login the clear, attractive primary action */
-        .account-dropdown a:last-child {
+        /* Keep Customer Login as the primary action */
+        .account-dropdown a:nth-child(2) {
             margin-top: 5px;
             color: #ffffff !important;
             background: linear-gradient(135deg, #11a8e5, #075b9b);
             text-align: center;
             box-shadow: 0 4px 12px rgba(7, 91, 155, .22);
         }
-        .account-dropdown a:last-child:hover {
+        .account-dropdown a:nth-child(2):hover {
             color: #ffffff !important;
             background: linear-gradient(135deg, #27c2ff, #0877bd);
             box-shadow: 0 6px 16px rgba(7, 119, 189, .32);
             transform: translateY(-1px);
         }
-        .account-dropdown a:last-child:focus-visible {
+        .account-dropdown a:nth-child(2):focus-visible {
             outline: 3px solid #42c8ff;
             outline-offset: 2px;
+        }
+        .account-dropdown a.owner-login-link {
+            margin-top: 5px;
+            border-top: 1px solid #e3edf5;
+            color: #075b9b !important;
+            background: #f3f9fd;
+            text-align: center;
+        }
+        .account-dropdown a.owner-login-link:hover {
+            background: #e5f4fc;
+            color: #064675 !important;
         }
         @media (max-width: 1000px) {
             .account-menu {
@@ -718,8 +729,9 @@
         <details class="account-menu">
             <summary aria-label="Customer account" title="Account">👤</summary>
             <div class="account-dropdown">
-                <a href="register.html">Register</a>
-                <a href="login.html">Login</a>
+                <a href="register.html">Customer Register / Create Account</a>
+                <a href="login.html">Customer Login</a>
+                <a href="owner-login.html" class="owner-login-link">Owner / Master Login</a>
             </div>
         </details>
     </div>
