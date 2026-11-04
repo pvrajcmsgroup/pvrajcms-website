@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PVrajCMS - Customer Dashboard</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #081426;
+      color: #fff;
+    }
+
+    header {
+      background: #10233e;
+      padding: 18px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1e4266;
+    }
+
+    header h2 { margin: 0; color: #25c7e8; }
+
+    button {
+      background: #13b9dc;
+      color: #061525;
+      border: 0;
+      padding: 11px 18px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 15px;
+    }
+
+    .card {
+      background: #10233e;
+      border: 1px solid #21466a;
+      border-radius: 12px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    h3 { color: #25c7e8; }
+
+    .info {
+      color: #c7d6e8;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    .product {
+      border: 1px solid #285477;
+      border-radius: 9px;
+      padding: 15px;
+      margin: 12px 0;
+    }
+
+    #message { color: #25c7e8; }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h2>PVrajCMS</h2>
+  <button onclick="logout()">Logout</button>
+</header>
+
+<main>
+  <div class="card">
+    <h3>Customer Dashboard</h3>
+    <p id="message">Loading your account...</p>
+    <div class="info">
+      <p><b>Name:</b> <span id="customerName">-</span></p>
+      <p><b>Email:</b> <span id="customerEmail">-</span></p>
+      <p><b>Mobile:</b> <span id="customerMobile">-</span></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Our Products</h3>
+    <div class="product">
+      <b>Crude Oil Scalping Calculator</b>
+      <p class="info">Manage your calculator subscription.</p>
+    </div>
+    <div class="product">
+      <b>PV Mart</b>
+      <p class="info">Access your PV Mart account.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>My Subscriptions</h3>
+    <p class="info" id="subscriptions">Loading subscriptions...</p>
+  </div>
+
+  <div class="card">
+    <h3>Payment History</h3>
+    <p class="info" id="payments">Loading payment history...</p>
+  </div>
+</main>
+
+<script>
+async function loadDashboard() {
+  const { data: { user }, error } = await pvSupabase.auth.getUser();
+
+  if (error || !user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  document.getElementById("customerEmail").textContent = user.email || "-";
+
+  const { data: profile, error: profileError } = await pvSupabase
+    .from("profiles")
+    .select("full_name, mobile")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (!profileError && profile) {
+    document.getElementById("customerName").textContent =
+      profile.full_name || "-";
+
+    document.getElementById("customerMobile").textContent =
+      profile.mobile || "-";
+  }
+
+  const { data: subs, error: subError } = await pvSupabase
+    .from("subscriptions")
+    .select("*")
+    .eq("user_id", user.id);
+
+  document.getElementById("subscriptions").textContent =
+    subError ? "Could not load subscriptions." :
+    subs && subs.length ? JSON.stringify(subs) :
+    "No subscriptions found.";
+
+  const { data: paymentData, error: paymentError } = await pvSupabase
+    .from("payments")
+    .select("*")
+    .eq("user_id", user.id);
+
+  document.getElementById("payments").textContent =
+    paymentError ? "Could not load payment history." :
+    paymentData && paymentData.length ? JSON.stringify(paymentData) :
+    "No payment history found.";
+
+  document.getElementById("message").textContent = "Welcome to PVrajCMS!";
+}
+
+async function logout() {
+  await pvSupabase.auth.signOut();
+  window.location.href = "login.html";
+}
+
+loadDashboard();
+</script>
+
+</body>
+</html>
