@@ -21,12 +21,19 @@ h1{font-size:clamp(28px,5vw,38px);margin:8px 0 10px}.intro{color:#b9cde0;line-he
 .price-row{display:flex;align-items:baseline;gap:8px;margin-top:15px}.price{font-size:34px;font-weight:800;color:#9df2c0}.period{color:#b9cde0;font-size:13px}
 .line{height:1px;background:rgba(255,255,255,.12);margin:18px 0}
 .detail{display:flex;justify-content:space-between;gap:12px;margin:12px 0;font-size:14px}.detail span:first-child{color:#b9cde0}.detail strong{text-align:right;overflow-wrap:anywhere}
-.qrbox{min-height:190px;border:1px dashed rgba(120,190,220,.4);border-radius:12px;display:grid;place-items:center;text-align:center;padding:18px;background:rgba(255,255,255,.025);color:#b9cde0}
-.qrbox strong{display:block;color:#f4f8ff;margin-bottom:7px}
+.qrbox{border:1px dashed rgba(120,190,220,.4);border-radius:12px;text-align:center;padding:16px;background:rgba(255,255,255,.025);color:#b9cde0}
+.qrbox img{display:block;width:min(100%,270px);height:auto;margin:12px auto;border-radius:8px;background:#fff;padding:8px}
 .notice{margin-top:16px;padding:12px;border-radius:9px;background:rgba(255,190,70,.09);border:1px solid rgba(255,190,70,.22);color:#ffe0a3;font-size:12px;line-height:1.6}
 .status{margin-top:16px;padding:12px;border-radius:9px;background:rgba(255,255,255,.045);color:#b9cde0;font-size:12px;line-height:1.6}
-button{width:100%;min-height:46px;margin-top:16px;border:0;border-radius:9px;background:#174ea6;color:white;font-size:14px;font-weight:800;cursor:pointer}
+.field{margin-top:16px}.field label{display:block;margin-bottom:8px;font-size:13px;font-weight:700;color:#e8f3ff}
+.field input{width:100%;min-height:44px;padding:11px 12px;border:1px solid rgba(150,195,225,.35);border-radius:8px;background:#0a1b2c;color:#fff;font-size:14px}
+.field input:focus{outline:2px solid rgba(67,202,255,.45);border-color:#43caff}
+.field input[type=file]{padding:9px}
+.hint{margin:7px 0 0;color:#a9bfd3;font-size:11px;line-height:1.5}
+button{width:100%;min-height:46px;margin-top:18px;border:0;border-radius:9px;background:#087dba;color:white;font-size:14px;font-weight:800;cursor:pointer}
 button:disabled{opacity:.55;cursor:not-allowed}
+#paymentStatus[data-kind="success"]{color:#a9f5c5;border:1px solid rgba(80,220,140,.25)}
+#paymentStatus[data-kind="error"]{color:#ffc1b9;border:1px solid rgba(255,100,90,.3)}
 @media(max-width:700px){.layout{grid-template-columns:1fr}.topbar{padding:9px 14px}.brand{gap:0}.brand img{width:min(52vw,210px)}.tagline{display:none}main{margin-top:25px}.card{padding:19px}}
 </style>
 </head>
@@ -38,7 +45,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
 <main>
   <div class="eyebrow">Secure customer checkout</div>
   <h1>Subscription Checkout</h1>
-  <p class="intro">Review your service and subscription details. Your access will be activated only after the payment is verified.</p>
+  <p class="intro">Review your service and subscription details. Your access will be activated only after the payment is manually verified by the owner.</p>
   <div class="layout">
     <section class="card">
       <h2>Order Summary</h2>
@@ -52,16 +59,31 @@ button:disabled{opacity:.55;cursor:not-allowed}
       <div class="detail"><span>Registered email</span><strong id="customerEmail">Loading...</strong></div>
       <div class="detail"><span>Subscription duration</span><strong>30 Days</strong></div>
       <div class="detail"><span>Total payable</span><strong>₹1</strong></div>
-      <div class="notice">This is currently a ₹1 test checkout. Before accepting real customer payments, replace it with the final price and configure verified payment processing.</div>
+      <div class="notice">This is currently a ₹1 test checkout. Payment is not verified automatically. Do not submit a request until you have completed the UPI payment.</div>
     </section>
     <section class="card">
       <h2>Pay using UPI</h2>
       <div class="qrbox">
-        <div><strong>UPI QR Code will appear here</strong>Owner's PhonePe QR image has not been added yet.</div>
+        <strong>Scan this QR code to pay ₹1</strong>
+        <img src="GooglePay_QR.png" alt="PVrajCMS Group UPI payment QR code">
+        <span class="muted">Please verify the payee name and amount in your UPI app before paying.</span>
       </div>
-      <div class="status" id="paymentStatus">UPI ID and QR details are not configured yet. Please contact the website owner for payment instructions. Do not send payment to an unverified UPI ID.</div>
-      <button type="button" disabled>Payment details not configured</button>
-      <p class="muted">After UPI details and secure payment verification are configured, this section will show the payment action and transaction confirmation steps.</p>
+
+      <form id="paymentForm">
+        <div class="field">
+          <label for="utrNumber">UPI UTR / Transaction Reference Number</label>
+          <input id="utrNumber" name="utrNumber" type="text" minlength="6" maxlength="40" autocomplete="off" placeholder="Enter UTR / transaction reference" required>
+          <p class="hint">Enter the transaction reference shown in your UPI payment app.</p>
+        </div>
+        <div class="field">
+          <label for="paymentScreenshot">Payment Screenshot</label>
+          <input id="paymentScreenshot" name="paymentScreenshot" type="file" accept="image/png,image/jpeg,image/webp" required>
+          <p class="hint">Upload a clear payment screenshot (PNG, JPG or WEBP; maximum 5 MB).</p>
+        </div>
+        <button id="submitPayment" type="submit" disabled>Loading account...</button>
+      </form>
+      <div class="status" id="paymentStatus" role="status" aria-live="polite">Checking your account...</div>
+      <p class="muted">After submission, your request will remain Pending until the owner checks the UTR and payment screenshot. Subscription access is not activated by submitting this form.</p>
     </section>
   </div>
 </main>
@@ -71,13 +93,28 @@ button:disabled{opacity:.55;cursor:not-allowed}
 document.addEventListener("DOMContentLoaded", async function(){
   const nameEl=document.getElementById("customerName");
   const emailEl=document.getElementById("customerEmail");
+  const statusEl=document.getElementById("paymentStatus");
+  const form=document.getElementById("paymentForm");
+  const submitBtn=document.getElementById("submitPayment");
+  const utrEl=document.getElementById("utrNumber");
+  const fileEl=document.getElementById("paymentScreenshot");
   const client=(typeof pvSupabase!=="undefined"&&pvSupabase)?pvSupabase:window.pvSupabase;
-  if(!client?.auth){
+  let currentUser=null;
+
+  function showStatus(message,kind){
+    statusEl.textContent=message;
+    statusEl.dataset.kind=kind||"";
+  }
+
+  if(!client?.auth || !client?.storage){
     nameEl.textContent="Unable to verify";
     emailEl.textContent="Supabase not connected";
-    document.getElementById("paymentStatus").textContent="Account verification is unavailable. Please try again later.";
+    submitBtn.disabled=true;
+    submitBtn.textContent="Checkout unavailable";
+    showStatus("Supabase is not connected. Please contact the website owner.", "error");
     return;
   }
+
   try{
     const {data,error}=await client.auth.getUser();
     if(error||!data?.user){
@@ -85,14 +122,90 @@ document.addEventListener("DOMContentLoaded", async function(){
       window.location.replace("login.html?redirect="+returnTo);
       return;
     }
-    const user=data.user;
-    nameEl.textContent=user.user_metadata?.full_name||user.user_metadata?.name||user.email?.split("@")[0]||"Customer";
-    emailEl.textContent=user.email||"Not available";
+    currentUser=data.user;
+    nameEl.textContent=currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||currentUser.email?.split("@")[0]||"Customer";
+    emailEl.textContent=currentUser.email||"Not available";
+    submitBtn.disabled=false;
+    submitBtn.textContent="Submit Payment for Verification";
+    showStatus("Account verified. After paying ₹1, enter the UTR and upload your payment screenshot.", "");
   }catch(error){
     console.error("Checkout account verification failed:",error);
     nameEl.textContent="Unable to verify";
     emailEl.textContent="Please refresh";
+    submitBtn.disabled=true;
+    submitBtn.textContent="Checkout unavailable";
+    showStatus("Account verification failed. Please refresh the page and try again.", "error");
   }
+
+  form.addEventListener("submit", async function(event){
+    event.preventDefault();
+    if(!currentUser){
+      showStatus("Please log in again before submitting your payment request.", "error");
+      return;
+    }
+
+    const utr=utrEl.value.trim();
+    const file=fileEl.files && fileEl.files[0];
+    if(utr.length<6 || utr.length>40){
+      showStatus("Please enter a valid UTR / transaction reference (6–40 characters).", "error");
+      utrEl.focus();
+      return;
+    }
+    if(!file){
+      showStatus("Please select your payment screenshot.", "error");
+      return;
+    }
+    const allowedTypes=["image/png","image/jpeg","image/webp"];
+    if(!allowedTypes.includes(file.type)){
+      showStatus("Only PNG, JPG or WEBP screenshots are accepted.", "error");
+      return;
+    }
+    if(file.size>5*1024*1024){
+      showStatus("Screenshot must be 5 MB or smaller.", "error");
+      return;
+    }
+
+    submitBtn.disabled=true;
+    submitBtn.textContent="Uploading and submitting...";
+    showStatus("Uploading your payment screenshot. Please do not close this page.", "");
+
+    const extension=file.type==="image/png"?"png":file.type==="image/webp"?"webp":"jpg";
+    const filePath=currentUser.id+"/"+Date.now()+"-"+crypto.randomUUID()+"."+extension;
+
+    try{
+      const {data:uploadData,error:uploadError}=await client.storage
+        .from("payment-screenshots")
+        .upload(filePath,file,{contentType:file.type,upsert:false});
+
+      if(uploadError) throw uploadError;
+
+      const {data:requestData,error:requestError}=await client
+        .from("payment_requests")
+        .insert({
+          user_id:currentUser.id,
+          service_name:"Crude Oil Scalping Calculator",
+          amount:1.00,
+          duration_days:30,
+          utr_number:utr,
+          screenshot_path:uploadData.path,
+          status:"pending"
+        })
+        .select("id")
+        .single();
+
+      if(requestError) throw requestError;
+
+      form.reset();
+      showStatus("Payment request submitted successfully. Your request is Pending owner verification. Reference: "+requestData.id, "success");
+      submitBtn.textContent="Request Submitted";
+    }catch(error){
+      console.error("Payment request submission failed:",error);
+      const message=error?.message||"Unknown error";
+      showStatus("Could not submit your request: "+message+". Please contact the website owner if the screenshot uploaded but the request was not saved.", "error");
+      submitBtn.disabled=false;
+      submitBtn.textContent="Try Again";
+    }
+  });
 });
 </script>
 </body>
