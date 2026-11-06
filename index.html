@@ -1312,6 +1312,31 @@ border-radius: 16px;
 }
 </style>
 
+
+<style id="pv-mobile-banner-full-screen-width">
+@media screen and (max-width: 600px) {
+  body.home-page .pv-diwali-image-banner {
+    width: 100vw !important;
+    max-width: none !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: 0 !important;
+    margin-top: 8px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  body.home-page .pv-diwali-image-banner img {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+}
+</style>
+
 </head>
 
 <body class="home-page">
