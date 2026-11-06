@@ -8,173 +8,58 @@
   <style>
     * { box-sizing: border-box; }
     body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
+      margin: 0; min-height: 100vh; font-family: Arial, Helvetica, sans-serif;
       color: #f4f8ff;
-      background:
-        radial-gradient(circle at 15% 15%, rgba(0,174,239,.16), transparent 30%),
-        radial-gradient(circle at 85% 80%, rgba(0,110,180,.18), transparent 32%),
-        #061321;
+      background: radial-gradient(circle at 15% 15%, rgba(0,174,239,.16), transparent 30%),
+        radial-gradient(circle at 85% 80%, rgba(0,110,180,.18), transparent 32%), #061321;
     }
     .topbar {
-      min-height: 78px;
-      padding: 10px 4%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      border-bottom: 1px solid rgba(255,255,255,.12);
+      min-height: 78px; padding: 10px 4%; display: flex; align-items: center;
+      justify-content: space-between; gap: 16px; border-bottom: 1px solid rgba(255,255,255,.12);
       background: #071422;
     }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
-    }
-    .brand img {
-      width: min(28vw, 300px);
-      max-height: 62px;
-      object-fit: contain;
-    }
-    .tagline {
-      border-left: 1px solid rgba(255,255,255,.2);
-      padding-left: 14px;
-      color: #d6e6f7;
-      font-size: 12px;
-      white-space: nowrap;
-    }
-    .back-link {
-      color: #6bd5ff;
-      text-decoration: none;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-    .page {
-      min-height: calc(100vh - 78px);
-      display: grid;
-      place-items: center;
-      padding: 38px 16px;
-    }
+    .brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .brand img { width: min(28vw, 300px); max-height: 62px; object-fit: contain; }
+    .tagline { border-left: 1px solid rgba(255,255,255,.2); padding-left: 14px; color: #d6e6f7; font-size: 12px; white-space: nowrap; }
+    .back-link { color: #6bd5ff; text-decoration: none; font-weight: 700; white-space: nowrap; }
+    .page { min-height: calc(100vh - 78px); display: grid; place-items: center; padding: 38px 16px; }
     .register-card {
-      width: 100%;
-      max-width: 510px;
-      padding: 34px;
-      border: 1px solid rgba(76,190,238,.28);
-      border-radius: 18px;
-      background: linear-gradient(145deg, rgba(15,43,63,.97), rgba(7,23,38,.98));
+      width: 100%; max-width: 510px; padding: 34px; border: 1px solid rgba(76,190,238,.28);
+      border-radius: 18px; background: linear-gradient(145deg, rgba(15,43,63,.97), rgba(7,23,38,.98));
       box-shadow: 0 22px 65px rgba(0,0,0,.35);
     }
-    .eyebrow {
-      margin: 0 0 10px;
-      color: #43caff;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-    }
-    h1 {
-      margin: 0;
-      font-size: clamp(27px, 5vw, 34px);
-      line-height: 1.2;
-    }
-    .intro {
-      margin: 12px 0 25px;
-      color: #b9cde0;
-      font-size: 14px;
-      line-height: 1.65;
-    }
+    .eyebrow { margin: 0 0 10px; color: #43caff; font-size: 11px; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(27px, 5vw, 34px); line-height: 1.2; }
+    .intro { margin: 12px 0 25px; color: #b9cde0; font-size: 14px; line-height: 1.65; }
     .field { margin-bottom: 16px; }
-    label {
-      display: block;
-      margin-bottom: 7px;
-      color: #e8f3ff;
-      font-size: 13px;
-      font-weight: 700;
-    }
+    label { display: block; margin-bottom: 7px; color: #e8f3ff; font-size: 13px; font-weight: 700; }
     input {
-      width: 100%;
-      min-height: 47px;
-      padding: 12px 14px;
-      color: #ffffff;
-      background: #071827;
-      border: 1px solid #29465d;
-      border-radius: 9px;
-      outline: none;
-      font-size: 15px;
+      width: 100%; min-height: 47px; padding: 12px 14px; color: #fff; background: #071827;
+      border: 1px solid #29465d; border-radius: 9px; outline: none; font-size: 15px;
     }
     input::placeholder { color: #7890a5; }
-    input:focus {
-      border-color: #35bdf2;
-      box-shadow: 0 0 0 3px rgba(53,189,242,.13);
-    }
-    .terms {
-      display: flex;
-      align-items: flex-start;
-      gap: 9px;
-      margin: 18px 0;
-      color: #b9cde0;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-    .terms input {
-      width: 16px;
-      min-height: 16px;
-      margin: 1px 0 0;
-      accent-color: #13a9e4;
-      flex: 0 0 auto;
-    }
-    .terms a, .signin a {
-      color: #55ceff;
-      text-decoration: none;
-      font-weight: 700;
-    }
+    input:focus { border-color: #35bdf2; box-shadow: 0 0 0 3px rgba(53,189,242,.13); }
+    .terms { display: flex; align-items: flex-start; gap: 9px; margin: 18px 0; color: #b9cde0; font-size: 12px; line-height: 1.5; }
+    .terms input { width: 16px; min-height: 16px; margin: 1px 0 0; accent-color: #13a9e4; flex: 0 0 auto; }
+    .terms a, .signin a { color: #55ceff; text-decoration: none; font-weight: 700; }
     .create-btn {
-      width: 100%;
-      min-height: 49px;
-      border: 0;
-      border-radius: 9px;
-      color: #fff;
-      background: linear-gradient(135deg, #13b8ef, #075c9b);
-      box-shadow: 0 8px 22px rgba(5,112,177,.28);
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
+      width: 100%; min-height: 49px; border: 0; border-radius: 9px; color: #fff;
+      background: linear-gradient(135deg, #13b8ef, #075c9b); box-shadow: 0 8px 22px rgba(5,112,177,.28);
+      font-size: 15px; font-weight: 800; cursor: pointer;
     }
-    .create-btn:hover {
-      background: linear-gradient(135deg, #38ccff, #0879bd);
-      transform: translateY(-1px);
-    }
-    .signin {
-      margin: 20px 0 0;
-      color: #b9cde0;
-      text-align: center;
-      font-size: 13px;
-    }
-    .notice {
-      margin: 18px 0 0;
-      padding: 10px 12px;
-      color: #9db6ca;
-      background: rgba(255,255,255,.045);
-      border-radius: 8px;
-      font-size: 11px;
-      line-height: 1.5;
-      text-align: center;
-    }
+    .create-btn:hover { background: linear-gradient(135deg, #38ccff, #0879bd); transform: translateY(-1px); }
+    .create-btn:disabled { opacity: .65; cursor: wait; transform: none; }
+    .signin { margin: 20px 0 0; color: #b9cde0; text-align: center; font-size: 13px; }
+    .notice { margin: 18px 0 0; padding: 10px 12px; color: #9db6ca; background: rgba(255,255,255,.045); border-radius: 8px; font-size: 11px; line-height: 1.5; text-align: center; }
+    .notice.success { color: #9df2c0; background: rgba(30,160,90,.12); }
+    .notice.error { color: #ffb4b4; background: rgba(200,40,40,.12); }
     @media (max-width: 600px) {
       .topbar { min-height: 66px; padding: 9px 14px; }
-      .brand { gap: 0; }
-      .brand img { width: min(55vw, 220px); max-height: 52px; }
-      .tagline { display: none; }
-      .page { min-height: calc(100vh - 66px); padding: 22px 13px; }
-      .register-card { padding: 25px 19px; border-radius: 14px; }
-      .intro { margin-bottom: 21px; }
+      .brand { gap: 0; } .brand img { width: min(55vw, 220px); max-height: 52px; }
+      .tagline { display: none; } .page { min-height: calc(100vh - 66px); padding: 22px 13px; }
+      .register-card { padding: 25px 19px; border-radius: 14px; } .intro { margin-bottom: 21px; }
     }
-    @media (max-width: 350px) {
-      .back-link { font-size: 13px; }
-      .brand img { width: 48vw; }
-    }
+    @media (max-width: 350px) { .back-link { font-size: 13px; } .brand img { width: 48vw; } }
   </style>
 </head>
 <body>
@@ -195,7 +80,7 @@
       <form id="registerForm">
         <div class="field">
           <label for="fullName">Full Name</label>
-          <input id="fullName" name="fullName" type="text" placeholder="Enter your full name" autocomplete="name" required>
+          <input id="fullName" name="fullName" type="text" placeholder="Enter your full name" autocomplete="name" maxlength="100" required>
         </div>
         <div class="field">
           <label for="mobile">Mobile Number</label>
@@ -216,27 +101,109 @@
 
         <label class="terms">
           <input type="checkbox" id="terms" required>
-          <span>I agree to the <a href="#" aria-label="Terms and Conditions">Terms &amp; Conditions</a> and Privacy Policy.</span>
+          <span>I agree to the <a href="#" id="termsLink" aria-label="Terms and Conditions">Terms &amp; Conditions</a> and Privacy Policy.</span>
         </label>
 
-        <button class="create-btn" type="submit">Create Account</button>
+        <button class="create-btn" id="createButton" type="submit">Create Account</button>
       </form>
 
       <p class="signin">Already have an account? <a href="login.html">Login</a></p>
-      <p class="notice">Registration will be connected to the secure central customer account system in the next step. This page is currently a design preview.</p>
+      <p class="notice" id="statusMessage" role="status" aria-live="polite">Secure registration is provided by Supabase. Complete the project settings in this file before publishing.</p>
     </section>
   </main>
 
-  <script>
-    document.getElementById("registerForm").addEventListener("submit", function (event) {
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    // Replace these two values with your Supabase project's public URL and publishable/anon key.
+    // Never put a service_role/secret key in a browser file.
+    const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+    const SUPABASE_ANON_KEY = "YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY";
+
+    const statusMessage = document.getElementById("statusMessage");
+    const form = document.getElementById("registerForm");
+    const createButton = document.getElementById("createButton");
+
+    function showMessage(message, type = "") {
+      statusMessage.textContent = message;
+      statusMessage.className = `notice ${type}`.trim();
+    }
+
+    const isConfigured =
+      SUPABASE_URL.startsWith("https://") &&
+      !SUPABASE_URL.includes("YOUR_SUPABASE") &&
+      SUPABASE_ANON_KEY.length > 20 &&
+      !SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
+
+    let supabase = null;
+    if (isConfigured) {
+      supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      showMessage("Secure registration is ready. Your details will be handled by Supabase.");
+    } else {
+      showMessage("Supabase setup is pending: add your Project URL and Publishable/Anon Key to this file.");
+    }
+
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      const password = document.getElementById("password").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
-      if (password !== confirmPassword) {
-        alert("Password and Confirm Password do not match.");
+
+      if (!supabase) {
+        showMessage("Supabase is not configured yet. Add your Project URL and Publishable/Anon Key, then try again.", "error");
         return;
       }
-      alert("Registration design is ready. Secure account creation will be activated after connecting the central authentication system.");
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (!/^[0-9]{10}$/.test(mobile)) {
+        showMessage("Please enter a valid 10-digit mobile number.", "error");
+        return;
+      }
+      if (password !== confirmPassword) {
+        showMessage("Password and Confirm Password do not match.", "error");
+        return;
+      }
+      if (password.length < 8) {
+        showMessage("Password must contain at least 8 characters.", "error");
+        return;
+      }
+
+      createButton.disabled = true;
+      createButton.textContent = "Creating Account...";
+      showMessage("Creating your secure account. Please wait.");
+
+      try {
+        const emailRedirectTo = `${window.location.origin}/login.html`;
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo,
+            data: {
+              full_name: fullName,
+              mobile,
+              account_type: "customer"
+            }
+          }
+        });
+
+        if (error) throw error;
+
+        if (data.session) {
+          showMessage("Your account has been created successfully. You can now sign in.", "success");
+        } else {
+          showMessage("Registration submitted successfully. Please check your email and click the verification link before signing in.", "success");
+        }
+
+        form.reset();
+      } catch (error) {
+        showMessage(error.message || "Registration failed. Please try again.", "error");
+      } finally {
+        createButton.disabled = false;
+        createButton.textContent = "Create Account";
+      }
     });
   </script>
 </body>
