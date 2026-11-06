@@ -52,19 +52,19 @@ button:disabled{opacity:.55;cursor:not-allowed}
       <div class="product">
         <h3>Crude Oil Scalping Calculator</h3>
         <p class="muted">Calculate entry price, stop loss and target levels with the dedicated crude oil trading calculator.</p>
-        <div class="price-row"><span class="price">₹1</span><span class="period">/ 30 Days (test price)</span></div>
+        <div class="price-row"><span class="price">₹2</span><span class="period">/ 30 Days (test price)</span></div>
       </div>
       <div class="line"></div>
       <div class="detail"><span>Customer</span><strong id="customerName">Loading...</strong></div>
       <div class="detail"><span>Registered email</span><strong id="customerEmail">Loading...</strong></div>
       <div class="detail"><span>Subscription duration</span><strong>30 Days</strong></div>
-      <div class="detail"><span>Total payable</span><strong>₹1</strong></div>
-      <div class="notice">This is currently a ₹1 test checkout. Payment is not verified automatically. Do not submit a request until you have completed the UPI payment.</div>
+      <div class="detail"><span>Total payable</span><strong>₹2</strong></div>
+      <div class="notice">This is currently a ₹2 test checkout. Payment is not verified automatically. Do not submit a request until you have completed the UPI payment.</div>
     </section>
     <section class="card">
       <h2>Pay using UPI</h2>
       <div class="qrbox">
-        <strong>Scan this QR code to pay ₹1</strong>
+        <strong>Scan this QR code to pay ₹2</strong>
         <img src="GooglePay_QR.png" alt="PVrajCMS Group UPI payment QR code">
         <span class="muted">Please verify the payee name and amount in your UPI app before paying.</span>
       </div>
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async function(){
     emailEl.textContent=currentUser.email||"Not available";
     submitBtn.disabled=false;
     submitBtn.textContent="Submit Payment for Verification";
-    showStatus("Account verified. After paying ₹1, enter the UTR and upload your payment screenshot.", "");
+    showStatus("Account verified. After paying ₹2, enter the UTR and upload your payment screenshot.", "");
   }catch(error){
     console.error("Checkout account verification failed:",error);
     nameEl.textContent="Unable to verify";
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", async function(){
         .insert({
           user_id:currentUser.id,
           service_name:"Crude Oil Scalping Calculator",
-          amount:1.00,
+          amount:2.00,
           duration_days:30,
           utr_number:utr,
           screenshot_path:uploadData.path,
