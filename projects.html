@@ -243,6 +243,14 @@
             }
         }
 
+        /* Customer category navigation */
+        .category-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; margin:24px 0 42px; }
+        .category-link { display:block; padding:20px; border:1px solid rgba(103,189,226,.28); border-radius:10px; background:linear-gradient(145deg,rgba(18,48,69,.9),rgba(7,22,36,.96)); color:#f7fbff; text-decoration:none; transition:.2s ease; }
+        .category-link:hover { transform:translateY(-2px); border-color:#48c2f1; }
+        .category-link strong { display:block; margin-bottom:7px; font-size:17px; }
+        .category-link span { color:#afc3d2; font-size:13px; line-height:1.5; }
+        .category-section { scroll-margin-top:24px; }
+        .category-section > h2 { padding-bottom:9px; border-bottom:1px solid rgba(103,189,226,.2); }
     </style>
 </head>
 <body class="projects-page">
@@ -273,7 +281,17 @@
     <p>PVRajCMS Group is developing and exploring projects across technology, digital solutions, financial markets, healthcare innovation, business ventures and digital media.</p>
     <p>Our project ecosystem continues to evolve as we develop new ideas, technologies and opportunities for the future.</p>
 
-    <h2>Digital Solutions</h2>
+    <h2>Explore Categories</h2>
+    <div class="category-grid" aria-label="Project categories">
+        <a class="category-link" href="#digital-solutions"><strong>1. Digital Solutions</strong><span>Web, software, AI and automation projects</span></a>
+        <a class="category-link" href="#fm-fintech"><strong>2. FM &amp; FinTech</strong><span>Financial markets, trading and FinTech initiatives</span></a>
+        <a class="category-link" href="#business-ventures"><strong>3. Business Ventures</strong><span>Digital ventures, PV Mart and technology opportunities</span></a>
+        <a class="category-link" href="#healthcare-innovation"><strong>4. Healthcare &amp; Innovation</strong><span>Healthcare technology and innovation projects</span></a>
+        <a class="category-link" href="#other-projects"><strong>5. Other</strong><span>Media, future projects and other initiatives</span></a>
+    </div>
+
+    <section class="category-section" id="digital-solutions">
+    <h2>1. Digital Solutions</h2>
     <div class="project-card">
         <h3>Web &amp; Software Solutions</h3>
         <p>Digital projects focused on websites, software systems and technology solutions for modern businesses and digital operations.</p>
@@ -283,7 +301,9 @@
         <p>Projects exploring artificial intelligence, automation and emerging digital technologies to improve workflows and create practical technology solutions.</p>
     </div>
 
-    <h2>FM &amp; FinTech</h2>
+    </section>
+    <section class="category-section" id="fm-fintech">
+    <h2>2. FM &amp; FinTech</h2>
     <div class="project-card">
         <h3>Financial Markets Technology</h3>
         <p>Technology-oriented projects connected with financial markets, trading, commodities and digital market solutions.</p>
@@ -299,7 +319,26 @@
         <p>Exploring the intersection of financial markets, software and modern financial technology through digital projects and future initiatives.</p>
     </div>
 
-    <h2>Healthcare &amp; Innovation</h2>
+    </section>
+    <section class="category-section" id="business-ventures">
+    <h2>3. Business Ventures</h2>
+    <div class="project-card">
+        <h3>Digital Business Ventures</h3>
+        <p>Business initiatives combining technology, digital systems and entrepreneurial opportunities to build future-focused ventures.</p>
+    </div>
+    <div class="project-card">
+        <h3>Technology-Driven Opportunities</h3>
+        <p>Exploring new business opportunities where technology and engineering can support the development of useful products, services and digital platforms.</p>
+    </div>
+    <div class="project-card">
+        <h3>PV Mart – Digital Commerce Platform</h3>
+        <p>An online commerce platform for grocery, daily essentials and other shopping categories.</p>
+        <p><a href="pv-mart.html" class="header-cta">Open PV Mart</a></p>
+    </div>
+
+    </section>
+    <section class="category-section" id="healthcare-innovation">
+    <h2>4. Healthcare &amp; Innovation</h2>
     <div class="project-card">
         <h3>Healthcare Technology Projects</h3>
         <p>Technology-focused projects and concepts aimed at exploring innovative digital solutions for healthcare-related opportunities.</p>
@@ -309,16 +348,9 @@
         <p>Projects focused on identifying opportunities where engineering, technology and innovation can create practical value.</p>
     </div>
 
-    <h2>Business Ventures</h2>
-    <div class="project-card">
-        <h3>Digital Business Ventures</h3>
-        <p>Business initiatives combining technology, digital systems and entrepreneurial opportunities to build future-focused ventures.</p>
-    </div>
-    <div class="project-card">
-        <h3>Technology-Driven Opportunities</h3>
-        <p>Exploring new business opportunities where technology and engineering can support the development of useful products, services and digital platforms.</p>
-    </div>
-
+    </section>
+    <section class="category-section" id="other-projects">
+    <h2>5. Other</h2>
     <h2>MoneyX Labs USA</h2>
     <div class="project-card">
         <h3>USA-Focused Finance &amp; Markets Digital Media</h3>
@@ -337,6 +369,7 @@
     <p>Our projects are part of a long-term effort to combine engineering, technology and business opportunities to create a growing digital ecosystem.</p>
     <p>To discuss a project, partnership or technology opportunity, connect with PVRajCMS Group.</p>
     <p><a href="contact.html" class="header-cta">Get in Touch</a></p>
+    </section>
 </section>
 </main>
 
