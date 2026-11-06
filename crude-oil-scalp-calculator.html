@@ -38,6 +38,9 @@ button:active{transform:translateY(1px)}
 .note-box strong{color:#342607}
 .disclaimer{font-size:12px;color:var(--muted);line-height:1.6;margin:12px 0 0}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 24px}
+#accessGate{width:min(100% - 24px,620px);margin:18px auto;padding:18px;border:1px solid #dbe3f0;border-radius:12px;background:#fff;text-align:center;color:#17233b}
+#accessGate p{margin:6px 0}
+#calculatorContent[hidden]{display:none}
 @media(max-width:420px){main{width:calc(100% - 16px);margin-top:8px}.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.results{grid-template-columns:repeat(2,minmax(0,1fr))}.result{padding:8px}.result-value{font-size:17px}.card{border-radius:10px;padding:11px}.site-header .tagline{font-size:12px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
@@ -50,6 +53,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 24px}
   <h1>Crude Oil Scalp Calculator</h1>
   <p class="tagline">Crude Oil only · Plan targets and stop loss</p>
 </header>
+
+<section id="accessGate" role="status" aria-live="polite">
+  <strong id="accessTitle">Checking your subscription…</strong>
+  <p id="accessMessage">Please wait while we verify your Crude Oil Calculator access.</p>
+</section>
+
+<div id="calculatorContent" hidden>
 <main>
   <section class="card" aria-labelledby="calc-title">
     <h2 id="calc-title">Crude Oil Levels</h2>
@@ -93,6 +103,82 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 24px}
   </section>
 </main>
 <footer>© PVRajCMS Group</footer>
+</div>
+
+<!-- Load the same Supabase project configuration used by the website login and checkout. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+(async function verifyCrudeOilAccess(){
+  const gate = document.getElementById('accessGate');
+  const title = document.getElementById('accessTitle');
+  const message = document.getElementById('accessMessage');
+  const content = document.getElementById('calculatorContent');
+
+  const CHECKOUT_URL = 'subscription-checkout.html';
+  const LOGIN_URL = 'login.html';
+  const CRUDE_OIL_PRODUCT_ID = 'c1e96d0d-b9d2-47da-abb5-403ab7279776';
+
+  function showProblem(heading, detail){
+    title.textContent = heading;
+    message.textContent = detail;
+  }
+
+  try {
+    const client = (typeof pvSupabase !== 'undefined' && pvSupabase)
+      ? pvSupabase
+      : window.pvSupabase;
+
+    if (!client || !client.auth) {
+      showProblem('Connection problem', 'Supabase configuration was not loaded. Please contact the website owner.');
+      return;
+    }
+
+    const { data: userData, error: userError } = await client.auth.getUser();
+    if (userError) throw userError;
+
+    const user = userData && userData.user;
+    if (!user) {
+      const returnTo = encodeURIComponent(location.pathname.split('/').pop() || 'crude-oil-scalp-calculator.html');
+      location.replace(LOGIN_URL + '?redirect=' + returnTo);
+      return;
+    }
+
+    const nowIso = new Date().toISOString();
+    const { data: subscription, error: subscriptionError } = await client
+      .from('subscriptions')
+      .select('id,user_id,product_id,status,start_date,end_date')
+      .eq('user_id', user.id)
+      .eq('product_id', CRUDE_OIL_PRODUCT_ID)
+      .eq('status', 'active')
+      .gt('end_date', nowIso)
+      .order('end_date', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (subscriptionError) {
+      throw subscriptionError;
+    }
+
+    if (!subscription) {
+      location.replace(CHECKOUT_URL);
+      return;
+    }
+
+    gate.hidden = true;
+    content.hidden = false;
+  } catch (error) {
+    console.error('Crude Oil subscription verification failed:', error);
+    showProblem(
+      'Could not verify subscription',
+      (error && error.message)
+        ? error.message + ' — Please refresh the page or contact the website owner.'
+        : 'Please refresh the page or contact the website owner.'
+    );
+  }
+})();
+</script>
+
 <script>
 (() => {
   const byId = id => document.getElementById(id);
@@ -111,7 +197,6 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 24px}
       return;
     }
 
-    // The user's rules: T1 +8, then +10 more, then +7 more = 25 cumulative; SL 11.
     const sign = direction === 'BUY' ? 1 : -1;
     const t1 = entry + sign * 8;
     const t2 = entry + sign * 18;
