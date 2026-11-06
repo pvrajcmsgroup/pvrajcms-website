@@ -112,14 +112,9 @@
     </section>
   </main>
 
-  <script type="module">
-    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-
-    // Replace these two values with your Supabase project's public URL and publishable/anon key.
-    // Never put a service_role/secret key in a browser file.
-    const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
-    const SUPABASE_ANON_KEY = "YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY";
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script>
     const statusMessage = document.getElementById("statusMessage");
     const form = document.getElementById("registerForm");
     const createButton = document.getElementById("createButton");
@@ -129,25 +124,17 @@
       statusMessage.className = `notice ${type}`.trim();
     }
 
-    const isConfigured =
-      SUPABASE_URL.startsWith("https://") &&
-      !SUPABASE_URL.includes("YOUR_SUPABASE") &&
-      SUPABASE_ANON_KEY.length > 20 &&
-      !SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
-
-    let supabase = null;
-    if (isConfigured) {
-      supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabaseClient = (typeof pvSupabase !== "undefined") ? pvSupabase : null;
+    if (supabaseClient) {
       showMessage("Secure registration is ready. Your details will be handled by Supabase.");
     } else {
-      showMessage("Supabase setup is pending: add your Project URL and Publishable/Anon Key to this file.");
+      showMessage("Supabase configuration could not be loaded. Please check supabase-config.js.", "error");
     }
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
-
-      if (!supabase) {
-        showMessage("Supabase is not configured yet. Add your Project URL and Publishable/Anon Key, then try again.", "error");
+      if (!supabaseClient) {
+        showMessage("Supabase is not configured. Please check supabase-config.js and reload this page.", "error");
         return;
       }
 
@@ -175,20 +162,15 @@
       showMessage("Creating your secure account. Please wait.");
 
       try {
-        const emailRedirectTo = `${window.location.origin}/login.html`;
-        const { data, error } = await supabase.auth.signUp({
+        const emailRedirectTo = `${window.location.origin}/pvrajcms-website/login.html`;
+        const { data, error } = await supabaseClient.auth.signUp({
           email,
           password,
           options: {
             emailRedirectTo,
-            data: {
-              full_name: fullName,
-              mobile,
-              account_type: "customer"
-            }
+            data: { full_name: fullName, mobile, account_type: "customer" }
           }
         });
-
         if (error) throw error;
 
         if (data.session) {
@@ -196,7 +178,6 @@
         } else {
           showMessage("Registration submitted successfully. Please check your email and click the verification link before signing in.", "success");
         }
-
         form.reset();
       } catch (error) {
         showMessage(error.message || "Registration failed. Please try again.", "error");
