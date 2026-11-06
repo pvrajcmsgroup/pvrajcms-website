@@ -685,6 +685,27 @@
             background: #edf6fb;
             color: #0b6798 !important;
         }
+        .account-dropdown .logout-button {
+            display: block;
+            width: 100%;
+            margin-top: 6px;
+            padding: 10px 12px;
+            border: 0;
+            border-radius: 7px;
+            background: #fff0f0;
+            color: #b42318;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            text-align: left;
+            cursor: pointer;
+        }
+        .account-dropdown .logout-button:hover {
+            background: #ffe0e0;
+        }
+        .account-dropdown .logout-button[hidden] {
+            display: none !important;
+        }
         /* Keep Customer Login as the primary action */
         .account-dropdown a:nth-child(2) {
             margin-top: 5px;
@@ -806,6 +827,7 @@
                 <a href="register.html">Create Account</a>
                 <a href="login.html">Sign In</a>
                 <a href="owner-login.html" class="owner-login-link">Owner / Master Login</a>
+                <button type="button" id="customerLogout" class="logout-button" hidden>Log Out</button>
             </div>
         </details>
     </div>
@@ -1054,6 +1076,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const accountLabel = document.getElementById("accountLabel");
     const accountName = document.getElementById("accountName");
     const accountDropdown = document.querySelector(".account-dropdown");
+    const logoutButton = document.getElementById("customerLogout");
     // supabase-config.js declares `const pvSupabase`, which is not a window property.
     // Read that global lexical binding first, with window fallback for alternate setups.
     const supabaseClient = (typeof pvSupabase !== "undefined" && pvSupabase)
@@ -1093,6 +1116,26 @@ document.addEventListener("DOMContentLoaded", async function () {
             if (registerLink) registerLink.hidden = loggedIn;
             if (signInLink) signInLink.hidden = loggedIn;
         }
+        if (logoutButton) logoutButton.hidden = !loggedIn;
+    }
+
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async function () {
+            logoutButton.disabled = true;
+            logoutButton.textContent = "Logging out...";
+            try {
+                const { error } = await supabaseClient.auth.signOut();
+                if (error) throw error;
+                const menu = document.querySelector(".account-menu");
+                if (menu) menu.removeAttribute("open");
+                window.location.href = "index.html";
+            } catch (error) {
+                console.error("Logout failed:", error);
+                logoutButton.disabled = false;
+                logoutButton.textContent = "Log Out";
+                alert("Logout nahi ho paya. Please try again.");
+            }
+        });
     }
 
     try {
