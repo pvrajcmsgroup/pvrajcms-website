@@ -1054,6 +1054,92 @@ border-radius: 16px;
 }
 </style>
 
+
+<style id="pv-mobile-header-and-banner-final-fix">
+@media screen and (max-width: 600px) {
+  /* Keep logo on its own row; navigation stays in order, account follows PV MART. */
+  body.home-page .site-header > .container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 8px 10px 12px !important;
+    gap: 8px !important;
+  }
+  body.home-page .site-header .logo {
+    width: 100% !important;
+    justify-content: center !important;
+    padding-right: 48px !important;
+    box-sizing: border-box !important;
+  }
+  body.home-page .site-header .logo img {
+    width: min(100%, 270px) !important;
+    max-height: 70px !important;
+  }
+  body.home-page .site-header .navbar {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px 13px !important;
+    margin: 0 !important;
+    padding: 4px 0 !important;
+  }
+  body.home-page .site-header .navbar a {
+    font-size: 13px !important;
+    white-space: nowrap !important;
+  }
+  body.home-page .site-header .account-menu {
+    position: static !important;
+    display: block !important;
+    align-self: center !important;
+    margin: 0 !important;
+    z-index: 3000 !important;
+  }
+  body.home-page .site-header .account-menu summary {
+    min-width: 40px !important;
+    min-height: 40px !important;
+    padding: 3px 8px !important;
+    border-radius: 10px !important;
+  }
+
+  /* Use the real compressed Diwali artwork on mobile instead of the broken text card. */
+  body.home-page .pv-diwali-image-banner {
+    width: calc(100% - 24px) !important;
+    aspect-ratio: 1730 / 705 !important;
+    min-height: 0 !important;
+    margin: 14px auto 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    background: #06172b !important;
+  }
+  body.home-page .pv-diwali-image-banner img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+  }
+  body.home-page .pv-diwali-image-banner a {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    text-indent: -9999px !important;
+    overflow: hidden !important;
+  }
+  body.home-page .pv-diwali-image-banner a::before,
+  body.home-page .pv-diwali-image-banner a::after {
+    content: none !important;
+    display: none !important;
+  }
+}
+</style>
+
 </head>
 
 <body class="home-page">
