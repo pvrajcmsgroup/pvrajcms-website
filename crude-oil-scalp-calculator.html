@@ -1,143 +1,364 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101d3a">
 <title>Crude Oil Scalp Calculator | PVRajCMS</title>
-<meta name="description" content="PVRajCMS Crude Oil Scalp Calculator — automatic target and stop-loss levels.">
 
 <style>
-:root{color-scheme:light;--navy:#101d3a;--navy2:#193d73;--blue:#2463eb;--bg:#f2f5fb;--ink:#17233b;--muted:#68758d;--line:#dbe3f0;--green:#087443;--red:#b42318;--gold:#f5c451}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,Helvetica,sans-serif;line-height:1.5}
-.site-header{background:linear-gradient(130deg,#0a1429 0%,#132e5a 52%,#1e4c8c 100%);color:#fff;padding:16px 12px 14px;text-align:center;border-bottom:4px solid var(--gold)}
-.brand{display:inline-block;font-size:clamp(24px,5vw,32px);font-weight:900;letter-spacing:1.5px;line-height:1.15;background:linear-gradient(90deg,#fff 0%,#f8d778 45%,#fff 75%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 5px 24px #0003}
-.brand-sub{margin:4px 0 0;color:#d9e7ff;font-size:clamp(12px,2.5vw,15px);letter-spacing:2px;text-transform:uppercase}
-.header-line{width:72px;height:3px;background:var(--gold);border-radius:9px;margin:18px auto 14px}
-.site-header h1{margin:0;font-size:clamp(20px,4vw,28px);font-weight:750}
-.site-header .tagline{margin:7px 0 0;color:#e4edff;font-size:14px}
-
-main{width:min(100% - 24px,620px);margin:12px auto 18px}
-.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 8px 26px #15294b0a;min-width:0}
-h2{font-size:clamp(18px,3.5vw,22px);margin:0 0 6px;line-height:1.3}
-.intro{font-size:14px;color:var(--muted);margin:0 0 10px}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-label{display:block;font-size:14px;font-weight:750;margin:0 0 7px}
-input,select{display:block;width:100%;min-width:0;min-height:40px;padding:8px 10px;border:1px solid #cbd5e1;border-radius:11px;background:#fff;color:var(--ink);font:inherit;font-size:16px}
-input:focus,select:focus,button:focus-visible{outline:3px solid #93b4ff;outline-offset:2px}
-button{width:100%;min-height:40px;border:0;border-radius:11px;background:linear-gradient(100deg,#1d4ed8,#2875ed);color:white;font:inherit;font-weight:800;cursor:pointer;padding:9px 12px;margin-top:10px;box-shadow:0 5px 12px #175cd326}
-button:active{transform:translateY(1px)}
-.results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}
-.result{min-width:0;border:1px solid var(--line);background:#f8faff;border-radius:9px;padding:9px}
-.result-label{display:block;font-size:11px;line-height:1.3;color:var(--muted);margin-bottom:4px}
-.result-value{display:block;font-size:clamp(17px,4vw,22px);font-weight:850;line-height:1.2;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
-.target{color:var(--green)}.stop{color:var(--red)}
-.result-entry{background:#f3f6fc}
-.status{font-size:13px;min-height:20px;margin:10px 0 0;color:var(--red)}
-.note-box{background:#fff8e6;border:1px solid #f0d58e;border-radius:13px;padding:10px;color:#4d3b12;font-size:13px;line-height:1.5}
-.note-box strong{color:#342607}
-.disclaimer{font-size:12px;color:var(--muted);line-height:1.6;margin:12px 0 0}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 24px}
-
-/* Subscription Card */
-#subscriptionCard{
-  width:min(100% - 24px,620px);
-  margin:14px auto 12px;
-  padding:15px;
-  background:#fff;
-  border:1px solid #cdebd9;
-  border-radius:13px;
-  box-shadow:0 6px 22px #0874430c;
+:root{
+  --navy:#101d3a;
+  --blue:#2463eb;
+  --bg:#f2f5fb;
+  --ink:#17233b;
+  --muted:#68758d;
+  --line:#dbe3f0;
+  --green:#087443;
+  --red:#b42318;
+  --gold:#f5c451;
 }
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  line-height:1.4;
+}
+
+/* COMPACT HEADER */
+.site-header{
+  background:linear-gradient(120deg,#0a1429,#193d73,#1e4c8c);
+  color:white;
+  padding:6px 10px 8px;
+  text-align:center;
+  border-bottom:3px solid var(--gold);
+}
+
+.brand{
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:1px;
+  line-height:1.15;
+  color:#f8e5a9;
+}
+
+.brand-sub{
+  margin:1px 0 0;
+  font-size:10px;
+  letter-spacing:1.5px;
+  color:#d9e7ff;
+  text-transform:uppercase;
+}
+
+.header-line{
+  width:45px;
+  height:2px;
+  background:var(--gold);
+  margin:5px auto;
+  border-radius:5px;
+}
+
+.site-header h1{
+  margin:0;
+  font-size:20px;
+  line-height:1.2;
+}
+
+.site-header .tagline{
+  margin:2px 0 0;
+  font-size:11px;
+  color:#e4edff;
+}
+
+/* SUBSCRIPTION CARD */
+#subscriptionCard{
+  width:min(100% - 24px,900px);
+  margin:7px auto;
+  padding:9px 12px;
+  background:white;
+  border:1px solid #cdebd9;
+  border-radius:10px;
+  box-shadow:0 4px 15px #0874430c;
+}
+
+#subscriptionCard[hidden]{display:none}
+
 .subscription-top{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px;
-  margin-bottom:12px;
+  margin-bottom:5px;
 }
+
 .subscription-heading{
-  font-size:16px;
-  font-weight:850;
-  color:#17233b;
+  font-size:14px;
+  font-weight:800;
 }
+
 .active-badge{
   background:#e5f7ec;
   color:#087443;
   border:1px solid #b9e5c8;
-  border-radius:30px;
-  padding:4px 11px;
-  font-size:11px;
+  border-radius:20px;
+  padding:3px 9px;
+  font-size:10px;
   font-weight:800;
 }
-.remaining-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  background:#f1faf4;
-  border-radius:10px;
-  padding:12px;
-  margin-bottom:12px;
-}
-.remaining-number{
-  font-size:27px;
-  line-height:1.2;
-  font-weight:900;
-  color:#087443;
-  font-variant-numeric:tabular-nums;
-}
-.remaining-label{
-  font-size:12px;
-  color:#526b5d;
-  font-weight:700;
-}
-.subscription-details{
+
+.subscription-info{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
+  grid-template-columns:1.1fr 1fr 1fr;
+  gap:7px;
+  align-items:center;
 }
+
+.remaining-box{
+  background:#f1faf4;
+  border-radius:8px;
+  padding:6px 9px;
+}
+
+.remaining-number{
+  font-size:23px;
+  font-weight:900;
+  color:var(--green);
+  line-height:1.15;
+}
+
+.remaining-label{
+  font-size:10px;
+  color:#526b5d;
+}
+
 .subscription-detail{
   background:#f8faff;
   border:1px solid #e3eaf3;
-  border-radius:9px;
-  padding:9px;
-  min-width:0;
+  border-radius:8px;
+  padding:6px 9px;
 }
+
 .subscription-detail span{
   display:block;
-  font-size:11px;
-  color:#68758d;
-  margin-bottom:4px;
+  font-size:10px;
+  color:var(--muted);
 }
+
 .subscription-detail strong{
   display:block;
-  font-size:13px;
-  color:#17233b;
-  overflow-wrap:anywhere;
+  font-size:12px;
 }
-#subscriptionCard[hidden]{display:none}
 
-#accessGate{width:min(100% - 24px,620px);margin:18px auto;padding:18px;border:1px solid #dbe3f0;border-radius:12px;background:#fff;text-align:center;color:#17233b}
-#accessGate p{margin:6px 0}
+/* MAIN */
+main{
+  width:min(100% - 24px,900px);
+  margin:7px auto 12px;
+}
+
+.card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:11px;
+  margin-bottom:8px;
+  box-shadow:0 5px 18px #15294b0a;
+}
+
+h2{
+  font-size:18px;
+  margin:0 0 3px;
+  line-height:1.3;
+}
+
+.intro{
+  font-size:12px;
+  color:var(--muted);
+  margin:0 0 7px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+label{
+  display:block;
+  font-size:12px;
+  font-weight:750;
+  margin:0 0 4px;
+}
+
+input,select{
+  display:block;
+  width:100%;
+  min-width:0;
+  min-height:36px;
+  padding:6px 9px;
+  border:1px solid #cbd5e1;
+  border-radius:9px;
+  background:white;
+  color:var(--ink);
+  font-size:15px;
+}
+
+input:focus,select:focus,button:focus-visible{
+  outline:3px solid #93b4ff;
+  outline-offset:2px;
+}
+
+button{
+  width:100%;
+  min-height:36px;
+  border:0;
+  border-radius:9px;
+  background:linear-gradient(100deg,#1d4ed8,#2875ed);
+  color:white;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+  padding:6px 10px;
+  margin-top:7px;
+  box-shadow:0 4px 10px #175cd326;
+}
+
+button:active{transform:translateY(1px)}
+
+/* RESULTS */
+.results{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px;
+  margin-top:8px;
+}
+
+.result{
+  min-width:0;
+  border:1px solid var(--line);
+  background:#f8faff;
+  border-radius:8px;
+  padding:7px;
+}
+
+.result-label{
+  display:block;
+  font-size:10px;
+  color:var(--muted);
+  margin-bottom:3px;
+  line-height:1.3;
+}
+
+.result-value{
+  display:block;
+  font-size:19px;
+  font-weight:850;
+  line-height:1.2;
+  overflow-wrap:anywhere;
+  font-variant-numeric:tabular-nums;
+}
+
+.target{color:var(--green)}
+.stop{color:var(--red)}
+.result-entry{background:#f3f6fc}
+
+.status{
+  font-size:12px;
+  min-height:16px;
+  margin:5px 0 0;
+  color:var(--red);
+}
+
+#results[hidden]{display:none}
+
+/* IMPORTANT NOTE */
+.note-box{
+  background:#fff8e6;
+  border:1px solid #f0d58e;
+  border-radius:10px;
+  padding:8px;
+  color:#4d3b12;
+  font-size:11px;
+  line-height:1.45;
+}
+
+.note-box strong{color:#342607}
+
+.disclaimer{
+  font-size:10px;
+  color:var(--muted);
+  line-height:1.5;
+  margin:7px 0 0;
+}
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:10px;
+  padding:0 10px 10px;
+}
+
+/* ACCESS GATE */
+#accessGate{
+  width:min(100% - 24px,620px);
+  margin:15px auto;
+  padding:15px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:white;
+  text-align:center;
+  color:var(--ink);
+  font-size:13px;
+}
+
+#accessGate p{margin:5px 0}
 #calculatorContent[hidden]{display:none}
 
-@media(max-width:420px){
-main{width:calc(100% - 16px);margin-top:8px}
-.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.results{grid-template-columns:repeat(2,minmax(0,1fr))}
-.result{padding:8px}
-.result-value{font-size:17px}
-.card{border-radius:10px;padding:11px}
-.site-header .tagline{font-size:12px}
-#subscriptionCard{width:calc(100% - 16px);padding:12px}
-.remaining-number{font-size:24px}
-.subscription-detail{padding:8px}
+/* MOBILE */
+@media(max-width:500px){
+
+  .site-header{padding:6px 7px}
+  .brand{font-size:22px}
+  .site-header h1{font-size:18px}
+
+  #subscriptionCard{
+    width:calc(100% - 16px);
+    padding:8px;
+  }
+
+  .subscription-info{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .remaining-box{
+    grid-column:1/-1;
+  }
+
+  main{
+    width:calc(100% - 16px);
+  }
+
+  .card{padding:9px}
+
+  .form-grid{gap:6px}
+
+  .results{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:5px;
+  }
+
+  .result{padding:7px}
+  .result-value{font-size:17px}
 }
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important}
+}
 </style>
 </head>
 
@@ -151,24 +372,21 @@ main{width:calc(100% - 16px);margin-top:8px}
   <p class="tagline">Crude Oil only · Plan targets and stop loss</p>
 </header>
 
-<!-- Customer Subscription Information -->
+<!-- SUBSCRIPTION -->
 <section id="subscriptionCard" hidden>
+
   <div class="subscription-top">
     <div class="subscription-heading">My Subscription</div>
     <span class="active-badge">● ACTIVE</span>
   </div>
 
-  <div class="remaining-row">
-    <div>
+  <div class="subscription-info">
+
+    <div class="remaining-box">
       <div class="remaining-number" id="remainingDays">--</div>
       <div class="remaining-label">Days Remaining</div>
     </div>
-    <div style="text-align:right;font-size:12px;color:#526b5d">
-      Your Calculator<br>Access is Active
-    </div>
-  </div>
 
-  <div class="subscription-details">
     <div class="subscription-detail">
       <span>Activation Date</span>
       <strong id="subscriptionStart">--</strong>
@@ -178,11 +396,12 @@ main{width:calc(100% - 16px);margin-top:8px}
       <span>Expiry Date</span>
       <strong id="subscriptionEnd">--</strong>
     </div>
+
   </div>
 </section>
 
 <section id="accessGate" role="status" aria-live="polite">
-  <strong id="accessTitle">Checking your subscription…</strong>
+  <strong id="accessTitle">Checking your subscription...</strong>
   <p id="accessMessage">Please wait while we verify your Crude Oil Calculator access.</p>
 </section>
 
@@ -191,10 +410,13 @@ main{width:calc(100% - 16px);margin-top:8px}
 <main>
 
   <section class="card" aria-labelledby="calc-title">
+
     <h2 id="calc-title">Crude Oil Levels</h2>
+
     <p class="intro">Enter Crude Oil entry price and select BUY or SELL.</p>
 
     <div class="form-grid">
+
       <div>
         <label for="direction">Trade Type</label>
         <select id="direction">
@@ -205,8 +427,11 @@ main{width:calc(100% - 16px);margin-top:8px}
 
       <div>
         <label for="entry">Entry Price</label>
-        <input id="entry" type="number" inputmode="decimal" min="0" step="any" placeholder="Enter entry price" autocomplete="off">
+        <input id="entry" type="number" inputmode="decimal"
+          min="0" step="any" placeholder="Enter entry price"
+          autocomplete="off">
       </div>
+
     </div>
 
     <button id="calculate" type="button">Calculate Levels</button>
@@ -214,6 +439,7 @@ main{width:calc(100% - 16px);margin-top:8px}
     <p id="error" class="status" role="status" aria-live="polite"></p>
 
     <div id="results" hidden aria-live="polite">
+
       <div class="results">
 
         <div class="result result-entry">
@@ -249,10 +475,13 @@ main{width:calc(100% - 16px);margin-top:8px}
       </div>
 
       <button id="copy" type="button">Copy Results</button>
+
     </div>
+
   </section>
 
   <section class="card" aria-labelledby="note-title">
+
     <h2 id="note-title">Important Note — Crude Oil Only</h2>
 
     <div class="note-box">
@@ -270,6 +499,7 @@ main{width:calc(100% - 16px);margin-top:8px}
     <p class="disclaimer">
       Trading involves risk. No calculator or strategy can guarantee profits or prevent all losses. This tool calculates price levels only; it does not provide trading signals or place orders.
     </p>
+
   </section>
 
 </main>
@@ -296,12 +526,11 @@ main{width:calc(100% - 16px);margin-top:8px}
   const CRUDE_OIL_PRODUCT_ID =
     'c1e96d0d-b9d2-47da-abb5-403ab7279776';
 
-  function showProblem(heading, detail){
+  function showProblem(heading,detail){
     title.textContent = heading;
     message.textContent = detail;
   }
 
-  // Format subscription dates for Indian customers.
   function formatSubscriptionDate(value){
 
     if(!value) return '--';
@@ -317,11 +546,9 @@ main{width:calc(100% - 16px);margin-top:8px}
     });
   }
 
-  // Calculate remaining service days.
   function calculateRemainingDays(endDate){
 
-    const now = Date.now();
-    const difference = endDate.getTime() - now;
+    const difference = endDate.getTime() - Date.now();
 
     if(difference <= 0) return 0;
 
@@ -343,7 +570,6 @@ main{width:calc(100% - 16px);margin-top:8px}
       return;
     }
 
-    // Verify logged-in customer.
     const {data:userData,error:userError} =
       await client.auth.getUser();
 
@@ -362,7 +588,6 @@ main{width:calc(100% - 16px);margin-top:8px}
       return;
     }
 
-    // Fetch the customer's active subscriptions.
     const {data:subscriptions,error:subscriptionError} =
       await client
         .from('subscriptions')
@@ -391,12 +616,10 @@ main{width:calc(100% - 16px);margin-top:8px}
     });
 
     if(!validSubscription){
-
       location.replace(CHECKOUT_URL);
       return;
     }
 
-    // Subscription is valid: calculate remaining days.
     const endText = String(validSubscription.end_date);
 
     const endDate = /^\d{4}-\d{2}-\d{2}$/.test(endText)
@@ -405,7 +628,6 @@ main{width:calc(100% - 16px);margin-top:8px}
 
     const remainingDays = calculateRemainingDays(endDate);
 
-    // Display subscription information.
     document.getElementById('remainingDays').textContent =
       remainingDays + (remainingDays === 1 ? ' Day' : ' Days');
 
@@ -415,17 +637,13 @@ main{width:calc(100% - 16px);margin-top:8px}
     document.getElementById('subscriptionEnd').textContent =
       formatSubscriptionDate(validSubscription.end_date);
 
-    // Show calculator and subscription card.
     gate.hidden = true;
     subscriptionCard.hidden = false;
     content.hidden = false;
 
   }catch(error){
 
-    console.error(
-      'Crude Oil subscription verification failed:',
-      error
-    );
+    console.error('Crude Oil subscription verification failed:',error);
 
     showProblem(
       'Could not verify subscription',
