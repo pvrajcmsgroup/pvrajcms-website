@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Owner Payment Dashboard | PVrajCMS Group</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#061321;color:#f4f8ff;font-family:Arial,Helvetica,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 4%;background:#071422;border-bottom:1px solid #244056}
+header img{width:min(38vw,240px);max-height:55px;object-fit:contain}.header-right{display:flex;gap:12px;align-items:center}
+a{color:#65d2ff}button{border:0;border-radius:8px;padding:11px 16px;font-weight:700;cursor:pointer;background:#087dba;color:white}
+button.secondary{background:#29445b}button.reject{background:#a63737}button:disabled{opacity:.5;cursor:not-allowed}
+main{width:min(1100px,calc(100% - 28px));margin:32px auto 60px}
+h1{margin:8px 0;font-size:clamp(25px,4vw,36px)}.muted{color:#b9cde0;font-size:13px;line-height:1.6}
+.panel{padding:20px;border:1px solid rgba(76,190,238,.25);border-radius:14px;background:linear-gradient(145deg,#0f2b3f,#071726);margin-top:18px}
+.status{padding:12px;border-radius:8px;background:#10283b;color:#c8d9e8;font-size:13px;line-height:1.5;margin:14px 0}
+.status.error{color:#ffc1b9;background:#3a1c22}.status.good{color:#a9f5c5;background:#123326}
+.request{padding:18px 0;border-bottom:1px solid #29445b}.request:last-child{border-bottom:0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 22px}.item{font-size:13px;overflow-wrap:anywhere}.item span{display:block;color:#9eb7cc;margin-bottom:4px}.item strong{color:#f4f8ff}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.actions button{min-width:120px}
+.empty{padding:25px;text-align:center;color:#b9cde0}
+@media(max-width:650px){header{padding:12px 14px}header img{width:48vw}.grid{grid-template-columns:1fr}.panel{padding:16px}.actions button{flex:1}}
+</style>
+</head>
+<body>
+<header>
+  <a href="index.html"><img src="logo.png" alt="PVrajCMS Group"></a>
+  <div class="header-right"><span class="muted">Owner Admin</span><button class="secondary" id="logoutBtn" type="button">Logout</button></div>
+</header>
+<main>
+  <p class="muted">PVRAJCMS GROUP • PAYMENT MANAGEMENT</p>
+  <h1>Payment Approval Dashboard</h1>
+  <p class="muted">Review UTR and payment proof carefully. Approving a request records the payment and activates the matching subscription for the requested duration.</p>
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <h2 style="margin:0;font-size:19px">Pending Payment Requests</h2>
+      <button id="refreshBtn" class="secondary" type="button">Refresh Requests</button>
+    </div>
+    <div id="message" class="status">Checking owner access...</div>
+    <div id="requestList"></div>
+  </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const client=(typeof pvSupabase!=="undefined"&&pvSupabase)?pvSupabase:window.pvSupabase;
+  const message=document.getElementById("message");
+  const list=document.getElementById("requestList");
+  const refresh=document.getElementById("refreshBtn");
+  const logout=document.getElementById("logoutBtn");
+  const ownerEmail="pvrajcmsgroup@gmail.com";
+  function say(text,kind=""){message.textContent=text;message.className="status "+kind;}
+  if(!client?.auth){say("Supabase is not configured on this page.","error");refresh.disabled=true;return;}
+  const {data:{user},error}=await client.auth.getUser();
+  if(error||!user){location.replace("login.html?redirect="+encodeURIComponent("owner-payment-dashboard.html"));return;}
+  if((user.email||"").toLowerCase()!==ownerEmail){say("Access denied. Sign in with the registered Owner Email.","error");refresh.disabled=true;return;}
+  const {data:isAdmin,error:adminError}=await client.rpc("is_app_admin");
+  if(adminError||isAdmin!==true){say("This account is not authorized as Owner Admin. Please check the admin setup.","error");refresh.disabled=true;return;}
+  say("Owner access verified: "+user.email,"good");
+
+  async function loadRequests(){
+    refresh.disabled=true;list.innerHTML="";
+    say("Loading pending requests...");
+    const {data,error}=await client.rpc("get_pending_payment_requests");
+    if(error){say("Could not load requests: "+error.message,"error");refresh.disabled=false;return;}
+    if(!data||data.length===0){list.innerHTML='<div class="empty">No pending payment requests.</div>';say("Owner access verified. No pending requests.","good");refresh.disabled=false;return;}
+    say(data.length+" pending request(s) found.","good");
+    for(const r of data){
+      const card=document.createElement("section");card.className="request";
+      const grid=document.createElement("div");grid.className="grid";
+      const fields=[
+        ["Customer",r.customer_email||r.user_id],
+        ["Service",r.service_name],
+        ["Amount","₹"+Number(r.amount).toFixed(2)],
+        ["Duration",r.duration_days+" days"],
+        ["UTR / Reference",r.utr_number],
+        ["Submitted",new Date(r.created_at).toLocaleString()]
+      ];
+      for(const [label,value] of fields){
+        const cell=document.createElement("div");cell.className="item";
+        const span=document.createElement("span");span.textContent=label;
+        const strong=document.createElement("strong");strong.textContent=value??"—";
+        cell.append(span,strong);grid.append(cell);
+      }
+      const actions=document.createElement("div");actions.className="actions";
+      const proof=document.createElement("button");proof.type="button";proof.className="secondary";proof.textContent="View Payment Screenshot";
+      proof.addEventListener("click",async()=>{
+        proof.disabled=true;
+        const {data:linkData,error:linkError}=await client.storage.from("payment-screenshots").createSignedUrl(r.screenshot_path,120);
+        proof.disabled=false;
+        if(linkError){say("Could not open screenshot: "+linkError.message,"error");return;}
+        window.open(linkData.signedUrl,"_blank","noopener");
+      });
+      const approve=document.createElement("button");approve.type="button";approve.textContent="Approve & Activate";
+      const reject=document.createElement("button");reject.type="button";reject.className="reject";reject.textContent="Reject";
+      async function review(decision,button){
+        const promptText=decision==="approve"?"Confirm payment has been checked and ₹"+Number(r.amount).toFixed(2)+" is received. Approve and activate for "+r.duration_days+" days?":"Reject this payment request?";
+        if(!confirm(promptText))return;
+        approve.disabled=true;reject.disabled=true;proof.disabled=true;
+        say("Processing "+decision+"...");
+        const {data,error}=await client.rpc("review_payment_request",{p_request_id:r.request_id,p_decision:decision});
+        if(error){say("Action failed: "+error.message,"error");approve.disabled=false;reject.disabled=false;proof.disabled=false;return;}
+        say("Request "+decision+"d successfully. "+(data?.subscription_end?"Subscription ends: "+new Date(data.subscription_end).toLocaleString():""),"good");
+        await loadRequests();
+      }
+      approve.addEventListener("click",()=>review("approve",approve));
+      reject.addEventListener("click",()=>review("reject",reject));
+      actions.append(proof,approve,reject);card.append(grid,actions);list.append(card);
+    }
+    refresh.disabled=false;
+  }
+  refresh.addEventListener("click",loadRequests);
+  logout.addEventListener("click",async()=>{await client.auth.signOut();location.replace("login.html");});
+  await loadRequests();
+});
+</script>
+</body>
+</html>
