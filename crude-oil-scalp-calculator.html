@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
 <meta name="theme-color" content="#101d3a">
 <title>Crude Oil Scalp Calculator | PVRajCMS</title>
 <meta name="description" content="PVRajCMS Crude Oil Scalp Calculator — automatic target and stop-loss levels.">
+
 <style>
 :root{color-scheme:light;--navy:#101d3a;--navy2:#193d73;--blue:#2463eb;--bg:#f2f5fb;--ink:#17233b;--muted:#68758d;--line:#dbe3f0;--green:#087443;--red:#b42318;--gold:#f5c451}
 *{box-sizing:border-box}
@@ -17,6 +19,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,Helv
 .header-line{width:72px;height:3px;background:var(--gold);border-radius:9px;margin:18px auto 14px}
 .site-header h1{margin:0;font-size:clamp(20px,4vw,28px);font-weight:750}
 .site-header .tagline{margin:7px 0 0;color:#e4edff;font-size:14px}
+
 main{width:min(100% - 24px,620px);margin:12px auto 18px}
 .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 8px 26px #15294b0a;min-width:0}
 h2{font-size:clamp(18px,3.5vw,22px);margin:0 0 6px;line-height:1.3}
@@ -38,14 +41,108 @@ button:active{transform:translateY(1px)}
 .note-box strong{color:#342607}
 .disclaimer{font-size:12px;color:var(--muted);line-height:1.6;margin:12px 0 0}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 24px}
+
+/* Subscription Card */
+#subscriptionCard{
+  width:min(100% - 24px,620px);
+  margin:14px auto 12px;
+  padding:15px;
+  background:#fff;
+  border:1px solid #cdebd9;
+  border-radius:13px;
+  box-shadow:0 6px 22px #0874430c;
+}
+.subscription-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+.subscription-heading{
+  font-size:16px;
+  font-weight:850;
+  color:#17233b;
+}
+.active-badge{
+  background:#e5f7ec;
+  color:#087443;
+  border:1px solid #b9e5c8;
+  border-radius:30px;
+  padding:4px 11px;
+  font-size:11px;
+  font-weight:800;
+}
+.remaining-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  background:#f1faf4;
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:12px;
+}
+.remaining-number{
+  font-size:27px;
+  line-height:1.2;
+  font-weight:900;
+  color:#087443;
+  font-variant-numeric:tabular-nums;
+}
+.remaining-label{
+  font-size:12px;
+  color:#526b5d;
+  font-weight:700;
+}
+.subscription-details{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+.subscription-detail{
+  background:#f8faff;
+  border:1px solid #e3eaf3;
+  border-radius:9px;
+  padding:9px;
+  min-width:0;
+}
+.subscription-detail span{
+  display:block;
+  font-size:11px;
+  color:#68758d;
+  margin-bottom:4px;
+}
+.subscription-detail strong{
+  display:block;
+  font-size:13px;
+  color:#17233b;
+  overflow-wrap:anywhere;
+}
+#subscriptionCard[hidden]{display:none}
+
 #accessGate{width:min(100% - 24px,620px);margin:18px auto;padding:18px;border:1px solid #dbe3f0;border-radius:12px;background:#fff;text-align:center;color:#17233b}
 #accessGate p{margin:6px 0}
 #calculatorContent[hidden]{display:none}
-@media(max-width:420px){main{width:calc(100% - 16px);margin-top:8px}.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.results{grid-template-columns:repeat(2,minmax(0,1fr))}.result{padding:8px}.result-value{font-size:17px}.card{border-radius:10px;padding:11px}.site-header .tagline{font-size:12px}}
+
+@media(max-width:420px){
+main{width:calc(100% - 16px);margin-top:8px}
+.form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.results{grid-template-columns:repeat(2,minmax(0,1fr))}
+.result{padding:8px}
+.result-value{font-size:17px}
+.card{border-radius:10px;padding:11px}
+.site-header .tagline{font-size:12px}
+#subscriptionCard{width:calc(100% - 16px);padding:12px}
+.remaining-number{font-size:24px}
+.subscription-detail{padding:8px}
+}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
+
 <body>
+
 <header class="site-header">
   <div class="brand">PVRajCMS</div>
   <p class="brand-sub">Group · Financial Technology</p>
@@ -54,16 +151,49 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 24px}
   <p class="tagline">Crude Oil only · Plan targets and stop loss</p>
 </header>
 
+<!-- Customer Subscription Information -->
+<section id="subscriptionCard" hidden>
+  <div class="subscription-top">
+    <div class="subscription-heading">My Subscription</div>
+    <span class="active-badge">● ACTIVE</span>
+  </div>
+
+  <div class="remaining-row">
+    <div>
+      <div class="remaining-number" id="remainingDays">--</div>
+      <div class="remaining-label">Days Remaining</div>
+    </div>
+    <div style="text-align:right;font-size:12px;color:#526b5d">
+      Your Calculator<br>Access is Active
+    </div>
+  </div>
+
+  <div class="subscription-details">
+    <div class="subscription-detail">
+      <span>Activation Date</span>
+      <strong id="subscriptionStart">--</strong>
+    </div>
+
+    <div class="subscription-detail">
+      <span>Expiry Date</span>
+      <strong id="subscriptionEnd">--</strong>
+    </div>
+  </div>
+</section>
+
 <section id="accessGate" role="status" aria-live="polite">
   <strong id="accessTitle">Checking your subscription…</strong>
   <p id="accessMessage">Please wait while we verify your Crude Oil Calculator access.</p>
 </section>
 
 <div id="calculatorContent" hidden>
+
 <main>
+
   <section class="card" aria-labelledby="calc-title">
     <h2 id="calc-title">Crude Oil Levels</h2>
     <p class="intro">Enter Crude Oil entry price and select BUY or SELL.</p>
+
     <div class="form-grid">
       <div>
         <label for="direction">Trade Type</label>
@@ -72,110 +202,231 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 24px}
           <option value="SELL">SELL</option>
         </select>
       </div>
+
       <div>
         <label for="entry">Entry Price</label>
         <input id="entry" type="number" inputmode="decimal" min="0" step="any" placeholder="Enter entry price" autocomplete="off">
       </div>
     </div>
+
     <button id="calculate" type="button">Calculate Levels</button>
+
     <p id="error" class="status" role="status" aria-live="polite"></p>
+
     <div id="results" hidden aria-live="polite">
       <div class="results">
-        <div class="result result-entry"><span class="result-label">Entry Price</span><strong class="result-value" id="entryOut">—</strong></div>
-        <div class="result"><span class="result-label">Stop Loss · 11 points</span><strong class="result-value stop" id="slOut">—</strong></div>
-        <div class="result"><span class="result-label">T1 · 8 points</span><strong class="result-value target" id="t1Out">—</strong></div>
-        <div class="result"><span class="result-label">T2 · 18 points cumulative</span><strong class="result-value target" id="t2Out">—</strong></div>
-        <div class="result"><span class="result-label">T3 · 25 points cumulative</span><strong class="result-value target" id="t3Out">—</strong></div>
-        <div class="result"><span class="result-label">Planned target distance</span><strong class="result-value">25 pts</strong></div>
+
+        <div class="result result-entry">
+          <span class="result-label">Entry Price</span>
+          <strong class="result-value" id="entryOut">—</strong>
+        </div>
+
+        <div class="result">
+          <span class="result-label">Stop Loss · 11 points</span>
+          <strong class="result-value stop" id="slOut">—</strong>
+        </div>
+
+        <div class="result">
+          <span class="result-label">T1 · 8 points</span>
+          <strong class="result-value target" id="t1Out">—</strong>
+        </div>
+
+        <div class="result">
+          <span class="result-label">T2 · 18 points cumulative</span>
+          <strong class="result-value target" id="t2Out">—</strong>
+        </div>
+
+        <div class="result">
+          <span class="result-label">T3 · 25 points cumulative</span>
+          <strong class="result-value target" id="t3Out">—</strong>
+        </div>
+
+        <div class="result">
+          <span class="result-label">Planned target distance</span>
+          <strong class="result-value">25 pts</strong>
+        </div>
+
       </div>
+
       <button id="copy" type="button">Copy Results</button>
     </div>
   </section>
+
   <section class="card" aria-labelledby="note-title">
     <h2 id="note-title">Important Note — Crude Oil Only</h2>
+
     <div class="note-box">
-      <strong>Use only for Crude Oil.</strong> Do not use this calculator for Silver or other commodities because their price movement and stop-loss needs may differ.
+      <strong>Use only for Crude Oil.</strong>
+      Do not use this calculator for Silver or other commodities because their price movement and stop-loss needs may differ.
+
       <br><strong>Stop Loss:</strong> 11 points.
-      <br><strong>Targets:</strong> T1 = 8, T2 = 18 cumulative, T3 = 25 cumulative points.
+
+      <br><strong>Targets:</strong>
+      T1 = 8, T2 = 18 cumulative, T3 = 25 cumulative points.
+
       <br>Monitor market conditions at every target; do not wait blindly for T3. Manage risk and protect your capital.
     </div>
-    <p class="disclaimer">Trading involves risk. No calculator or strategy can guarantee profits or prevent all losses. This tool calculates price levels only; it does not provide trading signals or place orders.</p>
+
+    <p class="disclaimer">
+      Trading involves risk. No calculator or strategy can guarantee profits or prevent all losses. This tool calculates price levels only; it does not provide trading signals or place orders.
+    </p>
   </section>
+
 </main>
+
 <footer>© PVRajCMS Group</footer>
+
 </div>
 
-<!-- Load the same Supabase project configuration used by the website login and checkout. -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
+
 <script>
 (async function verifyCrudeOilAccess(){
+
   const gate = document.getElementById('accessGate');
   const title = document.getElementById('accessTitle');
   const message = document.getElementById('accessMessage');
   const content = document.getElementById('calculatorContent');
+  const subscriptionCard = document.getElementById('subscriptionCard');
 
   const CHECKOUT_URL = 'subscription-checkout.html';
   const LOGIN_URL = 'login.html';
-  const CRUDE_OIL_PRODUCT_ID = 'c1e96d0d-b9d2-47da-abb5-403ab7279776';
+
+  const CRUDE_OIL_PRODUCT_ID =
+    'c1e96d0d-b9d2-47da-abb5-403ab7279776';
 
   function showProblem(heading, detail){
     title.textContent = heading;
     message.textContent = detail;
   }
 
-  try {
-    const client = (typeof pvSupabase !== 'undefined' && pvSupabase)
-      ? pvSupabase
-      : window.pvSupabase;
+  // Format subscription dates for Indian customers.
+  function formatSubscriptionDate(value){
 
-    if (!client || !client.auth) {
-      showProblem('Connection problem', 'Supabase configuration was not loaded. Please contact the website owner.');
+    if(!value) return '--';
+
+    const date = new Date(value);
+
+    if(!Number.isFinite(date.getTime())) return '--';
+
+    return date.toLocaleDateString('en-IN',{
+      day:'2-digit',
+      month:'short',
+      year:'numeric'
+    });
+  }
+
+  // Calculate remaining service days.
+  function calculateRemainingDays(endDate){
+
+    const now = Date.now();
+    const difference = endDate.getTime() - now;
+
+    if(difference <= 0) return 0;
+
+    return Math.ceil(difference / (1000 * 60 * 60 * 24));
+  }
+
+  try{
+
+    const client =
+      (typeof pvSupabase !== 'undefined' && pvSupabase)
+        ? pvSupabase
+        : window.pvSupabase;
+
+    if(!client || !client.auth){
+      showProblem(
+        'Connection problem',
+        'Supabase configuration was not loaded. Please contact the website owner.'
+      );
       return;
     }
 
-    const { data: userData, error: userError } = await client.auth.getUser();
-    if (userError) throw userError;
+    // Verify logged-in customer.
+    const {data:userData,error:userError} =
+      await client.auth.getUser();
+
+    if(userError) throw userError;
 
     const user = userData && userData.user;
-    if (!user) {
-      const returnTo = encodeURIComponent(location.pathname.split('/').pop() || 'crude-oil-scalp-calculator.html');
+
+    if(!user){
+
+      const returnTo = encodeURIComponent(
+        location.pathname.split('/').pop() ||
+        'crude-oil-scalp-calculator.html'
+      );
+
       location.replace(LOGIN_URL + '?redirect=' + returnTo);
       return;
     }
 
-    // Fetch active records first. Do not compare a DATE column with a
-    // timestamp in PostgREST; that can cause valid subscriptions to be missed.
-    const { data: subscriptions, error: subscriptionError } = await client
-      .from('subscriptions')
-      .select('id,user_id,product_id,status,start_date,end_date')
-      .eq('user_id', user.id)
-      .eq('product_id', CRUDE_OIL_PRODUCT_ID)
-      .eq('status', 'active')
-      .order('end_date', { ascending: false });
+    // Fetch the customer's active subscriptions.
+    const {data:subscriptions,error:subscriptionError} =
+      await client
+        .from('subscriptions')
+        .select('id,user_id,product_id,status,start_date,end_date')
+        .eq('user_id',user.id)
+        .eq('product_id',CRUDE_OIL_PRODUCT_ID)
+        .eq('status','active')
+        .order('end_date',{ascending:false});
 
-    if (subscriptionError) throw subscriptionError;
+    if(subscriptionError) throw subscriptionError;
 
     const now = new Date();
-    const hasValidSubscription = (subscriptions || []).some((sub) => {
-      if (!sub.end_date) return false;
-      // For DATE values, the subscription remains valid through the whole end day.
+
+    const validSubscription = (subscriptions || []).find(sub => {
+
+      if(!sub.end_date) return false;
+
       const endText = String(sub.end_date);
+
       const endDate = /^\d{4}-\d{2}-\d{2}$/.test(endText)
         ? new Date(endText + 'T23:59:59')
         : new Date(endText);
-      return Number.isFinite(endDate.getTime()) && endDate >= now;
+
+      return Number.isFinite(endDate.getTime()) &&
+             endDate >= now;
     });
 
-    if (!hasValidSubscription) {
+    if(!validSubscription){
+
       location.replace(CHECKOUT_URL);
       return;
     }
 
+    // Subscription is valid: calculate remaining days.
+    const endText = String(validSubscription.end_date);
+
+    const endDate = /^\d{4}-\d{2}-\d{2}$/.test(endText)
+      ? new Date(endText + 'T23:59:59')
+      : new Date(endText);
+
+    const remainingDays = calculateRemainingDays(endDate);
+
+    // Display subscription information.
+    document.getElementById('remainingDays').textContent =
+      remainingDays + (remainingDays === 1 ? ' Day' : ' Days');
+
+    document.getElementById('subscriptionStart').textContent =
+      formatSubscriptionDate(validSubscription.start_date);
+
+    document.getElementById('subscriptionEnd').textContent =
+      formatSubscriptionDate(validSubscription.end_date);
+
+    // Show calculator and subscription card.
     gate.hidden = true;
+    subscriptionCard.hidden = false;
     content.hidden = false;
-  } catch (error) {
-    console.error('Crude Oil subscription verification failed:', error);
+
+  }catch(error){
+
+    console.error(
+      'Crude Oil subscription verification failed:',
+      error
+    );
+
     showProblem(
       'Could not verify subscription',
       (error && error.message)
@@ -183,28 +434,41 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 24px}
         : 'Please refresh the page or contact the website owner.'
     );
   }
+
 })();
 </script>
 
 <script>
 (() => {
+
   const byId = id => document.getElementById(id);
-  const format = value => Number(value).toLocaleString('en-IN', { maximumFractionDigits: 8 });
+
+  const format = value =>
+    Number(value).toLocaleString('en-IN',{
+      maximumFractionDigits:8
+    });
+
   let copiedText = '';
 
-  function calculate() {
+  function calculate(){
+
     const raw = byId('entry').value.trim();
     const entry = Number(raw);
     const direction = byId('direction').value;
 
-    if (!raw || !Number.isFinite(entry) || entry <= 0) {
-      byId('error').textContent = 'Please enter a valid entry price greater than zero.';
+    if(!raw || !Number.isFinite(entry) || entry <= 0){
+
+      byId('error').textContent =
+        'Please enter a valid entry price greater than zero.';
+
       byId('results').hidden = true;
       copiedText = '';
+
       return;
     }
 
     const sign = direction === 'BUY' ? 1 : -1;
+
     const t1 = entry + sign * 8;
     const t2 = entry + sign * 18;
     const t3 = entry + sign * 25;
@@ -215,30 +479,48 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 24px}
     byId('t2Out').textContent = format(t2);
     byId('t3Out').textContent = format(t3);
     byId('slOut').textContent = format(sl);
+
     byId('error').textContent = '';
     byId('results').hidden = false;
 
-    copiedText = `PVRajCMS Group - Crude Oil Scalp Calculator\nTrade: ${direction}\nEntry: ${format(entry)}\nT1 (8 points): ${format(t1)}\nT2 (18 points cumulative): ${format(t2)}\nT3 (25 points cumulative): ${format(t3)}\nSL (11 points): ${format(sl)}`;
+    copiedText =
+      `PVRajCMS Group - Crude Oil Scalp Calculator\nTrade: ${direction}\nEntry: ${format(entry)}\nT1 (8 points): ${format(t1)}\nT2 (18 points cumulative): ${format(t2)}\nT3 (25 points cumulative): ${format(t3)}\nSL (11 points): ${format(sl)}`;
   }
 
-  byId('calculate').addEventListener('click', calculate);
-  byId('entry').addEventListener('keydown', event => {
-    if (event.key === 'Enter') calculate();
+  byId('calculate').addEventListener('click',calculate);
+
+  byId('entry').addEventListener('keydown',event => {
+    if(event.key === 'Enter') calculate();
   });
-  byId('direction').addEventListener('change', () => {
-    if (!byId('results').hidden) calculate();
+
+  byId('direction').addEventListener('change',() => {
+    if(!byId('results').hidden) calculate();
   });
-  byId('copy').addEventListener('click', async () => {
-    if (!copiedText) return;
-    try {
+
+  byId('copy').addEventListener('click',async () => {
+
+    if(!copiedText) return;
+
+    try{
+
       await navigator.clipboard.writeText(copiedText);
+
       byId('copy').textContent = 'Copied!';
-      window.setTimeout(() => { byId('copy').textContent = 'Copy Results'; }, 1500);
-    } catch {
-      byId('error').textContent = 'Copy is unavailable in this browser. Please copy the results manually.';
+
+      window.setTimeout(() => {
+        byId('copy').textContent = 'Copy Results';
+      },1500);
+
+    }catch{
+
+      byId('error').textContent =
+        'Copy is unavailable in this browser. Please copy the results manually.';
     }
+
   });
+
 })();
 </script>
+
 </body>
 </html>
