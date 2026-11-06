@@ -625,15 +625,21 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 38px;
-            height: 38px;
+            min-width: 38px;
+            max-width: 150px;
+            min-height: 38px;
+            padding: 0 12px;
             border: 1px solid rgba(255,255,255,.28);
-            border-radius: 50%;
+            border-radius: 22px;
             color: #ffffff;
             background: rgba(255,255,255,.08);
             cursor: pointer;
-            font-size: 19px;
-            line-height: 1;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             transition: background .2s ease, border-color .2s ease;
         }
         .account-menu summary::-webkit-details-marker { display: none; }
@@ -782,7 +788,7 @@
             <a href="pv-mart.html">PV MART</a>
         </nav>
         <details class="account-menu">
-            <summary aria-label="Customer account" title="Account">👤</summary>
+            <summary id="accountLabel" aria-label="Customer account" title="Account">👤</summary>
             <div class="account-dropdown">
                 <a href="register.html">Create Account</a>
                 <a href="login.html">Sign In</a>
@@ -1032,16 +1038,53 @@
 <script>
 document.addEventListener("DOMContentLoaded", async function () {
     const categoryMenu = document.getElementById("customerCategories");
-    if (!categoryMenu || !window.pvSupabase) return;
+    const accountLabel = document.getElementById("accountLabel");
+    const accountDropdown = document.querySelector(".account-dropdown");
+    // supabase-config.js declares `const pvSupabase`, which is not a window property.
+    // Read that global lexical binding first, with window fallback for alternate setups.
+    const supabaseClient = (typeof pvSupabase !== "undefined" && pvSupabase)
+        ? pvSupabase
+        : window.pvSupabase;
+
+    if (!supabaseClient) {
+        console.error("Supabase client not found. Check supabase-config.js loading.");
+        return;
+    }
+
+    function updateHeader(session) {
+        const loggedIn = !!session;
+        if (categoryMenu) {
+            categoryMenu.classList.toggle("is-authenticated", loggedIn);
+            if (!loggedIn) categoryMenu.removeAttribute("open");
+        }
+        if (accountLabel) {
+            if (loggedIn) {
+                const user = session.user;
+                const displayName = user.user_metadata?.full_name
+                    || user.user_metadata?.name
+                    || user.email?.split("@")[0]
+                    || "My Account";
+                accountLabel.textContent = displayName;
+                accountLabel.title = "Signed in as " + displayName;
+                accountLabel.setAttribute("aria-label", "Signed in as " + displayName);
+            } else {
+                accountLabel.textContent = "👤";
+                accountLabel.title = "Customer account";
+                accountLabel.setAttribute("aria-label", "Customer account");
+            }
+        }
+        if (accountDropdown) {
+            const registerLink = accountDropdown.querySelector('a[href="register.html"]');
+            const signInLink = accountDropdown.querySelector('a[href="login.html"]');
+            if (registerLink) registerLink.hidden = loggedIn;
+            if (signInLink) signInLink.hidden = loggedIn;
+        }
+    }
 
     try {
-        const { data: { session } } = await window.pvSupabase.auth.getSession();
-        if (session) categoryMenu.classList.add("is-authenticated");
-
-        window.pvSupabase.auth.onAuthStateChange((_event, nextSession) => {
-            categoryMenu.classList.toggle("is-authenticated", !!nextSession);
-            if (!nextSession) categoryMenu.removeAttribute("open");
-        });
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        updateHeader(session);
+        supabaseClient.auth.onAuthStateChange((_event, nextSession) => updateHeader(nextSession));
     } catch (error) {
         console.error("Could not verify customer login:", error);
     }
