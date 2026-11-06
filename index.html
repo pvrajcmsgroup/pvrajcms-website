@@ -622,26 +622,39 @@
         }
         .account-menu summary {
             list-style: none;
-            display: inline-flex;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-width: 38px;
-            max-width: 150px;
-            min-height: 38px;
-            padding: 0 12px;
+            gap: 2px;
+            min-width: 48px;
+            max-width: 120px;
+            min-height: 58px;
+            padding: 3px 6px;
             border: 1px solid rgba(255,255,255,.28);
-            border-radius: 22px;
+            border-radius: 12px;
             color: #ffffff;
             background: rgba(255,255,255,.08);
             cursor: pointer;
-            font-size: 13px;
-            font-weight: 700;
-            line-height: 1.2;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            line-height: 1.1;
             transition: background .2s ease, border-color .2s ease;
         }
+        .account-menu .account-emoji {
+            display: block;
+            font-size: 23px;
+            line-height: 1;
+        }
+        .account-menu .account-name {
+            display: block;
+            max-width: 108px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .account-menu .account-name:empty { display: none; }
         .account-menu summary::-webkit-details-marker { display: none; }
         .account-menu summary:hover,
         .account-menu[open] summary {
@@ -788,7 +801,7 @@
             <a href="pv-mart.html">PV MART</a>
         </nav>
         <details class="account-menu">
-            <summary id="accountLabel" aria-label="Customer account" title="Account">👤</summary>
+            <summary id="accountLabel" aria-label="Customer account" title="Account"><span class="account-emoji">👤</span><span class="account-name" id="accountName"></span></summary>
             <div class="account-dropdown">
                 <a href="register.html">Create Account</a>
                 <a href="login.html">Sign In</a>
@@ -1039,6 +1052,7 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const categoryMenu = document.getElementById("customerCategories");
     const accountLabel = document.getElementById("accountLabel");
+    const accountName = document.getElementById("accountName");
     const accountDropdown = document.querySelector(".account-dropdown");
     // supabase-config.js declares `const pvSupabase`, which is not a window property.
     // Read that global lexical binding first, with window fallback for alternate setups.
@@ -1064,11 +1078,11 @@ document.addEventListener("DOMContentLoaded", async function () {
                     || user.user_metadata?.name
                     || user.email?.split("@")[0]
                     || "My Account";
-                accountLabel.textContent = displayName;
+                if (accountName) accountName.textContent = displayName;
                 accountLabel.title = "Signed in as " + displayName;
                 accountLabel.setAttribute("aria-label", "Signed in as " + displayName);
             } else {
-                accountLabel.textContent = "👤";
+                if (accountName) accountName.textContent = "";
                 accountLabel.title = "Customer account";
                 accountLabel.setAttribute("aria-label", "Customer account");
             }
