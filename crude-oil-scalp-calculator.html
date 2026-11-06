@@ -144,23 +144,30 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:0 16px 24px}
       return;
     }
 
-    const nowIso = new Date().toISOString();
-    const { data: subscription, error: subscriptionError } = await client
+    // Fetch active records first. Do not compare a DATE column with a
+    // timestamp in PostgREST; that can cause valid subscriptions to be missed.
+    const { data: subscriptions, error: subscriptionError } = await client
       .from('subscriptions')
       .select('id,user_id,product_id,status,start_date,end_date')
       .eq('user_id', user.id)
       .eq('product_id', CRUDE_OIL_PRODUCT_ID)
       .eq('status', 'active')
-      .gt('end_date', nowIso)
-      .order('end_date', { ascending: false })
-      .limit(1)
-      .maybeSingle();
+      .order('end_date', { ascending: false });
 
-    if (subscriptionError) {
-      throw subscriptionError;
-    }
+    if (subscriptionError) throw subscriptionError;
 
-    if (!subscription) {
+    const now = new Date();
+    const hasValidSubscription = (subscriptions || []).some((sub) => {
+      if (!sub.end_date) return false;
+      // For DATE values, the subscription remains valid through the whole end day.
+      const endText = String(sub.end_date);
+      const endDate = /^\d{4}-\d{2}-\d{2}$/.test(endText)
+        ? new Date(endText + 'T23:59:59')
+        : new Date(endText);
+      return Number.isFinite(endDate.getTime()) && endDate >= now;
+    });
+
+    if (!hasValidSubscription) {
       location.replace(CHECKOUT_URL);
       return;
     }
