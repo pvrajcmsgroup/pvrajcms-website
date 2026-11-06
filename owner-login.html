@@ -76,6 +76,8 @@
     .back { display: block; margin-top: 22px; color: #a9dff5; text-align: center; text-decoration: none; font-size: 13px; }
     @media (max-width: 480px) { .login-card { padding: 28px 22px; } h1 { font-size: 22px; } }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
 </head>
 <body>
   <main class="login-card">
@@ -100,10 +102,7 @@
 
       <a class="forgot" href="forgot-password.html">Forgot password?</a>
       <button class="submit" type="submit">Sign In Securely</button>
-      <div class="notice" id="setupNotice" role="status">
-        This is the Owner Login page design only. Secure sign-in is not connected yet.
-        We must connect Supabase authentication and verify the owner's admin role before enabling access.
-      </div>
+      <div class="notice" id="setupNotice" role="status" aria-live="polite"></div>
     </form>
 
     <p class="security">Access is intended only for the authorized PVRajCMS Group owner. Do not share your password.</p>
@@ -111,17 +110,77 @@
   </main>
 
   <script>
-    const passwordInput = document.getElementById('ownerPassword');
-    const toggleButton = document.getElementById('togglePassword');
-    toggleButton.addEventListener('click', () => {
-      const showing = passwordInput.type === 'password';
-      passwordInput.type = showing ? 'text' : 'password';
-      toggleButton.textContent = showing ? 'Hide' : 'Show';
+    const passwordInput = document.getElementById("ownerPassword");
+    const toggleButton = document.getElementById("togglePassword");
+    const form = document.getElementById("ownerLoginForm");
+    const notice = document.getElementById("setupNotice");
+    const submitButton = form.querySelector(".submit");
+    const ownerEmail = "pvrajcmsgroup@gmail.com";
+
+    toggleButton.addEventListener("click", () => {
+      const showing = passwordInput.type === "password";
+      passwordInput.type = showing ? "text" : "password";
+      toggleButton.textContent = showing ? "Hide" : "Show";
     });
 
-    document.getElementById('ownerLoginForm').addEventListener('submit', (event) => {
+    function showNotice(message, kind = "error") {
+      notice.textContent = message;
+      notice.style.display = "block";
+      notice.style.borderColor = kind === "success"
+        ? "rgba(80,220,140,.35)" : "rgba(255,193,91,.28)";
+      notice.style.color = kind === "success" ? "#a9f5c5" : "#ffd58d";
+    }
+
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      document.getElementById('setupNotice').style.display = 'block';
+
+      const client = (typeof pvSupabase !== "undefined" && pvSupabase)
+        ? pvSupabase : window.pvSupabase;
+
+      if (!client?.auth) {
+        showNotice("Supabase connection nahi mil raha. supabase-config.js aur uski file location check karein.");
+        return;
+      }
+
+      const email = document.getElementById("ownerEmail").value.trim().toLowerCase();
+      const password = passwordInput.value;
+
+      if (email !== ownerEmail) {
+        showNotice("Access denied. Please enter the registered Owner Email.");
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Verifying Owner...";
+
+      try {
+        const { data, error } = await client.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        if (!data?.user) throw new Error("Login could not be completed.");
+
+        const { data: isAdmin, error: adminError } = await client.rpc("is_app_admin");
+        if (adminError) {
+          await client.auth.signOut();
+          throw new Error("Owner admin verification failed: " + adminError.message);
+        }
+        if (isAdmin !== true) {
+          await client.auth.signOut();
+          throw new Error("This account is not authorized as Owner Admin. Please check the admin setup.");
+        }
+
+        showNotice("Owner verified. Opening Payment Dashboard...", "success");
+        window.location.replace("owner-payment-dashboard.html");
+      } catch (error) {
+        let message = error?.message || "Owner login failed. Please try again.";
+        if (/invalid login credentials/i.test(message)) {
+          message = "Incorrect Owner Email or Password. Please try again.";
+        } else if (/email not confirmed/i.test(message)) {
+          message = "Please confirm the owner email address first.";
+        }
+        showNotice(message);
+        submitButton.disabled = false;
+        submitButton.textContent = "Sign In Securely";
+      }
     });
   </script>
 </body>
