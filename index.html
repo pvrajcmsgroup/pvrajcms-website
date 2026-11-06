@@ -791,6 +791,98 @@
             }
         }
 
+
+        /* Festive greeting and offer banner */
+        .festive-offer {
+            width: min(1160px, calc(100% - 32px));
+            margin: 22px auto 0;
+            padding: clamp(22px, 4vw, 38px);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            border: 1px solid rgba(238, 190, 91, .55);
+            border-radius: 18px;
+            background:
+                radial-gradient(circle at 12% 15%, rgba(255, 190, 75, .18), transparent 30%),
+                radial-gradient(circle at 88% 85%, rgba(255, 125, 45, .16), transparent 32%),
+                linear-gradient(135deg, #091a2b, #18253a 55%, #3a211c);
+            box-shadow: 0 14px 38px rgba(0,0,0,.22);
+            color: #fff8e9;
+        }
+        .festive-offer::before,
+        .festive-offer::after {
+            content: "✦";
+            position: absolute;
+            color: #f5c66b;
+            font-size: 28px;
+            opacity: .75;
+        }
+        .festive-offer::before { top: 14px; left: 18px; }
+        .festive-offer::after { right: 18px; bottom: 14px; }
+        .festive-offer .festive-greeting {
+            margin: 0 auto 10px;
+            color: #ffe0a0;
+            font-size: clamp(18px, 2.5vw, 24px);
+            font-weight: 800;
+            line-height: 1.5;
+        }
+        .festive-offer .festive-wish {
+            max-width: 850px;
+            margin: 0 auto 18px;
+            color: #f7ead5;
+            font-size: clamp(14px, 1.8vw, 17px);
+            line-height: 1.75;
+        }
+        .festive-offer .festive-title {
+            margin: 0 0 8px;
+            color: #ffd27b;
+            font-size: clamp(23px, 4vw, 34px);
+            line-height: 1.2;
+            font-weight: 900;
+        }
+        .festive-offer .festive-product {
+            margin: 0 0 7px;
+            color: #ffffff;
+            font-size: clamp(16px, 2vw, 20px);
+            font-weight: 700;
+        }
+        .festive-offer .festive-price {
+            margin: 0 0 18px;
+            color: #ffe0a0;
+            font-size: clamp(22px, 3vw, 28px);
+            font-weight: 900;
+        }
+        .festive-offer .festive-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            min-height: 46px;
+            padding: 12px 24px;
+            border: 1px solid #ffe0a0;
+            border-radius: 9px;
+            background: linear-gradient(135deg, #f6c66c, #d98b2b);
+            color: #24170b !important;
+            text-decoration: none;
+            font-weight: 900;
+            box-shadow: 0 7px 18px rgba(0,0,0,.22);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .festive-offer .festive-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(0,0,0,.3);
+        }
+        @media (max-width: 600px) {
+            .festive-offer {
+                width: calc(100% - 24px);
+                margin-top: 14px;
+                padding: 25px 16px;
+                border-radius: 14px;
+            }
+            .festive-offer .festive-wish { line-height: 1.65; }
+            .festive-offer .festive-button { width: 100%; max-width: 280px; }
+        }
+
     </style>
 </head>
 
@@ -823,6 +915,22 @@
         </details>
     </div>
 </header>
+
+
+    <section class="festive-offer" aria-label="Dhanteras and Diwali wishes and special offer">
+        <p class="festive-greeting">🙏 नमस्कार!</p>
+        <p class="festive-wish">
+            आप सभी को <strong>PVrajCMS Group</strong> की ओर से धनतेरस, दीपावली,
+            गोवर्धन पूजा एवं भाई दूज की हार्दिक शुभकामनाएँ। आपके जीवन में सुख,
+            समृद्धि और खुशियों का प्रकाश हमेशा बना रहे।
+        </p>
+        <h2 class="festive-title">🪔 Dhanteras &amp; Diwali Special Offer 🪔</h2>
+        <p class="festive-product">Crude Oil Scalping Calculator</p>
+        <p class="festive-price">₹380 / 30 Days</p>
+        <a href="services.html" class="festive-button">
+            Explore Festive Offer <span aria-hidden="true">→</span>
+        </a>
+    </section>
 
 <main>
 
