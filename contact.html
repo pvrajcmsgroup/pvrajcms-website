@@ -254,6 +254,22 @@
             }
             body.contact-page .contact-box { padding: 14px 12px; }
         }
+
+        /* Shared PVrajCMS account control */
+        .contact-page .account-nav{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:54px;margin-left:4px;z-index:1300}
+        .contact-page .account-trigger{display:flex;flex-direction:column;align-items:center;gap:2px;background:transparent;color:#fff;padding:3px 7px;border:0;border-radius:9px;min-width:52px;cursor:pointer}
+        .contact-page .account-avatar{width:32px;height:32px;border:1px solid #8ba0b5;border-radius:50%;display:grid;place-items:center;font-size:22px;overflow:hidden;background:#142b42}
+        .contact-page .account-avatar img{width:100%;height:100%;object-fit:cover}
+        .contact-page .account-name{max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;font-weight:700;color:#fff}
+        .contact-page .account-menu{display:none;position:absolute;right:0;top:calc(100% + 5px);min-width:190px;background:#fff;border:1px solid #e5eaf0;border-radius:10px;padding:7px;box-shadow:0 10px 28px #07142240;z-index:1400}
+        .contact-page .account-nav.open .account-menu,.contact-page .account-nav:focus-within .account-menu{display:block}
+        .contact-page .account-menu a,.contact-page .account-menu button{display:block;width:100%;text-align:left;text-decoration:none;color:#172536;background:#fff;padding:10px 11px;border-radius:7px;font-size:13px;font-weight:700;border:0;cursor:pointer}
+        .contact-page .account-menu a:hover,.contact-page .account-menu button:hover{background:#edf8f1;color:#13865c}
+        .contact-page .account-menu .account-divider{height:1px;background:#e5eaf0;margin:5px 2px}
+        .contact-page .account-photo-input{display:none}
+        @media(max-width:1000px){.contact-page .account-nav{margin:4px auto 0}}
+        @media(max-width:700px){.contact-page .account-nav{margin:4px auto 0}.contact-page .account-menu{right:50%;transform:translateX(50%);top:100%}}
+
     </style>
 </head>
 <body class="contact-page">
@@ -272,6 +288,21 @@
             <a href="projects.html">Projects</a>
             <a href="contact.html" aria-current="page">Contact</a>
             <a href="kirana.html">PV MART</a>
+            <div class="account-nav" id="accountNav">
+                <button type="button" class="account-trigger" id="accountTrigger" aria-label="Customer account" aria-expanded="false">
+                    <span class="account-avatar" id="accountAvatar">👤</span>
+                    <span class="account-name" id="accountName"></span>
+                </button>
+                <div class="account-menu" aria-label="Account menu">
+                    <a href="register.html" id="accountSignup">Create Account</a>
+                    <a href="login.html" id="accountSignin">Sign In</a>
+                    <a href="owner-login.html" id="accountOwner">Owner / Master Login</a>
+                    <div class="account-divider" id="accountDivider" style="display:none"></div>
+                    <button type="button" id="changeProfilePhoto" style="display:none">Change Profile Photo</button>
+                    <input class="account-photo-input" type="file" id="accountPhotoInput" accept="image/*">
+                    <button type="button" id="accountLogout" style="display:none">Log Out</button>
+                </div>
+            </div>
         </nav>
     </div>
 </header>
@@ -327,5 +358,54 @@
     </div>
     <div class="footer-bottom"><span>© 2026 PVRajCMS Group. All rights reserved.</span><span>Engineering • Technology • Digital Innovation</span></div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+(function initPVAccount(){
+ const authClient = (typeof pvSupabase !== "undefined" && pvSupabase) ? pvSupabase : null;
+ const nav=document.getElementById("accountNav"), trigger=document.getElementById("accountTrigger");
+ const avatar=document.getElementById("accountAvatar"), nameEl=document.getElementById("accountName");
+ const photoInput=document.getElementById("accountPhotoInput");
+ if(!nav||!trigger)return;
+ trigger.addEventListener("click",()=>{const open=nav.classList.toggle("open");trigger.setAttribute("aria-expanded",String(open));});
+ document.addEventListener("click",e=>{if(!nav.contains(e.target)){nav.classList.remove("open");trigger.setAttribute("aria-expanded","false");}});
+ function showUser(user){
+  const loggedIn=!!user;
+  ["accountSignup","accountSignin","accountOwner"].forEach(id=>document.getElementById(id).style.display=loggedIn?"none":"block");
+  ["accountDivider","changeProfilePhoto","accountLogout"].forEach(id=>document.getElementById(id).style.display=loggedIn?"block":"none");
+  if(!loggedIn){avatar.textContent="👤";nameEl.textContent="";return;}
+  const meta=user.user_metadata||{},displayName=meta.full_name||meta.name||user.email?.split("@")[0]||"Account";
+  const photo=meta.avatar_url||meta.picture||"";
+  avatar.innerHTML=photo?`<img src="${photo}" alt="Profile photo">`:"👤";
+  nameEl.textContent=displayName;
+ }
+ if(!authClient){console.warn("Central Supabase config not loaded; account menu is in guest mode.");return;}
+ authClient.auth.getSession().then(({data})=>showUser(data.session?.user||null));
+ authClient.auth.onAuthStateChange((_event,session)=>showUser(session?.user||null));
+ document.getElementById("changeProfilePhoto").addEventListener("click",()=>photoInput.click());
+ photoInput.addEventListener("change",async()=>{
+  const file=photoInput.files?.[0];if(!file)return;
+  const {data:{user},error:userError}=await authClient.auth.getUser();
+  if(userError||!user){alert("Please sign in first.");return;}
+  if(!file.type.startsWith("image/")){alert("Please select an image file.");return;}
+  if(file.size>5*1024*1024){alert("Photo size 5 MB se kam rakhein.");return;}
+  const ext=(file.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"")||"jpg";
+  const path=`${user.id}/avatar-${Date.now()}.${ext}`;
+  const {error:uploadError}=await authClient.storage.from("avatars").upload(path,file,{upsert:true,contentType:file.type});
+  if(uploadError){alert("Photo upload nahi hua. Supabase Storage mein public 'avatars' bucket aur policies check karein. "+uploadError.message);return;}
+  const {data:{publicUrl}}=authClient.storage.from("avatars").getPublicUrl(path);
+  const {error:updateError}=await authClient.auth.updateUser({data:{avatar_url:publicUrl}});
+  if(updateError){alert("Profile update nahi hua: "+updateError.message);return;}
+  const {data:{user:updatedUser}}=await authClient.auth.getUser();showUser(updatedUser);alert("Profile photo updated.");
+ });
+ document.getElementById("accountLogout").addEventListener("click",async()=>{
+  const {error}=await authClient.auth.signOut();
+  if(error){alert("Logout nahi hua: "+error.message);return;}
+  window.location.href="index.html";
+ });
+})();
+</script>
+
 </body>
 </html>
