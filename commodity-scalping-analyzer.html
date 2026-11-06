@@ -233,11 +233,35 @@ th{
 
 }
 
+
+/* Subscription access gate */
+#subscriptionGate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(7,19,33,.97)}
+#subscriptionGate .gate-panel{width:min(100%,520px);background:#10283a;color:#fff;border:1px solid #24516b;border-radius:16px;padding:26px;box-shadow:0 18px 55px rgba(0,0,0,.35);text-align:center}
+#subscriptionGate h2{margin:0 0 12px;font-size:24px}
+#subscriptionGate p{color:#c5d8e8;line-height:1.55}
+#subscriptionGate .gate-status{margin:16px 0;padding:12px;border-radius:9px;background:#19384b}
+#subscriptionGate a{color:#65d5ff}
+#subscriptionGate button{margin-top:10px}
+#appContent{display:none}
+
 </style>
 </head>
 
 <body>
 
+
+<div id="subscriptionGate">
+  <div class="gate-panel">
+    <h2>Crude Oil Calculator Access</h2>
+    <p id="gateMessage">Checking your login and subscription...</p>
+    <div class="gate-status" id="gateStatus">Please wait.</div>
+    <button id="gateLoginButton" type="button" style="display:none">Login to Continue</button>
+    <button id="gateRetryButton" type="button" class="secondary" style="display:none">Check Again</button>
+    <p style="font-size:12px;margin-top:16px">PVrajCMS Group • Subscription protected access</p>
+  </div>
+</div>
+
+<div id="appContent">
 <div class="container">
 
     <div class="header">
@@ -674,7 +698,85 @@ th{
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 <script>
+
+// ---- PVrajCMS subscription protection ----
+(async function enforceSubscriptionAccess(){
+    const gate = document.getElementById("subscriptionGate");
+    const app = document.getElementById("appContent");
+    const message = document.getElementById("gateMessage");
+    const status = document.getElementById("gateStatus");
+    const loginButton = document.getElementById("gateLoginButton");
+    const retryButton = document.getElementById("gateRetryButton");
+
+    function showBlocked(title, detail, showLogin){
+        message.textContent = title;
+        status.textContent = detail;
+        loginButton.style.display = showLogin ? "block" : "none";
+        retryButton.style.display = "block";
+        app.style.display = "none";
+        gate.style.display = "flex";
+    }
+
+    loginButton.addEventListener("click", function(){
+        window.location.href = "login.html?redirect=commodity-scalping-analyzer.html";
+    });
+    retryButton.addEventListener("click", function(){
+        window.location.reload();
+    });
+
+    try {
+        const client = (typeof pvSupabase !== "undefined" && pvSupabase)
+            ? pvSupabase
+            : window.pvSupabase;
+
+        if (!client || !client.auth) {
+            showBlocked("Access check is not configured.",
+                "Supabase client was not found. Confirm supabase-config.js is in the same GitHub Pages folder.", false);
+            return;
+        }
+
+        const { data: sessionData, error: sessionError } = await client.auth.getSession();
+        if (sessionError) throw sessionError;
+
+        const user = sessionData && sessionData.session && sessionData.session.user;
+        if (!user) {
+            showBlocked("Please log in first.",
+                "A registered customer account is required to use this calculator.", true);
+            return;
+        }
+
+        const { data: subscriptions, error: subscriptionError } = await client
+            .from("subscriptions")
+            .select("status,start_date,end_date,products!inner(product_name)")
+            .eq("user_id", user.id)
+            .eq("status", "active")
+            .eq("products.product_name", "Crude Oil Scalping Calculator")
+            .gt("end_date", new Date().toISOString())
+            .limit(1);
+
+        if (subscriptionError) throw subscriptionError;
+
+        if (!subscriptions || subscriptions.length === 0) {
+            showBlocked("No active subscription found.",
+                "Your Crude Oil Scalping Calculator subscription is not active or has expired. Please contact PVrajCMS Group if you have already paid.", false);
+            return;
+        }
+
+        const expiry = new Date(subscriptions[0].end_date);
+        message.textContent = "Subscription verified. Welcome!";
+        status.textContent = "Access active until " + expiry.toLocaleString("en-IN");
+        gate.style.display = "none";
+        app.style.display = "block";
+    } catch (error) {
+        console.error("Subscription verification error:", error);
+        showBlocked("We could not verify your subscription.",
+            error && error.message ? error.message : "Please try again or contact support.", false);
+    }
+})();
+
 
 function calculateEMA(values, period){
 
@@ -1407,5 +1509,6 @@ document
 
 </script>
 
+</div><!-- /appContent -->
 </body>
 </html>
