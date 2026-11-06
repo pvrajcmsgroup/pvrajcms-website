@@ -4,79 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PVrajCMS - Customer Dashboard</title>
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
-
   <style>
     * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #081426;
-      color: #fff;
-    }
-
-    header {
-      background: #10233e;
-      padding: 18px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #1e4266;
-    }
-
+    body { margin: 0; font-family: Arial, sans-serif; background: #081426; color: #fff; }
+    header { background: #10233e; padding: 18px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e4266; }
     header h2 { margin: 0; color: #25c7e8; }
-
-    button {
-      background: #13b9dc;
-      color: #061525;
-      border: 0;
-      padding: 11px 18px;
-      border-radius: 7px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    main {
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 15px;
-    }
-
-    .card {
-      background: #10233e;
-      border: 1px solid #21466a;
-      border-radius: 12px;
-      padding: 22px;
-      margin-bottom: 20px;
-    }
-
+    button { background: #13b9dc; color: #061525; border: 0; padding: 11px 18px; border-radius: 7px; cursor: pointer; font-weight: bold; }
+    button:disabled { opacity: .65; cursor: wait; }
+    main { max-width: 1000px; margin: 30px auto; padding: 15px; }
+    .card { background: #10233e; border: 1px solid #21466a; border-radius: 12px; padding: 22px; margin-bottom: 20px; }
     h3 { color: #25c7e8; }
-
-    .info {
-      color: #c7d6e8;
-      line-height: 1.8;
-      overflow-wrap: anywhere;
-    }
-
-    .product {
-      border: 1px solid #285477;
-      border-radius: 9px;
-      padding: 15px;
-      margin: 12px 0;
-    }
-
+    .info { color: #c7d6e8; line-height: 1.8; overflow-wrap: anywhere; }
+    .product { border: 1px solid #285477; border-radius: 9px; padding: 15px; margin: 12px 0; }
     #message { color: #25c7e8; }
+    .data-item { padding: 12px 0; border-bottom: 1px solid #21466a; color: #c7d6e8; overflow-wrap: anywhere; }
+    .data-item:last-child { border-bottom: 0; }
+    .data-item strong { color: #fff; }
+    .empty { color: #c7d6e8; }
+    @media(max-width:600px) { header { padding: 15px 4%; } header h2 { font-size: 20px; } main { margin: 18px auto; padding: 12px; } .card { padding: 17px; } }
   </style>
 </head>
-
 <body>
-
 <header>
   <h2>PVrajCMS</h2>
-  <button onclick="logout()">Logout</button>
+  <button id="logoutButton" type="button">Logout</button>
 </header>
 
 <main>
@@ -104,70 +57,144 @@
 
   <div class="card">
     <h3>My Subscriptions</h3>
-    <p class="info" id="subscriptions">Loading subscriptions...</p>
+    <div class="info" id="subscriptions">Loading subscriptions...</div>
   </div>
 
   <div class="card">
     <h3>Payment History</h3>
-    <p class="info" id="payments">Loading payment history...</p>
+    <div class="info" id="payments">Loading payment history...</div>
   </div>
 </main>
 
 <script>
-async function loadDashboard() {
-  const { data: { user }, error } = await pvSupabase.auth.getUser();
+(function () {
+  const byId = (id) => document.getElementById(id);
+  const setText = (id, value) => { byId(id).textContent = value || "-"; };
 
-  if (error || !user) {
-    window.location.href = "login.html";
-    return;
+  function showRows(containerId, rows, emptyText, errorText) {
+    const container = byId(containerId);
+    container.replaceChildren();
+
+    if (errorText) {
+      const p = document.createElement("p");
+      p.className = "empty";
+      p.textContent = errorText;
+      container.appendChild(p);
+      return;
+    }
+    if (!rows || rows.length === 0) {
+      const p = document.createElement("p");
+      p.className = "empty";
+      p.textContent = emptyText;
+      container.appendChild(p);
+      return;
+    }
+
+    rows.forEach((row) => {
+      const item = document.createElement("div");
+      item.className = "data-item";
+      const entries = Object.entries(row).filter(([key, value]) =>
+        value !== null && value !== undefined && value !== "" &&
+        !["id", "user_id"].includes(key.toLowerCase())
+      );
+      if (!entries.length) {
+        item.textContent = "Record found.";
+      } else {
+        entries.forEach(([key, value], index) => {
+          if (index) item.appendChild(document.createTextNode(" • "));
+          const strong = document.createElement("strong");
+          strong.textContent = key.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase()) + ": ";
+          item.appendChild(strong);
+          item.appendChild(document.createTextNode(
+            typeof value === "object" ? JSON.stringify(value) : String(value)
+          ));
+        });
+      }
+      container.appendChild(item);
+    });
   }
 
-  document.getElementById("customerEmail").textContent = user.email || "-";
+  async function loadDashboard() {
+    if (typeof pvSupabase === "undefined" || !pvSupabase) {
+      byId("message").textContent = "Supabase configuration could not be loaded. Check supabase-config.js.";
+      return;
+    }
 
-  const { data: profile, error: profileError } = await pvSupabase
-    .from("profiles")
-    .select("full_name, mobile")
-    .eq("id", user.id)
-    .maybeSingle();
+    try {
+      const { data: { user }, error: authError } = await pvSupabase.auth.getUser();
+      if (authError || !user) {
+        window.location.href = "login.html";
+        return;
+      }
 
-  if (!profileError && profile) {
-    document.getElementById("customerName").textContent =
-      profile.full_name || "-";
+      const metadata = user.user_metadata || {};
+      setText("customerEmail", user.email);
+      setText("customerName", metadata.full_name || metadata.name);
+      setText("customerMobile", metadata.mobile || metadata.phone);
 
-    document.getElementById("customerMobile").textContent =
-      profile.mobile || "-";
+      // If a profiles row exists, prefer its current values. Registration also
+      // stores name/mobile in Auth user metadata, so the dashboard has a fallback.
+      const { data: profile, error: profileError } = await pvSupabase
+        .from("profiles")
+        .select("full_name, mobile")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (!profileError && profile) {
+        setText("customerName", profile.full_name || metadata.full_name || metadata.name);
+        setText("customerMobile", profile.mobile || metadata.mobile || metadata.phone);
+      }
+
+      const { data: subs, error: subError } = await pvSupabase
+        .from("subscriptions")
+        .select("*")
+        .eq("user_id", user.id);
+
+      showRows(
+        "subscriptions",
+        subs,
+        "No subscriptions found.",
+        subError ? "Could not load subscriptions. Check the subscriptions table and its Row Level Security (RLS) policy." : ""
+      );
+
+      const { data: paymentData, error: paymentError } = await pvSupabase
+        .from("payments")
+        .select("*")
+        .eq("user_id", user.id);
+
+      showRows(
+        "payments",
+        paymentData,
+        "No payment history found.",
+        paymentError ? "Could not load payment history. Check the payments table and its Row Level Security (RLS) policy." : ""
+      );
+
+      byId("message").textContent = "Welcome to PVrajCMS!";
+    } catch (err) {
+      console.error("Dashboard loading error:", err);
+      byId("message").textContent = "Unable to load your dashboard. Please refresh and try again.";
+    }
   }
 
-  const { data: subs, error: subError } = await pvSupabase
-    .from("subscriptions")
-    .select("*")
-    .eq("user_id", user.id);
+  async function logout() {
+    const button = byId("logoutButton");
+    button.disabled = true;
+    button.textContent = "Logging out...";
+    try {
+      const { error } = await pvSupabase.auth.signOut();
+      if (error) throw error;
+      window.location.href = "login.html";
+    } catch (err) {
+      console.error("Logout error:", err);
+      byId("message").textContent = "Logout failed. Please try again.";
+      button.disabled = false;
+      button.textContent = "Logout";
+    }
+  }
 
-  document.getElementById("subscriptions").textContent =
-    subError ? "Could not load subscriptions." :
-    subs && subs.length ? JSON.stringify(subs) :
-    "No subscriptions found.";
-
-  const { data: paymentData, error: paymentError } = await pvSupabase
-    .from("payments")
-    .select("*")
-    .eq("user_id", user.id);
-
-  document.getElementById("payments").textContent =
-    paymentError ? "Could not load payment history." :
-    paymentData && paymentData.length ? JSON.stringify(paymentData) :
-    "No payment history found.";
-
-  document.getElementById("message").textContent = "Welcome to PVrajCMS!";
-}
-
-async function logout() {
-  await pvSupabase.auth.signOut();
-  window.location.href = "login.html";
-}
-
-loadDashboard();
+  byId("logoutButton").addEventListener("click", logout);
+  loadDashboard();
+})();
 </script>
-
 </body>
 </html>
