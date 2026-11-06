@@ -1202,6 +1202,56 @@ border-radius: 16px;
 }
 </style>
 
+
+<style id="pv-mobile-header-spacing-banner-size">
+@media screen and (max-width: 600px) {
+  /* A little breathing room between PV MART and the account button. */
+  body.home-page .site-header > .container {
+    grid-template-columns: minmax(0, 1fr) 46px !important;
+    column-gap: 12px !important;
+  }
+  body.home-page .site-header > .container > .navbar {
+    justify-content: space-between !important;
+    gap: 0 8px !important;
+    padding-right: 2px !important;
+  }
+  body.home-page .site-header > .container > .account-menu {
+    margin-left: 0 !important;
+    justify-self: end !important;
+    transform: translateX(-2px) !important;
+  }
+  body.home-page .site-header > .container > .account-menu summary {
+    width: 40px !important;
+    min-width: 40px !important;
+  }
+
+  /* Enlarge the banner to use almost the full mobile content width. */
+  body.home-page .pv-diwali-image-banner {
+    width: calc(100% - 12px) !important;
+    max-width: none !important;
+    margin: 12px auto 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  body.home-page .pv-diwali-image-banner img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+  body.home-page .pv-diwali-image-banner a {
+    display: block !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    line-height: 0 !important;
+  }
+}
+</style>
+
 </head>
 
 <body class="home-page">
