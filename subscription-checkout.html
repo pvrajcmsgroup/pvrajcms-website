@@ -1,218 +1,212 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login | PVrajCMS Group</title>
+<title>Subscription Checkout | PVrajCMS Group</title>
 <style>
-* { box-sizing: border-box; }
-body { margin:0; min-height:100vh; font-family:Arial,Helvetica,sans-serif; color:#f4f8ff; background:radial-gradient(circle at 15% 15%,rgba(0,174,239,.16),transparent 30%),radial-gradient(circle at 85% 80%,rgba(0,110,180,.18),transparent 32%),#061321; }
-.topbar { min-height:78px; padding:10px 4%; display:flex; align-items:center; justify-content:space-between; gap:16px; border-bottom:1px solid rgba(255,255,255,.12); background:#071422; }
-.brand { display:flex; align-items:center; gap:14px; min-width:0; }
-.brand img { width:min(28vw,300px); max-height:62px; object-fit:contain; }
-.tagline { border-left:1px solid rgba(255,255,255,.2); padding-left:14px; color:#d6e6f7; font-size:12px; white-space:nowrap; }
-.back-link { color:#6bd5ff; text-decoration:none; font-weight:700; white-space:nowrap; }
-.page { min-height:calc(100vh - 78px); display:grid; place-items:center; padding:38px 16px; }
-.login-card { width:100%; max-width:460px; padding:36px; border:1px solid rgba(76,190,238,.28); border-radius:18px; background:linear-gradient(145deg,rgba(15,43,63,.97),rgba(7,23,38,.98)); box-shadow:0 22px 65px rgba(0,0,0,.35); }
-.eyebrow { margin:0 0 10px; color:#43caff; font-size:11px; font-weight:800; letter-spacing:2.5px; text-transform:uppercase; }
-h1 { margin:0; font-size:clamp(28px,5vw,35px); line-height:1.2; }
-.intro { margin:12px 0 27px; color:#b9cde0; font-size:14px; line-height:1.65; }
-.field { margin-bottom:18px; }
-label { display:block; margin-bottom:7px; color:#e8f3ff; font-size:13px; font-weight:700; }
-input[type="email"],input[type="password"] { width:100%; min-height:49px; padding:12px 14px; color:#fff; background:#071827; border:1px solid #29465d; border-radius:9px; outline:none; font-size:15px; }
-input::placeholder { color:#7890a5; }
-input:focus { border-color:#35bdf2; box-shadow:0 0 0 3px rgba(53,189,242,.13); }
-.form-options { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:2px 0 22px; }
-.remember { display:inline-flex; align-items:center; gap:8px; color:#b9cde0; font-size:12px; }
-.remember input { width:15px; height:15px; margin:0; accent-color:#13a9e4; }
-a { color:#55ceff; text-decoration:none; }
-.forgot { font-size:12px; font-weight:700; }
-.login-btn { width:100%; min-height:51px; border:0; border-radius:9px; color:#fff; background:linear-gradient(135deg,#13b8ef,#075c9b); box-shadow:0 8px 22px rgba(5,112,177,.28); font-size:16px; font-weight:800; cursor:pointer; transition:.2s ease; }
-.login-btn:hover { background:linear-gradient(135deg,#38ccff,#0879bd); box-shadow:0 10px 25px rgba(5,130,200,.38); transform:translateY(-2px); }
-.login-btn:focus-visible { outline:3px solid #65d6ff; outline-offset:3px; }
-.login-btn:disabled { opacity:.65; cursor:wait; transform:none; }
-.signup { margin:22px 0 0; color:#b9cde0; text-align:center; font-size:13px; }
-.notice { margin:19px 0 0; padding:10px 12px; color:#9db6ca; background:rgba(255,255,255,.045); border-radius:8px; font-size:11px; line-height:1.5; text-align:center; }
-.notice.success { color:#9df2c0; background:rgba(30,160,90,.12); }
-.notice.error { color:#ffb4b4; background:rgba(200,40,40,.12); }
-@media(max-width:600px) { .topbar { min-height:66px; padding:9px 14px; } .brand { gap:0; } .brand img { width:min(55vw,220px); max-height:52px; } .tagline { display:none; } .page { min-height:calc(100vh - 66px); padding:22px 13px; } .login-card { padding:27px 20px; border-radius:14px; } .intro { margin-bottom:23px; } }
-@media(max-width:350px) { .back-link { font-size:13px; } .brand img { width:48vw; } .form-options { align-items:flex-start; flex-direction:column; } }
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:#f4f8ff;background:radial-gradient(circle at 15% 15%,rgba(0,174,239,.15),transparent 30%),#061321}
+.topbar{min-height:76px;padding:10px 4%;display:flex;align-items:center;justify-content:space-between;gap:16px;background:#071422;border-bottom:1px solid rgba(255,255,255,.12)}
+.brand{display:flex;align-items:center;gap:14px;min-width:0}.brand img{width:min(28vw,290px);max-height:60px;object-fit:contain}.tagline{padding-left:14px;border-left:1px solid rgba(255,255,255,.2);font-size:12px;color:#d6e6f7;white-space:nowrap}
+.back{color:#65d2ff;text-decoration:none;font-weight:700;white-space:nowrap}
+main{width:min(920px,calc(100% - 28px));margin:38px auto 60px}
+.eyebrow{color:#43caff;font-size:11px;font-weight:800;letter-spacing:2.3px;text-transform:uppercase}
+h1{font-size:clamp(28px,5vw,38px);margin:8px 0 10px}.intro{color:#b9cde0;line-height:1.65;margin:0 0 24px}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+.card{padding:24px;border:1px solid rgba(76,190,238,.25);border-radius:15px;background:linear-gradient(145deg,rgba(15,43,63,.97),rgba(7,23,38,.98));box-shadow:0 18px 45px rgba(0,0,0,.22)}
+.card h2{font-size:19px;margin:0 0 18px}
+.product{padding:16px;border:1px solid rgba(100,190,230,.2);border-radius:10px;background:rgba(255,255,255,.035)}
+.product h3{margin:0 0 8px;font-size:18px}.muted{color:#b9cde0;font-size:13px;line-height:1.6}
+.price-row{display:flex;align-items:baseline;gap:8px;margin-top:15px}.price{font-size:34px;font-weight:800;color:#9df2c0}.period{color:#b9cde0;font-size:13px}
+.line{height:1px;background:rgba(255,255,255,.12);margin:18px 0}
+.detail{display:flex;justify-content:space-between;gap:12px;margin:12px 0;font-size:14px}.detail span:first-child{color:#b9cde0}.detail strong{text-align:right;overflow-wrap:anywhere}
+.qrbox{border:1px dashed rgba(120,190,220,.4);border-radius:12px;text-align:center;padding:16px;background:rgba(255,255,255,.025);color:#b9cde0}
+.qrbox img{display:block;width:min(100%,270px);height:auto;margin:12px auto;border-radius:8px;background:#fff;padding:8px}
+.notice{margin-top:16px;padding:12px;border-radius:9px;background:rgba(255,190,70,.09);border:1px solid rgba(255,190,70,.22);color:#ffe0a3;font-size:12px;line-height:1.6}
+.status{margin-top:16px;padding:12px;border-radius:9px;background:rgba(255,255,255,.045);color:#b9cde0;font-size:12px;line-height:1.6}
+.field{margin-top:16px}.field label{display:block;margin-bottom:8px;font-size:13px;font-weight:700;color:#e8f3ff}
+.field input{width:100%;min-height:44px;padding:11px 12px;border:1px solid rgba(150,195,225,.35);border-radius:8px;background:#0a1b2c;color:#fff;font-size:14px}
+.field input:focus{outline:2px solid rgba(67,202,255,.45);border-color:#43caff}
+.field input[type=file]{padding:9px}
+.hint{margin:7px 0 0;color:#a9bfd3;font-size:11px;line-height:1.5}
+button{width:100%;min-height:46px;margin-top:18px;border:0;border-radius:9px;background:#087dba;color:white;font-size:14px;font-weight:800;cursor:pointer}
+button:disabled{opacity:.55;cursor:not-allowed}
+#paymentStatus[data-kind="success"]{color:#a9f5c5;border:1px solid rgba(80,220,140,.25)}
+#paymentStatus[data-kind="error"]{color:#ffc1b9;border:1px solid rgba(255,100,90,.3)}
+@media(max-width:700px){.layout{grid-template-columns:1fr}.topbar{padding:9px 14px}.brand{gap:0}.brand img{width:min(52vw,210px)}.tagline{display:none}main{margin-top:25px}.card{padding:19px}}
 </style>
 </head>
 <body>
-
 <header class="topbar">
-  <a class="brand" href="index.html">
-    <img src="logo.png" alt="PVrajCMS Group">
-    <span class="tagline">Engineering • Technology • Digital Innovation</span>
-  </a>
-  <a class="back-link" href="index.html">← Back to Website</a>
+  <a class="brand" href="index.html"><img src="logo.png" alt="PVrajCMS Group"><span class="tagline">Engineering • Technology • Digital Innovation</span></a>
+  <a class="back" href="services.html">← Back to Services</a>
 </header>
+<main>
+  <div class="eyebrow">Secure customer checkout</div>
+  <h1>Subscription Checkout</h1>
+  <p class="intro">Review your service and subscription details. Your access will be activated only after the payment is manually verified by the owner.</p>
+  <div class="layout">
+    <section class="card">
+      <h2>Order Summary</h2>
+      <div class="product">
+        <h3>Crude Oil Scalping Calculator</h3>
+        <p class="muted">Calculate entry price, stop loss and target levels with the dedicated crude oil trading calculator.</p>
+        <div class="price-row"><span class="price">₹2</span><span class="period">/ 30 Days (test price)</span></div>
+      </div>
+      <div class="line"></div>
+      <div class="detail"><span>Customer</span><strong id="customerName">Loading...</strong></div>
+      <div class="detail"><span>Registered email</span><strong id="customerEmail">Loading...</strong></div>
+      <div class="detail"><span>Subscription duration</span><strong>30 Days</strong></div>
+      <div class="detail"><span>Total payable</span><strong>₹2</strong></div>
+      <div class="notice">This is currently a ₹2 test checkout. Payment is not verified automatically. Do not submit a request until you have completed the UPI payment.</div>
+    </section>
+    <section class="card">
+      <h2>Pay using UPI</h2>
+      <div class="qrbox">
+        <strong>Scan this QR code to pay ₹2</strong>
+        <img src="GooglePay_QR.png" alt="PVrajCMS Group UPI payment QR code">
+        <span class="muted">Please verify the payee name and amount in your UPI app before paying.</span>
+      </div>
 
-<main class="page">
-<section class="login-card">
-  <p class="eyebrow">PVrajCMS Group Account</p>
-  <h1>Welcome Back</h1>
-  <p class="intro">Login with your registered email address to access PVrajCMS Group services.</p>
-
-  <form id="loginForm">
-    <div class="field">
-      <label for="loginEmail">Email Address</label>
-      <input id="loginEmail" name="email" type="email" placeholder="Enter your registered email address" autocomplete="username" required>
-    </div>
-
-    <div class="field">
-      <label for="password">Password</label>
-      <input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
-    </div>
-
-    <div class="form-options">
-      <label class="remember">
-        <input type="checkbox" id="remember" checked>
-        Remember Me
-      </label>
-      <a class="forgot" href="forgot-password.html">Forgot Password?</a>
-    </div>
-
-    <button class="login-btn" id="loginButton" type="submit">Login to Your Account</button>
-  </form>
-
-  <p class="signup">Don't have an account? <a href="register.html">Create Account</a></p>
-  <p class="notice" id="loginMessage" role="status" aria-live="polite">Sign in securely using your registered email address.</p>
-</section>
+      <form id="paymentForm">
+        <div class="field">
+          <label for="utrNumber">UPI UTR / Transaction Reference Number</label>
+          <input id="utrNumber" name="utrNumber" type="text" minlength="6" maxlength="40" autocomplete="off" placeholder="Enter UTR / transaction reference" required>
+          <p class="hint">Enter the transaction reference shown in your UPI payment app.</p>
+        </div>
+        <div class="field">
+          <label for="paymentScreenshot">Payment Screenshot</label>
+          <input id="paymentScreenshot" name="paymentScreenshot" type="file" accept="image/png,image/jpeg,image/webp" required>
+          <p class="hint">Upload a clear payment screenshot (PNG, JPG or WEBP; maximum 5 MB).</p>
+        </div>
+        <button id="submitPayment" type="submit" disabled>Loading account...</button>
+      </form>
+      <div class="status" id="paymentStatus" role="status" aria-live="polite">Checking your account...</div>
+      <p class="muted">After submission, your request will remain Pending until the owner checks the UTR and payment screenshot. Subscription access is not activated by submitting this form.</p>
+    </section>
+  </div>
 </main>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
-
 <script>
-const loginForm = document.getElementById("loginForm");
-const loginButton = document.getElementById("loginButton");
-const loginMessage = document.getElementById("loginMessage");
+document.addEventListener("DOMContentLoaded", async function(){
+  const nameEl=document.getElementById("customerName");
+  const emailEl=document.getElementById("customerEmail");
+  const statusEl=document.getElementById("paymentStatus");
+  const form=document.getElementById("paymentForm");
+  const submitBtn=document.getElementById("submitPayment");
+  const utrEl=document.getElementById("utrNumber");
+  const fileEl=document.getElementById("paymentScreenshot");
+  const client=(typeof pvSupabase!=="undefined"&&pvSupabase)?pvSupabase:window.pvSupabase;
+  let currentUser=null;
 
-const OWNER_EMAIL = "pvrajcmsgroup@gmail.com";
-
-function showLoginMessage(message, type = "") {
-  loginMessage.textContent = message;
-  loginMessage.className = ("notice " + type).trim();
-}
-
-// Owner always goes to Owner Dashboard.
-// Customers return to their originally requested page.
-function getPostLoginDestination(user) {
-
-  const email = (user?.email || "").trim().toLowerCase();
-
-  if (email === OWNER_EMAIL) {
-    return "owner-payment-dashboard.html";
+  function showStatus(message,kind){
+    statusEl.textContent=message;
+    statusEl.dataset.kind=kind||"";
   }
 
-  const requested = new URLSearchParams(window.location.search).get("redirect");
-
-  if (!requested) {
-    return "projects.html";
-  }
-
-  try {
-    const destination = new URL(requested, window.location.href);
-
-    if (destination.origin !== window.location.origin) {
-      return "projects.html";
-    }
-
-    if (destination.pathname.startsWith("//")) {
-      return "projects.html";
-    }
-
-    // UPDATED: Added Crude Oil Calculator to allowed pages.
-    const allowedPages = [
-      "subscription-checkout.html",
-      "projects.html",
-      "crude-oil-scalp-calculator.html"
-    ];
-
-    const page = destination.pathname.split("/").pop();
-
-    if (!allowedPages.includes(page)) {
-      return "projects.html";
-    }
-
-    return destination.pathname + destination.search + destination.hash;
-
-  } catch (_error) {
-    return "projects.html";
-  }
-}
-
-loginForm.addEventListener("submit", async function(event) {
-
-  event.preventDefault();
-
-  const client =
-    (typeof pvSupabase !== "undefined" && pvSupabase)
-      ? pvSupabase
-      : window.pvSupabase;
-
-  if (!client?.auth) {
-    showLoginMessage(
-      "Supabase could not be initialized. Please check supabase-config.js and the Supabase library connection.",
-      "error"
-    );
+  if(!client?.auth || !client?.storage){
+    nameEl.textContent="Unable to verify";
+    emailEl.textContent="Supabase not connected";
+    submitBtn.disabled=true;
+    submitBtn.textContent="Checkout unavailable";
+    showStatus("Supabase is not connected. Please contact the website owner.", "error");
     return;
   }
 
-  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
-  const password = document.getElementById("password").value;
-
-  if (!email || !password) {
-    showLoginMessage("Please enter your email address and password.", "error");
-    return;
+  try{
+    const {data,error}=await client.auth.getUser();
+    if(error||!data?.user){
+      const returnTo=encodeURIComponent("subscription-checkout.html");
+      window.location.replace("login.html?redirect="+returnTo);
+      return;
+    }
+    currentUser=data.user;
+    nameEl.textContent=currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||currentUser.email?.split("@")[0]||"Customer";
+    emailEl.textContent=currentUser.email||"Not available";
+    submitBtn.disabled=false;
+    submitBtn.textContent="Submit Payment for Verification";
+    showStatus("Account verified. After paying ₹2, enter the UTR and upload your payment screenshot.", "");
+  }catch(error){
+    console.error("Checkout account verification failed:",error);
+    nameEl.textContent="Unable to verify";
+    emailEl.textContent="Please refresh";
+    submitBtn.disabled=true;
+    submitBtn.textContent="Checkout unavailable";
+    showStatus("Account verification failed. Please refresh the page and try again.", "error");
   }
 
-  loginButton.disabled = true;
-  loginButton.textContent = "Signing In...";
-
-  showLoginMessage("Verifying your account. Please wait.");
-
-  try {
-
-    const { data, error } = await client.auth.signInWithPassword({
-      email,
-      password
-    });
-
-    if (error) throw error;
-
-    if (!data?.user) {
-      throw new Error("Login could not be completed. Please try again.");
+  form.addEventListener("submit", async function(event){
+    event.preventDefault();
+    if(!currentUser){
+      showStatus("Please log in again before submitting your payment request.", "error");
+      return;
     }
 
-    const destination = getPostLoginDestination(data.user);
-
-    showLoginMessage("Login successful. Redirecting you now...", "success");
-
-    window.location.assign(destination);
-
-  } catch (error) {
-
-    let message = error?.message ||
-      "Login failed. Please check your details and try again.";
-
-    if (/email not confirmed/i.test(message)) {
-      message = "Please verify your email address using the confirmation link sent to your inbox.";
+    const utr=utrEl.value.trim();
+    const file=fileEl.files && fileEl.files[0];
+    if(utr.length<6 || utr.length>40){
+      showStatus("Please enter a valid UTR / transaction reference (6–40 characters).", "error");
+      utrEl.focus();
+      return;
     }
-    else if (/invalid login credentials/i.test(message)) {
-      message = "Incorrect email address or password. Please try again.";
+    if(!file){
+      showStatus("Please select your payment screenshot.", "error");
+      return;
+    }
+    const allowedTypes=["image/png","image/jpeg","image/webp"];
+    if(!allowedTypes.includes(file.type)){
+      showStatus("Only PNG, JPG or WEBP screenshots are accepted.", "error");
+      return;
+    }
+    if(file.size>5*1024*1024){
+      showStatus("Screenshot must be 5 MB or smaller.", "error");
+      return;
     }
 
-    showLoginMessage(message, "error");
+    submitBtn.disabled=true;
+    submitBtn.textContent="Uploading and submitting...";
+    showStatus("Uploading your payment screenshot. Please do not close this page.", "");
 
-    loginButton.disabled = false;
-    loginButton.textContent = "Login to Your Account";
-  }
+    const extension=file.type==="image/png"?"png":file.type==="image/webp"?"webp":"jpg";
+    const filePath=currentUser.id+"/"+Date.now()+"-"+crypto.randomUUID()+"."+extension;
+
+    try{
+      const {data:uploadData,error:uploadError}=await client.storage
+        .from("payment-screenshots")
+        .upload(filePath,file,{contentType:file.type,upsert:false});
+
+      if(uploadError) throw uploadError;
+
+      const {data:requestData,error:requestError}=await client
+        .from("payment_requests")
+        .insert({
+          user_id:currentUser.id,
+          service_name:"Crude Oil Scalping Calculator",
+          amount:2.00,
+          duration_days:30,
+          utr_number:utr,
+          screenshot_path:uploadData.path,
+          status:"pending"
+        })
+        .select("id")
+        .single();
+
+      if(requestError) throw requestError;
+
+      form.reset();
+      showStatus("Payment request submitted successfully. Your request is Pending owner verification. Reference: "+requestData.id, "success");
+      submitBtn.textContent="Request Submitted";
+    }catch(error){
+      console.error("Payment request submission failed:",error);
+      const message=error?.message||"Unknown error";
+      showStatus("Could not submit your request: "+message+". Please contact the website owner if the screenshot uploaded but the request was not saved.", "error");
+      submitBtn.disabled=false;
+      submitBtn.textContent="Try Again";
+    }
+  });
 });
 </script>
-
 </body>
 </html>
