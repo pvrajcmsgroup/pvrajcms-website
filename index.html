@@ -705,6 +705,52 @@
             }
         }
 
+
+        /* Five main business categories — visible only after customer sign-in */
+        .category-nav {
+            position: relative;
+            display: none;
+            flex: 0 0 auto;
+        }
+        .category-nav.is-authenticated { display: block; }
+        .category-nav > summary {
+            list-style: none;
+            cursor: pointer;
+            color: inherit;
+            font: inherit;
+            white-space: nowrap;
+        }
+        .category-nav > summary::-webkit-details-marker { display: none; }
+        .category-nav > summary::after { content: "⌄"; margin-left: 5px; }
+        .category-nav-dropdown {
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 0;
+            min-width: 235px;
+            padding: 8px;
+            background: #fff;
+            border: 1px solid #dbe5ef;
+            border-radius: 10px;
+            box-shadow: 0 12px 30px rgba(0,0,0,.2);
+            z-index: 2000;
+        }
+        .category-nav-dropdown a {
+            display: block;
+            padding: 11px 13px;
+            color: #10243a !important;
+            text-decoration: none;
+            font-size: 14px !important;
+            font-weight: 700;
+            border-radius: 7px;
+        }
+        .category-nav-dropdown a:hover { background: #edf6fb; color: #0b6798 !important; }
+        @media (max-width: 1000px) {
+            .category-nav-dropdown {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
     </style>
 </head>
 
@@ -722,7 +768,16 @@
             <a href="index.html" aria-current="page">Home</a>
             <a href="about.html">About</a>
             <a href="services.html">Services</a>
-            <a href="projects.html">Projects</a>
+            <details class="category-nav" id="customerCategories">
+                <summary>Categories</summary>
+                <div class="category-nav-dropdown">
+                    <a href="projects.html?category=digital-solutions">Digital Solutions</a>
+                    <a href="projects.html?category=fm-fintech">FM &amp; FinTech</a>
+                    <a href="projects.html?category=business-ventures">Business Ventures</a>
+                    <a href="projects.html?category=healthcare-innovation">Healthcare &amp; Innovation</a>
+                    <a href="projects.html?category=other">Other</a>
+                </div>
+            </details>
             <a href="contact.html">Contact</a>
             <a href="pv-mart.html">PV MART</a>
         </nav>
@@ -970,6 +1025,28 @@
         <span>Engineering • Technology • Digital Innovation</span>
     </div>
 </footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+    const categoryMenu = document.getElementById("customerCategories");
+    if (!categoryMenu || !window.pvSupabase) return;
+
+    try {
+        const { data: { session } } = await window.pvSupabase.auth.getSession();
+        if (session) categoryMenu.classList.add("is-authenticated");
+
+        window.pvSupabase.auth.onAuthStateChange((_event, nextSession) => {
+            categoryMenu.classList.toggle("is-authenticated", !!nextSession);
+            if (!nextSession) categoryMenu.removeAttribute("open");
+        });
+    } catch (error) {
+        console.error("Could not verify customer login:", error);
+    }
+});
+</script>
 
 </body>
 </html>
