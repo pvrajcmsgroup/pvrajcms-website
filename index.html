@@ -1252,6 +1252,36 @@ border-radius: 16px;
 }
 </style>
 
+
+<style id="pv-mobile-account-align-banner-max-width">
+@media screen and (max-width: 600px) {
+  /* Align the account icon slightly upward with the PV MART text. */
+  body.home-page .site-header > .container > .account-menu {
+    transform: translateY(-5px) !important;
+  }
+
+  /* Make the Diwali banner nearly full-bleed on mobile. */
+  body.home-page .pv-diwali-image-banner {
+    width: calc(100vw - 8px) !important;
+    max-width: none !important;
+    margin-left: calc(50% - 50vw + 4px) !important;
+    margin-right: 0 !important;
+    margin-top: 10px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  body.home-page .pv-diwali-image-banner img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+}
+</style>
+
 </head>
 
 <body class="home-page">
