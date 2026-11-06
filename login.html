@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,107 +41,178 @@ a { color:#55ceff; text-decoration:none; }
 </style>
 </head>
 <body>
+
 <header class="topbar">
-  <a class="brand" href="index.html"><img src="logo.png" alt="PVrajCMS Group"><span class="tagline">Engineering • Technology • Digital Innovation</span></a>
+  <a class="brand" href="index.html">
+    <img src="logo.png" alt="PVrajCMS Group">
+    <span class="tagline">Engineering • Technology • Digital Innovation</span>
+  </a>
   <a class="back-link" href="index.html">← Back to Website</a>
 </header>
+
 <main class="page">
 <section class="login-card">
   <p class="eyebrow">PVrajCMS Group Account</p>
   <h1>Welcome Back</h1>
   <p class="intro">Login with your registered email address to access PVrajCMS Group services.</p>
+
   <form id="loginForm">
-    <div class="field"><label for="loginEmail">Email Address</label><input id="loginEmail" name="email" type="email" placeholder="Enter your registered email address" autocomplete="username" required></div>
-    <div class="field"><label for="password">Password</label><input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required></div>
+    <div class="field">
+      <label for="loginEmail">Email Address</label>
+      <input id="loginEmail" name="email" type="email" placeholder="Enter your registered email address" autocomplete="username" required>
+    </div>
+
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+    </div>
+
     <div class="form-options">
-      <label class="remember"><input type="checkbox" id="remember" checked>Remember Me</label>
+      <label class="remember">
+        <input type="checkbox" id="remember" checked>
+        Remember Me
+      </label>
       <a class="forgot" href="forgot-password.html">Forgot Password?</a>
     </div>
+
     <button class="login-btn" id="loginButton" type="submit">Login to Your Account</button>
   </form>
+
   <p class="signup">Don't have an account? <a href="register.html">Create Account</a></p>
   <p class="notice" id="loginMessage" role="status" aria-live="polite">Sign in securely using your registered email address.</p>
 </section>
 </main>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
-<script>
-const loginForm=document.getElementById("loginForm");
-const loginButton=document.getElementById("loginButton");
-const loginMessage=document.getElementById("loginMessage");
-const OWNER_EMAIL="pvrajcmsgroup@gmail.com";
 
-function showLoginMessage(message,type=""){
-  loginMessage.textContent=message;
-  loginMessage.className=("notice "+type).trim();
+<script>
+const loginForm = document.getElementById("loginForm");
+const loginButton = document.getElementById("loginButton");
+const loginMessage = document.getElementById("loginMessage");
+
+const OWNER_EMAIL = "pvrajcmsgroup@gmail.com";
+
+function showLoginMessage(message, type = "") {
+  loginMessage.textContent = message;
+  loginMessage.className = ("notice " + type).trim();
 }
 
-// Owners always go to the Owner Dashboard after login.
-// Customers can only be redirected to the approved customer pages.
-function getPostLoginDestination(user){
-  const email=(user?.email||"").trim().toLowerCase();
+// Owner always goes to Owner Dashboard.
+// Customers return to their originally requested page.
+function getPostLoginDestination(user) {
 
-  if(email===OWNER_EMAIL){
+  const email = (user?.email || "").trim().toLowerCase();
+
+  if (email === OWNER_EMAIL) {
     return "owner-payment-dashboard.html";
   }
 
-  const requested=new URLSearchParams(window.location.search).get("redirect");
-  if(!requested) return "projects.html";
+  const requested = new URLSearchParams(window.location.search).get("redirect");
 
-  try{
-    const destination=new URL(requested,window.location.href);
-    if(destination.origin!==window.location.origin) return "projects.html";
-    if(destination.pathname.startsWith("//")) return "projects.html";
+  if (!requested) {
+    return "projects.html";
+  }
 
-    const allowedPages=["subscription-checkout.html","projects.html"];
-    const page=destination.pathname.split("/").pop();
+  try {
+    const destination = new URL(requested, window.location.href);
 
-    if(!allowedPages.includes(page)) return "projects.html";
-    return destination.pathname+destination.search+destination.hash;
-  }catch(_error){
+    if (destination.origin !== window.location.origin) {
+      return "projects.html";
+    }
+
+    if (destination.pathname.startsWith("//")) {
+      return "projects.html";
+    }
+
+    // UPDATED: Added Crude Oil Calculator to allowed pages.
+    const allowedPages = [
+      "subscription-checkout.html",
+      "projects.html",
+      "crude-oil-scalp-calculator.html"
+    ];
+
+    const page = destination.pathname.split("/").pop();
+
+    if (!allowedPages.includes(page)) {
+      return "projects.html";
+    }
+
+    return destination.pathname + destination.search + destination.hash;
+
+  } catch (_error) {
     return "projects.html";
   }
 }
 
-loginForm.addEventListener("submit",async function(event){
+loginForm.addEventListener("submit", async function(event) {
+
   event.preventDefault();
 
-  const client=(typeof pvSupabase!=="undefined"&&pvSupabase)?pvSupabase:window.pvSupabase;
+  const client =
+    (typeof pvSupabase !== "undefined" && pvSupabase)
+      ? pvSupabase
+      : window.pvSupabase;
 
-  if(!client?.auth){
-    showLoginMessage("Supabase could not be initialized. Please check supabase-config.js and the Supabase library connection.","error");
+  if (!client?.auth) {
+    showLoginMessage(
+      "Supabase could not be initialized. Please check supabase-config.js and the Supabase library connection.",
+      "error"
+    );
     return;
   }
 
-  const email=document.getElementById("loginEmail").value.trim().toLowerCase();
-  const password=document.getElementById("password").value;
+  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+  const password = document.getElementById("password").value;
 
-  if(!email||!password){
-    showLoginMessage("Please enter your email address and password.","error");
+  if (!email || !password) {
+    showLoginMessage("Please enter your email address and password.", "error");
     return;
   }
 
-  loginButton.disabled=true;
-  loginButton.textContent="Signing In...";
+  loginButton.disabled = true;
+  loginButton.textContent = "Signing In...";
+
   showLoginMessage("Verifying your account. Please wait.");
 
-  try{
-    const {data,error}=await client.auth.signInWithPassword({email,password});
-    if(error) throw error;
-    if(!data?.user) throw new Error("Login could not be completed. Please try again.");
+  try {
 
-    const destination=getPostLoginDestination(data.user);
-    showLoginMessage("Login successful. Redirecting you now...","success");
+    const { data, error } = await client.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) throw error;
+
+    if (!data?.user) {
+      throw new Error("Login could not be completed. Please try again.");
+    }
+
+    const destination = getPostLoginDestination(data.user);
+
+    showLoginMessage("Login successful. Redirecting you now...", "success");
+
     window.location.assign(destination);
-  }catch(error){
-    let message=error?.message||"Login failed. Please check your details and try again.";
-    if(/email not confirmed/i.test(message)) message="Please verify your email address using the confirmation link sent to your inbox.";
-    else if(/invalid login credentials/i.test(message)) message="Incorrect email address or password. Please try again.";
-    showLoginMessage(message,"error");
-    loginButton.disabled=false;
-    loginButton.textContent="Login to Your Account";
+
+  } catch (error) {
+
+    let message = error?.message ||
+      "Login failed. Please check your details and try again.";
+
+    if (/email not confirmed/i.test(message)) {
+      message = "Please verify your email address using the confirmation link sent to your inbox.";
+    }
+    else if (/invalid login credentials/i.test(message)) {
+      message = "Incorrect email address or password. Please try again.";
+    }
+
+    showLoginMessage(message, "error");
+
+    loginButton.disabled = false;
+    loginButton.textContent = "Login to Your Account";
   }
 });
 </script>
+
 </body>
 </html>
