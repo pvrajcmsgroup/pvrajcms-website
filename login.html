@@ -68,15 +68,22 @@ a { color:#55ceff; text-decoration:none; }
 const loginForm=document.getElementById("loginForm");
 const loginButton=document.getElementById("loginButton");
 const loginMessage=document.getElementById("loginMessage");
+const OWNER_EMAIL="pvrajcmsgroup@gmail.com";
 
 function showLoginMessage(message,type=""){
   loginMessage.textContent=message;
   loginMessage.className=("notice "+type).trim();
 }
 
-// Only allow a same-site page as the post-login destination.
-// This prevents an untrusted redirect URL from sending customers off-site.
-function getPostLoginDestination(){
+// Owners always go to the Owner Dashboard after login.
+// Customers can only be redirected to the approved customer pages.
+function getPostLoginDestination(user){
+  const email=(user?.email||"").trim().toLowerCase();
+
+  if(email===OWNER_EMAIL){
+    return "owner-payment-dashboard.html";
+  }
+
   const requested=new URLSearchParams(window.location.search).get("redirect");
   if(!requested) return "projects.html";
 
@@ -84,8 +91,10 @@ function getPostLoginDestination(){
     const destination=new URL(requested,window.location.href);
     if(destination.origin!==window.location.origin) return "projects.html";
     if(destination.pathname.startsWith("//")) return "projects.html";
+
     const allowedPages=["subscription-checkout.html","projects.html"];
     const page=destination.pathname.split("/").pop();
+
     if(!allowedPages.includes(page)) return "projects.html";
     return destination.pathname+destination.search+destination.hash;
   }catch(_error){
@@ -95,27 +104,38 @@ function getPostLoginDestination(){
 
 loginForm.addEventListener("submit",async function(event){
   event.preventDefault();
-  if(typeof pvSupabase==="undefined"||!pvSupabase?.auth){
-    showLoginMessage("Supabase could not be initialized. Please check supabase-config.js and the Supabase library connection.","error");return;
+
+  const client=(typeof pvSupabase!=="undefined"&&pvSupabase)?pvSupabase:window.pvSupabase;
+
+  if(!client?.auth){
+    showLoginMessage("Supabase could not be initialized. Please check supabase-config.js and the Supabase library connection.","error");
+    return;
   }
+
   const email=document.getElementById("loginEmail").value.trim().toLowerCase();
   const password=document.getElementById("password").value;
-  if(!email||!password){showLoginMessage("Please enter your email address and password.","error");return;}
+
+  if(!email||!password){
+    showLoginMessage("Please enter your email address and password.","error");
+    return;
+  }
+
   loginButton.disabled=true;
   loginButton.textContent="Signing In...";
   showLoginMessage("Verifying your account. Please wait.");
-  try{
-    const {data,error}=await pvSupabase.auth.signInWithPassword({email,password});
-    if(error)throw error;
-    if(!data?.user)throw new Error("Login could not be completed. Please try again.");
 
-    const destination=getPostLoginDestination();
+  try{
+    const {data,error}=await client.auth.signInWithPassword({email,password});
+    if(error) throw error;
+    if(!data?.user) throw new Error("Login could not be completed. Please try again.");
+
+    const destination=getPostLoginDestination(data.user);
     showLoginMessage("Login successful. Redirecting you now...","success");
     window.location.assign(destination);
   }catch(error){
     let message=error?.message||"Login failed. Please check your details and try again.";
-    if(/email not confirmed/i.test(message))message="Please verify your email address using the confirmation link sent to your inbox.";
-    else if(/invalid login credentials/i.test(message))message="Incorrect email address or password. Please try again.";
+    if(/email not confirmed/i.test(message)) message="Please verify your email address using the confirmation link sent to your inbox.";
+    else if(/invalid login credentials/i.test(message)) message="Incorrect email address or password. Please try again.";
     showLoginMessage(message,"error");
     loginButton.disabled=false;
     loginButton.textContent="Login to Your Account";
