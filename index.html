@@ -1282,6 +1282,36 @@ border-radius: 16px;
 }
 </style>
 
+
+<style id="pv-mobile-account-banner-extra-adjust">
+@media screen and (max-width: 600px) {
+  /* Nudge the account icon a little higher, keeping it beside PV MART. */
+  body.home-page .site-header > .container > .account-menu {
+    transform: translateY(-9px) !important;
+  }
+
+  /* Enlarge the banner further while keeping its full artwork visible. */
+  body.home-page .pv-diwali-image-banner {
+    width: calc(100vw - 2px) !important;
+    max-width: none !important;
+    margin-left: calc(50% - 50vw + 1px) !important;
+    margin-right: 0 !important;
+    margin-top: 8px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  body.home-page .pv-diwali-image-banner img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+}
+</style>
+
 </head>
 
 <body class="home-page">
