@@ -237,6 +237,100 @@
             .services-page .service-card h3 { font-size: 18px; }
             .services-page .service-card p { font-size: 14px; }
         }
+
+        /* Shared PVRajCMS customer account control */
+        .services-page .account-menu {
+            position: relative;
+            flex: 0 0 auto;
+            margin-left: 4px;
+            z-index: 3000;
+        }
+        .services-page .account-menu > summary {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            min-width: 48px;
+            max-width: 120px;
+            min-height: 58px;
+            padding: 3px 6px;
+            border: 1px solid rgba(255,255,255,.28);
+            border-radius: 12px;
+            color: #fff;
+            background: rgba(255,255,255,.08);
+            cursor: pointer;
+            line-height: 1.1;
+        }
+        .services-page .account-menu > summary::-webkit-details-marker { display:none; }
+        .services-page .account-avatar {
+            display: block;
+            width: 27px;
+            height: 27px;
+            border-radius: 50%;
+            object-fit: cover;
+            font-size: 23px;
+            line-height: 27px;
+            text-align: center;
+        }
+        .services-page .account-name {
+            display: block;
+            max-width: 108px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .services-page .account-name:empty { display:none; }
+        .services-page .account-dropdown {
+            position: absolute;
+            top: calc(100% + 9px);
+            right: 0;
+            min-width: 185px;
+            padding: 8px;
+            background: #fff;
+            border: 1px solid #dbe5ef;
+            border-radius: 10px;
+            box-shadow: 0 12px 30px rgba(0,0,0,.22);
+        }
+        .services-page .account-dropdown a,
+        .services-page .account-dropdown button,
+        .services-page .account-dropdown label {
+            display: block;
+            width: 100%;
+            padding: 10px 12px;
+            border: 0;
+            border-radius: 7px;
+            color: #10243a !important;
+            background: transparent;
+            text-decoration: none;
+            text-align: left;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .services-page .account-dropdown a:hover,
+        .services-page .account-dropdown button:hover,
+        .services-page .account-dropdown label:hover { background:#edf6fb; }
+        .services-page .account-dropdown .account-logout {
+            margin-top: 5px;
+            color: #b42318 !important;
+            background: #fff0f0;
+        }
+        .services-page .account-dropdown [hidden] { display:none !important; }
+        .services-page .account-photo-input { display:none; }
+        @media (max-width: 1000px) {
+            .services-page .account-menu { margin: 5px auto 0; }
+            .services-page .account-dropdown {
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+            }
+        }
+
     </style>
 </head>
 <body class="services-page">
@@ -256,6 +350,20 @@
             <a href="contact.html">Contact</a>
             <a href="kirana.html">PV MART</a>
         </nav>
+        <details class="account-menu" id="customerAccountMenu">
+            <summary id="accountSummary" aria-label="Customer account" title="Customer account">
+                <span class="account-avatar" id="accountAvatar">👤</span>
+                <span class="account-name" id="accountName"></span>
+            </summary>
+            <div class="account-dropdown">
+                <a href="register.html" id="accountRegisterLink">Create Account</a>
+                <a href="login.html" id="accountSignInLink">Sign In</a>
+                <a href="owner-login.html" class="owner-login-link">Owner / Master Login</a>
+                <label for="accountPhotoInput" id="accountPhotoLabel" hidden>Change Profile Photo</label>
+                <input class="account-photo-input" type="file" id="accountPhotoInput" accept="image/*">
+                <button type="button" class="account-logout" id="accountLogout" hidden>Log Out</button>
+            </div>
+        </details>
     </div>
 </header>
 <main>
@@ -321,5 +429,150 @@
     </div>
     <div class="footer-bottom"><span>© 2026 PVRajCMS Group. All rights reserved.</span><span>Engineering • Technology • Digital Innovation</span></div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+    const summary = document.getElementById("accountSummary");
+    const avatar = document.getElementById("accountAvatar");
+    const name = document.getElementById("accountName");
+    const registerLink = document.getElementById("accountRegisterLink");
+    const signInLink = document.getElementById("accountSignInLink");
+    const photoLabel = document.getElementById("accountPhotoLabel");
+    const photoInput = document.getElementById("accountPhotoInput");
+    const logoutButton = document.getElementById("accountLogout");
+    const accountMenu = document.getElementById("customerAccountMenu");
+
+    const supabaseClient = (typeof pvSupabase !== "undefined" && pvSupabase)
+        ? pvSupabase : window.pvSupabase;
+
+    if (!supabaseClient) {
+        console.error("Supabase client not found. Check supabase-config.js.");
+        return;
+    }
+
+    function renderAccount(session) {
+        const signedIn = !!session;
+        if (registerLink) registerLink.hidden = signedIn;
+        if (signInLink) signInLink.hidden = signedIn;
+        if (photoLabel) photoLabel.hidden = !signedIn;
+        if (logoutButton) logoutButton.hidden = !signedIn;
+
+        if (!signedIn) {
+            if (name) name.textContent = "";
+            if (avatar) {
+                avatar.textContent = "👤";
+                avatar.removeAttribute("src");
+            }
+            if (summary) {
+                summary.title = "Customer account";
+                summary.setAttribute("aria-label", "Customer account");
+            }
+            return;
+        }
+
+        const user = session.user;
+        const displayName = user.user_metadata?.full_name
+            || user.user_metadata?.name
+            || user.email?.split("@")[0]
+            || "My Account";
+        const avatarUrl = user.user_metadata?.avatar_url;
+
+        if (name) name.textContent = displayName;
+        if (avatar) {
+            if (avatarUrl) {
+                avatar.textContent = "";
+                avatar.src = avatarUrl;
+                avatar.alt = "Profile photo";
+            } else {
+                avatar.removeAttribute("src");
+                avatar.textContent = "👤";
+            }
+        }
+        if (summary) {
+            summary.title = "Signed in as " + displayName;
+            summary.setAttribute("aria-label", "Signed in as " + displayName);
+        }
+    }
+
+    try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        renderAccount(session);
+        supabaseClient.auth.onAuthStateChange((_event, nextSession) => renderAccount(nextSession));
+    } catch (error) {
+        console.error("Could not load account session:", error);
+    }
+
+    if (photoInput) {
+        photoInput.addEventListener("change", async function () {
+            const file = photoInput.files && photoInput.files[0];
+            if (!file) return;
+            if (!file.type.startsWith("image/")) {
+                alert("Please select an image file.");
+                photoInput.value = "";
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                alert("Please choose an image smaller than 5 MB.");
+                photoInput.value = "";
+                return;
+            }
+
+            const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
+            if (userError || !user) {
+                alert("Please sign in again to change your profile photo.");
+                photoInput.value = "";
+                return;
+            }
+
+            const extension = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
+            const filePath = user.id + "/profile." + (extension || "jpg");
+            const { error: uploadError } = await supabaseClient.storage
+                .from("avatars")
+                .upload(filePath, file, { upsert: true, contentType: file.type });
+
+            if (uploadError) {
+                console.error("Profile photo upload failed:", uploadError);
+                alert("Photo upload nahi hua. Supabase Storage mein public 'avatars' bucket aur upload policy setup hona zaroori hai.");
+                photoInput.value = "";
+                return;
+            }
+
+            const { data: publicData } = supabaseClient.storage.from("avatars").getPublicUrl(filePath);
+            const { error: updateError } = await supabaseClient.auth.updateUser({
+                data: { avatar_url: publicData.publicUrl }
+            });
+
+            if (updateError) {
+                console.error("Profile photo update failed:", updateError);
+                alert("Photo upload ho gaya, lekin profile update nahi hua. Please try again.");
+            } else {
+                const { data: { session: refreshedSession } } = await supabaseClient.auth.getSession();
+                renderAccount(refreshedSession);
+            }
+            photoInput.value = "";
+        });
+    }
+
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async function () {
+            logoutButton.disabled = true;
+            logoutButton.textContent = "Logging out...";
+            const { error } = await supabaseClient.auth.signOut();
+            if (error) {
+                console.error("Logout failed:", error);
+                logoutButton.disabled = false;
+                logoutButton.textContent = "Log Out";
+                alert("Logout nahi ho paya. Please try again.");
+                return;
+            }
+            if (accountMenu) accountMenu.removeAttribute("open");
+            window.location.href = "index.html";
+        });
+    }
+});
+</script>
+
 </body>
 </html>
