@@ -198,6 +198,21 @@ button:focus-visible, a:focus-visible, .cat:focus-visible, .category-card:focus-
      </div>
     </div>
     <a href="index.html" class="main-website-link" title="PVRajCMS Group Main Website">Main Website</a><a href="#offers">Offers</a><a href="#cartPage" id="myCartLink">My Cart (<span id="cartCount">0</span>)</a><a href="#contact">Contact</a>
+    <div class="account-nav" id="accountNav">
+     <button type="button" class="account-trigger" id="accountTrigger" aria-label="Customer account" aria-expanded="false">
+      <span class="account-avatar" id="accountAvatar">👤</span>
+      <span class="account-name" id="accountName"></span>
+     </button>
+     <div class="account-menu" aria-label="Account menu">
+      <a href="register.html" id="accountSignup">Create Account</a>
+      <a href="login.html" id="accountSignin">Sign In</a>
+      <a href="owner-login.html" id="accountOwner">Owner / Master Login</a>
+      <div class="account-divider" id="accountDivider" style="display:none"></div>
+      <button type="button" id="changeProfilePhoto" style="display:none">Change Profile Photo</button>
+      <input class="account-photo-input" type="file" id="accountPhotoInput" accept="image/*">
+      <button type="button" id="accountLogout" style="display:none">Log Out</button>
+     </div>
+    </div>
   </nav>
  </div>
 </header>
