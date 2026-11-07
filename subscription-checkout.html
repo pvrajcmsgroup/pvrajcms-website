@@ -81,6 +81,13 @@ main{margin-top:25px}
     is manually verified by the owner.
   </p>
 
+  <section class="card" id="checkoutGate" role="status" aria-live="polite">
+    <h2 id="checkoutGateTitle">Checking your account...</h2>
+    <p class="muted" id="checkoutGateMessage">
+      Please wait while we securely verify your login and subscription.
+    </p>
+  </section>
+
   <div class="layout">
 
     <section class="card">
@@ -220,6 +227,9 @@ document.addEventListener("DOMContentLoaded", async function(){
   const statusEl = document.getElementById("paymentStatus");
   const form = document.getElementById("paymentForm");
   const checkoutLayout = document.querySelector(".layout");
+  const checkoutGate = document.getElementById("checkoutGate");
+  const checkoutGateTitle = document.getElementById("checkoutGateTitle");
+  const checkoutGateMessage = document.getElementById("checkoutGateMessage");
   const submitBtn = document.getElementById("submitPayment");
   const utrEl = document.getElementById("utrNumber");
   const fileEl = document.getElementById("paymentScreenshot");
@@ -244,6 +254,21 @@ document.addEventListener("DOMContentLoaded", async function(){
     statusEl.textContent = message;
     statusEl.dataset.kind = kind || "";
 
+  }
+
+  function showGate(title, message, kind){
+    if(checkoutGateTitle) checkoutGateTitle.textContent = title;
+    if(checkoutGateMessage) checkoutGateMessage.textContent = message;
+    if(checkoutGate){
+      checkoutGate.dataset.kind = kind || "";
+      checkoutGate.hidden = false;
+    }
+    if(checkoutLayout) checkoutLayout.classList.remove("checkout-ready");
+  }
+
+  function revealCheckout(){
+    if(checkoutGate) checkoutGate.hidden = true;
+    if(checkoutLayout) checkoutLayout.classList.add("checkout-ready");
   }
 
   // Verify subscription expiry.
@@ -279,8 +304,18 @@ document.addEventListener("DOMContentLoaded", async function(){
 
   }
 
+  showGate(
+    "Checking your account...",
+    "Please wait while we securely verify your login and subscription."
+  );
+
   if(!client?.auth || !client?.storage){
 
+    showGate(
+      "Checkout temporarily unavailable",
+      "We could not connect to the account service. Please refresh or contact the website owner.",
+      "error"
+    );
     nameEl.textContent = "Unable to verify";
     emailEl.textContent = "Supabase not connected";
 
@@ -304,6 +339,10 @@ document.addEventListener("DOMContentLoaded", async function(){
 
     if(!data?.user){
 
+      showGate(
+        "Login required",
+        "You will be redirected to sign in. After login, you will return here to complete your ₹588 subscription."
+      );
       const returnTo = encodeURIComponent(CHECKOUT_URL);
 
       window.location.replace(
@@ -372,7 +411,7 @@ document.addEventListener("DOMContentLoaded", async function(){
 
 
     // STEP 5: No valid subscription: Show Payment Form only to an authenticated customer.
-    if(checkoutLayout) checkoutLayout.classList.add("checkout-ready");
+    revealCheckout();
     verificationReady = true;
 
     submitBtn.disabled = false;
@@ -392,6 +431,12 @@ document.addEventListener("DOMContentLoaded", async function(){
       error
     );
 
+    showGate(
+      "Could not verify your account",
+      (error?.message || "An unexpected account verification error occurred.") +
+      " Please sign in again or refresh this page.",
+      "error"
+    );
     verificationReady = false;
 
     nameEl.textContent =
