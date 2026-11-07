@@ -1337,6 +1337,42 @@ border-radius: 16px;
 }
 </style>
 
+
+<style id="pv-mobile-banner-click-area-fix">
+@media screen and (max-width: 600px) {
+  /* Only the visible Explore Offer button should be clickable.
+     Keep the rest of the banner artwork non-clickable on mobile. */
+  body.home-page .pv-diwali-image-banner {
+    position: relative !important;
+  }
+  body.home-page .pv-diwali-image-banner > a.festive-offer-link {
+    position: absolute !important;
+    inset: auto !important;
+    left: 33% !important;
+    bottom: 3% !important;
+    width: 34% !important;
+    height: 16% !important;
+    min-height: 0 !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 50px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-indent: -9999px !important;
+    overflow: hidden !important;
+    z-index: 2 !important;
+    line-height: normal !important;
+  }
+  body.home-page .pv-diwali-image-banner > a.festive-offer-link::before,
+  body.home-page .pv-diwali-image-banner > a.festive-offer-link::after {
+    content: none !important;
+    display: none !important;
+  }
+}
+</style>
+
 </head>
 
 <body class="home-page">
