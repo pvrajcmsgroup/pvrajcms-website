@@ -332,17 +332,23 @@ document.addEventListener("DOMContentLoaded", async function(){
 
   try{
 
-    // STEP 1: Verify Login Session.
-    const {data, error} = await client.auth.getUser();
+    // STEP 1: Read the existing browser session.
+    // getSession() returns session=null for signed-out visitors instead of
+    // throwing "Auth session missing", so they can be redirected to Login.
+    const {data: sessionData, error: sessionError} =
+      await client.auth.getSession();
 
-    if(error) throw error;
+    if(sessionError) throw sessionError;
 
-    if(!data?.user){
+    const session = sessionData?.session;
+
+    if(!session?.user){
 
       showGate(
         "Login required",
-        "You will be redirected to sign in. After login, you will return here to complete your ₹588 subscription."
+        "Please sign in to your PVrajCMS account. After login, you will return here to complete your ₹588 subscription."
       );
+
       const returnTo = encodeURIComponent(CHECKOUT_URL);
 
       window.location.replace(
@@ -352,7 +358,7 @@ document.addEventListener("DOMContentLoaded", async function(){
       return;
     }
 
-    currentUser = data.user;
+    currentUser = session.user;
 
     nameEl.textContent =
       currentUser.user_metadata?.full_name ||
