@@ -349,6 +349,12 @@ document.addEventListener("DOMContentLoaded", async function(){
         "Please sign in to your PVrajCMS account. After login, you will return here to complete your ₹588 subscription."
       );
 
+      // Save the return destination in this tab as a fallback in case
+      // the browser or an intermediate page drops the query string.
+      try {
+        sessionStorage.setItem("pvrajcms_login_return", CHECKOUT_URL);
+      } catch (_storageError) {}
+
       const returnTo = encodeURIComponent(CHECKOUT_URL);
 
       window.location.replace(
