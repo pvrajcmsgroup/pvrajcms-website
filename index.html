@@ -1373,6 +1373,20 @@ border-radius: 16px;
 }
 </style>
 
+
+<style id="pv-mobile-logo-nav-gap-final">
+@media screen and (max-width: 600px) {
+  /* Slightly reduce the vertical gap between the logo and navigation. */
+  body.home-page .site-header > .container {
+    row-gap: 0 !important;
+    padding-bottom: 10px !important;
+  }
+  body.home-page .site-header > .container > .logo {
+    margin-bottom: -5px !important;
+  }
+}
+</style>
+
 </head>
 
 <body class="home-page">
