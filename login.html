@@ -109,9 +109,16 @@ function getRequestedDestination() {
   const params = new URLSearchParams(window.location.search);
   const requested = params.get("redirect");
 
-  // Fallback for checkout flows where the query parameter was lost:
-  // only trust a same-origin checkout page as the immediate referrer.
-  return requested || getSafeCheckoutReferrer();
+  if (requested) return requested;
+
+  // Same-tab fallback saved by subscription-checkout.html before redirecting.
+  try {
+    const savedReturn = sessionStorage.getItem("pvrajcms_login_return");
+    if (savedReturn === "subscription-checkout.html") return savedReturn;
+  } catch (_storageError) {}
+
+  // Final fallback: trust only a same-origin checkout page as the referrer.
+  return getSafeCheckoutReferrer();
 }
 
 function getPostLoginDestination(user) {
@@ -200,6 +207,11 @@ loginForm.addEventListener("submit", async function(event) {
     }
 
     const destination = getPostLoginDestination(data.user);
+
+    try {
+      sessionStorage.removeItem("pvrajcms_login_return");
+    } catch (_storageError) {}
+
     showLoginMessage("Login successful. Redirecting you now...", "success");
     window.location.assign(destination);
 
