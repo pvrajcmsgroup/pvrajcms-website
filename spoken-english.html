@@ -36,6 +36,7 @@ h1{font-size:clamp(30px,4vw,44px);line-height:1.12;margin:12px 0}.hero p{font-si
 .record-status{margin-top:12px;padding:11px 13px;background:#f4f7fb;border-radius:9px;color:#53677f;font-size:14px}
 .record-status.live{background:#fff1f1;color:#b42318}
 .speaking-test audio{display:block;width:100%;margin-top:14px}
+.recordings-list{display:grid;gap:12px;margin-top:14px}.recording-item{border:1px solid var(--line);background:#f8fbff;border-radius:12px;padding:13px}.recording-item-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:700;margin-bottom:9px}.recording-item audio{width:100%;display:block}.recording-item-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.recording-item-actions .btn{padding:9px 13px;font-size:13px}.recording-limit{font-size:13px;color:var(--muted);margin-top:8px}
 .record-note{font-size:12px!important;color:#718096!important}
 
 .notice{margin-top:20px;background:#eaf4ff;border:1px solid #cfe3f7;border-radius:13px;padding:15px 18px;color:#294b6b;line-height:1.55;font-size:14px}
@@ -113,12 +114,10 @@ footer{background:#071b31;color:#cbd8e6;text-align:center;padding:24px 16px;font
   <button class="btn secondary" id="recordAgain" type="button">↻ Record Again</button>
  </div>
  <div class="record-status" id="recordStatus" role="status" aria-live="polite">Ready. Allow microphone access when your browser asks.</div>
- <audio id="recordedAudio" controls hidden></audio>
- <div class="test-controls recording-actions">
-  <a class="btn primary" id="downloadRecording" hidden download="pv-education-speaking-practice.webm">Download My Recording</a>
-  <button class="btn secondary delete-btn" id="deleteRecording" type="button">🗑 Delete Recording</button>
+ <div id="recordingsList" class="recordings-list" aria-live="polite">
+  <p class="record-note">No recordings saved yet. You can keep up to 2 attempts here.</p>
  </div>
- <p class="record-note">Privacy: Your recording stays in this browser tab. It is not uploaded or sent to PV Education. Download it if you want to keep it. Microphone access requires HTTPS and your permission.</p>
+ <p class="record-note">Privacy: Up to 2 recordings stay in this browser tab only. They are not uploaded or sent to PV Education. Download them if you want to keep them. Microphone access requires HTTPS and your permission.</p>
 </section>
 
 <div class="notice"><strong>Learning note:</strong> This is the first frontend version of the Spoken English course. Lesson completion and practice notes are saved only in this browser. Student accounts, synced progress, audio lessons and certificates can be connected in a later phase.</div>
@@ -167,8 +166,10 @@ const speakingPrompts={
 $("speakingPrompt").addEventListener("change",()=>{
  $("speakingQuestion").textContent=speakingPrompts[$("speakingPrompt").value];
 });
-let mediaRecorder=null,recordedChunks=[],recordedUrl=null,activeStream=null;
-let recordingStartedAt=0,recordingTimer=null,discardPendingRecording=false;
+let mediaRecorder=null,recordedChunks=[],activeStream=null;
+let recordingStartedAt=0,recordingTimer=null;
+const savedRecordings=[];
+const MAX_RECORDINGS=2;
 const recordingClock=document.createElement("span");
 recordingClock.className="record-clock";recordingClock.id="recordingClock";recordingClock.textContent="00:00";
 $("recordStatus").appendChild(recordingClock);
@@ -178,24 +179,58 @@ function formatRecordingTime(totalSeconds){
  return minutes+":"+seconds;
 }
 function updateRecordingClock(){
- const elapsed=Math.floor((Date.now()-recordingStartedAt)/1000);
- recordingClock.textContent=formatRecordingTime(elapsed);
+ if(!recordingStartedAt)return;
+ recordingClock.textContent=formatRecordingTime(Math.floor((Date.now()-recordingStartedAt)/1000));
 }
 function stopRecordingClock(){
  if(recordingTimer){clearInterval(recordingTimer);recordingTimer=null;}
 }
-const startRecording=$("startRecording"),stopRecording=$("stopRecording"),recordStatus=$("recordStatus");
-function clearRecording(){
- if(recordedUrl){URL.revokeObjectURL(recordedUrl);recordedUrl=null;}
- $("recordedAudio").removeAttribute("src");$("recordedAudio").hidden=true;
- $("downloadRecording").hidden=true;
+const startRecording=$("startRecording"),stopRecording=$("stopRecording"),recordAgain=$("recordAgain"),recordStatus=$("recordStatus");
+function renderSavedRecordings(){
+ const list=$("recordingsList");
+ if(!savedRecordings.length){
+  list.innerHTML='<p class="record-note">No recordings saved yet. You can keep up to 2 attempts here.</p>';
+ }else{
+  list.innerHTML=savedRecordings.map((item,index)=>`
+   <div class="recording-item">
+    <div class="recording-item-head"><span>Recording ${index+1} · ${item.duration}</span><span class="tag">Saved in this tab</span></div>
+    <audio controls preload="metadata" src="${item.url}"></audio>
+    <div class="recording-item-actions">
+     <a class="btn primary" href="${item.url}" download="pv-education-speaking-practice-${index+1}.webm">⬇ Download Recording ${index+1}</a>
+     <button class="btn secondary delete-btn" type="button" data-delete-recording="${item.id}">🗑 Delete</button>
+    </div>
+   </div>`).join("");
+  list.querySelectorAll("[data-delete-recording]").forEach(button=>{
+   button.addEventListener("click",()=>{
+    const index=savedRecordings.findIndex(item=>item.id===button.dataset.deleteRecording);
+    if(index>=0){URL.revokeObjectURL(savedRecordings[index].url);savedRecordings.splice(index,1);renderSavedRecordings();updateRecordButtons();}
+   });
+  });
+ }
+ $("recordingCount").textContent=`${savedRecordings.length} of ${MAX_RECORDINGS} recordings saved`;
+}
+function updateRecordButtons(){
+ const full=savedRecordings.length>=MAX_RECORDINGS;
+ startRecording.disabled=full||!!(mediaRecorder&&mediaRecorder.state==="recording");
+ recordAgain.disabled=full||!!(mediaRecorder&&mediaRecorder.state==="recording");
+}
+function saveCurrentRecording(){
+ const blob=new Blob(recordedChunks,{type:mediaRecorder?.mimeType||"audio/webm"});
+ if(!blob.size)return;
+ const url=URL.createObjectURL(blob);
+ const duration=formatRecordingTime(Math.floor((Date.now()-recordingStartedAt)/1000));
+ savedRecordings.push({id:String(Date.now())+Math.random().toString(16).slice(2),url,duration});
+ renderSavedRecordings();
 }
 async function beginRecording(){
+ if(savedRecordings.length>=MAX_RECORDINGS){
+  recordStatus.textContent="You already have 2 recordings. Delete one recording before making another.";return;
+ }
  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){
   recordStatus.textContent="Voice recording is not supported in this browser. Please use an updated Chrome or Edge browser over HTTPS.";return;
  }
  try{
-  clearRecording();recordedChunks=[];
+  recordedChunks=[];
   activeStream=await navigator.mediaDevices.getUserMedia({audio:true});
   let options={};
   if(MediaRecorder.isTypeSupported("audio/webm;codecs=opus"))options.mimeType="audio/webm;codecs=opus";
@@ -203,61 +238,36 @@ async function beginRecording(){
   mediaRecorder.ondataavailable=e=>{if(e.data&&e.data.size>0)recordedChunks.push(e.data);};
   mediaRecorder.onstop=()=>{
    stopRecordingClock();
-   if(discardPendingRecording){discardPendingRecording=false;return;}
-   updateRecordingClock();
-   const blob=new Blob(recordedChunks,{type:mediaRecorder.mimeType||"audio/webm"});
-   recordedUrl=URL.createObjectURL(blob);
-   $("recordedAudio").src=recordedUrl;$("recordedAudio").hidden=false;
-   $("downloadRecording").href=recordedUrl;$("downloadRecording").hidden=false;
+   saveCurrentRecording();
+   recordingStartedAt=0;recordingClock.textContent="00:00";
    recordStatus.classList.remove("live");
-   recordStatus.textContent="Recording ready. Play it back, or download it to keep a copy.";
+   recordStatus.firstChild.textContent="Recording saved. You can listen, download it, or make one more attempt. ";
    if(activeStream){activeStream.getTracks().forEach(track=>track.stop());activeStream=null;}
+   startRecording.disabled=false;stopRecording.disabled=true;updateRecordButtons();
   };
   mediaRecorder.start();
   recordingStartedAt=Date.now();recordingClock.textContent="00:00";
   stopRecordingClock();recordingTimer=setInterval(updateRecordingClock,250);
-  startRecording.disabled=true;stopRecording.disabled=false;
+  startRecording.disabled=true;recordAgain.disabled=true;stopRecording.disabled=false;
   recordStatus.classList.add("live");recordStatus.firstChild.textContent="● Recording… Speak clearly. Time: ";
  }catch(error){
   recordStatus.classList.remove("live");
   recordStatus.textContent=error.name==="NotAllowedError"?"Microphone permission was blocked. Allow microphone access in your browser and try again.":"Could not start recording. Check that a microphone is connected and try again.";
   if(activeStream){activeStream.getTracks().forEach(track=>track.stop());activeStream=null;}
+  startRecording.disabled=false;stopRecording.disabled=true;updateRecordButtons();
  }
 }
 startRecording.addEventListener("click",beginRecording);
+recordAgain.addEventListener("click",beginRecording);
 stopRecording.addEventListener("click",()=>{
- if(mediaRecorder&&mediaRecorder.state!=="inactive")mediaRecorder.stop();
- stopRecordingClock();
- startRecording.disabled=false;stopRecording.disabled=true;
-});
-$("recordAgain").addEventListener("click",async()=>{
- stopRecordingClock();
- if(mediaRecorder&&mediaRecorder.state!=="inactive"){
-  discardPendingRecording=true;
-  mediaRecorder.onstop=()=>{
-   if(activeStream){activeStream.getTracks().forEach(track=>track.stop());activeStream=null;}
-   discardPendingRecording=false;
-   clearRecording();recordedChunks=[];startRecording.disabled=false;stopRecording.disabled=true;
-   recordStatus.classList.remove("live");recordStatus.textContent="Starting a new attempt…";
-   recordingClock.textContent="00:00";
-   beginRecording();
-  };
-  mediaRecorder.stop();
- }else{
-  clearRecording();recordedChunks=[];startRecording.disabled=false;stopRecording.disabled=true;
-  recordStatus.classList.remove("live");recordStatus.textContent="Starting a new attempt…";
-  recordingClock.textContent="00:00";
-  await beginRecording();
+ if(mediaRecorder&&mediaRecorder.state==="recording"){
+  mediaRecorder.stop();stopRecordingClock();stopRecording.disabled=true;
  }
 });
-$("deleteRecording").addEventListener("click",()=>{
- stopRecordingClock();
- if(mediaRecorder&&mediaRecorder.state!=="inactive"){discardPendingRecording=true;mediaRecorder.stop();}
- clearRecording();recordedChunks=[];startRecording.disabled=false;stopRecording.disabled=true;
- recordStatus.classList.remove("live");
- recordStatus.firstChild.textContent="Recording deleted from this page. You can start a new recording anytime. ";
- recordingClock.textContent="00:00";
-});
+const count=document.createElement("p");
+count.id="recordingCount";count.className="recording-limit";count.textContent="0 of 2 recordings saved";
+$("recordingsList").before(count);
+renderSavedRecordings();updateRecordButtons();
 
 </script>
 </body>
