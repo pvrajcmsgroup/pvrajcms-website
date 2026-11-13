@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="PV Education by PVrajCMS Group - online examinations, courses, study materials and student services.">
+<title>PV Education | PVrajCMS Group</title>
+<style>
+:root{--navy:#06172a;--navy2:#0a2b49;--blue:#087bd8;--cyan:#18c4e8;--ink:#10213b;--muted:#607087;--bg:#f4f8fc;--line:#dce7f1;--white:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+a{text-decoration:none;color:inherit}.topbar{background:var(--navy);color:#fff;border-bottom:1px solid #24435f;position:sticky;top:0;z-index:20}
+.nav{max-width:1240px;margin:auto;min-height:76px;padding:10px 22px;display:flex;align-items:center;gap:22px}
+.brand{display:flex;align-items:center;gap:12px;min-width:250px}.brand img{width:178px;max-height:54px;object-fit:contain}.brand-divider{height:42px;width:1px;background:#456078}.edu-brand{font-size:20px;font-weight:800;white-space:nowrap}.edu-brand small{display:block;color:#b9d7ef;font-size:11px;font-weight:500;margin-top:4px}
+.links{margin-left:auto;display:flex;align-items:center;gap:22px;font-size:14px;font-weight:700}.links a:hover{color:#43d5f2}.nav-actions{display:flex;gap:9px}.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:10px;padding:11px 17px;font-weight:700;font-size:14px;border:1px solid transparent;cursor:pointer}.btn-primary{background:var(--blue);color:#fff}.btn-outline{border-color:#8aa8c4;color:#fff}.menu-btn{display:none;background:transparent;border:1px solid #56718a;color:white;border-radius:8px;padding:9px 12px}
+.hero{background:linear-gradient(110deg,#06172a 0%,#0b3456 57%,#087a9a 100%);color:#fff;overflow:hidden}
+.hero-inner{max-width:1240px;margin:auto;padding:62px 28px 48px;display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:center;min-height:380px}
+.eyebrow{display:inline-block;color:#8eeaff;background:#0e4963;border:1px solid #267b9a;padding:8px 14px;border-radius:30px;font-size:12px;letter-spacing:1.2px;font-weight:800}
+.hero h1{font-size:clamp(38px,5vw,60px);line-height:1.04;margin:18px 0 10px}.hero h2{font-size:21px;margin:0 0 14px}.hero p{font-size:16px;line-height:1.7;color:#d5e7f6;max-width:620px}.hero-buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.hero-art{min-height:250px;border:1px solid #3b7895;border-radius:24px;background:radial-gradient(circle at 75% 20%,#1a9bb3 0,#125474 32%,#09233d 75%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.hero-art .cap{font-size:100px;filter:drop-shadow(0 12px 12px #00101d)}.hero-art .book{position:absolute;font-size:60px;right:18%;bottom:25px}.hero-art .laptop{position:absolute;font-size:76px;left:18%;bottom:18px}
+.quicklinks{max-width:1180px;margin:-22px auto 0;padding:0 22px;position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.quick{background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px;box-shadow:0 8px 22px #10213b0d;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:700}.quick span{font-size:25px}
+.stats{max-width:1180px;margin:30px auto 0;padding:0 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.stat{background:#fff;border:1px solid var(--line);border-radius:13px;padding:17px;text-align:center}.stat strong{display:block;color:#087bd8;font-size:25px}.stat small{color:var(--muted)}
+.section{max-width:1240px;margin:0 auto;padding:54px 22px 8px}.section-head{text-align:center;margin-bottom:26px}.section-head h2{font-size:30px;margin:0 0 8px}.section-head p{color:var(--muted);margin:0}
+.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:21px 17px;display:flex;flex-direction:column;min-height:230px;box-shadow:0 5px 18px #10213b08}.card .icon{font-size:34px}.card h3{font-size:17px;margin:13px 0 8px}.card p{color:var(--muted);font-size:13px;line-height:1.55;flex:1}.card a{color:#087bd8;font-size:13px;font-weight:800}
+.forms{background:#eaf4fc;border-top:1px solid #d8e8f5;border-bottom:1px solid #d8e8f5;margin-top:48px;padding-bottom:48px}.form-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.form-tile{background:#fff;border:1px solid #d7e5f1;border-radius:13px;padding:17px;display:flex;align-items:center;gap:11px;font-weight:700;font-size:14px}.form-tile span{font-size:25px}
+.exam-banner{max-width:1196px;margin:48px auto 0;padding:0 22px}.exam-inner{background:linear-gradient(100deg,#06172a,#075ca5);border-radius:18px;padding:24px 28px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px}.exam-inner h2{margin:0 0 6px}.exam-inner p{margin:0;color:#d7eaff}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.feature{display:flex;gap:12px;align-items:flex-start;padding:18px;background:#fff;border:1px solid var(--line);border-radius:13px}.feature span{font-size:25px}.feature strong{display:block;margin-bottom:5px}.feature small{color:var(--muted);line-height:1.5}
+footer{background:var(--navy);color:#d5e4f1;margin-top:55px;padding:28px 22px}.foot{max-width:1196px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px}.foot a{color:#72dff5}
+@media(max-width:980px){.links{gap:12px}.brand{min-width:unset}.brand img{width:140px}.cards{grid-template-columns:repeat(3,1fr)}.form-grid{grid-template-columns:repeat(3,1fr)}.quicklinks{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.nav{min-height:66px;padding:9px 14px;gap:10px}.brand img{width:112px}.brand-divider{display:none}.edu-brand{font-size:15px}.edu-brand small{font-size:9px}.menu-btn{display:block;margin-left:auto}.links{display:none;position:absolute;top:66px;left:0;right:0;background:var(--navy);padding:16px 22px;flex-direction:column;align-items:flex-start;border-top:1px solid #29455e}.links.open{display:flex}.nav-actions{display:none}.hero-inner{grid-template-columns:1fr;padding:42px 20px 42px}.hero-art{min-height:180px}.hero-art .cap{font-size:75px}.hero-art .book{font-size:45px}.hero-art .laptop{font-size:55px}.quicklinks{margin-top:14px;padding:0 15px}.stats{grid-template-columns:repeat(2,1fr);padding:0 15px}.section{padding:42px 15px 0}.cards{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:repeat(2,1fr)}.exam-banner{margin-top:34px;padding:0 15px}.exam-inner{align-items:flex-start;flex-direction:column}.features{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:420px){.edu-brand{display:none}.cards{grid-template-columns:1fr}.card{min-height:190px}.form-grid{grid-template-columns:1fr}.quicklinks{grid-template-columns:1fr 1fr}.quick{padding:12px;font-size:12px}.features{grid-template-columns:1fr}.hero h1{font-size:38px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="index.html" aria-label="PVrajCMS Group home">
+      <img src="logo.png" alt="PVrajCMS Group logo" onerror="this.style.display='none'">
+      <span class="brand-divider"></span>
+      <span class="edu-brand">🎓 PV Education<small>A Unit of PVrajCMS Group</small></span>
+    </a>
+    <button class="menu-btn" type="button" onclick="document.querySelector('.links').classList.toggle('open')" aria-label="Toggle menu">☰</button>
+    <div class="links">
+      <a href="pv-education.html">Home</a><a href="#exams">Exams⌄</a><a href="#courses">Courses⌄</a><a href="#study">Study Material</a><a href="#student-services">Student Services⌄</a>
+    </div>
+    <div class="nav-actions"><a class="btn btn-outline" href="login.html">Login</a><a class="btn btn-primary" href="register.html">Register</a></div>
+  </nav>
+</header>
+<main>
+<section class="hero">
+ <div class="hero-inner">
+  <div>
+   <span class="eyebrow">LEARN • PRACTICE • TEST • GROW</span>
+   <h1>PV Education</h1>
+   <h2>Your Online Learning & Examination Platform</h2>
+   <p>Prepare, practice and test yourself with online examinations, courses, study material and student services — all in one place.</p>
+   <div class="hero-buttons"><a class="btn btn-primary" href="#exams">Explore Exams →</a><a class="btn btn-outline" href="#courses">Browse Courses</a></div>
+  </div>
+  <div class="hero-art" aria-label="Education themed illustration"><span class="cap">🎓</span><span class="book">📚</span><span class="laptop">💻</span></div>
+ </div>
+</section>
+<div class="quicklinks">
+ <a class="quick" href="#exams"><span>📝</span> Online Exams</a><a class="quick" href="#courses"><span>🎯</span> Skill Courses</a><a class="quick" href="#study"><span>📚</span> Study Material</a><a class="quick" href="#student-services"><span>📄</span> Online Forms</a>
+</div>
+<section class="stats" aria-label="Platform highlights">
+ <div class="stat"><strong>Online</strong><small>Examination Access</small></div><div class="stat"><strong>Anytime</strong><small>Learn at Your Pace</small></div><div class="stat"><strong>One Place</strong><small>Student Services</small></div><div class="stat"><strong>Digital</strong><small>Learning Platform</small></div>
+</section>
+<section class="section" id="exams">
+ <div class="section-head"><h2>Explore Education Services</h2><p>Learning and examination resources in one place.</p></div>
+ <div class="cards">
+  <article class="card"><span class="icon">📝</span><h3>Online Examination</h3><p>Take online tests, practice questions and view results when released.</p><a href="online-exam.html">Explore Exams →</a></article>
+  <article class="card" id="courses"><span class="icon">🎥</span><h3>Online Courses</h3><p>Build practical knowledge with structured learning and skill programs.</p><a href="#courses">Explore Courses →</a></article>
+  <article class="card" id="study"><span class="icon">📚</span><h3>Study Material</h3><p>Access notes, PDFs, practice sets and learning resources.</p><a href="#study">View Material →</a></article>
+  <article class="card"><span class="icon">🗣️</span><h3>Spoken English</h3><p>Improve English speaking, communication and confidence.</p><a href="#student-services">Start Learning →</a></article>
+  <article class="card"><span class="icon">🤖</span><h3>AI Learning Assistant</h3><p>Get learning support, concept explanations and study guidance.</p><a href="#student-services">Explore AI →</a></article>
+ </div>
+</section>
+<section class="forms" id="student-services">
+ <div class="section">
+  <div class="section-head"><h2>Online Forms & Student Services</h2><p>Apply online and keep track of your application.</p></div>
+  <div class="form-grid">
+   <a class="form-tile" href="admission-form.html"><span>🎓</span> Admission Form</a>
+   <a class="form-tile" href="exam-form.html"><span>📋</span> Examination Form</a>
+   <a class="form-tile" href="scholarship-form.html"><span>🏅</span> Scholarship Form</a>
+   <a class="form-tile" href="course-registration.html"><span>📖</span> Course Registration</a>
+   <a class="form-tile" href="certificate-application.html"><span>📜</span> Certificate Application</a>
+  </div>
+ </div>
+</section>
+<section class="exam-banner">
+ <div class="exam-inner"><div><h2>Upcoming Online Examinations</h2><p>Check available examinations and their schedules.</p></div><a class="btn btn-outline" href="online-exam.html">View All Exams →</a></div>
+</section>
+<section class="section">
+ <div class="section-head"><h2>A Better Learning Experience</h2><p>Simple access for students across devices.</p></div>
+ <div class="features">
+  <div class="feature"><span>⚡</span><div><strong>Timely Results</strong><small>View results when they are officially published.</small></div></div>
+  <div class="feature"><span>🔐</span><div><strong>Student Access</strong><small>Designed for individual student accounts and records.</small></div></div>
+  <div class="feature"><span>📱</span><div><strong>Any Device</strong><small>Access the portal on mobile, tablet or desktop.</small></div></div>
+  <div class="feature"><span>📜</span><div><strong>Digital Records</strong><small>Keep your learning and application information organized.</small></div></div>
+ </div>
+</section>
+</main>
+<footer><div class="foot"><span>© 2026 PV Education · A Unit of PVrajCMS Group</span><span><a href="index.html">Main Website</a> · <a href="contact.html">Contact</a></span></div></footer>
+</body>
+</html>
