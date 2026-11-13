@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Courses | PV Education</title>
+<style>
+:root{--navy:#071b31;--blue:#087bd8;--cyan:#16c6dc;--ink:#10233e;--muted:#62748b;--bg:#f3f7fc;--line:#dce6f2;--white:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--navy);color:#fff;position:sticky;top:0;z-index:10;box-shadow:0 4px 15px #071b3125}
+.nav{max-width:1240px;margin:auto;min-height:78px;padding:10px 18px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:14px;min-width:0}.brand img:first-child{width:190px;max-height:54px;object-fit:contain}.divider{height:48px;width:1px;background:#71839a}.brand img:last-child{width:220px;max-height:54px;object-fit:contain}
+nav{margin-left:auto;display:flex;align-items:center;gap:22px}nav a{color:#fff;text-decoration:none;font-weight:700;font-size:14px;white-space:nowrap}nav a:hover{color:#5ce4f1}.navbtn{border:1px solid #9db3ca;border-radius:11px;padding:12px 18px}
+.menu{display:none;background:transparent;border:1px solid #7890aa;color:white;border-radius:8px;padding:9px;font-size:20px}
+.wrap{max-width:1160px;margin:auto;padding:30px 20px 60px}
+.hero{background:linear-gradient(120deg,#08213c,#075c91 65%,#087da2);border-radius:22px;padding:44px;color:#fff;display:grid;grid-template-columns:1.25fr .75fr;gap:24px;align-items:center;overflow:hidden}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:2px;color:#7ceafa;text-transform:uppercase}
+h1{font-size:clamp(32px,4vw,48px);line-height:1.12;margin:13px 0}.hero p{font-size:17px;line-height:1.65;color:#e0edf8;max-width:650px}
+.hero-art{background:#ffffff16;border:1px solid #ffffff35;border-radius:18px;padding:24px;text-align:center}.hero-art .big{font-size:76px}.hero-art strong{display:block;font-size:20px;margin-top:8px}
+.btn{display:inline-block;text-decoration:none;border:0;border-radius:10px;padding:13px 20px;font-weight:700;cursor:pointer}.primary{background:#087bd8;color:white}.secondary{background:#fff;color:#075c91;margin-left:8px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:36px 0 18px}.section-head h2{font-size:28px;margin:0 0 7px}.section-head p{margin:0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:22px;box-shadow:0 8px 24px #142b4609}
+.card .icon{font-size:34px}.card h3{margin:13px 0 8px;font-size:20px}.card p{color:var(--muted);line-height:1.55;min-height:48px}
+.meta{display:flex;gap:12px;flex-wrap:wrap;color:#53677f;font-size:13px;margin:14px 0}.pill{display:inline-block;background:#eaf5ff;color:#075c91;padding:6px 10px;border-radius:30px;font-size:12px;font-weight:700}
+.feature{border:2px solid #b7e6f0;background:linear-gradient(135deg,#fff,#f0fbff)}
+.feature .btn{margin-top:4px}
+.notice{margin-top:28px;padding:18px 20px;border-radius:14px;background:#eaf4ff;border:1px solid #cfe3f7;color:#294b6b;line-height:1.55}
+footer{background:#071b31;color:#cbd8e6;text-align:center;padding:24px 16px;font-size:13px}
+@media(max-width:900px){.nav{flex-wrap:wrap}.brand img:first-child{width:150px}.brand img:last-child{width:175px}nav{gap:13px}nav a{font-size:13px}.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.nav{min-height:68px}.brand{flex:1}.brand img:first-child{width:112px}.brand img:last-child{width:130px}.divider{height:38px}.menu{display:block}nav{display:none;width:100%;margin:0;padding:8px 0 12px;flex-wrap:wrap}nav.open{display:flex}.hero{grid-template-columns:1fr;padding:28px 22px}.hero-art{display:none}.grid{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}.secondary{margin:10px 0 0}}
+</style>
+</head>
+<body>
+<header>
+ <div class="nav">
+  <div class="brand">
+   <img src="logo.png" alt="PVrajCMS Group logo">
+   <span class="divider"></span>
+   <img src="pv-education-logo.png" alt="PV Education — A Unit of PVrajCMS Group">
+  </div>
+  <button class="menu" aria-label="Open navigation" onclick="document.querySelector('nav').classList.toggle('open')">☰</button>
+  <nav>
+   <a href="pv-education.html">Home</a>
+   <a href="online-exam.html">Exams</a>
+   <a href="online-courses.html">Courses</a>
+   <a href="pv-education.html#study">Study Material</a>
+   <a href="pv-education.html#services">Student Services</a>
+   <a class="navbtn" href="login.html">Login</a>
+   <a class="btn primary" href="register.html">Register</a>
+  </nav>
+ </div>
+</header>
+<main class="wrap">
+ <section class="hero">
+  <div>
+   <div class="eyebrow">Learn • Practice • Grow</div>
+   <h1>Build Skills for Your Future</h1>
+   <p>Explore practical online courses designed to help students improve their knowledge, communication and career skills. Learn at your own pace with PV Education.</p>
+   <a class="btn primary" href="#courses">Explore Courses</a>
+   <a class="btn secondary" href="#spoken-english">Explore Spoken English</a>
+  </div>
+  <div class="hero-art"><div class="big">🎓📚</div><strong>Learn Anytime, Anywhere</strong><p>Structured learning in one place</p></div>
+ </section>
+
+ <section id="courses">
+  <div class="section-head"><div><h2>Explore Online Courses</h2><p>Choose a learning path and start building your skills.</p></div><span class="pill">PV Education</span></div>
+  <div class="grid">
+   <article class="card feature" id="spoken-english">
+    <div class="icon">🗣️</div><span class="pill">Featured Course</span>
+    <h3>Spoken English</h3>
+    <p>Improve everyday speaking, pronunciation, vocabulary and confidence through guided lessons and practice.</p>
+    <div class="meta"><span>Beginner friendly</span><span>•</span><span>Self-paced</span></div>
+    <a class="btn primary" href="spoken-english.html">View Course</a>
+   </article>
+   <article class="card">
+    <div class="icon">💻</div><h3>Computer Fundamentals</h3>
+    <p>Learn computer basics, files, internet use and essential digital skills.</p>
+    <div class="meta"><span>Beginner</span><span>•</span><span>Self-paced</span></div>
+    <a class="btn primary" href="course-registration.html">Course Registration</a>
+   </article>
+   <article class="card">
+    <div class="icon">🧠</div><h3>Reasoning & Aptitude</h3>
+    <p>Practice logical reasoning, quantitative aptitude and problem-solving basics.</p>
+    <div class="meta"><span>Practice based</span><span>•</span><span>All learners</span></div>
+    <a class="btn primary" href="course-registration.html">Course Registration</a>
+   </article>
+   <article class="card">
+    <div class="icon">✍️</div><h3>English Grammar</h3>
+    <p>Build a foundation in sentence structure, tenses, grammar and writing.</p>
+    <div class="meta"><span>Beginner</span><span>•</span><span>Self-paced</span></div>
+    <a class="btn primary" href="course-registration.html">Course Registration</a>
+   </article>
+   <article class="card">
+    <div class="icon">📘</div><h3>Exam Preparation</h3>
+    <p>Support your preparation with topic-wise learning and practice resources.</p>
+    <div class="meta"><span>Exam focused</span><span>•</span><span>Practice based</span></div>
+    <a class="btn primary" href="online-exam.html">Explore Exams</a>
+   </article>
+   <article class="card">
+    <div class="icon">🤖</div><h3>Digital & AI Skills</h3>
+    <p>Get introduced to useful digital tools and responsible AI-assisted learning.</p>
+    <div class="meta"><span>Skill building</span><span>•</span><span>Beginner</span></div>
+    <a class="btn primary" href="course-registration.html">Course Registration</a>
+   </article>
+  </div>
+ </section>
+ <div class="notice"><strong>Course access:</strong> Course lessons, student progress, certificates and online payments can be connected in a later phase. This page currently presents the course catalogue; registration links open the existing course registration form.</div>
+</main>
+<footer>© PV Education · A Unit of PVrajCMS Group</footer>
+</body>
+</html>
