@@ -185,26 +185,59 @@ const lessons=[
 ];
 function speakEnglish(text,button,rate=0.88){
  const synth=window.speechSynthesis;
- if(!synth || !("SpeechSynthesisUtterance" in window)){
-  alert("आपके browser में Text-to-Speech उपलब्ध नहीं है। Chrome या Edge का updated version इस्तेमाल करें।");return;
+ if(!synth || typeof SpeechSynthesisUtterance==="undefined"){
+  alert("इस browser में Text-to-Speech support नहीं है। कृपया updated Google Chrome या Microsoft Edge खोलें।");return;
  }
- synth.cancel();
- document.querySelectorAll(".speak-btn").forEach(b=>{b.disabled=false;if(b.dataset.original)b.textContent=b.dataset.original;});
- const utterance=new SpeechSynthesisUtterance(String(text));
- utterance.lang="en-US";utterance.rate=rate;utterance.pitch=1;utterance.volume=1;
- const chooseVoice=()=>{
-  const voices=synth.getVoices();
-  const voice=voices.find(v=>v.lang==="en-US")||voices.find(v=>/^en[-_]/i.test(v.lang));
-  if(voice)utterance.voice=voice;
- };
- chooseVoice();
- if(button){button.dataset.original=button.dataset.original||button.textContent;button.textContent="▶ Loading audio…";button.disabled=true;}
- utterance.onstart=()=>{if(button)button.textContent="▶ Speaking…";};
- utterance.onend=()=>{if(button){button.disabled=false;button.textContent=button.dataset.original||"🔊 Listen";}};
- utterance.onerror=(event)=>{if(button){button.disabled=false;button.textContent=button.dataset.original||"🔊 Listen";}console.warn("Speech audio error:",event.error);alert("Audio नहीं चला। Chrome/Windows की आवाज़ और English Text-to-Speech voice जाँचें।");};
- // Chrome may need a short pause after cancel() before a new utterance.
- synth.resume();
- setTimeout(()=>{chooseVoice();synth.speak(utterance);},120);
+ try{
+  synth.cancel();
+  const utterance=new SpeechSynthesisUtterance(String(text));
+  utterance.lang="en-US";
+  utterance.rate=rate;
+  utterance.pitch=1;
+  utterance.volume=1;
+  const restore=()=>{
+   if(button){button.disabled=false;button.textContent=button.dataset.original||"🔊 Listen";}
+  };
+  if(button){
+   button.dataset.original=button.dataset.original||button.textContent;
+   button.textContent="▶ Speaking…";
+   button.disabled=true;
+  }
+  utterance.onstart=()=>{if(button)button.textContent="▶ Speaking…";};
+  utterance.onend=restore;
+  utterance.onerror=(event)=>{
+   restore();
+   console.error("Speech synthesis error:",event.error);
+   alert("Browser audio start नहीं कर पाया ("+(event.error||"unknown error")+"). Windows में English Text-to-Speech voice और Chrome की आवाज़ जाँचें।");
+  };
+  // Wait for Chrome's voice list, then choose an English voice if available.
+  const speakNow=()=>{
+   const voices=synth.getVoices();
+   const selected=voices.find(v=>/^en-US$/i.test(v.lang))||
+                  voices.find(v=>/^en[-_]/i.test(v.lang));
+   if(selected)utterance.voice=selected;
+   synth.resume();
+   synth.speak(utterance);
+  };
+  if(synth.getVoices().length){
+   setTimeout(speakNow,180);
+  }else{
+   let started=false;
+   const onVoices=()=>{
+    if(started)return;
+    started=true;
+    synth.removeEventListener("voiceschanged",onVoices);
+    setTimeout(speakNow,100);
+   };
+   synth.addEventListener("voiceschanged",onVoices);
+   // Some systems do not fire voiceschanged; still try the browser default voice.
+   setTimeout(()=>{if(!started){started=true;synth.removeEventListener("voiceschanged",onVoices);speakNow();}},900);
+  }
+ }catch(err){
+  if(button){button.disabled=false;button.textContent=button.dataset.original||"🔊 Listen";}
+  console.error(err);
+  alert("Audio शुरू नहीं हो पाया। Chrome/Windows की आवाज़ और Text-to-Speech settings जाँचें।");
+ }
 }
 let current=0;const done=new Set(JSON.parse(localStorage.getItem("pvSpokenDone")||"[]"));
 const $=id=>document.getElementById(id);
