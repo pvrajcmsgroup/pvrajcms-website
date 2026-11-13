@@ -185,8 +185,8 @@ const lessons=[
 ];
 function speakEnglish(text,button,rate=0.88){
  const synth=window.speechSynthesis;
- if(!synth || typeof SpeechSynthesisUtterance==="undefined"){
-  alert("इस browser में Text-to-Speech support नहीं है। कृपया updated Google Chrome या Microsoft Edge खोलें।");return;
+ if(!synth || typeof window.SpeechSynthesisUtterance==="undefined"){
+  alert("इस browser में Text-to-Speech support नहीं है। Updated Chrome या Microsoft Edge इस्तेमाल करें।");return;
  }
  try{
   synth.cancel();
@@ -203,40 +203,22 @@ function speakEnglish(text,button,rate=0.88){
    button.textContent="▶ Speaking…";
    button.disabled=true;
   }
-  utterance.onstart=()=>{if(button)button.textContent="▶ Speaking…";};
   utterance.onend=restore;
   utterance.onerror=(event)=>{
    restore();
    console.error("Speech synthesis error:",event.error);
-   alert("Browser audio start नहीं कर पाया ("+(event.error||"unknown error")+"). Windows में English Text-to-Speech voice और Chrome की आवाज़ जाँचें।");
+   alert("Audio नहीं चल पाया: "+(event.error||"Speech error")+". Pronunciation Studio में Listen काम कर रहा है तो पेज refresh करके फिर कोशिश करें।");
   };
-  // Wait for Chrome's voice list, then choose an English voice if available.
-  const speakNow=()=>{
-   const voices=synth.getVoices();
-   const selected=voices.find(v=>/^en-US$/i.test(v.lang))||
-                  voices.find(v=>/^en[-_]/i.test(v.lang));
-   if(selected)utterance.voice=selected;
-   synth.resume();
-   synth.speak(utterance);
-  };
-  if(synth.getVoices().length){
-   setTimeout(speakNow,180);
-  }else{
-   let started=false;
-   const onVoices=()=>{
-    if(started)return;
-    started=true;
-    synth.removeEventListener("voiceschanged",onVoices);
-    setTimeout(speakNow,100);
-   };
-   synth.addEventListener("voiceschanged",onVoices);
-   // Some systems do not fire voiceschanged; still try the browser default voice.
-   setTimeout(()=>{if(!started){started=true;synth.removeEventListener("voiceschanged",onVoices);speakNow();}},900);
-  }
+  const voices=synth.getVoices();
+  const selected=voices.find(v=>/^en-US$/i.test(v.lang))||voices.find(v=>/^en[-_]/i.test(v.lang));
+  if(selected)utterance.voice=selected;
+  // Speak immediately inside the user's button click; delayed speech can be blocked by Chrome.
+  synth.resume();
+  synth.speak(utterance);
  }catch(err){
   if(button){button.disabled=false;button.textContent=button.dataset.original||"🔊 Listen";}
   console.error(err);
-  alert("Audio शुरू नहीं हो पाया। Chrome/Windows की आवाज़ और Text-to-Speech settings जाँचें।");
+  alert("Audio शुरू नहीं हो पाया। Chrome की आवाज़ और Text-to-Speech settings जाँचें।");
  }
 }
 let current=0;const done=new Set(JSON.parse(localStorage.getItem("pvSpokenDone")||"[]"));
@@ -262,7 +244,14 @@ function setupPronunciationStudio(){
  });
 }
 setupPronunciationStudio();
-function render(){const l=lessons[current];$("lessonTag").textContent=`LESSON ${current+1} · BEGINNER`;$("lessonTitle").textContent=l.title;$("lessonIntro").textContent=l.intro;$("lessonBody").innerHTML=l.items.map((x,i)=>`<div class="phrase"><strong>${x[0]}</strong><span class="translation">${x[1]}</span><div class="phrase-tools"><button class="speak-btn" type="button" onclick="speakEnglish(${JSON.stringify(x[0]).replace(/</g, "\\u003c")},this)">🔊 Listen</button><button class="speak-btn" type="button" onclick="speakEnglish(${JSON.stringify(x[0]).replace(/</g, "\\u003c")},this,0.72)">🐢 Speak Slowly</button></div></div>`).join("");document.querySelectorAll(".lessonbtn").forEach(b=>b.classList.toggle("active",+b.dataset.lesson===current));$("prevBtn").disabled=current===0;$("nextBtn").disabled=current===lessons.length-1;$("completeBtn").textContent=done.has(current)?"Completed ✓":"Mark as Complete ✓";$("quizBox").hidden=!l.quiz;$("practiceText").value=localStorage.getItem("pvSpokenPractice"+current)||"";$("practiceFeedback").textContent="";$("quizFeedback").textContent="";if(l.quiz){$("quizQuestion").textContent=l.quiz.q;$("quizOptions").innerHTML=l.quiz.options.map((o,i)=>`<label><input type="radio" name="answer" value="${i}">${o}</label>`).join("")}updateProgress()}
+$("lessonBody").addEventListener("click",event=>{
+ const button=event.target.closest("button[data-speech-index]");
+ if(!button)return;
+ const index=Number(button.dataset.speechIndex);
+ const item=lessons[current]?.items?.[index];
+ if(item)speakEnglish(item[0],button,Number(button.dataset.speechRate)||0.88);
+});
+function render(){const l=lessons[current];$("lessonTag").textContent=`LESSON ${current+1} · BEGINNER`;$("lessonTitle").textContent=l.title;$("lessonIntro").textContent=l.intro;$("lessonBody").innerHTML=l.items.map((x,i)=>`<div class="phrase"><strong>${x[0]}</strong><span class="translation">${x[1]}</span><div class="phrase-tools"><button class="speak-btn" type="button" data-speech-index="${i}" data-speech-rate="0.88">🔊 Listen</button><button class="speak-btn" type="button" data-speech-index="${i}" data-speech-rate="0.72">🐢 Speak Slowly</button></div></div>`).join("");document.querySelectorAll(".lessonbtn").forEach(b=>b.classList.toggle("active",+b.dataset.lesson===current));$("prevBtn").disabled=current===0;$("nextBtn").disabled=current===lessons.length-1;$("completeBtn").textContent=done.has(current)?"Completed ✓":"Mark as Complete ✓";$("quizBox").hidden=!l.quiz;$("practiceText").value=localStorage.getItem("pvSpokenPractice"+current)||"";$("practiceFeedback").textContent="";$("quizFeedback").textContent="";if(l.quiz){$("quizQuestion").textContent=l.quiz.q;$("quizOptions").innerHTML=l.quiz.options.map((o,i)=>`<label><input type="radio" name="answer" value="${i}">${o}</label>`).join("")}updateProgress()}
 function updateProgress(){let n=done.size;$("progressText").textContent=`${n} of 8 lessons completed`;$("progressBar").style.width=(n/8*100)+"%"}
 document.querySelectorAll(".lessonbtn").forEach(b=>b.addEventListener("click",()=>{current=+b.dataset.lesson;render()}));
 $("prevBtn").onclick=()=>{if(current>0){current--;render()}};$("nextBtn").onclick=()=>{if(current<7){current++;render()}};
