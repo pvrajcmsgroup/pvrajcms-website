@@ -36,6 +36,15 @@ h1{font-size:clamp(30px,4vw,44px);line-height:1.12;margin:12px 0}.hero p{font-si
 .record-status{margin-top:12px;padding:11px 13px;background:#f4f7fb;border-radius:9px;color:#53677f;font-size:14px}
 .record-status.live{background:#fff1f1;color:#b42318}
 .speaking-test audio{display:block;width:100%;margin-top:14px}
+
+.assessment{margin-top:20px;border:1px solid var(--line);background:#fff;border-radius:16px;padding:20px}
+.assessment h3{margin:0 0 8px;font-size:21px}.assessment p{color:var(--muted);line-height:1.55}
+.assessment-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}
+.assessment-item{border:1px solid var(--line);border-radius:10px;padding:12px;background:#f8fbff}
+.assessment-item label{display:flex;align-items:flex-start;gap:9px;line-height:1.45;font-size:14px}
+.assessment-item input{margin-top:3px;accent-color:var(--blue)}
+.assessment-result{padding:12px;border-radius:10px;background:#edf6ff;color:#174a7d;margin-top:12px;min-height:44px}
+@media(max-width:650px){.assessment-grid{grid-template-columns:1fr}}
 .recordings-list{display:grid;gap:12px;margin-top:14px}.recording-item{border:1px solid var(--line);background:#f8fbff;border-radius:12px;padding:13px}.recording-item-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:700;margin-bottom:9px}.recording-item audio{width:100%;display:block}.recording-item-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.recording-item-actions .btn{padding:9px 13px;font-size:13px}.recording-limit{font-size:13px;color:var(--muted);margin-top:8px}
 .record-note{font-size:12px!important;color:#718096!important}
 
@@ -117,6 +126,24 @@ footer{background:#071b31;color:#cbd8e6;text-align:center;padding:24px 16px;font
  <div id="recordingsList" class="recordings-list" aria-live="polite">
   <p class="record-note">No recordings saved yet. You can keep up to 2 attempts here.</p>
  </div>
+ 
+<section class="assessment" id="speaking-assessment">
+ <span class="tag">SELF ASSESSMENT</span>
+ <h3>Check Your Speaking Practice</h3>
+ <p>After listening to your recording, tick the points you achieved. This is a self-check to help you improve; it is not an automatic pronunciation grade.</p>
+ <div class="assessment-grid">
+  <div class="assessment-item"><label><input type="checkbox" class="assessment-check"> I spoke clearly and loudly enough.</label></div>
+  <div class="assessment-item"><label><input type="checkbox" class="assessment-check"> I used complete sentences.</label></div>
+  <div class="assessment-item"><label><input type="checkbox" class="assessment-check"> I spoke at a steady pace.</label></div>
+  <div class="assessment-item"><label><input type="checkbox" class="assessment-check"> I felt confident while speaking.</label></div>
+ </div>
+ <div class="test-controls">
+  <button class="btn primary" type="button" id="checkAssessment">Check My Practice</button>
+  <button class="btn secondary" type="button" id="resetAssessment">Reset Checklist</button>
+ </div>
+ <div class="assessment-result" id="assessmentResult" aria-live="polite">Your self-assessment score will appear here.</div>
+</section>
+
  <p class="record-note">Privacy: Up to 2 recordings stay in this browser tab only. They are not uploaded or sent to PV Education. Download them if you want to keep them. Microphone access requires HTTPS and your permission.</p>
 </section>
 
@@ -268,6 +295,22 @@ const count=document.createElement("p");
 count.id="recordingCount";count.className="recording-limit";count.textContent="0 of 2 recordings saved";
 $("recordingsList").before(count);
 renderSavedRecordings();updateRecordButtons();
+
+
+const assessmentChecks=[...document.querySelectorAll(".assessment-check")];
+const savedAssessment=JSON.parse(localStorage.getItem("pvSpokenAssessment")||"null");
+if(savedAssessment)assessmentChecks.forEach((box,index)=>box.checked=!!savedAssessment[index]);
+$("checkAssessment").addEventListener("click",()=>{
+ const score=assessmentChecks.filter(box=>box.checked).length;
+ localStorage.setItem("pvSpokenAssessment",JSON.stringify(assessmentChecks.map(box=>box.checked)));
+ const messages=["Start slowly. Practise each sentence and try again.","Good start. Focus on clear sentences and steady pace.","Good progress! Keep practising the points you missed.","Very good practice. Keep working on confidence and clarity.","Excellent self-check! Continue practising regularly."];
+ $("assessmentResult").textContent=`Your self-check: ${score}/4. ${messages[score]}`;
+});
+$("resetAssessment").addEventListener("click",()=>{
+ assessmentChecks.forEach(box=>box.checked=false);
+ localStorage.removeItem("pvSpokenAssessment");
+ $("assessmentResult").textContent="Checklist reset. Listen to your recording and assess yourself again.";
+});
 
 </script>
 </body>
