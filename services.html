@@ -358,6 +358,61 @@
     color: #475569;
 }
 
+
+/* Compact service-category chooser: put all five divisions above the fold */
+.services-page .services { padding-top: 28px; }
+.services-page .services > .section-label { margin-bottom: 8px; }
+.services-page .services > h1 {
+    font-size: clamp(25px, 3vw, 36px);
+    line-height: 1.15;
+    margin: 5px 0 8px;
+}
+.services-page .services .services-intro {
+    margin: 0 0 20px;
+    color: #c8d8e8;
+    font-size: 14px;
+}
+.services-page .division-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0 0 30px;
+}
+.services-page .division-tile {
+    min-height: 112px;
+    padding: 17px 18px;
+    border: 1px solid rgba(64, 183, 225, .34);
+    border-radius: 12px;
+    background: linear-gradient(145deg, #0d2638, #091a29);
+    color: #f4f8ff;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+.services-page .division-tile:hover {
+    transform: translateY(-3px);
+    border-color: #20c7f5;
+    background: linear-gradient(145deg, #12344a, #0b2031);
+}
+.services-page .division-icon { font-size: 22px; line-height: 1; }
+.services-page .division-name { font-size: 17px; font-weight: 700; }
+.services-page .division-action { color: #28cafa; font-size: 13px; font-weight: 700; }
+.services-page .media-heading { margin-top: 12px; }
+@media (max-width: 760px) {
+    .services-page .services { padding-top: 20px; }
+    .services-page .division-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .services-page .division-tile { min-height: 105px; padding: 14px; }
+    .services-page .division-name { font-size: 15px; }
+}
+@media (max-width: 380px) {
+    .services-page .division-grid { grid-template-columns: 1fr; }
+    .services-page .division-tile { min-height: 82px; }
+}
+
 </style>
 </head>
 <body class="services-page">
@@ -396,63 +451,38 @@
 <main>
 <section class="services">
     <span class="section-label">OUR SERVICES</span>
-    <h1>Technology • Digital Solutions • Innovation</h1>
-    <p>PVRajCMS Group develops and explores technology-driven solutions across digital systems, software, financial technology, automation, healthcare innovation and business ventures.</p>
-    <p>Our services and capabilities are designed around practical technology applications that can help businesses build, improve and expand their digital presence and operations.</p>
+    <h1>Choose a Business Division</h1>
+    <p class="services-intro">Select a category to explore its services.</p>
 
-    <h2>Our Business Divisions</h2>
-    <p>Explore the five dedicated business divisions of PVRajCMS Group. Each division focuses on a distinct area while remaining part of one connected group.</p>
-
-    <div class="service-card" id="cms-soft-tech">
-        <h3>CMS Soft &amp; Tech</h3>
-        <p>Website development, web applications, custom software, Android and desktop applications, AI solutions, automation and digital technology services.</p>
-        <a class="division-link" href="cms-soft-tech.html">Explore More <span aria-hidden="true">→</span></a>
+    <div class="division-grid">
+        <a class="division-tile" href="cms-soft-tech.html" id="cms-soft-tech">
+            <span class="division-icon">💻</span>
+            <span class="division-name">CMS Soft &amp; Tech</span>
+            <span class="division-action">Explore <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="division-tile" href="pv-education.html" id="pv-education">
+            <span class="division-icon">🎓</span>
+            <span class="division-name">PV Education</span>
+            <span class="division-action">Explore <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="division-tile" href="cms-fintech.html" id="cms-fintech">
+            <span class="division-icon">📈</span>
+            <span class="division-name">CMS FinTech</span>
+            <span class="division-action">Explore <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="division-tile" href="pv-mart.html" id="pv-mart">
+            <span class="division-icon">🛒</span>
+            <span class="division-name">PV Mart</span>
+            <span class="division-action">Explore <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="division-tile" href="pv-healthcare.html" id="pv-healthcare">
+            <span class="division-icon">🏥</span>
+            <span class="division-name">PV Healthcare</span>
+            <span class="division-action">Explore <span aria-hidden="true">→</span></span>
+        </a>
     </div>
 
-    <div class="service-card" id="pv-education">
-        <h3>PV Education</h3>
-        <p>Online learning, school education, competitive exam preparation, spoken English, online examinations, study materials, courses and AI-assisted learning.</p>
-        <a class="division-link" href="pv-education.html">Explore More <span aria-hidden="true">→</span></a>
-    </div>
-
-    <div class="service-card" id="cms-fintech">
-        <h3>CMS FinTech</h3>
-        <p>Trading technology, MCX tools, market analysis solutions, financial calculators and software designed for financial-market learning and workflows.</p>
-        <a class="division-link" href="cms-fintech.html">Explore More <span aria-hidden="true">→</span></a>
-    </div>
-
-    <div class="product-card">
-        <div class="product-number">01</div>
-        <div class="product-info">
-            <h3>PVRajCMS MCX Risk–Reward Calculator</h3>
-            <p>Calculate trade risk, potential reward and Risk–Reward ratio for MCX instruments with BUY/SELL, automatic or manual quantity, and T1, T2 and T3 targets.</p>
-            <a href="PVRajCMS-MCX-Risk-Reward-Calculator.html" class="product-button">Open Calculator →</a>
-        </div>
-    </div>
-
-    <div class="product-card" id="crude-oil-scalp-calculator">
-        <div class="product-number">02</div>
-        <div class="product-info">
-            <h3>PVRajCMS Crude Oil Scalp Calculator</h3>
-            <p>Calculate Crude Oil entry price, stop loss and T1, T2 and T3 target levels with the dedicated scalp calculator.</p>
-            <div class="product-price">₹588 / 30 Days</div><br>
-            <a href="subscription-checkout.html" class="product-button">Subscribe Now →</a>
-        </div>
-    </div>
-
-    <div class="service-card" id="pv-mart">
-        <h3>PV Mart</h3>
-        <p>Online shopping and retail initiatives, including grocery, daily essentials and other product categories through the PV Mart platform.</p>
-        <a class="division-link" href="pv-mart.html">Explore More <span aria-hidden="true">→</span></a>
-    </div>
-
-    <div class="service-card" id="pv-healthcare">
-        <h3>PV Healthcare</h3>
-        <p>A healthcare-focused division planned for health information, healthcare directories, appointment-related services and digital healthcare initiatives. Medical services will be offered only where required licences and qualified professionals are in place.</p>
-        <a class="division-link" href="pv-healthcare.html">Explore More <span aria-hidden="true">→</span></a>
-    </div>
-
-    <h2>Group Digital Media</h2>
+    <h2 class="media-heading">Group Digital Media</h2>
     <div class="service-card"><h3>MoneyX Labs USA</h3><p>A USA-focused finance and markets digital media brand covering trading, investing, Bitcoin and crypto, personal finance, AI and FinTech.</p></div>
 
     <h2>Our Technology Approach</h2>
