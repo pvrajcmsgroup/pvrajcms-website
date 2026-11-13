@@ -31,7 +31,7 @@ h1{font-size:clamp(30px,4vw,44px);line-height:1.12;margin:12px 0}.hero p{font-si
 .speaking-test h2{margin:0 0 8px;font-size:25px}.speaking-test p{color:var(--muted);line-height:1.6}
 .test-prompt{background:#f3f8fe;border:1px solid #d8e8f7;border-radius:12px;padding:15px;margin:12px 0}
 .test-prompt strong{display:block;margin-bottom:6px}.test-prompt small{color:var(--muted)}
-.test-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.test-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.delete-row{margin-top:9px}.delete-btn{border-color:#f0caca;background:#fff5f5;color:#b42318}.record-clock{font-weight:700;font-variant-numeric:tabular-nums;margin-left:6px}
 .test-controls select{padding:11px 12px;border:1px solid #cbd8e8;border-radius:9px;background:#fff;color:var(--ink);font:inherit;min-width:220px}
 .record-status{margin-top:12px;padding:11px 13px;background:#f4f7fb;border-radius:9px;color:#53677f;font-size:14px}
 .record-status.live{background:#fff1f1;color:#b42318}
@@ -111,7 +111,9 @@ footer{background:#071b31;color:#cbd8e6;text-align:center;padding:24px 16px;font
   <button class="btn primary" id="startRecording" type="button">● Start Recording</button>
   <button class="btn secondary" id="stopRecording" type="button" disabled>■ Stop</button>
   <button class="btn secondary" id="recordAgain" type="button">↻ Record Again</button>
-  <button class="btn secondary" id="deleteRecording" type="button">🗑 Delete Recording</button>
+ </div>
+ <div class="test-controls delete-row">
+  <button class="btn secondary delete-btn" id="deleteRecording" type="button">🗑 Delete Recording</button>
  </div>
  <div class="record-status" id="recordStatus" role="status" aria-live="polite">Ready. Allow microphone access when your browser asks.</div>
  <audio id="recordedAudio" controls hidden></audio>
@@ -168,6 +170,22 @@ $("speakingPrompt").addEventListener("change",()=>{
  $("speakingQuestion").textContent=speakingPrompts[$("speakingPrompt").value];
 });
 let mediaRecorder=null,recordedChunks=[],recordedUrl=null,activeStream=null;
+let recordingStartedAt=0,recordingTimer=null,discardPendingRecording=false;
+const recordingClock=document.createElement("span");
+recordingClock.className="record-clock";recordingClock.id="recordingClock";recordingClock.textContent="00:00";
+$("recordStatus").appendChild(recordingClock);
+function formatRecordingTime(totalSeconds){
+ const minutes=Math.floor(totalSeconds/60).toString().padStart(2,"0");
+ const seconds=(totalSeconds%60).toString().padStart(2,"0");
+ return minutes+":"+seconds;
+}
+function updateRecordingClock(){
+ const elapsed=Math.floor((Date.now()-recordingStartedAt)/1000);
+ recordingClock.textContent=formatRecordingTime(elapsed);
+}
+function stopRecordingClock(){
+ if(recordingTimer){clearInterval(recordingTimer);recordingTimer=null;}
+}
 const startRecording=$("startRecording"),stopRecording=$("stopRecording"),recordStatus=$("recordStatus");
 function clearRecording(){
  if(recordedUrl){URL.revokeObjectURL(recordedUrl);recordedUrl=null;}
@@ -186,6 +204,9 @@ startRecording.addEventListener("click",async()=>{
   mediaRecorder=new MediaRecorder(activeStream,options);
   mediaRecorder.ondataavailable=e=>{if(e.data&&e.data.size>0)recordedChunks.push(e.data);};
   mediaRecorder.onstop=()=>{
+   stopRecordingClock();
+   if(discardPendingRecording){discardPendingRecording=false;return;}
+   updateRecordingClock();
    const blob=new Blob(recordedChunks,{type:mediaRecorder.mimeType||"audio/webm"});
    recordedUrl=URL.createObjectURL(blob);
    $("recordedAudio").src=recordedUrl;$("recordedAudio").hidden=false;
@@ -195,8 +216,10 @@ startRecording.addEventListener("click",async()=>{
    if(activeStream){activeStream.getTracks().forEach(track=>track.stop());activeStream=null;}
   };
   mediaRecorder.start();
+  recordingStartedAt=Date.now();recordingClock.textContent="00:00";
+  stopRecordingClock();recordingTimer=setInterval(updateRecordingClock,250);
   startRecording.disabled=true;stopRecording.disabled=false;
-  recordStatus.classList.add("live");recordStatus.textContent="● Recording… Speak clearly. Select Stop when you finish.";
+  recordStatus.classList.add("live");recordStatus.firstChild.textContent="● Recording… Speak clearly. Time: ";
  }catch(error){
   recordStatus.classList.remove("live");
   recordStatus.textContent=error.name==="NotAllowedError"?"Microphone permission was blocked. Allow microphone access in your browser and try again.":"Could not start recording. Check that a microphone is connected and try again.";
@@ -205,18 +228,23 @@ startRecording.addEventListener("click",async()=>{
 });
 stopRecording.addEventListener("click",()=>{
  if(mediaRecorder&&mediaRecorder.state!=="inactive")mediaRecorder.stop();
+ stopRecordingClock();
  startRecording.disabled=false;stopRecording.disabled=true;
 });
 $("recordAgain").addEventListener("click",()=>{
- if(mediaRecorder&&mediaRecorder.state!=="inactive")mediaRecorder.stop();
+ stopRecordingClock();
+ if(mediaRecorder&&mediaRecorder.state!=="inactive"){discardPendingRecording=true;mediaRecorder.stop();}
  clearRecording();recordedChunks=[];startRecording.disabled=false;stopRecording.disabled=true;
- recordStatus.classList.remove("live");recordStatus.textContent="Ready for another attempt. Press Start Recording when you are ready.";
+ recordStatus.classList.remove("live");recordStatus.firstChild.textContent="Ready for another attempt. Press Start Recording when you are ready. ";
+ recordingClock.textContent="00:00";
 });
 $("deleteRecording").addEventListener("click",()=>{
- if(mediaRecorder&&mediaRecorder.state!=="inactive")mediaRecorder.stop();
+ stopRecordingClock();
+ if(mediaRecorder&&mediaRecorder.state!=="inactive"){discardPendingRecording=true;mediaRecorder.stop();}
  clearRecording();recordedChunks=[];startRecording.disabled=false;stopRecording.disabled=true;
  recordStatus.classList.remove("live");
- recordStatus.textContent="Recording deleted from this page. You can start a new recording anytime.";
+ recordStatus.firstChild.textContent="Recording deleted from this page. You can start a new recording anytime. ";
+ recordingClock.textContent="00:00";
 });
 
 </script>
