@@ -184,17 +184,27 @@ const lessons=[
 {title:"Final Practice Quiz",intro:"Check your understanding of the basic phrases from this course.",items:[["Speak clearly and practise every day.","स्पष्ट बोलें और हर दिन अभ्यास करें।"]],quiz:{q:"Which sentence means “मुझे समझ नहीं आया”?",options:["I am fine, thank you.","I do not understand.","Nice to meet you."],answer:1}}
 ];
 function speakEnglish(text,button,rate=0.88){
- if(!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)){
-  alert("Audio pronunciation is not supported in this browser. Please try an updated Chrome or Edge browser.");return;
+ const synth=window.speechSynthesis;
+ if(!synth || !("SpeechSynthesisUtterance" in window)){
+  alert("आपके browser में Text-to-Speech उपलब्ध नहीं है। Chrome या Edge का updated version इस्तेमाल करें।");return;
  }
- window.speechSynthesis.cancel();
+ synth.cancel();
  document.querySelectorAll(".speak-btn").forEach(b=>{b.disabled=false;if(b.dataset.original)b.textContent=b.dataset.original;});
- const utterance=new SpeechSynthesisUtterance(text);
- utterance.lang="en-US";utterance.rate=rate;utterance.pitch=1;
- if(button){button.dataset.original=button.textContent;button.textContent="▶ Speaking…";button.disabled=true;}
+ const utterance=new SpeechSynthesisUtterance(String(text));
+ utterance.lang="en-US";utterance.rate=rate;utterance.pitch=1;utterance.volume=1;
+ const chooseVoice=()=>{
+  const voices=synth.getVoices();
+  const voice=voices.find(v=>v.lang==="en-US")||voices.find(v=>/^en[-_]/i.test(v.lang));
+  if(voice)utterance.voice=voice;
+ };
+ chooseVoice();
+ if(button){button.dataset.original=button.dataset.original||button.textContent;button.textContent="▶ Loading audio…";button.disabled=true;}
+ utterance.onstart=()=>{if(button)button.textContent="▶ Speaking…";};
  utterance.onend=()=>{if(button){button.disabled=false;button.textContent=button.dataset.original||"🔊 Listen";}};
- utterance.onerror=()=>{if(button){button.disabled=false;button.textContent=button.dataset.original||"🔊 Listen";}};
- window.speechSynthesis.speak(utterance);
+ utterance.onerror=(event)=>{if(button){button.disabled=false;button.textContent=button.dataset.original||"🔊 Listen";}console.warn("Speech audio error:",event.error);alert("Audio नहीं चला। Chrome/Windows की आवाज़ और English Text-to-Speech voice जाँचें।");};
+ // Chrome may need a short pause after cancel() before a new utterance.
+ synth.resume();
+ setTimeout(()=>{chooseVoice();synth.speak(utterance);},120);
 }
 let current=0;const done=new Set(JSON.parse(localStorage.getItem("pvSpokenDone")||"[]"));
 const $=id=>document.getElementById(id);
@@ -204,7 +214,7 @@ function setupPronunciationStudio(){
  listen.addEventListener("click",()=>{
   const value=$("pronunciationText").value.trim();
   if(!value){$("pronunciationStatus").textContent="पहले practice sentence लिखें।";return;}
-  if(!("speechSynthesis" in window)){ $("pronunciationStatus").textContent="इस browser में audio pronunciation उपलब्ध नहीं है।";return;}
+  if(!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)){ $("pronunciationStatus").textContent="इस browser में Text-to-Speech उपलब्ध नहीं है। Updated Chrome/Edge इस्तेमाल करें।";return;}
   window.speechSynthesis.cancel();
   const utterance=new SpeechSynthesisUtterance(value);
   utterance.lang=$("pronunciationVoice").value;
