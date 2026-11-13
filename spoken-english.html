@@ -111,6 +111,7 @@ footer{background:#071b31;color:#cbd8e6;text-align:center;padding:24px 16px;font
   <button class="btn primary" id="startRecording" type="button">● Start Recording</button>
   <button class="btn secondary" id="stopRecording" type="button" disabled>■ Stop</button>
   <button class="btn secondary" id="recordAgain" type="button">↻ Record Again</button>
+  <button class="btn secondary" id="deleteRecording" type="button">🗑 Delete Recording</button>
  </div>
  <div class="record-status" id="recordStatus" role="status" aria-live="polite">Ready. Allow microphone access when your browser asks.</div>
  <audio id="recordedAudio" controls hidden></audio>
@@ -210,6 +211,12 @@ $("recordAgain").addEventListener("click",()=>{
  if(mediaRecorder&&mediaRecorder.state!=="inactive")mediaRecorder.stop();
  clearRecording();recordedChunks=[];startRecording.disabled=false;stopRecording.disabled=true;
  recordStatus.classList.remove("live");recordStatus.textContent="Ready for another attempt. Press Start Recording when you are ready.";
+});
+$("deleteRecording").addEventListener("click",()=>{
+ if(mediaRecorder&&mediaRecorder.state!=="inactive")mediaRecorder.stop();
+ clearRecording();recordedChunks=[];startRecording.disabled=false;stopRecording.disabled=true;
+ recordStatus.classList.remove("live");
+ recordStatus.textContent="Recording deleted from this page. You can start a new recording anytime.";
 });
 
 </script>
