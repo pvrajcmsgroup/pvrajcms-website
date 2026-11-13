@@ -22,7 +22,7 @@ h1{font-size:clamp(30px,4vw,44px);line-height:1.12;margin:12px 0}.hero p{font-si
 .panel h2,.lesson h2{font-size:21px;margin:0 0 14px}.progressline{height:9px;background:#e7eef7;border-radius:20px;overflow:hidden;margin:10px 0}.progressline span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .2s}
 .small{font-size:13px;color:var(--muted)}.module{margin-top:18px}.module h3{font-size:14px;margin:0 0 8px;color:#36516d}.lessonbtn{display:block;width:100%;text-align:left;border:1px solid transparent;background:#f4f7fb;color:var(--ink);padding:11px 12px;border-radius:9px;margin:6px 0;cursor:pointer;font-size:14px}.lessonbtn.active{background:#eaf5ff;border-color:#9bcdf3;color:#075c91;font-weight:700}.lessonbtn:focus{outline:2px solid #73baf0}
 .tag{display:inline-block;background:#eaf5ff;color:#075c91;border-radius:30px;padding:6px 10px;font-size:12px;font-weight:700}
-.lesson h2{font-size:26px;margin-top:12px}.lesson p{color:#53677f;line-height:1.65}.phrase{background:#f3f8fe;border-left:4px solid var(--blue);border-radius:10px;padding:14px 16px;margin:12px 0}.phrase strong{display:block;color:#10233e;margin-bottom:5px}.translation{font-size:14px;color:#62748b}.phrase-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.speak-btn{border:1px solid #b9d8f3;background:#fff;color:#075c91;border-radius:8px;padding:7px 11px;font-weight:700;font-size:13px;cursor:pointer}.speak-btn:hover{background:#eaf5ff}.speak-btn:disabled{opacity:.6;cursor:wait}.audio-help{font-size:12px;color:#62748b;margin:8px 0 0}
+.lesson h2{font-size:26px;margin-top:12px}.lesson p{color:#53677f;line-height:1.65}.phrase{background:#f3f8fe;border-left:4px solid var(--blue);border-radius:10px;padding:14px 16px;margin:12px 0}.phrase strong{display:block;color:#10233e;margin-bottom:5px}.translation{font-size:14px;color:#62748b}.phrase-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.speak-btn{border:1px solid #b9d8f3;background:#fff;color:#075c91;border-radius:8px;padding:7px 11px;font-weight:700;font-size:13px;cursor:pointer}.speak-btn:hover{background:#eaf5ff}.speak-btn:disabled{opacity:.6;cursor:wait}.audio-help{font-size:12px;color:#62748b;margin:8px 0 0}.pronunciation-studio{margin:16px 0;padding:16px;border:1px solid #cfe3f8;background:#f5faff;border-radius:13px}.pronunciation-studio h3{margin:0 0 6px;color:#10233e;font-size:17px}.pronunciation-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-top:12px}.pronunciation-controls label{display:flex;flex-direction:column;gap:5px;font-size:12px;color:#53677f;flex:1;min-width:150px}.pronunciation-controls input,.pronunciation-controls select{width:100%;padding:9px;border:1px solid #c8d9eb;border-radius:8px;background:#fff;color:#10233e}.pronunciation-controls button{border:0;border-radius:8px;padding:10px 14px;background:#087bd1;color:#fff;font-weight:700;cursor:pointer}.pronunciation-tip{font-size:12px;color:#62748b;margin:8px 0 0}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.secondary{background:#eaf1fb;color:#174a7d}
 .practice{margin-top:20px;border-top:1px solid var(--line);padding-top:18px}.practice textarea{width:100%;min-height:90px;border:1px solid #cbd8e8;border-radius:10px;padding:12px;font:inherit;resize:vertical}.feedback{margin-top:10px;color:#08734a;font-weight:700;font-size:14px;min-height:20px}
 .quiz{background:#f7faff;border:1px solid var(--line);border-radius:13px;padding:16px;margin-top:18px}.quiz label{display:block;margin:10px 0;font-size:14px}.quiz input{margin-right:8px}
@@ -94,6 +94,17 @@ footer{background:#071b31;color:#cbd8e6;text-align:center;padding:24px 16px;font
   <h2 id="lessonTitle">Greetings & Introductions</h2>
   <p id="lessonIntro">Start a conversation politely with these common English greetings.</p>
   <p class="audio-help">🔊 Tap “Listen” to hear the English pronunciation. Audio uses your browser’s voice.</p>
+  <div class="pronunciation-studio">
+   <h3>🎧 Pronunciation Studio</h3>
+   <p class="small" style="margin:0">अपना sentence लिखें, accent और speed चुनें, फिर सुनकर दोहराएँ।</p>
+   <div class="pronunciation-controls">
+    <label>Practice sentence<input id="pronunciationText" type="text" value="How are you today?" maxlength="220"></label>
+    <label>English accent<select id="pronunciationVoice"><option value="en-US">American English</option><option value="en-GB">British English</option><option value="en-IN">Indian English</option></select></label>
+    <label>Speaking speed <span id="pronunciationRateLabel">0.8×</span><input id="pronunciationRate" type="range" min="0.55" max="1.15" step="0.05" value="0.8"></label>
+    <button id="pronunciationListen" type="button">🔊 Listen</button>
+   </div>
+   <p class="pronunciation-tip" id="pronunciationStatus" aria-live="polite">पहले सुनें, फिर उसी sentence को अपनी आवाज़ में 2–3 बार बोलें।</p>
+  </div>
   <div id="lessonBody">
    <div class="phrase"><strong>Hello. How are you?</strong><span class="translation">नमस्ते। आप कैसे हैं?</span></div>
    <div class="phrase"><strong>I am fine, thank you.</strong><span class="translation">मैं ठीक हूँ, धन्यवाद।</span></div>
@@ -187,6 +198,27 @@ function speakEnglish(text,button,rate=0.88){
 }
 let current=0;const done=new Set(JSON.parse(localStorage.getItem("pvSpokenDone")||"[]"));
 const $=id=>document.getElementById(id);
+function setupPronunciationStudio(){
+ const rate=$("pronunciationRate"),label=$("pronunciationRateLabel"),listen=$("pronunciationListen");
+ rate.addEventListener("input",()=>label.textContent=Number(rate.value).toFixed(2).replace(/0$/,"")+"×");
+ listen.addEventListener("click",()=>{
+  const value=$("pronunciationText").value.trim();
+  if(!value){$("pronunciationStatus").textContent="पहले practice sentence लिखें।";return;}
+  if(!("speechSynthesis" in window)){ $("pronunciationStatus").textContent="इस browser में audio pronunciation उपलब्ध नहीं है।";return;}
+  window.speechSynthesis.cancel();
+  const utterance=new SpeechSynthesisUtterance(value);
+  utterance.lang=$("pronunciationVoice").value;
+  utterance.rate=Number(rate.value);
+  const voices=window.speechSynthesis.getVoices(),wanted=utterance.lang.toLowerCase();
+  const voice=voices.find(v=>v.lang.toLowerCase()===wanted)||voices.find(v=>v.lang.toLowerCase().startsWith(wanted.slice(0,2)));
+  if(voice)utterance.voice=voice;
+  utterance.onstart=()=>{$("pronunciationStatus").textContent="अब ध्यान से सुनें और sentence दोहराएँ…";listen.disabled=true;};
+  utterance.onend=()=>{$("pronunciationStatus").textContent="अच्छा! अब बिना audio के यही sentence बोलकर अभ्यास करें।";listen.disabled=false;};
+  utterance.onerror=()=>{$("pronunciationStatus").textContent="Audio चल नहीं पाया। Browser voice settings जाँचें।";listen.disabled=false;};
+  window.speechSynthesis.speak(utterance);
+ });
+}
+setupPronunciationStudio();
 function render(){const l=lessons[current];$("lessonTag").textContent=`LESSON ${current+1} · BEGINNER`;$("lessonTitle").textContent=l.title;$("lessonIntro").textContent=l.intro;$("lessonBody").innerHTML=l.items.map((x,i)=>`<div class="phrase"><strong>${x[0]}</strong><span class="translation">${x[1]}</span><div class="phrase-tools"><button class="speak-btn" type="button" onclick="speakEnglish(${JSON.stringify(x[0]).replace(/</g, "\\u003c")},this)">🔊 Listen</button><button class="speak-btn" type="button" onclick="speakEnglish(${JSON.stringify(x[0]).replace(/</g, "\\u003c")},this,0.72)">🐢 Speak Slowly</button></div></div>`).join("");document.querySelectorAll(".lessonbtn").forEach(b=>b.classList.toggle("active",+b.dataset.lesson===current));$("prevBtn").disabled=current===0;$("nextBtn").disabled=current===lessons.length-1;$("completeBtn").textContent=done.has(current)?"Completed ✓":"Mark as Complete ✓";$("quizBox").hidden=!l.quiz;$("practiceText").value=localStorage.getItem("pvSpokenPractice"+current)||"";$("practiceFeedback").textContent="";$("quizFeedback").textContent="";if(l.quiz){$("quizQuestion").textContent=l.quiz.q;$("quizOptions").innerHTML=l.quiz.options.map((o,i)=>`<label><input type="radio" name="answer" value="${i}">${o}</label>`).join("")}updateProgress()}
 function updateProgress(){let n=done.size;$("progressText").textContent=`${n} of 8 lessons completed`;$("progressBar").style.width=(n/8*100)+"%"}
 document.querySelectorAll(".lessonbtn").forEach(b=>b.addEventListener("click",()=>{current=+b.dataset.lesson;render()}));
