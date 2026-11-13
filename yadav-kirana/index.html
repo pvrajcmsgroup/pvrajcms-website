@@ -176,6 +176,26 @@ button{min-height:42px}
   .bill-line{grid-template-columns:minmax(0,1fr) 34px 66px 26px}
 }
 
+
+/* SCROLL FIX: keep the document as the scrolling surface on desktop and mobile */
+html, body {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior-y: auto !important;
+  touch-action: pan-y;
+}
+body { position: static !important; }
+.app { height: auto !important; min-height: 100vh; overflow: visible !important; }
+.layout, main, .view.active { overflow: visible !important; }
+.view.active { min-height: 1px; }
+@media (max-width: 850px) {
+  body { padding-bottom: env(safe-area-inset-bottom); }
+  .app { padding-bottom: calc(88px + env(safe-area-inset-bottom)) !important; }
+  .bottom-nav { position: fixed; }
+}
+
 </style>
 </head>
 <body>
