@@ -52,6 +52,9 @@ h1{font-size:clamp(30px,4vw,44px);line-height:1.12;margin:12px 0}.hero p{font-si
 footer{background:#071b31;color:#cbd8e6;text-align:center;padding:24px 16px;font-size:13px}
 @media(max-width:900px){.brand img:first-child{width:150px}.brand img:last-child{width:175px}nav{gap:12px}nav a{font-size:13px}.layout{grid-template-columns:260px 1fr}}
 @media(max-width:680px){.nav{flex-wrap:wrap;min-height:68px}.brand{flex:1}.brand img:first-child{width:108px}.brand img:last-child{width:126px}.divider{height:36px}.menu{display:block}nav{display:none;width:100%;margin:0;padding:8px 0 12px;flex-wrap:wrap}nav.open{display:flex}.hero{grid-template-columns:1fr;padding:26px 20px}.hero-art{display:none}.layout{grid-template-columns:1fr}.panel{order:0}.lesson{order:1}}
+
+.daily-practice{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:17px;padding:22px;box-shadow:0 8px 24px #142b4608}.daily-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.daily-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:16px 0}.day-btn{border:1px solid var(--line);background:#f5f8fc;border-radius:9px;padding:10px 5px;color:var(--ink);font-weight:700;cursor:pointer}.day-btn.active{background:#eaf5ff;border-color:#7dbce9;color:#075c91}.day-btn.done{background:#eaf8f0;border-color:#9bd5b2;color:#176b42}.daily-card{background:#f5f9fe;border:1px solid #dce9f7;border-radius:13px;padding:17px}.daily-card h3{margin:0 0 8px}.daily-card p{line-height:1.6;color:#53677f}.daily-list{padding-left:20px;line-height:1.8}.daily-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.daily-status{font-size:13px;color:var(--muted);margin-top:10px}@media(max-width:680px){.daily-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.daily-practice{padding:16px}}
+
 </style>
 </head>
 <body>
@@ -145,6 +148,14 @@ footer{background:#071b31;color:#cbd8e6;text-align:center;padding:24px 16px;font
 </section>
 
  <p class="record-note">Privacy: Up to 2 recordings stay in this browser tab only. They are not uploaded or sent to PV Education. Download them if you want to keep them. Microphone access requires HTTPS and your permission.</p>
+</section>
+
+
+<section class="daily-practice" id="daily-speaking-practice">
+ <div class="daily-head"><div><span class="tag">30-DAY SPEAKING CHALLENGE</span><h2 style="margin:10px 0 4px">Daily Speaking Practice</h2><p class="small" style="margin:0">हर दिन एक नया topic चुनें, 2–3 मिनट बोलें और अपनी progress mark करें।</p></div><div class="tag" id="dailyProgress">0 / 30 days completed</div></div>
+ <div class="progressline"><span id="dailyProgressBar"></span></div>
+ <div class="daily-grid" id="dailyGrid" aria-label="Choose a practice day"></div>
+ <div class="daily-card"><span class="tag" id="dailyDayLabel">DAY 1</span><h3 id="dailyTitle">Introduce Yourself</h3><p id="dailyGoal"></p><strong>Speak about these points:</strong><ul class="daily-list" id="dailyPoints"></ul><strong>Useful sentence starters:</strong><ul class="daily-list" id="dailyStarters"></ul><p><strong>Your speaking task:</strong> <span id="dailyTask"></span></p><div class="daily-actions"><button class="btn primary" id="dailyListen" type="button">🔊 Listen to a sample</button><button class="btn secondary" id="dailyComplete" type="button">Mark Day Complete ✓</button></div><p class="daily-status" id="dailyStatus" aria-live="polite">Your daily challenge progress is saved on this device.</p></div>
 </section>
 
 <div class="notice"><strong>Learning note:</strong> This is the first frontend version of the Spoken English course. Lesson completion and practice notes are saved only in this browser. Student accounts, synced progress, audio lessons and certificates can be connected in a later phase.</div>
@@ -311,6 +322,44 @@ $("resetAssessment").addEventListener("click",()=>{
  localStorage.removeItem("pvSpokenAssessment");
  $("assessmentResult").textContent="Checklist reset. Listen to your recording and assess yourself again.";
 });
+
+const dailyChallenges=[
+["Introduce Yourself","Practise a short and confident introduction.",["Your name","Where you live","What you do or study","One thing you enjoy"],["My name is…","I am from…","I work as… / I am a student.","In my free time, I like…"],"Speak for 1 minute as if you are meeting someone for the first time."],
+["My Family","Talk about the people in your family.",["How many people are in your family","Who you live with","What you do together"],["There are … people in my family.","I live with…","We enjoy… together."],"Describe your family for 2 minutes."],
+["My Daily Routine","Explain your usual day in order.",["When you wake up","Your morning activities","Work or study","Your evening"],["I usually wake up at…","After that, I…","In the evening, I…"],"Describe your daily routine using first, then, after that and finally."],
+["My Hometown","Describe the place where you live.",["Name of your town or village","Famous places","What you like","One thing to improve"],["I live in…","It is famous for…","My favourite place is…"],"Speak for 2 minutes about your hometown."],
+["My Best Friend","Talk about a friend you know well.",["Their name","How you met","Their qualities","What you do together"],["My best friend is…","We met…","I like this person because…"],"Describe your friend without reading notes."],
+["My Favourite Food","Talk about a dish you enjoy.",["Name of the dish","Ingredients or taste","When you eat it","Who makes it"],["My favourite food is…","It tastes…","I usually eat it…"],"Explain your favourite food for 90 seconds."],
+["At the Market","Practise a conversation while buying something.",["Greet the shopkeeper","Ask the price","Ask for another option","Thank the shopkeeper"],["How much is this?","Do you have another colour?","Can you reduce the price?"],"Act out a customer and shopkeeper conversation."],
+["Asking for Directions","Explain how to ask for and give directions.",["Ask where a place is","Understand left and right","Ask about distance"],["Excuse me, where is…?","Go straight ahead.","Turn left at…"],"Give directions from your home to a nearby shop."],
+["My Favourite Hobby","Talk about an activity you enjoy.",["What your hobby is","When you do it","Why you enjoy it"],["My hobby is…","I do it in my free time.","It makes me feel…"],"Speak for 2 minutes about your hobby."],
+["A Memorable Day","Describe a day you remember.",["When it happened","Where you were","Who was with you","Why it was special"],["I remember the day when…","I was with…","It was special because…"],"Tell your story in the past tense."],
+["My Education","Talk about your studies.",["What you studied","Your favourite subject","What you learned","Your future learning goal"],["I studied…","My favourite subject is…","I want to learn…"],"Speak for 2 minutes about your education."],
+["My Work or Business","Explain what you do.",["Your role or business","Your daily tasks","Who you work with","Your goal"],["I work in…","My main responsibility is…","My goal is…"],"Explain your work to a new person."],
+["A Phone Conversation","Practise speaking on a phone call.",["Say hello","Ask if the person is available","Explain why you called","End politely"],["Hello, may I speak to…?","I am calling because…","Thank you for your time."],"Act out a 1-minute phone conversation."],
+["Making an Appointment","Practise booking a meeting.",["Say what appointment you need","Suggest a day and time","Confirm the details"],["I would like to book…","Are you available on…?","That time works for me."],"Role-play booking an appointment."],
+["At a Restaurant","Practise ordering food politely.",["Ask for a table","Read the menu","Order food and a drink","Ask for the bill"],["Could I have a table for…?","I would like to order…","Could I have the bill, please?"],"Act out a restaurant conversation."],
+["Talk About the Weather","Describe today's weather.",["Is it sunny, cloudy or rainy","How the weather feels","What you plan to do"],["The weather is…","It feels… today.","I think it might…"],"Speak for 90 seconds about the weather."],
+["Your Weekend Plan","Talk about your plans.",["What you will do","Where you will go","Who will join you"],["This weekend, I am going to…","I plan to…","I hope to…"],"Describe your weekend using future expressions."],
+["Healthy Habits","Talk about habits that keep people healthy.",["Food and water","Exercise","Sleep","One habit you want to build"],["I try to…","It is important to…","I want to improve…"],"Give a short talk about healthy habits."],
+["Describe Your Room","Describe a room in your home.",["What is in the room","Where things are","What you like about it"],["There is…","There are…","Next to the… is…"],"Describe your room using there is and there are."],
+["A Problem I Solved","Explain a small problem you handled.",["What happened","What you tried","How it ended"],["The problem was…","First, I…","Finally, I…"],"Tell the story clearly from beginning to end."],
+["Give Your Opinion","Share your view on learning English.",["Why English is useful","What is difficult","How to improve"],["In my opinion…","I believe that…","For example…"],"Speak for 2 minutes and give at least one reason."],
+["Describe a Person","Describe someone you admire.",["Who the person is","Their qualities","What you learn from them"],["I admire…","This person is…","I have learned…"],"Describe the person respectfully for 2 minutes."],
+["Travel Plans","Talk about a place you want to visit.",["Where you want to go","Why you want to visit","What you would do there"],["I would like to visit…","I want to see…","I hope I can…"],"Speak as if you are planning a trip with a friend."],
+["A News or Current Event","Explain a news story you recently heard.",["What happened","Where it happened","Why it matters","Your reaction"],["I heard that…","According to the news…","I think…"],"Summarise one news story in your own words."],
+["Interview Practice","Answer common interview questions.",["Introduce yourself","Your strengths","Your experience","Your goal"],["I am…","One of my strengths is…","I am interested in this role because…"],"Answer: Tell me about yourself, for 2 minutes."],
+["Agree and Disagree","Practise expressing a different opinion politely.",["State your view","Give a reason","Respond respectfully"],["I agree because…","I see your point, but…","From my perspective…"],"Speak about whether online learning is useful."],
+["Tell a Short Story","Tell a simple story with a beginning and ending.",["Introduce the situation","Describe what happened","Explain the ending"],["One day…","Suddenly…","In the end…"],"Make up a short story and tell it aloud."],
+["Speak for Three Minutes","Build fluency by speaking continuously.",["Choose a familiar topic","Give examples","Avoid long pauses","Finish with a conclusion"],["Today I would like to talk about…","Another point is…","To conclude…"],"Speak for 3 minutes on any topic without reading a full script."],
+["Final Confidence Challenge","Combine what you learned over 30 days.",["Introduce yourself","Describe your daily life","Share an opinion","Talk about a future goal"],["Let me introduce myself…","In my daily life…","I believe…","In the future, I hope to…"],"Record a 3-minute speech. Listen to it and note one strength and one area to improve."]
+];
+let selectedDaily=0;const dailyDone=new Set(JSON.parse(localStorage.getItem("pvSpokenDailyDone")||"[]"));
+function renderDailyGrid(){const grid=$("dailyGrid");grid.innerHTML=dailyChallenges.map((d,i)=>`<button type="button" class="day-btn ${i===selectedDaily?'active ':''}${dailyDone.has(i)?'done':''}" data-day="${i}">${dailyDone.has(i)?'✓ ':''}Day ${i+1}</button>`).join("");grid.querySelectorAll("[data-day]").forEach(b=>b.addEventListener("click",()=>{selectedDaily=Number(b.dataset.day);renderDailyChallenge()}));const n=dailyDone.size;$("dailyProgress").textContent=`${n} / 30 days completed`;$("dailyProgressBar").style.width=(n/30*100)+"%";}
+function renderDailyChallenge(){const d=dailyChallenges[selectedDaily];$("dailyDayLabel").textContent=`DAY ${selectedDaily+1}`;$("dailyTitle").textContent=d[0];$("dailyGoal").textContent=d[1];$("dailyPoints").innerHTML=d[2].map(x=>`<li>${x}</li>`).join("");$("dailyStarters").innerHTML=d[3].map(x=>`<li>${x}</li>`).join("");$("dailyTask").textContent=d[4];$("dailyComplete").textContent=dailyDone.has(selectedDaily)?"Completed ✓ · Mark Again":"Mark Day Complete ✓";$("dailyStatus").textContent=dailyDone.has(selectedDaily)?"This day is marked complete. Keep practising to improve your fluency.":"Your daily challenge progress is saved on this device.";renderDailyGrid()}
+$("dailyComplete").addEventListener("click",()=>{dailyDone.add(selectedDaily);localStorage.setItem("pvSpokenDailyDone",JSON.stringify([...dailyDone]));renderDailyChallenge()});
+$("dailyListen").addEventListener("click",()=>{const d=dailyChallenges[selectedDaily];speakEnglish(d[0]+". "+d[1]+" "+d[4],$("dailyListen"),0.85)});
+renderDailyChallenge();
 
 </script>
 </body>
