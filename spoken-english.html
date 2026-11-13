@@ -22,7 +22,7 @@ h1{font-size:clamp(30px,4vw,44px);line-height:1.12;margin:12px 0}.hero p{font-si
 .panel h2,.lesson h2{font-size:21px;margin:0 0 14px}.progressline{height:9px;background:#e7eef7;border-radius:20px;overflow:hidden;margin:10px 0}.progressline span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .2s}
 .small{font-size:13px;color:var(--muted)}.module{margin-top:18px}.module h3{font-size:14px;margin:0 0 8px;color:#36516d}.lessonbtn{display:block;width:100%;text-align:left;border:1px solid transparent;background:#f4f7fb;color:var(--ink);padding:11px 12px;border-radius:9px;margin:6px 0;cursor:pointer;font-size:14px}.lessonbtn.active{background:#eaf5ff;border-color:#9bcdf3;color:#075c91;font-weight:700}.lessonbtn:focus{outline:2px solid #73baf0}
 .tag{display:inline-block;background:#eaf5ff;color:#075c91;border-radius:30px;padding:6px 10px;font-size:12px;font-weight:700}
-.lesson h2{font-size:26px;margin-top:12px}.lesson p{color:#53677f;line-height:1.65}.phrase{background:#f3f8fe;border-left:4px solid var(--blue);border-radius:10px;padding:14px 16px;margin:12px 0}.phrase strong{display:block;color:#10233e;margin-bottom:5px}.translation{font-size:14px;color:#62748b}
+.lesson h2{font-size:26px;margin-top:12px}.lesson p{color:#53677f;line-height:1.65}.phrase{background:#f3f8fe;border-left:4px solid var(--blue);border-radius:10px;padding:14px 16px;margin:12px 0}.phrase strong{display:block;color:#10233e;margin-bottom:5px}.translation{font-size:14px;color:#62748b}.phrase-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.speak-btn{border:1px solid #b9d8f3;background:#fff;color:#075c91;border-radius:8px;padding:7px 11px;font-weight:700;font-size:13px;cursor:pointer}.speak-btn:hover{background:#eaf5ff}.speak-btn:disabled{opacity:.6;cursor:wait}.audio-help{font-size:12px;color:#62748b;margin:8px 0 0}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.secondary{background:#eaf1fb;color:#174a7d}
 .practice{margin-top:20px;border-top:1px solid var(--line);padding-top:18px}.practice textarea{width:100%;min-height:90px;border:1px solid #cbd8e8;border-radius:10px;padding:12px;font:inherit;resize:vertical}.feedback{margin-top:10px;color:#08734a;font-weight:700;font-size:14px;min-height:20px}
 .quiz{background:#f7faff;border:1px solid var(--line);border-radius:13px;padding:16px;margin-top:18px}.quiz label{display:block;margin:10px 0;font-size:14px}.quiz input{margin-right:8px}
@@ -68,6 +68,7 @@ footer{background:#071b31;color:#cbd8e6;text-align:center;padding:24px 16px;font
   <span class="tag" id="lessonTag">LESSON 1 · BEGINNER</span>
   <h2 id="lessonTitle">Greetings & Introductions</h2>
   <p id="lessonIntro">Start a conversation politely with these common English greetings.</p>
+  <p class="audio-help">🔊 Tap “Listen” to hear the English pronunciation. Audio uses your browser’s voice.</p>
   <div id="lessonBody">
    <div class="phrase"><strong>Hello. How are you?</strong><span class="translation">नमस्ते। आप कैसे हैं?</span></div>
    <div class="phrase"><strong>I am fine, thank you.</strong><span class="translation">मैं ठीक हूँ, धन्यवाद।</span></div>
@@ -93,9 +94,22 @@ const lessons=[
 {title:"Speaking Practice",intro:"Read this short conversation aloud. Try speaking both roles.",items:[["A: Hello! My name is Rahul. What is your name?","A: नमस्ते! मेरा नाम राहुल है। आपका नाम क्या है?"],["B: Hi Rahul. I am Priya. Nice to meet you.","B: नमस्ते राहुल। मैं प्रिया हूँ। आपसे मिलकर अच्छा लगा।"],["A: Nice to meet you too. Where are you from?","A: मुझसे मिलकर भी अच्छा लगा। आप कहाँ से हैं?"],["B: I am from Lucknow.","B: मैं लखनऊ से हूँ।"]]},
 {title:"Final Practice Quiz",intro:"Check your understanding of the basic phrases from this course.",items:[["Speak clearly and practise every day.","स्पष्ट बोलें और हर दिन अभ्यास करें।"]],quiz:{q:"Which sentence means “मुझे समझ नहीं आया”?",options:["I am fine, thank you.","I do not understand.","Nice to meet you."],answer:1}}
 ];
+function speakEnglish(text,button,rate=0.88){
+ if(!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)){
+  alert("Audio pronunciation is not supported in this browser. Please try an updated Chrome or Edge browser.");return;
+ }
+ window.speechSynthesis.cancel();
+ document.querySelectorAll(".speak-btn").forEach(b=>{b.disabled=false;if(b.dataset.original)b.textContent=b.dataset.original;});
+ const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang="en-US";utterance.rate=rate;utterance.pitch=1;
+ if(button){button.dataset.original=button.textContent;button.textContent="▶ Speaking…";button.disabled=true;}
+ utterance.onend=()=>{if(button){button.disabled=false;button.textContent=button.dataset.original||"🔊 Listen";}};
+ utterance.onerror=()=>{if(button){button.disabled=false;button.textContent=button.dataset.original||"🔊 Listen";}};
+ window.speechSynthesis.speak(utterance);
+}
 let current=0;const done=new Set(JSON.parse(localStorage.getItem("pvSpokenDone")||"[]"));
 const $=id=>document.getElementById(id);
-function render(){const l=lessons[current];$("lessonTag").textContent=`LESSON ${current+1} · BEGINNER`;$("lessonTitle").textContent=l.title;$("lessonIntro").textContent=l.intro;$("lessonBody").innerHTML=l.items.map(x=>`<div class="phrase"><strong>${x[0]}</strong><span class="translation">${x[1]}</span></div>`).join("");document.querySelectorAll(".lessonbtn").forEach(b=>b.classList.toggle("active",+b.dataset.lesson===current));$("prevBtn").disabled=current===0;$("nextBtn").disabled=current===lessons.length-1;$("completeBtn").textContent=done.has(current)?"Completed ✓":"Mark as Complete ✓";$("quizBox").hidden=!l.quiz;$("practiceText").value=localStorage.getItem("pvSpokenPractice"+current)||"";$("practiceFeedback").textContent="";$("quizFeedback").textContent="";if(l.quiz){$("quizQuestion").textContent=l.quiz.q;$("quizOptions").innerHTML=l.quiz.options.map((o,i)=>`<label><input type="radio" name="answer" value="${i}">${o}</label>`).join("")}updateProgress()}
+function render(){const l=lessons[current];$("lessonTag").textContent=`LESSON ${current+1} · BEGINNER`;$("lessonTitle").textContent=l.title;$("lessonIntro").textContent=l.intro;$("lessonBody").innerHTML=l.items.map((x,i)=>`<div class="phrase"><strong>${x[0]}</strong><span class="translation">${x[1]}</span><div class="phrase-tools"><button class="speak-btn" type="button" onclick="speakEnglish(${JSON.stringify(x[0]).replace(/</g, "\\u003c")},this)">🔊 Listen</button><button class="speak-btn" type="button" onclick="speakEnglish(${JSON.stringify(x[0]).replace(/</g, "\\u003c")},this,0.72)">🐢 Speak Slowly</button></div></div>`).join("");document.querySelectorAll(".lessonbtn").forEach(b=>b.classList.toggle("active",+b.dataset.lesson===current));$("prevBtn").disabled=current===0;$("nextBtn").disabled=current===lessons.length-1;$("completeBtn").textContent=done.has(current)?"Completed ✓":"Mark as Complete ✓";$("quizBox").hidden=!l.quiz;$("practiceText").value=localStorage.getItem("pvSpokenPractice"+current)||"";$("practiceFeedback").textContent="";$("quizFeedback").textContent="";if(l.quiz){$("quizQuestion").textContent=l.quiz.q;$("quizOptions").innerHTML=l.quiz.options.map((o,i)=>`<label><input type="radio" name="answer" value="${i}">${o}</label>`).join("")}updateProgress()}
 function updateProgress(){let n=done.size;$("progressText").textContent=`${n} of 8 lessons completed`;$("progressBar").style.width=(n/8*100)+"%"}
 document.querySelectorAll(".lessonbtn").forEach(b=>b.addEventListener("click",()=>{current=+b.dataset.lesson;render()}));
 $("prevBtn").onclick=()=>{if(current>0){current--;render()}};$("nextBtn").onclick=()=>{if(current<7){current++;render()}};
