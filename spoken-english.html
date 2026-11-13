@@ -26,6 +26,18 @@ h1{font-size:clamp(30px,4vw,44px);line-height:1.12;margin:12px 0}.hero p{font-si
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.secondary{background:#eaf1fb;color:#174a7d}
 .practice{margin-top:20px;border-top:1px solid var(--line);padding-top:18px}.practice textarea{width:100%;min-height:90px;border:1px solid #cbd8e8;border-radius:10px;padding:12px;font:inherit;resize:vertical}.feedback{margin-top:10px;color:#08734a;font-weight:700;font-size:14px;min-height:20px}
 .quiz{background:#f7faff;border:1px solid var(--line);border-radius:13px;padding:16px;margin-top:18px}.quiz label{display:block;margin:10px 0;font-size:14px}.quiz input{margin-right:8px}
+
+.speaking-test{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:17px;padding:22px;box-shadow:0 8px 24px #142b4608}
+.speaking-test h2{margin:0 0 8px;font-size:25px}.speaking-test p{color:var(--muted);line-height:1.6}
+.test-prompt{background:#f3f8fe;border:1px solid #d8e8f7;border-radius:12px;padding:15px;margin:12px 0}
+.test-prompt strong{display:block;margin-bottom:6px}.test-prompt small{color:var(--muted)}
+.test-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.test-controls select{padding:11px 12px;border:1px solid #cbd8e8;border-radius:9px;background:#fff;color:var(--ink);font:inherit;min-width:220px}
+.record-status{margin-top:12px;padding:11px 13px;background:#f4f7fb;border-radius:9px;color:#53677f;font-size:14px}
+.record-status.live{background:#fff1f1;color:#b42318}
+.speaking-test audio{display:block;width:100%;margin-top:14px}
+.record-note{font-size:12px!important;color:#718096!important}
+
 .notice{margin-top:20px;background:#eaf4ff;border:1px solid #cfe3f7;border-radius:13px;padding:15px 18px;color:#294b6b;line-height:1.55;font-size:14px}
 footer{background:#071b31;color:#cbd8e6;text-align:center;padding:24px 16px;font-size:13px}
 @media(max-width:900px){.brand img:first-child{width:150px}.brand img:last-child{width:175px}nav{gap:12px}nav a{font-size:13px}.layout{grid-template-columns:260px 1fr}}
@@ -80,6 +92,34 @@ footer{background:#071b31;color:#cbd8e6;text-align:center;padding:24px 16px;font
   <div class="quiz" id="quizBox" hidden><h3>Quick Check</h3><p id="quizQuestion"></p><div id="quizOptions"></div><button class="btn primary" id="checkQuiz">Check Answer</button><div class="feedback" id="quizFeedback" aria-live="polite"></div></div>
  </section>
 </div>
+
+<section class="speaking-test" id="speaking-test">
+ <span class="tag">PRACTICAL SPEAKING TEST</span>
+ <h2>Speak & Record Your Answer</h2>
+ <p>Choose a topic, read the prompt, then record your spoken answer. Listen to your recording and try again to improve your confidence.</p>
+ <label for="speakingPrompt"><strong>Choose a speaking topic</strong></label>
+ <div class="test-prompt">
+  <select id="speakingPrompt" aria-label="Choose a speaking topic">
+   <option value="intro">Test 1: Introduce yourself</option>
+   <option value="routine">Test 2: Describe your daily routine</option>
+   <option value="town">Test 3: Talk about your hometown</option>
+  </select>
+  <p id="speakingQuestion" style="margin:12px 0 5px;color:#10233e;font-weight:700">Please tell us your name, where you are from, and what you do.</p>
+  <small>Tip: Try to speak for 30–60 seconds using complete sentences.</small>
+ </div>
+ <div class="test-controls">
+  <button class="btn primary" id="startRecording" type="button">● Start Recording</button>
+  <button class="btn secondary" id="stopRecording" type="button" disabled>■ Stop</button>
+  <button class="btn secondary" id="recordAgain" type="button">↻ Record Again</button>
+ </div>
+ <div class="record-status" id="recordStatus" role="status" aria-live="polite">Ready. Allow microphone access when your browser asks.</div>
+ <audio id="recordedAudio" controls hidden></audio>
+ <div class="test-controls">
+  <a class="btn primary" id="downloadRecording" hidden download="pv-education-speaking-practice.webm">Download My Recording</a>
+ </div>
+ <p class="record-note">Privacy: Your recording stays in this browser tab. It is not uploaded or sent to PV Education. Download it if you want to keep it. Microphone access requires HTTPS and your permission.</p>
+</section>
+
 <div class="notice"><strong>Learning note:</strong> This is the first frontend version of the Spoken English course. Lesson completion and practice notes are saved only in this browser. Student accounts, synced progress, audio lessons and certificates can be connected in a later phase.</div>
 </main>
 <footer>© PV Education · A Unit of PVrajCMS Group</footer>
@@ -117,6 +157,61 @@ $("completeBtn").onclick=()=>{done.add(current);localStorage.setItem("pvSpokenDo
 $("savePractice").onclick=()=>{localStorage.setItem("pvSpokenPractice"+current,$("practiceText").value);$("practiceFeedback").textContent="Your practice note is saved on this device."};
 $("checkQuiz").onclick=()=>{const selected=document.querySelector('input[name="answer"]:checked');$("quizFeedback").textContent=!selected?"Please select an answer.":+selected.value===lessons[current].quiz.answer?"Correct! Well done.":"Not quite. Try again."};
 render();
+
+const speakingPrompts={
+ intro:"Please tell us your name, where you are from, and what you do.",
+ routine:"Please describe your daily routine. What do you do in the morning, afternoon, and evening?",
+ town:"Please talk about your hometown. What do you like about it?"
+};
+$("speakingPrompt").addEventListener("change",()=>{
+ $("speakingQuestion").textContent=speakingPrompts[$("speakingPrompt").value];
+});
+let mediaRecorder=null,recordedChunks=[],recordedUrl=null,activeStream=null;
+const startRecording=$("startRecording"),stopRecording=$("stopRecording"),recordStatus=$("recordStatus");
+function clearRecording(){
+ if(recordedUrl){URL.revokeObjectURL(recordedUrl);recordedUrl=null;}
+ $("recordedAudio").removeAttribute("src");$("recordedAudio").hidden=true;
+ $("downloadRecording").hidden=true;
+}
+startRecording.addEventListener("click",async()=>{
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){
+  recordStatus.textContent="Voice recording is not supported in this browser. Please use an updated Chrome or Edge browser over HTTPS.";return;
+ }
+ try{
+  clearRecording();recordedChunks=[];
+  activeStream=await navigator.mediaDevices.getUserMedia({audio:true});
+  let options={};
+  if(MediaRecorder.isTypeSupported("audio/webm;codecs=opus"))options.mimeType="audio/webm;codecs=opus";
+  mediaRecorder=new MediaRecorder(activeStream,options);
+  mediaRecorder.ondataavailable=e=>{if(e.data&&e.data.size>0)recordedChunks.push(e.data);};
+  mediaRecorder.onstop=()=>{
+   const blob=new Blob(recordedChunks,{type:mediaRecorder.mimeType||"audio/webm"});
+   recordedUrl=URL.createObjectURL(blob);
+   $("recordedAudio").src=recordedUrl;$("recordedAudio").hidden=false;
+   $("downloadRecording").href=recordedUrl;$("downloadRecording").hidden=false;
+   recordStatus.classList.remove("live");
+   recordStatus.textContent="Recording ready. Play it back, or download it to keep a copy.";
+   if(activeStream){activeStream.getTracks().forEach(track=>track.stop());activeStream=null;}
+  };
+  mediaRecorder.start();
+  startRecording.disabled=true;stopRecording.disabled=false;
+  recordStatus.classList.add("live");recordStatus.textContent="● Recording… Speak clearly. Select Stop when you finish.";
+ }catch(error){
+  recordStatus.classList.remove("live");
+  recordStatus.textContent=error.name==="NotAllowedError"?"Microphone permission was blocked. Allow microphone access in your browser and try again.":"Could not start recording. Check that a microphone is connected and try again.";
+  if(activeStream){activeStream.getTracks().forEach(track=>track.stop());activeStream=null;}
+ }
+});
+stopRecording.addEventListener("click",()=>{
+ if(mediaRecorder&&mediaRecorder.state!=="inactive")mediaRecorder.stop();
+ startRecording.disabled=false;stopRecording.disabled=true;
+});
+$("recordAgain").addEventListener("click",()=>{
+ if(mediaRecorder&&mediaRecorder.state!=="inactive")mediaRecorder.stop();
+ clearRecording();recordedChunks=[];startRecording.disabled=false;stopRecording.disabled=true;
+ recordStatus.classList.remove("live");recordStatus.textContent="Ready for another attempt. Press Start Recording when you are ready.";
+});
+
 </script>
 </body>
 </html>
