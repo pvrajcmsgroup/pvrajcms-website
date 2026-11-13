@@ -47,14 +47,16 @@ button{min-height:42px}
 }
 
 
-/* PVrajCMS education identity */
-.pv-brand-header{background:linear-gradient(105deg,#101d3b 0%,#172f62 58%,#2458d8 100%);box-shadow:0 5px 18px rgba(16,29,59,.18)}
-.pv-brand-lockup{display:flex;align-items:center;gap:12px;min-width:0}
-.pv-brand-mark{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,#fff,#dce8ff);font-size:23px;box-shadow:0 3px 10px #07173555}
-.pv-brand-copy{display:flex;flex-direction:column;gap:3px}
-.pv-brand-copy b{font-size:25px;line-height:1;letter-spacing:.2px;color:#fff;font-weight:850}
-.pv-brand-copy span{font-size:9px;letter-spacing:2px;font-weight:800;color:#c7d9ff}
-@media(max-width:520px){.pv-brand-mark{width:36px;height:36px;font-size:20px}.pv-brand-copy b{font-size:21px}.pv-brand-copy span{font-size:8px;letter-spacing:1.2px}}
+/* PVrajCMS Group + PV Education header aligned with the main website */
+.pv-brand-header{min-height:78px;height:auto;background:#061a30;box-shadow:0 5px 18px rgba(4,18,36,.22);display:flex;align-items:center;justify-content:space-between;gap:18px;padding:9px clamp(14px,3vw,34px);border-bottom:1px solid rgba(255,255,255,.12)}
+.pv-brand-lockup{display:flex;align-items:center;gap:14px;min-width:0;flex-wrap:wrap}
+.pv-brand-mark{display:flex;align-items:center;justify-content:center;width:auto;height:48px;border-radius:0;background:transparent;box-shadow:none;overflow:hidden}
+.pv-brand-mark img{display:block;max-width:190px;width:auto;height:48px;object-fit:contain}
+.pv-brand-divider{height:48px;width:1px;background:rgba(255,255,255,.28);flex:0 0 1px}
+.pv-education-logo{display:block;width:auto;max-width:220px;height:48px;object-fit:contain;background:#fff;border-radius:3px}
+.pv-brand-copy{display:none}
+@media(max-width:600px){.pv-brand-header{min-height:68px;padding:8px 10px;gap:8px}.pv-brand-lockup{gap:9px}.pv-brand-mark,.pv-brand-mark img{height:38px;max-width:138px}.pv-brand-divider{height:36px}.pv-education-logo{height:38px;max-width:158px}}
+@media(max-width:370px){.pv-brand-mark img{max-width:112px}.pv-education-logo{max-width:132px;height:34px}.pv-brand-lockup{gap:6px}}
 
 
 /* Final combined result popup */
@@ -72,7 +74,7 @@ button{min-height:42px}
 .pv-final-popup .pv-popup-secondary{background:#eaf0ff;color:#1743a5}
 @media(max-width:420px){.pv-final-popup{padding:20px 16px}.pv-final-popup h2{font-size:21px}.pv-final-popup .pv-popup-meta{grid-template-columns:1fr 1fr}}
 
-</style></head><body><header class="pv-brand-header"><div class="pv-brand-lockup"><span class="pv-brand-mark" aria-hidden="true">🎓</span><div class="pv-brand-copy"><b>PVrajCMS</b><span>EDUCATION · LEARNING · EXAMINATION</span></div></div><button id="logout" class="ghost hidden">Log out</button></header><main>
+</style></head><body><header class="pv-brand-header"><div class="pv-brand-lockup"><a class="pv-brand-mark" href="pv-education.html" aria-label="PVrajCMS Group home"><img src="logo.png" alt="PVrajCMS Group"></a><span class="pv-brand-divider" aria-hidden="true"></span><img class="pv-education-logo" src="pv-education-logo.png" alt="PV Education — A Unit of PVrajCMS Group"></div><button id="logout" class="ghost hidden">Log out</button></header><main>
 <section id="authView" class="card auth"><h1>Online Examination</h1><p class="muted">Sign in or create your student account.</p><div class="tabs"><button class="tab active" data-tab="login">Login</button><button class="tab" data-tab="signup">Register</button></div><form id="authForm"><label>Email<input id="email" type="email" required autocomplete="email"></label><label>Password<input id="password" type="password" minlength="6" required autocomplete="current-password"></label><button class="primary" id="authSubmit">Login</button></form><p id="authMsg" class="msg"></p><div id="demoAccess" class="demo-actions"><button type="button" class="demo-admin" id="adminDemo">Open Admin Demo</button><button type="button" class="demo-student" id="studentDemo">Open Student Demo</button></div><p class="demo-note">Demo mode works on this computer without Supabase. Demo data is stored in this browser only.</p></section>
 <section id="dashboardView" class="hidden"><div class="welcome"><div><p class="eyebrow">YOUR PORTAL</p><h1 id="welcomeTitle">Dashboard</h1><p class="muted" id="userEmail"></p></div><span id="roleBadge" class="badge">STUDENT</span></div>
 <div id="adminPanel" class="hidden"><div class="sectionhead"><h2>Create examination</h2><p class="muted">Create an MCQ exam and add its answer key.</p></div><form id="examForm" class="card"><div class="grid"><label>Exam title<input id="examTitle" required placeholder="e.g. General Knowledge Test"></label><label>Duration (minutes)<input id="duration" type="number" min="1" max="300" value="30" required></label><label>Total marks per question<input id="marks" type="number" min="1" value="1" required></label><label>Negative marks<input id="negative" type="number" min="0" step="0.25" value="0"></label></div><label>Instructions<textarea id="instructions" rows="2" placeholder="Read each question carefully..."></textarea></label><div class="divider"></div><div class="sectionhead inline"><h3>Questions</h3><button type="button" id="addQuestion" class="secondary">+ Add question</button></div><div id="questions"></div><button class="primary" type="submit">Publish examination</button><p id="adminMsg" class="msg"></p></form></div>
