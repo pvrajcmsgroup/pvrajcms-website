@@ -42,6 +42,15 @@ footer{background:#071b31;color:#cbd8e6;text-align:center;padding:24px 16px;font
 .ai-box textarea{width:100%;min-height:70px;border:1px solid #cbd8e8;border-radius:9px;padding:10px;font:inherit}
 .ai-reply{background:#fff;border:1px solid #dce6f2;border-radius:10px;padding:12px;margin-top:10px;line-height:1.6;white-space:pre-wrap}
 .lesson-chip{display:inline-block;background:#e9f8f1;color:#176b42;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:800}
+.vocab-practice{background:#fff;border:1px solid #cfe0f2;border-radius:12px;padding:13px;margin-top:10px}
+.vocab-word{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:9px;border-bottom:1px solid #edf1f6}
+.vocab-word:last-child{border-bottom:0}
+.vocab-word strong{font-size:17px;color:#075c91}.vocab-word small{display:block;color:#60748b;margin-top:3px}
+.vocab-word button,.vocab-practice button{border:0;border-radius:8px;background:#eaf3fc;color:#075c91;padding:8px 11px;font-weight:700;cursor:pointer}
+.vocab-input-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.vocab-input-row input{flex:1;min-width:170px;border:1px solid #cbd8e8;border-radius:8px;padding:10px;font:inherit}
+.vocab-feedback{font-size:13px;font-weight:700;margin-top:9px;min-height:18px}
+
 @media(max-width:700px){.teacher-card{padding:14px}.teacher-avatar{width:42px;height:42px;flex-basis:42px}}
 
 .segment-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:14px 0}
@@ -167,6 +176,46 @@ function askTeacher(){
  reply.textContent=`आपने लिखा: “${q}”\n\nअच्छी कोशिश! इसे सही करने के लिए पूरा sentence, उसका meaning और आज के lesson का rule साथ में देखें। एक बार खुद सुधारकर फिर लिखें।\n\nध्यान दें: यह अभी demo teacher feedback है, वास्तविक AI grammar analysis नहीं। AI API/backend जोड़ने के बाद teacher आपके जवाब का व्यक्तिगत correction, कारण और अगला अभ्यास दे सकेगा।`;
 }
 function clearTeacher(){if($("teacherQuestion"))$("teacherQuestion").value="";if($("teacherReply"))$("teacherReply").textContent="अपना सवाल लिखिए।";}
+
+function vocabPracticeData(c){
+ const letterSets={
+  2:[["A","Apple","सेब"],["B","Ball","गेंद"],["C","Cat","बिल्ली"],["D","Dog","कुत्ता"],["E","Egg","अंडा"]],
+  3:[["a","apple","सेब"],["b","ball","गेंद"],["c","cat","बिल्ली"],["d","dog","कुत्ता"],["e","egg","अंडा"]],
+  4:[["A","Apple","सेब"],["E","Egg","अंडा"],["I","Ink","स्याही"],["O","Orange","संतरा"],["U","Umbrella","छाता"]]
+ };
+ if(letterSets[c.id]) return letterSets[c.id];
+ const d=detailedLessons[c.id];
+ if(d && Array.isArray(d.vocab)){
+  return d.vocab.slice(0,8).map(item=>{
+   const parts=String(item).split(/[—–-]/);
+   return [parts[0].trim(),parts.slice(1).join("—").trim() || "अर्थ देखें"];
+  });
+ }
+ return [[c.topic,"आज का विषय"]];
+}
+function speakVocabWord(word){
+ if(!("speechSynthesis" in window)){alert("Audio इस browser में उपलब्ध नहीं है।");return;}
+ speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(word);u.lang="en-IN";u.rate=.78;speechSynthesis.speak(u);
+}
+function repeatVocab(){
+ const c=classes[selected-1],words=vocabPracticeData(c);
+ const line=words.map(w=>w[0]).join(". ");
+ if(!("speechSynthesis" in window)){alert("Audio इस browser में उपलब्ध नहीं है।");return;}
+ speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(`Listen and repeat after me. ${line}. Now you say it.`);
+ u.lang="en-IN";u.rate=.72;speechSynthesis.speak(u);
+}
+function checkVocabTyping(){
+ const c=classes[selected-1],words=vocabPracticeData(c);
+ const input=$("vocabTyping"),feedback=$("vocabTypingFeedback");
+ if(!input||!feedback)return;
+ const answer=input.value.trim().toLowerCase();
+ const accepted=words.some(w=>String(w[0]).toLowerCase()===answer || String(w[1]).toLowerCase()===answer);
+ feedback.textContent=accepted?"बहुत अच्छा! आपका जवाब सूची के एक शब्द से मेल खाता है। अब उसे दो बार बोलिए।":"फिर कोशिश कीजिए। ऊपर दिए गए शब्दों में से कोई एक English word या letter टाइप करें।";
+ feedback.style.color=accepted?"#16834b":"#9a5a10";
+}
+
 function make45MinuteSegments(c){
  const topic=c.topic;
  return [
@@ -214,7 +263,9 @@ function render(){
 
   <div class="teaching-card"><h3>⏱️ 45-Minute Teacher-Led Class · 5 Parts</h3>
    <p>हर भाग में Teacher पहले हिंदी में समझाएगा, फिर सरल English में बताएगा और उसके बाद विद्यार्थी अभ्यास करेगा। हर भाग का audio सुनने के लिए बटन दबाएँ।</p>
-   <div class="segment-grid">${make45MinuteSegments(c).map((s,i)=>`<div class="segment-card"><div class="segment-time">${s.time}<span>Teacher-led</span></div><div><h4>${s.title}</h4><p><b>हिंदी:</b> ${s.hi}</p><p><b>English:</b> ${s.en}</p><p><b>आपका अभ्यास:</b> ${s.task}</p><button class="btn secondary" type="button" onclick="speakSegment(${i})">🔊 इस Part को Teacher से सुनें</button></div></div>`).join("")}</div>
+   <div class="segment-grid">${make45MinuteSegments(c).map((s,i)=>`<div class="segment-card"><div class="segment-time">${s.time}<span>Teacher-led</span></div><div><h4>${s.title}</h4><p><b>हिंदी:</b> ${s.hi}</p><p><b>English:</b> ${s.en}</p><p><b>आपका अभ्यास:</b> ${s.task}</p>
+   ${i===1 ? `<div class="vocab-practice"><b>👩‍🏫 Teacher के साथ बोलिए / Learn and repeat</b><p>पहले Teacher को सुनिए। फिर हर शब्द मेरे साथ बोलिए। उदाहरण: A for Apple, B for Ball. अब आपकी बारी!</p>${vocabPracticeData(c).map((w,k)=>`<div class="vocab-word"><div><strong>${w[0]}${w[1] && w[1]!==w[0] ? " — "+w[1] : ""}</strong><small>${w[2] || ""}</small></div><button type="button" onclick="speakVocabWord('${String(w[1] || w[0]).replace(/'/g,"\\'")}')">🔊 सुनें</button></div>`).join("")}<div class="vocab-input-row"><input id="vocabTyping" type="text" placeholder="यहाँ कोई English word टाइप करें..."><button type="button" onclick="checkVocabTyping()">Check Answer</button><button type="button" onclick="repeatVocab()">🔊 Repeat with me</button></div><div id="vocabTypingFeedback" class="vocab-feedback" aria-live="polite"></div></div>` : ""}
+   <button class="btn secondary" type="button" onclick="speakSegment(${i})">🔊 इस Part को Teacher से सुनें</button></div></div>`).join("")}</div>
   </div>
   <h3>Today's learning steps</h3><ul class="practice">${c.practice.map(x=>`<li>${x}</li>`).join("")}</ul>
   <div class="workbox"><label>Writing practice</label><p>${c.writing}</p><textarea id="writingAnswer" placeholder="Write your own English sentences here..."></textarea><button class="btn secondary" type="button" onclick="saveWriting()">Save my practice</button><span id="writeStatus" class="small"></span></div>
