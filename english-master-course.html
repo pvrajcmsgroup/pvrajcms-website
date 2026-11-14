@@ -43,6 +43,15 @@ footer{background:#071b31;color:#cbd8e6;text-align:center;padding:24px 16px;font
 .ai-reply{background:#fff;border:1px solid #dce6f2;border-radius:10px;padding:12px;margin-top:10px;line-height:1.6;white-space:pre-wrap}
 .lesson-chip{display:inline-block;background:#e9f8f1;color:#176b42;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:800}
 @media(max-width:700px){.teacher-card{padding:14px}.teacher-avatar{width:42px;height:42px;flex-basis:42px}}
+
+.segment-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:14px 0}
+.segment-card{border:1px solid #d6e5f3;background:#fff;border-radius:13px;padding:14px;display:grid;grid-template-columns:88px 1fr;gap:12px;align-items:start}
+.segment-time{background:#eaf5ff;color:#075c91;border-radius:10px;padding:10px;text-align:center;font-weight:800;font-size:13px}
+.segment-time span{display:block;font-size:11px;font-weight:600;margin-top:4px}
+.segment-card h4{margin:0 0 6px;color:#123b60;font-size:15px}
+.segment-card p{margin:5px 0;line-height:1.55;color:#40566e}
+.segment-card .btn{margin-top:7px}
+@media(max-width:600px){.segment-card{grid-template-columns:1fr}.segment-time{text-align:left}.segment-time span{display:inline;margin-left:8px}}
 </style></head>
 <body>
 <header><div class="nav">
@@ -158,6 +167,24 @@ function askTeacher(){
  reply.textContent=`आपने लिखा: “${q}”\n\nअच्छी कोशिश! इसे सही करने के लिए पूरा sentence, उसका meaning और आज के lesson का rule साथ में देखें। एक बार खुद सुधारकर फिर लिखें।\n\nध्यान दें: यह अभी demo teacher feedback है, वास्तविक AI grammar analysis नहीं। AI API/backend जोड़ने के बाद teacher आपके जवाब का व्यक्तिगत correction, कारण और अगला अभ्यास दे सकेगा।`;
 }
 function clearTeacher(){if($("teacherQuestion"))$("teacherQuestion").value="";if($("teacherReply"))$("teacherReply").textContent="अपना सवाल लिखिए।";}
+function make45MinuteSegments(c){
+ const topic=c.topic;
+ return [
+  {time:"0–10 min",title:"Part 1 · Teacher समझाएगा / Understand the topic",hi:`बच्चों, आज का हमारा विषय ${topic} है। सबसे पहले इसे आसान हिंदी में समझते हैं। ${c.goal} अभी जल्दी नहीं करनी है। पहले बात को समझिए, फिर मेरे साथ उदाहरण बोलिए।`,en:`Hello students. Today's topic is ${topic}. First, understand the basic idea. ${c.goal} Listen carefully and repeat the key idea.`,task:"ध्यान से सुनें, मुख्य नियम समझें और 2 जरूरी बातें नोट करें।"},
+  {time:"10–15 min",title:"Part 2 · Vocabulary & Spelling",hi:`अब इस topic से जुड़े जरूरी शब्द सीखते हैं। हर शब्द को ध्यान से पढ़िए, उसका अर्थ समझिए और spelling दो बार लिखिए।`,en:`Now learn the important words related to ${topic}. Read each word aloud, understand its meaning and spell it correctly.`,task:"5 शब्द पढ़ें, अर्थ बोलें और spelling लिखें।"},
+  {time:"15–25 min",title:"Part 3 · Examples, Reading & Listening",hi:`अब मैं आपको उदाहरणों से समझाऊँगा। हर उदाहरण पहले सुनिए, फिर मेरे बाद दोहराइए। जहाँ गलती हो, वहीं रुककर दोबारा अभ्यास कीजिए।`,en:`Let's learn through examples. Listen first, then repeat each example aloud. Read slowly and focus on clear pronunciation.`,task:"उदाहरण 2 बार पढ़ें और सुनकर दोहराएँ।"},
+  {time:"25–35 min",title:"Part 4 · Writing & Correction",hi:`अब आपकी बारी है। आज के topic का उपयोग करके अपने वाक्य लिखिए। केवल नकल नहीं करनी है। अपनी गलती पहचानिए और उसे सुधारिए।`,en:`Now it is your turn to write. Create your own sentences using today's topic. Check spelling, word order and punctuation.`,task:c.writing},
+  {time:"35–45 min",title:"Part 5 · Speaking, Revision & Quick Test",hi:`अब हम आज की पढ़ाई दोहराएँगे। पहले topic को बोलकर समझाइए, फिर speaking practice कीजिए और अंत में test दीजिए।`,en:`Let's revise today's lesson. Explain the topic in your own words, complete the speaking task and take the practice test.`,task:c.speaking}
+ ];
+}
+function speakSegment(index){
+ const c=classes[selected-1],s=make45MinuteSegments(c)[index];
+ if(!("speechSynthesis" in window)){alert("Text-to-speech is not supported in this browser.");return;}
+ speechSynthesis.cancel();
+ const text=`${s.title}. ${s.hi} ${s.en} ${s.task}`;
+ const u=new SpeechSynthesisUtterance(text);u.lang="hi-IN";u.rate=.88;speechSynthesis.speak(u);
+}
+
 function render(){
  window.lastTestPassed=false;
  const c=classes[selected-1];renderList();
@@ -185,9 +212,10 @@ function render(){
    ${detailedLessons[c.id] ? `<p><b>Step 1 – Teacher हिंदी में समझाती हैं:</b></p>${detailedLessons[c.id].explanation}<p><b>Step 2 – Teacher explains in simple English:</b></p>${detailedLessons[c.id].englishExplanation || `<p><b>Today's topic:</b> ${c.topic}. ${c.goal} Read the examples, understand the meaning and practise saying them aloud.</p>`}<div class="example"><strong>Teacher's examples · उदाहरण</strong>${detailedLessons[c.id].examples.map(x=>`<p>${x}</p>`).join('')}</div><p><b>Step 2 – Vocabulary:</b> ${detailedLessons[c.id].vocab.join(' · ')}</p><div class="example"><strong>Read aloud</strong><p>${detailedLessons[c.id].reading}</p><button class="btn secondary" type="button" onclick="speakReading()">🔊 Listen to reading</button></div><p><b>Step 3 – Your turn:</b> ${detailedLessons[c.id].task}</p>` : `<p><b>Step 1 – हिंदी में समझें:</b> ${c.goal} इस topic को केवल याद न करें। इसका अर्थ समझें और देखें कि इसे रोज़मर्रा की English में कब इस्तेमाल करना है।</p><p><b>Step 2 – Learn in English:</b> Today's topic is <b>${c.topic}</b>. Understand the main idea, read the examples and notice how the topic is used in everyday English.</p><div class="example"><strong>Teacher's example · उदाहरण</strong><p>${c.topic}: अपने जीवन से जुड़ा एक आसान उदाहरण बनाइए। फिर उसे English में बोलने की कोशिश करें।</p><p><b>In English:</b> Make one simple example from your daily life. Read it slowly and say it aloud.</p></div><p><b>Step 3 – Your turn:</b> अब इसी topic पर अपना एक नया वाक्य लिखिए। फिर उसे आवाज़ से बोलकर अभ्यास कीजिए।</p>`}
   </div>
 
-  <div class="goal"><b>45-minute class plan</b><div class="timegrid">
-   <div class="timebox"><b>10 min</b><small>Learn & understand</small></div><div class="timebox"><b>5 min</b><small>Vocabulary & spelling</small></div><div class="timebox"><b>10 min</b><small>Read & listen</small></div><div class="timebox"><b>10 min</b><small>Write & correct</small></div><div class="timebox"><b>10 min</b><small>Speak & quiz</small></div>
-  </div></div>
+  <div class="teaching-card"><h3>⏱️ 45-Minute Teacher-Led Class · 5 Parts</h3>
+   <p>हर भाग में Teacher पहले हिंदी में समझाएगा, फिर सरल English में बताएगा और उसके बाद विद्यार्थी अभ्यास करेगा। हर भाग का audio सुनने के लिए बटन दबाएँ।</p>
+   <div class="segment-grid">${make45MinuteSegments(c).map((s,i)=>`<div class="segment-card"><div class="segment-time">${s.time}<span>Teacher-led</span></div><div><h4>${s.title}</h4><p><b>हिंदी:</b> ${s.hi}</p><p><b>English:</b> ${s.en}</p><p><b>आपका अभ्यास:</b> ${s.task}</p><button class="btn secondary" type="button" onclick="speakSegment(${i})">🔊 इस Part को Teacher से सुनें</button></div></div>`).join("")}</div>
+  </div>
   <h3>Today's learning steps</h3><ul class="practice">${c.practice.map(x=>`<li>${x}</li>`).join("")}</ul>
   <div class="workbox"><label>Writing practice</label><p>${c.writing}</p><textarea id="writingAnswer" placeholder="Write your own English sentences here..."></textarea><button class="btn secondary" type="button" onclick="saveWriting()">Save my practice</button><span id="writeStatus" class="small"></span></div>
   <div class="workbox"><label>Speaking mission</label><p>${c.speaking}</p><button class="btn secondary" type="button" onclick="speakPrompt()">🔊 Listen to the speaking prompt</button><p class="small">Use your device microphone/voice recorder to practise. Speaking quality is not automatically graded in this demo.</p></div>
