@@ -64,7 +64,7 @@ footer{background:#071b31;color:#cbd8e6;text-align:center;padding:24px 16px;font
  <div class="metric"><strong>45 Minutes</strong><small>Daily class plan</small></div>
 </div>
 <div class="progress-wrap"><div class="progress-head"><span>Your learning progress</span><span id="progressText">0%</span></div><div class="progress"><span id="progressBar"></span></div></div>
-<div class="notice"><b>Learning rule:</b> Start with Class 1. Pass its test with at least 70% to unlock Class 2. The same rule applies through Class 180. If you do not pass, review the lesson and try again. Your progress on this demo page is saved in this browser only. A connected student account and database will be needed to sync progress across devices.</div>
+<div class="notice"><b>Review mode:</b> All 180 classes are open so you can inspect them one by one. Passing a test records your progress, but does not lock the next class. Please review each lesson and share corrections before we finalize the full course. Your progress on this demo page is saved in this browser only. A connected student account and database will be needed to sync progress across devices.</div>
 <div class="layout">
 <aside class="panel"><h2>Course Classes</h2><p class="small">Choose an unlocked class. Locked classes open after passing the previous test.</p><div id="classList"></div></aside>
 <section class="lesson" id="lessonPanel" aria-live="polite"></section>
@@ -77,7 +77,7 @@ let passed = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]"));
 let selected = 1;
 const $=id=>document.getElementById(id);
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify([...passed]));}
-function unlocked(id){return id===1||passed.has(id)||passed.has(id-1);}
+function unlocked(id){return true;}
 function renderList(){
  const box=$("classList");box.innerHTML="";
  for(let m=0;m<6;m++){
