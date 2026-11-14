@@ -77,7 +77,7 @@ let passed = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]"));
 let selected = 1;
 const $=id=>document.getElementById(id);
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify([...passed]));}
-function unlocked(id){return id===1||passed.has(id-1);}
+function unlocked(id){return id===1||passed.has(id)||passed.has(id-1);}
 function renderList(){
  const box=$("classList");box.innerHTML="";
  for(let m=0;m<6;m++){
