@@ -100,7 +100,7 @@ button{min-height:42px}
     <label>Question paper PDF<input id="cloudPaperFile" type="file" accept="application/pdf,.pdf" required></label>
     <label>Answer key file (PDF, CSV or TXT)<input id="cloudAnswerKeyFile" type="file" accept="application/pdf,.pdf,.csv,.txt,text/csv,text/plain" required></label>
     <p class="demo-note">The answer key is stored securely for administrator use. It is not shown to students with the question paper.</p>
-    <label style="display:flex;align-items:center;gap:9px;font-weight:500"><input id="cloudPaperReplace" type="checkbox" style="width:auto;margin:0"> Replace current active paper and answer key (hide older active papers)</label>
+    <label style="display:flex;align-items:center;gap:9px;font-weight:500"><input id="cloudPaperReplace" type="checkbox" style="width:auto;margin:0"> Replace current active paper (hide older papers; their admin answer keys are retained)</label>
     <button class="primary" id="cloudPaperSubmit" type="submit">Upload Paper + Answer Key</button>
     <p class="msg" id="cloudPaperMsg" aria-live="polite"></p>
   </form>
@@ -183,7 +183,7 @@ async function loadCloudPapers(){
     keyRows=kr.data||[];
   }
   host.innerHTML=data.map(p=>{
-    const key=keyRows.find(k=>k.paper_id===p.id&&k.is_active);
+    const key=keyRows.filter(k=>k.paper_id===p.id).sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0))[0];
     return `<article class="examtile"><h3>${safe(p.title)}</h3><div class="meta">${p.exam_year}${p.booklet_series?' · Booklet Series '+safe(p.booklet_series):''} · ${p.total_questions} questions · ${p.duration_minutes} minutes · ${p.total_marks} marks</div>${p.exam_date?`<div class="meta">Exam date: ${safe(p.exam_date)}</div>`:''}${profile.role==='admin'?`<p><span class="demo-tag">${p.is_active?'Active':'Hidden from students'}</span> <span class="demo-tag">${key?'Answer key uploaded':'Answer key missing'}</span></p>`:''}<div class="demo-row"><button type="button" class="primary" data-cloud-view="${p.id}">Preview Question Paper</button>${profile.role==='admin'?`${key?`<button type="button" class="secondary" data-key-view="${key.id}">Preview Answer Key</button>`:''}<label class="secondary" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:10px 12px;border-radius:8px">${key?'Replace Answer Key':'Upload Answer Key'}<input type="file" accept=".pdf,.csv,.txt" data-key-file="${p.id}" style="width:150px;font-size:12px"></label><button type="button" class="secondary" data-key-upload="${p.id}">Save Key</button><button type="button" class="secondary" data-cloud-toggle="${p.id}" data-active="${p.is_active}">${p.is_active?'Hide from students':'Publish to students'}</button><button type="button" class="danger" data-cloud-delete="${p.id}" style="width:auto;margin:0">Delete Paper + Key</button>`:''}</div></article>`;
   }).join('');
   host.querySelectorAll('[data-cloud-view]').forEach(btn=>btn.onclick=async()=>{btn.disabled=true;try{const paper=data.find(x=>x.id===btn.dataset.cloudView);const {data:link,error}=await db.storage.from('pv-exam-papers').createSignedUrl(paper.storage_path,3600);if(error)throw error;window.open(link.signedUrl,'_blank','noopener');}catch(err){alert('Question paper could not be opened: '+err.message);}finally{btn.disabled=false;}});
@@ -210,27 +210,74 @@ async function loadCloudPapers(){
 }
 const cloudPaperForm=$('cloudPaperForm');
 if(cloudPaperForm)cloudPaperForm.addEventListener('submit',async e=>{
-  e.preventDefault();if(!user||profile?.role!=='admin')return msg('cloudPaperMsg','Only a signed-in administrator can upload papers.');
+  e.preventDefault();
+  if(!user||profile?.role!=='admin')return msg('cloudPaperMsg','Only a signed-in administrator can upload papers.');
   const file=$('cloudPaperFile').files?.[0],keyFile=$('cloudAnswerKeyFile').files?.[0];
   if(!file)return msg('cloudPaperMsg','Please choose the question paper PDF.');
   if(!keyFile)return msg('cloudPaperMsg','Please choose the answer key file.');
   if(file.type!=='application/pdf'&&!file.name.toLowerCase().endsWith('.pdf'))return msg('cloudPaperMsg','Question paper must be a PDF.');
-  const keyExt=keyFile.name.split('.').pop().toLowerCase();if(!['pdf','csv','txt'].includes(keyExt))return msg('cloudPaperMsg','Answer key must be PDF, CSV or TXT.');
+  const keyExt=keyFile.name.split('.').pop().toLowerCase();
+  if(!['pdf','csv','txt'].includes(keyExt))return msg('cloudPaperMsg','Answer key must be PDF, CSV or TXT.');
   if(file.size>25*1024*1024||keyFile.size>25*1024*1024)return msg('cloudPaperMsg','Each file must be 25 MB or smaller.');
+  const title=$('cloudPaperTitle').value.trim(),year=Number($('cloudPaperYear').value);
+  if(!title||!year)return msg('cloudPaperMsg','Please enter the paper title and exam year.');
   const btn=$('cloudPaperSubmit');btn.disabled=true;msg('cloudPaperMsg','Uploading question paper and answer key securely…',true);
   const clean=n=>n.normalize('NFKD').replace(/[^a-zA-Z0-9._-]+/g,'-').replace(/^-+|-+$/g,'').slice(-100)||'upload-file';
   const stamp=Date.now(),paperPath=`${user.id}/${stamp}-${clean(file.name)}`,keyPath=`${user.id}/${stamp}-answer-key-${clean(keyFile.name)}`;
-  let paperUploaded=false,keyUploaded=false,paperId=null;
+  let paperUploaded=false,keyUploaded=false,paperId=null,newPaperCreated=false,oldPaperPath=null,oldKeyPaths=[];
   try{
-    const {error:uploadError}=await db.storage.from('pv-exam-papers').upload(paperPath,file,{contentType:'application/pdf',upsert:false});if(uploadError)throw uploadError;paperUploaded=true;
-    const {error:keyUploadError}=await db.storage.from('pv-exam-papers').upload(keyPath,keyFile,{contentType:keyFile.type|| (keyExt==='pdf'?'application/pdf':keyExt==='csv'?'text/csv':'text/plain'),upsert:false});if(keyUploadError)throw keyUploadError;keyUploaded=true;
-    const row={title:$('cloudPaperTitle').value.trim(),exam_year:Number($('cloudPaperYear').value),exam_date:$('cloudPaperDate').value||null,booklet_series:$('cloudPaperSeries').value.trim()||null,total_questions:Number($('cloudPaperQuestions').value),duration_minutes:Number($('cloudPaperDuration').value),total_marks:Number($('cloudPaperMarks').value),file_name:file.name,storage_path:paperPath,uploaded_by:user.id,is_active:true};
-    const {data:paper,error:insertError}=await db.from('exam_papers').insert(row).select('id').single();if(insertError)throw insertError;paperId=paper.id;
-    const {data:keyRow,error:keyRowError}=await db.from('exam_paper_answer_keys').insert({paper_id:paperId,file_name:keyFile.name,storage_path:keyPath,uploaded_by:user.id,is_active:true}).select('id,paper_id,is_active').single();if(keyRowError)throw keyRowError;if(!keyRow||keyRow.paper_id!==paperId||keyRow.is_active!==true)throw new Error('Answer key record was created but could not be verified as linked to this paper.');
-    if($('cloudPaperReplace').checked){const {error:deactivateError}=await db.from('exam_papers').update({is_active:false}).eq('is_active',true).neq('id',paperId);if(deactivateError)throw deactivateError;const {error:keyDeactivateError}=await db.from('exam_paper_answer_keys').update({is_active:false}).eq('is_active',true).neq('paper_id',paperId);if(keyDeactivateError)throw keyDeactivateError;}
-    cloudPaperForm.reset();$('cloudPaperYear').value=new Date().getFullYear();$('cloudPaperQuestions').value=150;$('cloudPaperDuration').value=120;$('cloudPaperMarks').value=200;msg('cloudPaperMsg','Question paper and answer key uploaded successfully. Students can view the paper; the answer key remains admin-only.',true);await loadCloudPapers();
-  }catch(err){if(paperId)await db.from('exam_papers').delete().eq('id',paperId);if(keyUploaded)await db.storage.from('pv-exam-papers').remove([keyPath]);if(paperUploaded)await db.storage.from('pv-exam-papers').remove([paperPath]);msg('cloudPaperMsg','Upload failed: '+err.message+' — uploaded files/records were cleaned up where possible.');}
-  finally{btn.disabled=false;}
+    const {error:uploadError}=await db.storage.from('pv-exam-papers').upload(paperPath,file,{contentType:'application/pdf',upsert:false});
+    if(uploadError)throw uploadError;paperUploaded=true;
+    const {error:keyUploadError}=await db.storage.from('pv-exam-papers').upload(keyPath,keyFile,{contentType:keyFile.type||(keyExt==='pdf'?'application/pdf':keyExt==='csv'?'text/csv':'text/plain'),upsert:false});
+    if(keyUploadError)throw keyUploadError;keyUploaded=true;
+
+    const row={title,exam_year:year,exam_date:$('cloudPaperDate').value||null,booklet_series:$('cloudPaperSeries').value.trim()||null,total_questions:Number($('cloudPaperQuestions').value),duration_minutes:Number($('cloudPaperDuration').value),total_marks:Number($('cloudPaperMarks').value),file_name:file.name,storage_path:paperPath,uploaded_by:user.id,is_active:true};
+
+    // Reuse an existing exact title/year record instead of creating another duplicate.
+    const canonicalTitle=t=>String(t||'').toLowerCase().normalize('NFKD').replace(/general\s+studies/g,'gs').replace(/preliminary|prelims/g,'prelims').replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim();
+    const titleYear=title.match(/20\d{2}/)?.[0];
+    if(titleYear&&Number(titleYear)!==year)throw new Error(`Title year (${titleYear}) and Exam year (${year}) do not match. Please correct the year before uploading.`);
+    const {data:matches,error:matchError}=await db.from('exam_papers').select('id,title,exam_year,storage_path,created_at').eq('exam_year',year).order('created_at',{ascending:false});
+    if(matchError)throw matchError;
+    const existing=(matches||[]).find(p=>canonicalTitle(p.title)===canonicalTitle(title));
+    if(existing){
+      paperId=existing.id;oldPaperPath=existing.storage_path||null;
+      const {error:updateError}=await db.from('exam_papers').update(row).eq('id',paperId);
+      if(updateError)throw updateError;
+      const {data:oldKeys,error:oldKeyError}=await db.from('exam_paper_answer_keys').select('id,storage_path').eq('paper_id',paperId);
+      if(oldKeyError)throw oldKeyError;
+      oldKeyPaths=(oldKeys||[]).map(k=>k.storage_path).filter(Boolean);
+      const {error:deactivateError}=await db.from('exam_paper_answer_keys').update({is_active:false}).eq('paper_id',paperId).eq('is_active',true);
+      if(deactivateError)throw deactivateError;
+    }else{
+      const {data:paper,error:insertError}=await db.from('exam_papers').insert(row).select('id').single();
+      if(insertError)throw insertError;paperId=paper.id;newPaperCreated=true;
+    }
+
+    const {data:keyRow,error:keyRowError}=await db.from('exam_paper_answer_keys').insert({paper_id:paperId,file_name:keyFile.name,storage_path:keyPath,uploaded_by:user.id,is_active:true}).select('id,paper_id,is_active').single();
+    if(keyRowError)throw keyRowError;
+    if(!keyRow||keyRow.paper_id!==paperId||keyRow.is_active!==true)throw new Error('Answer key record was created but could not be verified as linked to this paper.');
+
+    // Replace means hide other papers from students, not deactivate their admin answer keys.
+    if($('cloudPaperReplace').checked){
+      const {error:deactivateError}=await db.from('exam_papers').update({is_active:false}).eq('is_active',true).neq('id',paperId);
+      if(deactivateError)throw deactivateError;
+    }
+
+    // Clean up old storage only after the new paper/key records are confirmed.
+    const cleanupPaths=[oldPaperPath,...oldKeyPaths].filter(Boolean);
+    if(cleanupPaths.length)await db.storage.from('pv-exam-papers').remove(cleanupPaths);
+
+    cloudPaperForm.reset();$('cloudPaperYear').value=new Date().getFullYear();$('cloudPaperQuestions').value=150;$('cloudPaperDuration').value=120;$('cloudPaperMarks').value=200;
+    msg('cloudPaperMsg','Question paper and answer key uploaded and verified. Existing same-title/year paper was updated instead of duplicated; older papers were hidden only if Replace was checked.',true);
+    await loadCloudPapers();
+  }catch(err){
+    // Avoid the previous cleanup typo that could leave orphan records/files.
+    if(newPaperCreated&&paperId)await db.from('exam_papers').delete().eq('id',paperId);
+    if(keyUploaded)await db.storage.from('pv-exam-papers').remove([keyPath]);
+    if(paperUploaded)await db.storage.from('pv-exam-papers').remove([paperPath]);
+    msg('cloudPaperMsg','Upload failed: '+err.message+' — uploaded files were cleaned up where possible.');
+  }finally{btn.disabled=false;}
 });
 async function adminExamInfo(id){const {data}=await db.from('exams').select('title').eq('id',id).single();alert(`Published: ${data.title}\nStudents can now take this examination.`);}
 function addQuestion(){const n=questions.length;questions.push({text:'',options:['','','',''],correct:0});renderQuestionBuilder();}
