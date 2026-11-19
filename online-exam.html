@@ -1,0 +1,1053 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PVrajCMS Online Examination System · GS + CSAT</title><style>
+:root{--ink:#172033;--muted:#697386;--line:#e5e9f0;--blue:#2457d6;--bg:#f4f6fb;--green:#16865b;--red:#c43d4b}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,Arial,sans-serif}header{height:68px;background:#101b35;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 max(calc((100% - 1100px)/2),22px)}header b{font-size:21px;letter-spacing:.3px}header span{font-size:11px;letter-spacing:1.5px;color:#b8c6e9;margin-left:8px}main{max-width:1100px;margin:34px auto;padding:0 20px;min-height:75vh}.card{background:white;border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 8px 28px #1720330a}.auth{max-width:430px;margin:6vh auto}.auth h1,h1{margin:0 0 6px;font-size:29px}.muted{color:var(--muted);margin-top:3px}.tabs{display:flex;gap:8px;margin:22px 0}.tab,.ghost,.secondary,.primary,.danger{border:0;border-radius:9px;padding:11px 16px;font-weight:650;cursor:pointer}.tab{background:#f0f3f9;color:#526078;flex:1}.tab.active,.primary{background:var(--blue);color:white}.secondary{background:#eaf0ff;color:#214bb2}.ghost{background:#ffffff20;color:white}.danger{background:#fff0f1;color:var(--red);border:1px solid #ffd8dc;width:100%;margin-top:18px}label{display:block;font-weight:600;font-size:13px;margin:13px 0}input,textarea,select{display:block;width:100%;margin-top:6px;padding:12px;border:1px solid #d9dfeb;border-radius:9px;font:inherit;color:var(--ink);background:white}button:disabled{opacity:.45;cursor:not-allowed}.hidden{display:none!important}.msg{min-height:20px;color:var(--red);font-size:13px}.welcome,.sectionhead,.examtop{display:flex;justify-content:space-between;align-items:center;gap:16px}.welcome{margin:10px 0 30px}.eyebrow{font-size:11px;letter-spacing:1.8px;color:var(--blue);font-weight:800;margin:0 0 5px}.badge{background:#e9f7f0;color:var(--green);padding:7px 12px;border-radius:99px;font-size:11px;font-weight:800}.sectionhead{margin:28px 0 14px}.sectionhead h2,.sectionhead h3{margin:0}.sectionhead p{margin:0}.inline{margin:14px 0}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 16px}.divider{height:1px;background:var(--line);margin:20px 0}.qbuilder{border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}.qbuilderhead{display:flex;justify-content:space-between;align-items:center}.qbuilderhead button{border:0;background:#fff0f1;color:var(--red);border-radius:7px;padding:6px 10px}.optiongrid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.examlist{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.examtile{background:white;border:1px solid var(--line);border-radius:14px;padding:18px}.examtile h3{margin:0 0 7px}.examtile .meta{color:var(--muted);font-size:13px;margin:8px 0 14px}.examtile button{width:100%}.examtop{margin-bottom:18px}.timer{font-size:25px;font-weight:850;background:#101b35;color:white;padding:9px 17px;border-radius:12px;font-variant-numeric:tabular-nums}.timer.warning{background:#b72d3d}.progress{height:7px;background:#e3e8f2;border-radius:9px;overflow:hidden;margin-bottom:18px}.progress div{height:100%;background:var(--green);width:0;transition:width .2s}.examlayout{display:grid;grid-template-columns:220px 1fr;gap:18px}.questionnav{height:max-content}.questionnav>div{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:14px 0}.palettebtn{border:1px solid var(--line);background:#f7f8fb;border-radius:7px;padding:8px 0;cursor:pointer}.palettebtn.answered{background:#e5f6ee;border-color:#9ad7b8;color:#126b49}.palettebtn.current{outline:2px solid var(--blue)}.small{font-size:11px}.qmeta{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}.questioncard h2{font-size:21px;margin:18px 0}.option{display:flex;align-items:center;gap:10px;border:1px solid var(--line);padding:13px;border-radius:10px;margin:10px 0;cursor:pointer}.option input{width:auto;margin:0}.examactions{display:flex;justify-content:space-between;margin-top:22px}.result{text-align:center;max-width:620px;margin:5vh auto}.score{font-size:52px;font-weight:900;color:var(--blue);margin:18px}.resultrow{display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid var(--line)}footer{text-align:center;color:#8992a4;padding:25px;font-size:12px}@media(max-width:650px){main{margin:20px auto}.grid,.optiongrid{grid-template-columns:1fr}.examlayout{grid-template-columns:1fr}.questionnav>div{grid-template-columns:repeat(8,1fr)}.welcome,.sectionhead{align-items:flex-start;flex-direction:column}.examtop{align-items:flex-start}.card{padding:18px}}
+/* Result review */
+.result-review{padding:10px 0}.result-review summary{cursor:pointer;color:var(--blue);font-weight:700;padding:8px 0}.result-review .demo-table{font-size:13px}
+/* Demo mode additions */
+.demo-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.demo-actions button,.demo-btn{border:0;border-radius:9px;padding:12px 15px;font-weight:700;cursor:pointer}.demo-admin{background:#6d35d4;color:#fff}.demo-student{background:#2458d8;color:#fff}.demo-note{font-size:13px;color:#6b7280;margin-top:10px}.demo-panel{max-width:1050px;margin:24px auto}.demo-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.demo-stat,.demo-card{background:#fff;border:1px solid #e2e8f0;border-radius:13px;padding:18px;box-shadow:0 5px 18px #14213b0b}.demo-stat b{display:block;font-size:25px;color:#2458d8}.demo-card{margin:14px 0}.demo-card h3{margin:0 0 8px}.demo-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.demo-field{display:block;margin:12px 0;font-weight:600}.demo-field input,.demo-field textarea,.demo-field select{display:block;width:100%;margin-top:6px;padding:11px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}.demo-options{display:grid;grid-template-columns:1fr 1fr;gap:8px}.demo-option{display:block;padding:10px;border:1px solid #dbe3ef;border-radius:8px;margin:8px 0}.demo-option input{margin-right:8px}.demo-timer{font-size:24px;font-weight:800;color:#c43d4b}.demo-hidden{display:none!important}.demo-table{width:100%;border-collapse:collapse}.demo-table th,.demo-table td{text-align:left;padding:10px;border-bottom:1px solid #e5e7eb}.demo-tag{display:inline-block;background:#e9f1ff;color:#2458d8;border-radius:20px;padding:4px 9px;font-size:12px;font-weight:700}@media(max-width:650px){.demo-stats{grid-template-columns:1fr}.demo-options{grid-template-columns:1fr}}
+
+
+/* Final responsive pass: phone, tablet and desktop */
+html{max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{width:100%;max-width:100%;overflow-x:hidden}
+header{gap:10px;min-width:0}
+main,.demo-panel{width:100%;max-width:1100px;min-width:0}
+.demo-card,.demo-stat,.card,.examtile{min-width:0;overflow-wrap:anywhere}
+.demo-table{min-width:680px}
+.demo-card [style*="overflow:auto"],.demo-card [style*="overflow: auto"]{max-width:100%;-webkit-overflow-scrolling:touch}
+button,select,input{max-width:100%;touch-action:manipulation}
+button{min-height:42px}
+.uppcs-paper-pages{max-width:100%;height:65vh!important;padding:8px!important;-webkit-overflow-scrolling:touch}
+#paperAnswerGrid{grid-template-columns:repeat(auto-fit,minmax(min(100%,105px),1fr))!important}
+@media(max-width:768px){
+  header{height:auto;min-height:60px;padding:12px 16px;flex-wrap:wrap}
+  header b{font-size:19px}
+  header span{font-size:9px;letter-spacing:1px}
+  main{padding:0 12px;margin:16px auto}
+  .demo-panel{margin:14px auto;padding-left:0;padding-right:0}
+  .demo-card,.demo-stat,.card{padding:14px;border-radius:12px}
+  .demo-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .demo-stat b{font-size:21px;overflow-wrap:anywhere}
+  .demo-row{align-items:stretch}
+  .demo-row>*{min-width:0}
+  .demo-row button{width:100%}
+  .demo-options{grid-template-columns:1fr}
+  .demo-field{min-width:0}
+  .demo-timer{font-size:21px}
+  .demo-table th,.demo-table td{padding:8px;font-size:12px;white-space:nowrap}
+  .result{margin:16px auto;padding:0 10px}
+  .score{font-size:38px}
+}
+@media(max-width:420px){
+  .demo-stats{grid-template-columns:1fr}
+  .demo-actions{grid-template-columns:1fr}
+  h1{font-size:24px!important}
+  .demo-card h2{font-size:20px}
+  .uppcs-paper-pages{height:55vh!important}
+  #paperAnswerGrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+
+
+/* PVrajCMS Group + PV Education header aligned with the main website */
+.pv-brand-header{min-height:78px;height:auto;background:#061a30;box-shadow:0 5px 18px rgba(4,18,36,.22);display:flex;align-items:center;justify-content:space-between;gap:18px;padding:9px clamp(14px,3vw,34px);border-bottom:1px solid rgba(255,255,255,.12)}
+.pv-brand-lockup{display:flex;align-items:center;gap:14px;min-width:0;flex-wrap:wrap}
+.pv-brand-mark{display:flex;align-items:center;justify-content:center;width:auto;height:48px;border-radius:0;background:transparent;box-shadow:none;overflow:hidden}
+.pv-brand-mark img{display:block;max-width:190px;width:auto;height:48px;object-fit:contain}
+.pv-brand-divider{height:48px;width:1px;background:rgba(255,255,255,.28);flex:0 0 1px}
+.pv-education-logo{display:block;width:auto;max-width:220px;height:48px;object-fit:contain;background:#fff;border-radius:3px}
+.pv-brand-copy{display:none}
+@media(max-width:600px){.pv-brand-header{min-height:68px;padding:8px 10px;gap:8px}.pv-brand-lockup{gap:9px}.pv-brand-mark,.pv-brand-mark img{height:38px;max-width:138px}.pv-brand-divider{height:36px}.pv-education-logo{height:38px;max-width:158px}}
+@media(max-width:370px){.pv-brand-mark img{max-width:112px}.pv-education-logo{max-width:132px;height:34px}.pv-brand-lockup{gap:6px}}
+
+
+/* Final combined result popup */
+.pv-final-popup-backdrop{position:fixed;inset:0;z-index:99999;background:rgba(8,18,42,.72);display:flex;align-items:center;justify-content:center;padding:16px}
+.pv-final-popup{width:min(520px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:20px;box-shadow:0 24px 80px rgba(0,0,0,.32);padding:26px;text-align:center;border:1px solid #dbe5f5}
+.pv-final-popup .pv-popup-icon{font-size:42px;margin-bottom:8px}
+.pv-final-popup h2{margin:0 0 10px;font-size:24px;color:#14264a}
+.pv-final-popup .pv-popup-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:18px 0;text-align:left}
+.pv-final-popup .pv-popup-meta div{padding:11px;border:1px solid #e0e8f5;border-radius:11px;background:#f7f9fd;min-width:0}
+.pv-final-popup .pv-popup-meta span{display:block;color:#64748b;font-size:12px;margin-bottom:4px}
+.pv-final-popup .pv-popup-meta b{display:block;color:#17366f;overflow-wrap:anywhere}
+.pv-final-popup .pv-popup-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+.pv-final-popup .pv-popup-actions button{border:0;border-radius:10px;padding:12px 18px;font-weight:700;cursor:pointer}
+.pv-final-popup .pv-popup-primary{background:#2458d8;color:#fff}
+.pv-final-popup .pv-popup-secondary{background:#eaf0ff;color:#1743a5}
+@media(max-width:420px){.pv-final-popup{padding:20px 16px}.pv-final-popup h2{font-size:21px}.pv-final-popup .pv-popup-meta{grid-template-columns:1fr 1fr}}
+
+
+.pv-brand-header{min-height:68px;height:auto;background:#061a30;box-shadow:0 5px 18px rgba(4,18,36,.22);display:flex;align-items:center;justify-content:space-between;gap:18px;padding:8px clamp(12px,1.2vw,22px);border-bottom:1px solid rgba(255,255,255,.12)}
+.pv-brand-lockup{display:flex;align-items:center;gap:12px;flex:0 0 auto;min-width:0}.pv-brand-mark{display:flex;align-items:center}.pv-brand-mark img{height:46px;width:auto;max-width:195px;object-fit:contain}.pv-brand-divider{height:48px;width:1px;background:rgba(255,255,255,.35);display:block}.pv-edu-link{display:flex;align-items:center}.pv-education-logo{height:48px;width:auto;max-width:220px;object-fit:contain}.pv-main-nav{display:flex;align-items:center;justify-content:flex-end;gap:clamp(10px,1.5vw,22px);flex:1;white-space:nowrap}.pv-main-nav a{color:#fff;text-decoration:none;font-size:14px;font-weight:700}.pv-main-nav a:hover{color:#22d3ee}.pv-main-nav .pv-nav-login,.pv-main-nav .pv-nav-register{padding:10px 17px;border-radius:11px;border:1px solid #9db6d0}.pv-main-nav .pv-nav-register{background:#087bd5;border-color:#087bd5}.pv-main-nav .pv-nav-login:hover,.pv-main-nav .pv-nav-register:hover{color:#fff;filter:brightness(1.12)}
+@media(max-width:900px){.pv-brand-header{flex-wrap:wrap;justify-content:center}.pv-main-nav{flex-basis:100%;justify-content:center;flex-wrap:wrap;gap:10px 16px;padding:4px 0}.pv-main-nav a{font-size:13px}}
+@media(max-width:520px){.pv-brand-lockup{width:100%;justify-content:center}.pv-brand-mark img{height:38px;max-width:145px}.pv-brand-divider{height:36px}.pv-education-logo{height:38px;max-width:160px}.pv-main-nav{gap:8px 12px}.pv-main-nav a{font-size:12px}.pv-main-nav .pv-nav-login,.pv-main-nav .pv-nav-register{padding:7px 11px}}
+#cloudPaperUploadCard input[type="checkbox"]{display:inline-block;width:17px;height:17px;flex:0 0 17px}.demo-row{flex-wrap:wrap}#cloudPaperList .examtile .demo-row button{flex:1 1 130px}
+</style></head><body><header class="pv-brand-header"><div class="pv-brand-lockup"><a class="pv-brand-mark" href="index.html" aria-label="PVrajCMS Group home"><img src="logo.png" alt="PVrajCMS Group"></a><span class="pv-brand-divider" aria-hidden="true"></span><a class="pv-edu-link" href="pv-education.html" aria-label="PV Education home"><img class="pv-education-logo" src="pv-education-logo.png" alt="PV Education — A Unit of PVrajCMS Group"></a></div><nav class="pv-main-nav" aria-label="PV Education navigation"><a href="pv-education.html#home">Home</a><a href="pv-education.html#exams">Exams⌄</a><a href="pv-education.html#courses">Courses⌄</a><a href="pv-education.html#study">Study Material</a><a href="pv-education.html#services">Student Services⌄</a><a class="pv-nav-login" href="#authView" id="headerLogin">Login</a><a class="pv-nav-register" href="#authView" id="headerRegister">Register</a></nav><button id="logout" class="ghost hidden">Log out</button></header><main>
+<section id="authView" class="card auth"><h1>Online Examination</h1><p class="muted">Sign in or create your student account.</p><div class="tabs"><button class="tab active" data-tab="login">Login</button><button class="tab" data-tab="signup">Register</button></div><form id="authForm"><label>Email<input id="email" type="email" required autocomplete="email"></label><label>Password<input id="password" type="password" minlength="6" required autocomplete="current-password"></label><button class="primary" id="authSubmit">Login</button></form><p id="authMsg" class="msg"></p><div id="demoAccess" class="demo-actions"><button type="button" class="demo-admin" id="adminDemo">Open Admin Demo</button><button type="button" class="demo-student" id="studentDemo">Open Student Demo</button></div><p class="demo-note">Demo mode works on this computer without Supabase. Demo data is stored in this browser only.</p></section>
+<section id="dashboardView" class="hidden"><div class="welcome"><div><p class="eyebrow">YOUR PORTAL</p><h1 id="welcomeTitle">Dashboard</h1><p class="muted" id="userEmail"></p></div><span id="roleBadge" class="badge">STUDENT</span></div>
+<div id="adminPanel" class="hidden"><div class="sectionhead"><h2>Create examination</h2><p class="muted">Create an MCQ exam and add its answer key.</p></div><form id="examForm" class="card"><div class="grid"><label>Exam title<input id="examTitle" required placeholder="e.g. General Knowledge Test"></label><label>Duration (minutes)<input id="duration" type="number" min="1" max="300" value="30" required></label><label>Total marks per question<input id="marks" type="number" min="1" value="1" required></label><label>Negative marks<input id="negative" type="number" min="0" step="0.25" value="0"></label></div><label>Instructions<textarea id="instructions" rows="2" placeholder="Read each question carefully..."></textarea></label><div class="divider"></div><div class="sectionhead inline"><h3>Questions</h3><button type="button" id="addQuestion" class="secondary">+ Add question</button></div><div id="questions"></div><button class="primary" type="submit">Publish examination</button><p id="adminMsg" class="msg"></p></form>
+<section class="card" id="cloudPaperUploadCard" style="margin-top:18px">
+  <div class="sectionhead"><h2>Upload Question Paper PDF</h2><span class="badge">Cloud Upload</span></div>
+  <p class="muted">Upload a PDF once. It will be available to students on their own devices after login.</p>
+  <form id="cloudPaperForm">
+    <div class="grid">
+      <label>Paper title<input id="cloudPaperTitle" required placeholder="UPPCS Prelims 2024 — General Studies Paper-I"></label>
+      <label>Exam year<input id="cloudPaperYear" type="number" min="2000" max="2100" required value="2024"></label>
+      <label>Exam date<input id="cloudPaperDate" type="date"></label>
+      <label>Booklet series<input id="cloudPaperSeries" placeholder="Series C"></label>
+      <label>Total questions<input id="cloudPaperQuestions" type="number" min="1" max="500" value="150" required></label>
+      <label>Duration (minutes)<input id="cloudPaperDuration" type="number" min="1" max="600" value="120" required></label>
+      <label>Total marks<input id="cloudPaperMarks" type="number" min="1" max="1000" value="200" required></label>
+    </div>
+    <label>Question paper PDF<input id="cloudPaperFile" type="file" accept="application/pdf,.pdf" required></label>
+    <label>Answer key file (PDF, CSV or TXT)<input id="cloudAnswerKeyFile" type="file" accept="application/pdf,.pdf,.csv,.txt,text/csv,text/plain" required></label>
+    <p class="demo-note">The answer key is stored securely for administrator use. It is not shown to students with the question paper.</p>
+    <label style="display:flex;align-items:center;gap:9px;font-weight:500"><input id="cloudPaperReplace" type="checkbox" style="width:auto;margin:0"> Replace current active paper and answer key (hide older active papers)</label>
+    <button class="primary" id="cloudPaperSubmit" type="submit">Upload Paper + Answer Key</button>
+    <p class="msg" id="cloudPaperMsg" aria-live="polite"></p>
+  </form>
+</section>
+</div>
+<div class="sectionhead"><h2>Uploaded question papers</h2><p class="muted">PDF papers available to students.</p></div><div id="cloudPaperList" class="examlist"></div>
+<div class="sectionhead"><h2 id="examListTitle">Available examinations</h2><p class="muted">Choose an exam to begin.</p></div><div id="examList" class="examlist"></div>
+<div class="sectionhead"><h2>My results</h2></div><div id="resultsList" class="examlist"></div></section>
+<section id="examView" class="hidden"><div class="examtop"><div><p class="eyebrow">EXAM IN PROGRESS</p><h1 id="runningTitle"></h1></div><div class="timer" id="timer">00:00</div></div><div class="progress"><div id="progressBar"></div></div><div class="examlayout"><aside class="card questionnav"><b>Question palette</b><div id="palette"></div><p class="muted small">Green = answered</p></aside><article class="card questioncard"><div class="qmeta"><span id="qCounter">Question 1</span><span id="qMarks"></span></div><h2 id="qText"></h2><div id="options"></div><div class="examactions"><button id="prevQ" class="secondary">Previous</button><button id="nextQ" class="primary">Next</button></div><button id="submitExam" class="danger">Submit examination</button><p id="examMsg" class="msg"></p></article></div></section>
+<section id="resultView" class="card result hidden"><p class="eyebrow">EXAMINATION RESULT</p><h1 id="resultTitle">Result</h1><div class="score" id="score"></div><div id="resultDetails"></div><button id="backDashboard" class="primary">Back to dashboard</button></section>
+</main><footer>© <span id="year"></span> PVrajCMS Group · Powered by PVrajCMS Group</footer><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script>
+// Uses the shared PVrajCMS Central Supabase client from supabase-config.js.
+const configured = !!(window.supabase && typeof pvSupabase !== 'undefined' && pvSupabase);
+const db = configured ? pvSupabase : null;
+const $ = id => document.getElementById(id);
+let user=null, profile=null, tab='login', questions=[], currentExam=null, attemptId=null, examQuestions=[], answers={}, qIndex=0, timerHandle=null, deadline=null, submitted=false;
+$('year').textContent=new Date().getFullYear();
+function show(id){['authView','dashboardView','examView','resultView'].forEach(x=>$(x).classList.toggle('hidden',x!==id));}
+function msg(id,s,ok=false){$(id).textContent=s;$(id).style.color=ok?'#16865b':'#c43d4b';}
+function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function setTab(t){tab=t;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));$('authSubmit').textContent=t==='login'?'Login':'Create account';$('password').autocomplete=t==='login'?'current-password':'new-password';}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));
+$('authForm').addEventListener('submit',async e=>{e.preventDefault();if(!db)return msg('authMsg','Setup required: add your Supabase URL and anon key in app.js.');$('authSubmit').disabled=true;try{const email=$('email').value.trim(),password=$('password').value;const r=tab==='login'?await db.auth.signInWithPassword({email,password}):await db.auth.signUp({email,password});if(r.error)throw r.error;if(tab==='signup'&&!r.data.session){msg('authMsg','Registration successful. Verify your email, then log in.',true);}else await loadSession();}catch(err){msg('authMsg',err.message);}finally{$('authSubmit').disabled=false;}});
+$('logout').onclick=async()=>{await db.auth.signOut();user=null;show('authView');$('logout').classList.add('hidden');};
+async function loadSession(){const {data:{session}}=await db.auth.getSession();if(!session){show('authView');return;}user=session.user;const [{data:profileRow,error:profileError},{data:isAdmin,error:adminError}]=await Promise.all([db.from('profiles').select('full_name').eq('id',user.id).maybeSingle(),db.rpc('is_app_admin')]);if(profileError)throw profileError;if(adminError)throw adminError;profile={role:isAdmin?'admin':'student',full_name:profileRow?.full_name||''};$('logout').classList.remove('hidden');$('userEmail').textContent=user.email;$('welcomeTitle').textContent=`Welcome${profile.full_name?' '+profile.full_name:''}`;$('roleBadge').textContent=profile.role.toUpperCase();$('adminPanel').classList.toggle('hidden',profile.role!=='admin');$('examListTitle').textContent=profile.role==='admin'?'Published examinations':'Available examinations';show('dashboardView');await loadDashboard();}
+async function loadDashboard(){const {data:exams,error}=await db.from('exams').select('id,title,duration_minutes,created_at,is_published').eq('is_published',true).order('created_at',{ascending:false});if(error)throw error;$('examList').innerHTML=exams.length?exams.map(x=>`<div class="examtile"><h3>${safe(x.title)}</h3><div class="meta">${x.duration_minutes} minutes · Published</div><button class="primary" data-exam="${x.id}">${profile.role==='admin'?'View exam':'Start examination'}</button></div>`).join(''):'<p class="muted">No examinations available yet.</p>';
+document.querySelectorAll('[data-exam]').forEach(b=>b.onclick=()=>profile.role==='admin'?adminExamInfo(b.dataset.exam):beginExam(b.dataset.exam));
+const {data:results}=await db.from('attempts').select('id,exam_id,status,score,total_marks,submitted_at,exams(title)').eq('student_id',user.id).eq('status','submitted').order('submitted_at',{ascending:false});$('resultsList').innerHTML=results?.length?results.map(r=>`<div class="examtile"><h3>${safe(r.exams?.title||'Examination')}</h3><div class="meta">Score: ${r.score}/${r.total_marks} · ${new Date(r.submitted_at).toLocaleString()}</div><button class="secondary" data-result="${r.id}">View result</button></div>`).join(''):'<p class="muted">No completed exams yet.</p>';document.querySelectorAll('[data-result]').forEach(b=>b.onclick=()=>showResult(b.dataset.result));await loadCloudPapers();}
+async function loadCloudPapers(){
+  const host=$('cloudPaperList');if(!host||!db||!user)return;
+  let q=db.from('exam_papers').select('id,title,exam_year,exam_date,booklet_series,total_questions,duration_minutes,total_marks,file_name,storage_path,is_active,created_at').order('created_at',{ascending:false});
+  if(profile.role!=='admin')q=q.eq('is_active',true);
+  const {data,error}=await q;
+  if(error){host.innerHTML=`<p class="muted">Question papers could not be loaded: ${safe(error.message)}</p>`;return;}
+  if(!data?.length){host.innerHTML='<p class="muted">No question papers uploaded yet.</p>';return;}
+  let keyRows=[];
+  if(profile.role==='admin'){
+    const kr=await db.from('exam_paper_answer_keys').select('id,paper_id,file_name,storage_path,is_active,created_at').order('created_at',{ascending:false});
+    if(kr.error){host.innerHTML=`<p class="muted">Answer-key management setup required: ${safe(kr.error.message)}. Run the supplied SQL setup once in Supabase.</p>`;return;}
+    keyRows=kr.data||[];
+  }
+  host.innerHTML=data.map(p=>{
+    const key=keyRows.find(k=>k.paper_id===p.id&&k.is_active);
+    return `<article class="examtile"><h3>${safe(p.title)}</h3><div class="meta">${p.exam_year}${p.booklet_series?' · Booklet Series '+safe(p.booklet_series):''} · ${p.total_questions} questions · ${p.duration_minutes} minutes · ${p.total_marks} marks</div>${p.exam_date?`<div class="meta">Exam date: ${safe(p.exam_date)}</div>`:''}${profile.role==='admin'?`<p><span class="demo-tag">${p.is_active?'Active':'Hidden from students'}</span> <span class="demo-tag">${key?'Answer key uploaded':'Answer key missing'}</span></p>`:''}<div class="demo-row"><button type="button" class="primary" data-cloud-view="${p.id}">Preview Question Paper</button>${profile.role==='admin'?`${key?`<button type="button" class="secondary" data-key-view="${key.id}">Preview Answer Key</button>`:''}<button type="button" class="secondary" data-cloud-toggle="${p.id}" data-active="${p.is_active}">${p.is_active?'Hide from students':'Publish to students'}</button><button type="button" class="danger" data-cloud-delete="${p.id}" style="width:auto;margin:0">Delete Paper + Key</button>`:''}</div></article>`;
+  }).join('');
+  host.querySelectorAll('[data-cloud-view]').forEach(btn=>btn.onclick=async()=>{btn.disabled=true;try{const paper=data.find(x=>x.id===btn.dataset.cloudView);const {data:link,error}=await db.storage.from('pv-exam-papers').createSignedUrl(paper.storage_path,3600);if(error)throw error;window.open(link.signedUrl,'_blank','noopener');}catch(err){alert('Question paper could not be opened: '+err.message);}finally{btn.disabled=false;}});
+  host.querySelectorAll('[data-key-view]').forEach(btn=>btn.onclick=async()=>{btn.disabled=true;try{const key=keyRows.find(x=>x.id===btn.dataset.keyView);const {data:link,error}=await db.storage.from('pv-exam-papers').createSignedUrl(key.storage_path,3600);if(error)throw error;window.open(link.signedUrl,'_blank','noopener');}catch(err){alert('Answer key could not be opened: '+err.message);}finally{btn.disabled=false;}});
+  host.querySelectorAll('[data-cloud-toggle]').forEach(btn=>btn.onclick=async()=>{btn.disabled=true;try{const next=btn.dataset.active!=='true';const {error}=await db.from('exam_papers').update({is_active:next}).eq('id',btn.dataset.cloudToggle);if(error)throw error;await loadCloudPapers();}catch(err){alert('Paper status could not be changed: '+err.message);btn.disabled=false;}});
+  host.querySelectorAll('[data-cloud-delete]').forEach(btn=>btn.onclick=async()=>{if(!confirm('Delete this question paper and its answer key permanently?'))return;btn.disabled=true;try{const paper=data.find(x=>x.id===btn.dataset.cloudDelete);const keys=keyRows.filter(x=>x.paper_id===paper.id);const paths=[paper.storage_path,...keys.map(x=>x.storage_path)];const {error:storageError}=await db.storage.from('pv-exam-papers').remove(paths);if(storageError)throw storageError;const {error:keyError}=await db.from('exam_paper_answer_keys').delete().eq('paper_id',paper.id);if(keyError)throw keyError;const {error}=await db.from('exam_papers').delete().eq('id',paper.id);if(error)throw error;await loadCloudPapers();}catch(err){alert('Paper/key could not be deleted: '+err.message);btn.disabled=false;}});
+}
+const cloudPaperForm=$('cloudPaperForm');
+if(cloudPaperForm)cloudPaperForm.addEventListener('submit',async e=>{
+  e.preventDefault();if(!user||profile?.role!=='admin')return msg('cloudPaperMsg','Only a signed-in administrator can upload papers.');
+  const file=$('cloudPaperFile').files?.[0],keyFile=$('cloudAnswerKeyFile').files?.[0];
+  if(!file)return msg('cloudPaperMsg','Please choose the question paper PDF.');
+  if(!keyFile)return msg('cloudPaperMsg','Please choose the answer key file.');
+  if(file.type!=='application/pdf'&&!file.name.toLowerCase().endsWith('.pdf'))return msg('cloudPaperMsg','Question paper must be a PDF.');
+  const keyExt=keyFile.name.split('.').pop().toLowerCase();if(!['pdf','csv','txt'].includes(keyExt))return msg('cloudPaperMsg','Answer key must be PDF, CSV or TXT.');
+  if(file.size>25*1024*1024||keyFile.size>25*1024*1024)return msg('cloudPaperMsg','Each file must be 25 MB or smaller.');
+  const btn=$('cloudPaperSubmit');btn.disabled=true;msg('cloudPaperMsg','Uploading question paper and answer key securely…',true);
+  const clean=n=>n.normalize('NFKD').replace(/[^a-zA-Z0-9._-]+/g,'-').replace(/^-+|-+$/g,'').slice(-100)||'upload-file';
+  const stamp=Date.now(),paperPath=`${user.id}/${stamp}-${clean(file.name)}`,keyPath=`${user.id}/${stamp}-answer-key-${clean(keyFile.name)}`;
+  let paperUploaded=false,keyUploaded=false,paperId=null;
+  try{
+    const {error:uploadError}=await db.storage.from('pv-exam-papers').upload(paperPath,file,{contentType:'application/pdf',upsert:false});if(uploadError)throw uploadError;paperUploaded=true;
+    const {error:keyUploadError}=await db.storage.from('pv-exam-papers').upload(keyPath,keyFile,{contentType:keyFile.type|| (keyExt==='pdf'?'application/pdf':keyExt==='csv'?'text/csv':'text/plain'),upsert:false});if(keyUploadError)throw keyUploadError;keyUploaded=true;
+    const row={title:$('cloudPaperTitle').value.trim(),exam_year:Number($('cloudPaperYear').value),exam_date:$('cloudPaperDate').value||null,booklet_series:$('cloudPaperSeries').value.trim()||null,total_questions:Number($('cloudPaperQuestions').value),duration_minutes:Number($('cloudPaperDuration').value),total_marks:Number($('cloudPaperMarks').value),file_name:file.name,storage_path:paperPath,uploaded_by:user.id,is_active:true};
+    const {data:paper,error:insertError}=await db.from('exam_papers').insert(row).select('id').single();if(insertError)throw insertError;paperId=paper.id;
+    const {error:keyRowError}=await db.from('exam_paper_answer_keys').insert({paper_id:paperId,file_name:keyFile.name,storage_path:keyPath,uploaded_by:user.id,is_active:true});if(keyRowError)throw keyRowError;
+    if($('cloudPaperReplace').checked){const {error:deactivateError}=await db.from('exam_papers').update({is_active:false}).eq('is_active',true).neq('id',paperId);if(deactivateError)throw deactivateError;const {error:keyDeactivateError}=await db.from('exam_paper_answer_keys').update({is_active:false}).eq('is_active',true).neq('paper_id',paperId);if(keyDeactivateError)throw keyDeactivateError;}
+    cloudPaperForm.reset();$('cloudPaperYear').value=new Date().getFullYear();$('cloudPaperQuestions').value=150;$('cloudPaperDuration').value=120;$('cloudPaperMarks').value=200;msg('cloudPaperMsg','Question paper and answer key uploaded successfully. Students can view the paper; the answer key remains admin-only.',true);await loadCloudPapers();
+  }catch(err){if(paperId)await db.from('exam_papers').delete().eq('id',paperId);if(keyUploaded)await db.storage.from('pv-exam-papers').remove([keyPath]);if(paperUploaded)await db.storage.from('pv-exam-papers').remove([paperPath]);msg('cloudPaperMsg','Upload failed: '+err.message);}
+  finally{btn.disabled=false;}
+});
+async function adminExamInfo(id){const {data}=await db.from('exams').select('title').eq('id',id).single();alert(`Published: ${data.title}\nStudents can now take this examination.`);}
+function addQuestion(){const n=questions.length;questions.push({text:'',options:['','','',''],correct:0});renderQuestionBuilder();}
+function renderQuestionBuilder(){$('questions').innerHTML=questions.map((q,i)=>`<div class="qbuilder"><div class="qbuilderhead"><b>Question ${i+1}</b><button type="button" data-remove="${i}">Remove</button></div><label>Question text<textarea data-qtext="${i}" rows="2" required>${safe(q.text)}</textarea></label><div class="optiongrid">${q.options.map((o,j)=>`<label>Option ${'ABCD'[j]}<input data-opt="${i}-${j}" value="${safe(o)}" required></label>`).join('')}</div><label>Correct answer<select data-correct="${i}">${q.options.map((o,j)=>`<option value="${j}" ${q.correct===j?'selected':''}>Option ${'ABCD'[j]}</option>`).join('')}</select></label></div>`).join('');document.querySelectorAll('[data-qtext]').forEach(el=>el.oninput=()=>questions[+el.dataset.qtext].text=el.value);document.querySelectorAll('[data-opt]').forEach(el=>el.oninput=()=>{const [i,j]=el.dataset.opt.split('-').map(Number);questions[i].options[j]=el.value;});document.querySelectorAll('[data-correct]').forEach(el=>el.onchange=()=>questions[+el.dataset.correct].correct=+el.value);document.querySelectorAll('[data-remove]').forEach(el=>el.onclick=()=>{questions.splice(+el.dataset.remove,1);renderQuestionBuilder();});}
+$('addQuestion').onclick=addQuestion;addQuestion();
+$('examForm').onsubmit=async e=>{e.preventDefault();if(!questions.length||questions.some(q=>!q.text.trim()||q.options.some(o=>!o.trim())))return msg('adminMsg','Complete every question and all four options.');const btn=e.submitter;btn.disabled=true;try{const {data:exam,error}=await db.from('exams').insert({title:$('examTitle').value.trim(),duration_minutes:+$('duration').value,marks_per_question:+$('marks').value,negative_marks:+$('negative').value,instructions:$('instructions').value,is_published:false,created_by:user.id}).select().single();if(error)throw error;const rows=questions.map((q,i)=>({exam_id:exam.id,question_text:q.text.trim(),option_a:q.options[0],option_b:q.options[1],option_c:q.options[2],option_d:q.options[3],position:i+1}));const {data:inserted,error:qe}=await db.from('exam_questions').insert(rows).select('id');if(qe)throw qe;const keys=inserted.map((row,i)=>({question_id:row.id,correct_option:['A','B','C','D'][questions[i].correct]}));const {error:ke}=await db.from('exam_answer_keys').insert(keys);if(ke)throw ke;const {error:pe}=await db.from('exams').update({is_published:true}).eq('id',exam.id);if(pe)throw pe;msg('adminMsg','Examination published successfully.',true);$('examForm').reset();questions=[];addQuestion();await loadDashboard();}catch(err){msg('adminMsg',err.message);}finally{btn.disabled=false;}};
+async function beginExam(id){if(!confirm('Start this examination now? The timer begins immediately.'))return;try{const {data,error}=await db.rpc('start_exam',{p_exam_id:id});if(error)throw error;attemptId=data.attempt_id;deadline=new Date(data.ends_at);const {data:exam,error:ee}=await db.from('exams').select('id,title,duration_minutes,marks_per_question,negative_marks,instructions').eq('id',id).single();if(ee)throw ee;const {data:qs,error:qe}=await db.from('exam_questions').select('id,question_text,option_a,option_b,option_c,option_d,position').eq('exam_id',id).order('position');if(qe)throw qe;currentExam=exam;examQuestions=qs;answers={};qIndex=0;submitted=false;$('runningTitle').textContent=exam.title;$('examMsg').textContent=exam.instructions||'';show('examView');renderExamQuestion();timerHandle=setInterval(tick,500);tick();}catch(err){alert(err.message);}}
+function tick(){const left=Math.max(0,Math.ceil((deadline-Date.now())/1000));const m=String(Math.floor(left/60)).padStart(2,'0'),s=String(left%60).padStart(2,'0');$('timer').textContent=`${m}:${s}`;$('timer').classList.toggle('warning',left<=60);if(left<=0)submitExam(true);}
+function renderExamQuestion(){const q=examQuestions[qIndex];$('qCounter').textContent=`Question ${qIndex+1} of ${examQuestions.length}`;$('qMarks').textContent=`${currentExam.marks_per_question} mark(s)`;$('qText').textContent=q.question_text;$('options').innerHTML=[q.option_a,q.option_b,q.option_c,q.option_d].map((o,i)=>`<label class="option"><input type="radio" name="answer" value="${'ABCD'[i]}" ${answers[q.id]==='ABCD'[i]?'checked':''}> <b>${'ABCD'[i]}.</b> ${safe(o)}</label>`).join('');document.querySelectorAll('[name=answer]').forEach(el=>el.onchange=()=>{answers[q.id]=el.value;renderPalette();});$('prevQ').disabled=qIndex===0;$('nextQ').textContent=qIndex===examQuestions.length-1?'Review answers':'Next';$('progressBar').style.width=`${Object.keys(answers).length/examQuestions.length*100}%`;renderPalette();}
+function renderPalette(){$('palette').innerHTML=examQuestions.map((q,i)=>`<button class="palettebtn ${answers[q.id]?'answered':''} ${i===qIndex?'current':''}" data-jump="${i}">${i+1}</button>`).join('');document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>{qIndex=+b.dataset.jump;renderExamQuestion();});}
+$('prevQ').onclick=()=>{qIndex=Math.max(0,qIndex-1);renderExamQuestion();};$('nextQ').onclick=()=>{qIndex=Math.min(examQuestions.length-1,qIndex+1);renderExamQuestion();};$('submitExam').onclick=()=>submitExam(false);
+async function submitExam(auto){if(submitted)return;if(!auto&&!confirm('Submit your examination? You cannot change answers after submission.'))return;submitted=true;clearInterval(timerHandle);$('submitExam').disabled=true;try{const payload=examQuestions.map(q=>({question_id:q.id,selected_option:answers[q.id]||null}));const {data,error}=await db.rpc('submit_exam',{p_attempt_id:attemptId,p_answers:payload});if(error)throw error;await showResult(attemptId);if(auto)alert('Time is over. Your examination was automatically submitted.');}catch(err){submitted=false;$('submitExam').disabled=false;alert('Submission failed: '+err.message+' Please keep this page open and retry.');}}
+async function showResult(id){const {data,error}=await db.from('attempts').select('score,total_marks,submitted_at,exams(title)').eq('id',id).single();if(error){alert(error.message);return;}const pct=data.total_marks?Math.round(data.score/data.total_marks*100):0;$('resultTitle').textContent=data.exams?.title||'Examination result';$('score').textContent=`${data.score} / ${data.total_marks}`;$('resultDetails').innerHTML=`<div class="resultrow"><span>Percentage</span><b>${pct}%</b></div><div class="resultrow"><span>Status</span><b>${pct>=40?'Completed':'Completed'}</b></div><div class="resultrow"><span>Submitted</span><b>${data.submitted_at?new Date(data.submitted_at).toLocaleString():'—'}</b></div>`;show('resultView');}
+$('backDashboard').onclick=async()=>{if(!user)return;show('dashboardView');$('submitExam').disabled=false;await loadDashboard();};
+(async()=>{if(!configured){show('authView');msg('authMsg','Setup needed: connect a Supabase project using app.js and run database.sql.');return;}try{await loadSession();}catch(err){console.error(err);show('authView');msg('authMsg',err.message);}})();
+
+</script>
+<script>
+// Local demonstration mode. Real accounts and multi-device exams require Supabase setup.
+(() => {
+  const pdfPages = [];
+  const $ = id => document.getElementById(id);
+  // Clean the previous demo's student profile, attempts and results once,
+  // while preserving administrator-created examination papers.
+  const legacyStoreKey = 'pvrajcms_exam_demo_v2_clean';
+  const storeKey = 'pvrajcms_exam_demo_v4_test_schedule';
+  const demoRoleKey = 'pvrajcms_exam_demo_role_v4_test_schedule';
+  try {
+    if (!localStorage.getItem(storeKey)) {
+      const legacy = JSON.parse(localStorage.getItem(legacyStoreKey) || 'null');
+      if (legacy && Array.isArray(legacy.exams)) {
+        localStorage.setItem(storeKey, JSON.stringify({ exams: legacy.exams, results: [] }));
+      }
+    }
+    localStorage.removeItem(legacyStoreKey);
+    localStorage.removeItem('pvrajcms_exam_demo_role_v2_clean');
+    localStorage.removeItem('pvrajcms_exam_demo_role_v1');
+    localStorage.removeItem('pvrajcms_uppcs_2023_attempt_v5_final_mobile');
+    localStorage.removeItem('pvrajcms_student_registration_v2');
+  } catch (e) {
+    console.warn('Could not clear previous demo student data:', e);
+  }
+  const seed = [{id:'sample-mcq',title:'General Knowledge Demo Test',duration:5,marks:1,negative:0,questions:[
+    {text:'What is the capital of India?',options:['Mumbai','New Delhi','Kolkata','Chennai'],correct:1},
+    {text:'How many days are there in a leap year?',options:['365','366','364','360'],correct:1},
+    {text:'Which planet is known as the Red Planet?',options:['Venus','Jupiter','Mars','Mercury'],correct:2},
+    {text:'What does HTML stand for?',options:['HyperText Markup Language','HighText Machine Language','HyperTool Multi Language','Home Tool Markup Language'],correct:0}
+  ],published:true,createdAt:new Date().toISOString()}];
+  let data; try { data=JSON.parse(localStorage.getItem(storeKey)) || {exams:seed,results:[]}; } catch { data={exams:seed,results:[]}; }
+  if(!data.exams.length) data.exams=seed;
+  const freshTestFlag='pvrajcms_fresh_student_intake_results_20261112_v1';
+  if(!localStorage.getItem(freshTestFlag)){
+    data.results=[];
+    localStorage.setItem(freshTestFlag,'1');
+  }
+  const save=()=>localStorage.setItem(storeKey,JSON.stringify(data)); save();
+  let role=null, activeExam=null, index=0, answers={}, endAt=0, timer=null;
+  const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const hideAll=()=>{['authView','dashboardView','examView','resultView'].forEach(id=>$(id)?.classList.add('hidden'));};
+  const shell=(title,sub,body)=>{hideAll();$('dashboardView').classList.remove('hidden');$('dashboardView').innerHTML=`<div class="demo-panel"><div class="demo-row"><div><p class="eyebrow">PVRAJCMS GROUP · DEMO MODE</p><h1>${title}</h1><p class="muted">${sub}</p></div>${role==='admin'?'<button class="primary" id="openStudentFromAdmin" type="button">Open Student Dashboard</button>':''}<button class="secondary" id="demoExit">Exit demo</button></div>${body}</div>`;$('demoExit').onclick=()=>{if(timer)clearInterval(timer);role=null;localStorage.removeItem(demoRoleKey);hideAll();$('authView').classList.remove('hidden');};if($('openStudentFromAdmin'))$('openStudentFromAdmin').onclick=()=>student();};
+  function admin(){role='admin';localStorage.setItem(demoRoleKey,'admin');const total=data.exams.reduce((n,e)=>n+e.questions.length,0)+150;shell('Admin Dashboard','Manage examinations, questions, and student results.',`
+    <div class="demo-stats"><div class="demo-stat"><b>${data.exams.length}</b>Examinations</div><div class="demo-stat"><b>${total}</b>Total questions</div><div class="demo-stat"><b>${data.results.length}</b>Submissions</div></div>
+    <div class="demo-card" style="border:1px solid #b8c9f5;background:#f5f8ff">
+      <h2>Cloud Paper & Answer Key Management</h2>
+      <p class="demo-note">This screen is DEMO MODE: uploads here stay in this browser only. To replace the paper and answer key for every student/device, sign in with the real Supabase administrator account. The secure Cloud Upload form is shown after administrator login.</p>
+      <button type="button" class="primary" id="openCloudAdminLogin">Open Secure Admin Login</button>
+    </div>
+    <div class="demo-card"><h2>Uploaded question paper</h2><p class="demo-note">This paper is available to students. Use the Student Dashboard button above to preview the timed examination.</p><p><b>UPPCS Prelims 2023 — General Studies Paper-I</b></p><p class="demo-note">Booklet Series C · Exam date: 14 May 2023 · 150 questions · 2 hours · 200 marks</p><div class="demo-row"><button type="button" class="secondary" id="togglePaper">Show / hide PDF</button><span class="demo-note">Compressed page preview is shown below for faster mobile loading.</span></div><div id="paperViewer" style="margin-top:12px"><div class="uppcs-paper-pages" style="height:70vh;overflow:auto;border:1px solid #dbe3ef;border-radius:10px;background:#e9edf5;padding:12px">${pdfPages.map((page,i)=>`<div style="max-width:850px;margin:0 auto 14px;background:white;box-shadow:0 2px 8px #0002"><div style="padding:6px 10px;font:12px Arial;color:#64748b">Question Paper · Page ${i+1} of ${pdfPages.length}</div><img src="${page}" alt="UPPCS GS question paper page ${i+1}" style="display:block;width:100%;height:auto"></div>`).join('')}</div></div></div>
+    <div class="demo-card"><h2>Create a new examination</h2><form id="demoCreate"><label class="demo-field">Exam title<input id="dTitle" required placeholder="e.g. General Knowledge Test"></label><div class="demo-options"><label class="demo-field">Duration (minutes)<input id="dDuration" type="number" min="1" max="180" value="30" required></label><label class="demo-field">Marks per question<input id="dMarks" type="number" min="1" value="1" required></label></div><label class="demo-field">Negative marks per wrong answer<input id="dNegative" type="number" min="0" step="0.25" value="0"></label>
+    <div class="demo-card" style="background:#f7f9ff"><h3>Bulk upload questions</h3><p class="demo-note">Upload a CSV file (Excel can be saved as CSV), or paste questions in the format shown below. This avoids entering every question one by one.</p><div class="demo-row"><button type="button" class="secondary" id="demoTemplate">Download CSV template</button><label class="demo-field" style="margin:0">Choose CSV/TXT file<input id="demoBulkFile" type="file" accept=".csv,.txt,text/csv,text/plain"></label></div><label class="demo-field">Or paste questions here<textarea id="demoBulkText" rows="5" placeholder="Question | Option A | Option B | Option C | Option D | Correct answer&#10;भारत की राजधानी क्या है? | मुंबई | नई दिल्ली | लखनऊ | पटना | B"></textarea></label><button type="button" class="secondary" id="demoImportText">Import pasted questions</button> <span id="demoImportMsg" class="demo-note"></span></div>
+    <div class="demo-row"><h3>Questions</h3><button type="button" id="demoAddQ" class="secondary">+ Add question manually</button></div><div id="demoQuestions"></div><button class="primary" type="submit">Publish exam</button></form><p class="demo-note">Bulk import supports CSV/TXT in this local demo. For PDF/Word, copy the question content into the paste box using the shown format. This demo saves questions only in this browser. Use Secure Admin Login for cloud-managed paper and answer-key uploads.</p></div>
+    <div class="demo-card"><h2>Examinations</h2>${data.exams.map(e=>`<div class="demo-row" style="padding:10px 0;border-bottom:1px solid #eee"><div><b>${escapeHtml(e.title)}</b><div class="muted small">${e.questions.length} questions · ${e.duration} minutes</div></div><span class="demo-tag">Published</span></div>`).join('')}</div>
+    <div class="demo-card"><h2>UPPCS 2023 Answer Key · Booklet C</h2>
+      <p class="demo-note"><b>150/150 answers loaded.</b> This is the published "Answer Key for Objection" sheet for Series C. Verify against UPPSC's final revised key before using results as official.</p>
+      <p class="demo-note">You can replace it by uploading a CSV/TXT containing 150 comma-separated letters (A,B,C,D), or one row per question: Question,Answer (1,A).</p>
+      <label class="demo-field">Upload / replace answer key<input id="uppcsKeyFile" type="file" accept=".csv,.txt,text/plain,text/csv"></label>
+      <button type="button" class="secondary" id="uppcsKeyExport">Download loaded answer key CSV</button>
+      <span id="uppcsKeyMsg" class="demo-note">Series C answer key is loaded in this browser.</span>
+    </div>
+    <div class="demo-card"><h2>Student results</h2>${data.results.length?(()=>{const key=getUppcsAnswerKey();const rows=data.results.map(r=>{let score=r.score,total=r.total,pct=r.pct,correct=r.correct,wrong=r.wrong,unanswered=r.unanswered,review='';if(r.title==='UPPCS Prelims 2023 — General Studies Paper-I'){try{const attempt=JSON.parse(localStorage.getItem(uppcsAttemptKey)||'null');const release=Number(r.resultAt||r.at&&((Date.parse(r.at)||0)+RESULT_DELAY_MS)||0);const ans=r.answers||(attempt?.submitted?attempt.answers:null);if(ans&&Date.now()>=release){correct=0;wrong=0;unanswered=0;const detail=[];for(let i=1;i<=150;i++){const a=ans[String(i)]||'';if(!a)unanswered++;else if(a===key[i-1])correct++;else wrong++;detail.push(`<tr><td>${i}</td><td>${a||'—'}</td><td>${key[i-1]}</td><td>${!a?'Unanswered':a===key[i-1]?'Correct':'Wrong'}</td></tr>`);}score=correct*(4/3)-wrong*(4/9);total=200;pct=score/total*100;Object.assign(r,{score,total,pct,correct,wrong,unanswered});save();review=`<details class="result-review"><summary>View all 150 answers</summary><p>Correct: <b>${correct}</b> · Wrong: <b>${wrong}</b> · Unanswered: <b>${unanswered}</b></p><div style="max-height:420px;overflow:auto"><table class="demo-table"><tr><th>Q</th><th>Your answer</th><th>Answer key</th><th>Status</th></tr>${detail.join('')}</table></div></details>`;}}catch(err){console.warn('Could not calculate UPPCS result',err);}}return {r,score,total,pct,correct,wrong,unanswered,review};});const ranked=rows.filter(x=>Number.isFinite(Number(x.score))).sort((a,b)=>Number(b.score)-Number(a.score));const rankIn=(list,x)=>{const i=list.findIndex(y=>y===x);return i<0?'—':(list.findIndex(y=>Number(y.score)===Number(x.score))+1);};const categoryNames=['General','OBC','SC','ST','EWS','PwBD','Other / Prefer not to say','Not specified'];const topTen=ranked.slice(0,10);const categoryBoards=categoryNames.map(cat=>{const list=ranked.filter(x=>(x.r.category||'Not specified')===cat);if(!list.length)return '';return `<h3 style="margin:18px 0 8px">${escapeHtml(cat)} Merit List <span class="demo-note">(${list.length} candidate${list.length===1?'':'s'})</span></h3><div style="overflow:auto"><table class="demo-table"><tr><th>Category Rank</th><th>Student</th><th>Roll Number</th><th>Examination Centre</th><th>Score</th><th>Percentage</th></tr>${list.map(x=>`<tr><td>${rankIn(list,x)}</td><td>${escapeHtml(x.r.student||'Student')}</td><td>${escapeHtml(x.r.rollNo||x.r.registration?.rollNo||'—')}</td><td>${escapeHtml(x.r.examCenter||x.r.registration?.examCenter||'—')}</td><td>${Number(x.score).toFixed(3)}/${x.total}</td><td>${Number(x.pct).toFixed(2)}%</td></tr>`).join('')}</table></div>`;}).join('');return `<h3>Overall merit list · Top 10</h3><div style="overflow:auto"><table class="demo-table"><tr><th>Overall Rank</th><th>Student</th><th>Roll Number</th><th>Category</th><th>Examination Centre</th><th>Score</th><th>Percentage</th></tr>${topTen.map(x=>`<tr><td>${rankIn(ranked,x)}</td><td>${escapeHtml(x.r.student||'Student')}</td><td>${escapeHtml(x.r.rollNo||x.r.registration?.rollNo||'—')}</td><td>${escapeHtml(x.r.category||'Not specified')}</td><td>${escapeHtml(x.r.examCenter||x.r.registration?.examCenter||'—')}</td><td>${Number(x.score).toFixed(3)}/${x.total}</td><td>${Number(x.pct).toFixed(2)}%</td></tr>`).join('')}</table></div><h3 style="margin-top:22px">All student results</h3><div style="overflow:auto"><table class="demo-table"><tr><th>Student</th><th>Roll Number</th><th>Category</th><th>Examination Centre</th><th>Exam</th><th>Score</th><th>Percentage</th><th>Correct</th><th>Wrong</th><th>Unanswered</th><th>Overall Rank</th><th>Category Rank</th></tr>${rows.map(x=>{const catList=ranked.filter(y=>(y.r.category||'Not specified')===(x.r.category||'Not specified'));const overall=rankIn(ranked,x),catRank=rankIn(catList,x);return `<tr><td>${escapeHtml(x.r.student||'Student')}</td><td>${escapeHtml(x.r.rollNo||x.r.registration?.rollNo||'—')}</td><td>${escapeHtml(x.r.category||'Not specified')}</td><td>${escapeHtml(x.r.examCenter||x.r.registration?.examCenter||'—')}</td><td>${escapeHtml(x.r.title||'Examination')}</td><td>${x.score!==undefined&&x.total!==undefined?`${Number(x.score).toFixed(3)}/${x.total}`:(x.r.title==='UPPCS Prelims 2023 — General Studies Paper-I'?'Result pending':'—')}</td><td>${x.pct!==undefined?`${Number(x.pct).toFixed(2)}%`:(x.r.title==='UPPCS Prelims 2023 — General Studies Paper-I'?'Pending':'—')}</td><td>${x.correct??'—'}</td><td>${x.wrong??'—'}</td><td>${x.unanswered??'—'}</td><td>${overall==='—'?'Pending':`${overall}/${ranked.length}`}</td><td>${catRank==='—'?'Pending':`${catRank}/${catList.length}`}</td></tr>${x.review?`<tr><td colspan="12">${x.review}</td></tr>`:''}`;}).join('')}</table></div><h3 style="margin-top:22px">Category-wise merit lists</h3>${categoryBoards}<p class="demo-note">Ranks use competition ranking (equal scores receive the same rank). Merit lists include only result records stored in this browser's demo data. Category is self-declared in this demo and is not an official reservation or eligibility determination.</p>`;})():'<p class="muted">No submissions yet. Take the sample exam from Student Demo to see a result here.</p>'}</div>`);
+    const cloudLoginButton=$('openCloudAdminLogin');
+    if(cloudLoginButton)cloudLoginButton.onclick=()=>{
+      role=null;localStorage.removeItem(demoRoleKey);
+      hideAll();$('authView').classList.remove('hidden');setTab('login');
+      $('authMsg').textContent='Sign in with the Supabase administrator account to upload/replace PDFs and answer keys for all students.';
+      $('email').focus();
+    };
+    const keyMsg=$('uppcsKeyMsg');
+    if(keyMsg)keyMsg.textContent=`Series C answer key loaded: ${getUppcsAnswerKey().length}/150 answers.`;
+    if($('uppcsKeyFile'))$('uppcsKeyFile').onchange=async e=>{
+      const f=e.target.files[0];if(!f)return;
+      try{
+        const raw=(await f.text()).replace(/^\uFEFF/,'').trim();
+        let parsed=[];
+        const lines=raw.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+        if(lines.length===1 && /^[A-Da-d](?:[,\s;]+[A-Da-d]){149}$/.test(lines[0])){
+          parsed=lines[0].split(/[,\s;]+/).map(x=>x.toUpperCase());
+        }else{
+          for(const line of lines){
+            const parts=line.split(/[,;\t|]/).map(x=>x.trim());
+            if(!parts.length)continue;
+            if(!/^\d+$/.test(parts[0]))continue;
+            const n=+parts[0],a=(parts[1]||'').toUpperCase();
+            if(n>=1&&n<=150&&['A','B','C','D'].includes(a))parsed[n-1]=a;
+          }
+        }
+        if(parsed.length!==150||parsed.some(x=>!['A','B','C','D'].includes(x)))throw new Error('CSV/TXT में 1 से 150 तक हर प्रश्न का A/B/C/D उत्तर होना चाहिए।');
+        setUppcsAnswerKey(parsed);keyMsg.textContent='Uploaded answer key saved: 150/150 answers.';alert('Answer key uploaded and saved successfully.');
+      }catch(err){alert(err.message||'Answer key could not be imported.');}
+      e.target.value='';
+    };
+    if($('uppcsKeyExport'))$('uppcsKeyExport').onclick=()=>{
+      const csv='Question,Answer\n'+getUppcsAnswerKey().map((a,i)=>`${i+1},${a}`).join('\n');
+      const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+      a.href=url;a.download='UPPCS_2023_GS_Paper_I_Series_C_Answer_Key.csv';a.click();URL.revokeObjectURL(url);
+    };
+    $('togglePaper').onclick=()=>{$('paperViewer').classList.toggle('hidden');};
+    let count=0;const addQ=(q=null)=>{count++;const n=count;const div=document.createElement('div');div.className='demo-card';div.innerHTML=`<div class="demo-row"><b>Question ${n}</b><button type="button" class="secondary" data-del="${n}">Remove</button></div><label class="demo-field">Question<input required name="qtext${n}" placeholder="Enter question"></label><div class="demo-options">${['A','B','C','D'].map((x,i)=>`<label class="demo-field">Option ${x}<input required name="q${n}o${i}" placeholder="Option ${x}"></label>`).join('')}</div><label class="demo-field">Correct answer<select name="correct${n}"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select></label>`;div.dataset.qnum=n;$('demoQuestions').appendChild(div);if(q){div.querySelector(`[name=qtext${n}]`).value=q.text;[0,1,2,3].forEach(i=>div.querySelector(`[name=q${n}o${i}]`).value=q.options[i]);div.querySelector(`[name=correct${n}]`).value=String(q.correct);}div.querySelector('[data-del]').onclick=()=>div.remove();};
+    const parseRows=raw=>{const lines=raw.replace(/^\uFEFF/,'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean);if(!lines.length)return [];const isPipe=lines[0].includes('|');let rows;if(isPipe){rows=lines.map(line=>line.split('|').map(x=>x.trim()));}else{const delim=lines[0].includes('\t')?'\t':',';rows=lines.map(line=>{let out=[],v='',quoted=false;for(let i=0;i<line.length;i++){const c=line[i];if(c==='"'&&line[i+1]==='"'&&quoted){v+='"';i++;}else if(c==='"')quoted=!quoted;else if(c===delim&&!quoted){out.push(v.trim());v='';}else v+=c;}out.push(v.trim());return out;});}
+      const first=rows[0].join(' ').toLowerCase();if(first.includes('question')&&(first.includes('option')||first.includes('correct')))rows.shift();return rows.map(r=>{if(r.length<6)return null;let key=String(r[5]).trim().toUpperCase();let correct='ABCD'.indexOf(key);if(correct<0&&/^[1-4]$/.test(key))correct=+key-1;if(correct<0)return null;return{text:r[0],options:r.slice(1,5),correct};}).filter(q=>q&&q.text&&q.options.every(Boolean));};
+    const importQs=qs=>{if(!qs.length){$('demoImportMsg').textContent='No valid rows found. Check the format and correct answer (A/B/C/D).';return;}qs.forEach(q=>addQ(q));$('demoImportMsg').textContent=`Imported ${qs.length} questions. Check them below before publishing.`;};
+    $('demoAddQ').onclick=()=>addQ();
+    $('demoTemplate').onclick=()=>{const csv='Question,Option A,Option B,Option C,Option D,Correct Answer\n"भारत की राजधानी क्या है?",मुंबई,नई दिल्ली,लखनऊ,पटना,B\n';const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='PVrajCMS_Question_Template.csv';a.click();URL.revokeObjectURL(url);};
+    $('demoImportText').onclick=()=>importQs(parseRows($('demoBulkText').value));
+    $('demoBulkFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;const raw=await f.text();importQs(parseRows(raw));e.target.value='';};
+    addQ();
+    $('demoCreate').onsubmit=e=>{e.preventDefault();const cards=[...$('demoQuestions').children];if(!cards.length)return alert('Add at least one question.');const qs=cards.map(c=>{const n=c.dataset.qnum;return{text:c.querySelector(`[name=qtext${n}]`).value.trim(),options:[0,1,2,3].map(i=>c.querySelector(`[name=q${n}o${i}]`).value.trim()),correct:+c.querySelector(`[name=correct${n}]`).value};});if(qs.some(q=>!q.text||q.options.some(o=>!o)))return alert('Complete all question fields or remove empty question cards.');data.exams.unshift({id:'exam-'+Date.now(),title:$('dTitle').value.trim(),duration:+$('dDuration').value,marks:+$('dMarks').value,negative:+$('dNegative').value,questions:qs,published:true,createdAt:new Date().toISOString()});save();admin();};
+  }
+  const uppcsAnswerKeyDefault=["D", "B", "D", "D", "B", "A", "A", "D", "C", "D", "D", "B", "B", "C", "D", "D", "C", "D", "A", "D", "D", "A", "A", "C", "A", "D", "D", "B", "D", "A", "A", "D", "C", "A", "A", "D", "C", "A", "B", "B", "B", "A", "B", "C", "D", "D", "D", "B", "B", "B", "D", "D", "A", "D", "B", "D", "A", "C", "A", "D", "C", "B", "D", "A", "D", "A", "A", "A", "A", "C", "A", "A", "B", "A", "B", "C", "D", "D", "C", "B", "C", "A", "C", "A", "B", "A", "C", "A", "A", "C", "C", "A", "C", "B", "D", "A", "C", "C", "B", "B", "A", "B", "C", "A", "A", "C", "B", "A", "D", "C", "B", "D", "A", "D", "C", "C", "C", "A", "D", "A", "D", "C", "B", "D", "A", "C", "C", "A", "D", "B", "C", "A", "B", "C", "A", "C", "D", "B", "D", "B", "C", "A", "D", "C", "A", "A", "D", "C", "B", "B"];
+  const uppcsAnswerKeyStorage='pvrajcms_uppcs_2023_answer_key_series_c_v1';
+  try{if(!localStorage.getItem(uppcsAnswerKeyStorage))localStorage.setItem(uppcsAnswerKeyStorage,JSON.stringify(uppcsAnswerKeyDefault));}catch{}
+  function getUppcsAnswerKey(){try{const k=JSON.parse(localStorage.getItem(uppcsAnswerKeyStorage)||'null');return Array.isArray(k)&&k.length===150?k:uppcsAnswerKeyDefault;}catch{return uppcsAnswerKeyDefault;}}
+  function setUppcsAnswerKey(k){if(!Array.isArray(k)||k.length!==150||k.some(x=>!['A','B','C','D'].includes(x)))throw new Error('Answer key must contain exactly 150 answers (A/B/C/D).');localStorage.setItem(uppcsAnswerKeyStorage,JSON.stringify(k));}
+  const ANSWER_KEY_DELAY_MS=2*60*1000;
+  const RESULT_DELAY_MS=5*60*1000;
+  const meritProfileKey='pvrajcms_student_registration_v5_test_schedule';
+
+  // Fresh student intake for this WhatsApp-ready release.
+  // This one-time cleanup removes earlier testing candidates/results from this browser,
+  // while preserving exam definitions, answer keys and the uploaded CSAT PDF.
+  const cleanStudentDataFlag='pvrajcms_fresh_student_intake_20261112_v1';
+  try{
+    if(!localStorage.getItem(cleanStudentDataFlag)){
+      [
+        'pvrajcms_student_registration_v5_test_schedule',
+        'pvrajcms_student_registry_v2',
+        'pvrajcms_active_student_roll_v2',
+        'pvrajcms_student_registration_v2',
+        'pvrajcms_uppcs_2023_attempt_v5_final_mobile',
+        'pvrajcms_uppcs_2023_attempt_v9_0900_final',
+        'pvrajcms_up pcs_csat_attempt_final_v3',
+        'pvrajcms_exam_demo_role_v1',
+        'pvrajcms_exam_demo_role_v2_clean'
+      ].forEach(k=>localStorage.removeItem(k));
+      const staleKeys=[];
+      for(let i=0;i<localStorage.length;i++){
+        const k=localStorage.key(i)||'';
+        if(k.startsWith('pvrajcms_uppcs_2023_attempt_') ||
+           k.startsWith('pvrajcms_csat_attempt_v3_student_') ||
+           k.startsWith('pvrajcms_final_result_popup_seen_')){
+          staleKeys.push(k);
+        }
+      }
+      staleKeys.forEach(k=>localStorage.removeItem(k));
+      localStorage.setItem(cleanStudentDataFlag,'1');
+    }
+  }catch(e){console.warn('Fresh student intake cleanup could not complete:',e);}
+
+  const studentRegistryKey='pvrajcms_student_registry_v2';
+  const activeStudentKey='pvrajcms_active_student_roll_v2';
+  const emptyStudentProfile={name:'',fatherName:'',rollNo:'',dob:'',gender:'',category:'',examCenter:''};
+  let registeredStudents=[];
+  try{registeredStudents=JSON.parse(localStorage.getItem(studentRegistryKey)||'[]');if(!Array.isArray(registeredStudents))registeredStudents=[];}catch{registeredStudents=[];}
+  // Migrate the earlier single-student profile into the new multi-student registry.
+  try{
+    const legacyProfile=JSON.parse(localStorage.getItem(meritProfileKey)||'null');
+    if(legacyProfile?.rollNo&&!registeredStudents.some(x=>String(x.rollNo).trim().toLowerCase()===String(legacyProfile.rollNo).trim().toLowerCase())){
+      registeredStudents.push({...emptyStudentProfile,...legacyProfile});
+      localStorage.setItem(studentRegistryKey,JSON.stringify(registeredStudents));
+    }
+  }catch{}
+  let activeStudentRoll=localStorage.getItem(activeStudentKey)||'';
+  let studentProfile={...emptyStudentProfile,...(registeredStudents.find(x=>String(x.rollNo)===activeStudentRoll)||registeredStudents[0]||{})};
+  if(studentProfile.rollNo){activeStudentRoll=String(studentProfile.rollNo);localStorage.setItem(activeStudentKey,activeStudentRoll);}
+  const saveStudentRegistry=()=>localStorage.setItem(studentRegistryKey,JSON.stringify(registeredStudents));
+  const saveMeritProfile=()=>{const ix=registeredStudents.findIndex(x=>String(x.rollNo).trim().toLowerCase()===String(studentProfile.rollNo).trim().toLowerCase());if(ix>=0)registeredStudents[ix]={...studentProfile};else registeredStudents.push({...studentProfile});saveStudentRegistry();localStorage.setItem(activeStudentKey,String(studentProfile.rollNo));localStorage.setItem(meritProfileKey,JSON.stringify(studentProfile));};
+  const studentStorageSuffix=roll=>'_student_'+encodeURIComponent(String(roll||'unregistered').trim().toLowerCase()); // Strict per-roll isolation; never copy unscoped legacy attempts.
+  const uppcsAttemptBaseKey='pvrajcms_uppcs_2023_attempt_v12_2hour';
+  let uppcsAttemptKey=uppcsAttemptBaseKey+studentStorageSuffix(studentProfile.rollNo);
+  // No legacy attempt migration: prevents one student's answers/results appearing for another.
+  let savedUppcs=null; try{savedUppcs=JSON.parse(localStorage.getItem(uppcsAttemptKey)||'null');}catch{}
+  let paperAnswers=savedUppcs?.answers||{},paperEndAt=savedUppcs?.endAt||0,paperSubmitted=!!savedUppcs?.submitted,paperReleaseAt=savedUppcs?.submittedAt||0,paperReleaseHandle=null;
+  const saveUppcs=()=>localStorage.setItem(uppcsAttemptKey,JSON.stringify({answers:paperAnswers,endAt:paperEndAt,submitted:paperSubmitted,submittedAt:paperReleaseAt}));
+  const meritCategories=['General','OBC','SC','ST','EWS','PwBD','Other / Prefer not to say'];
+  const examCenters=['Lucknow','Prayagraj','Varanasi','Kanpur','Agra','Meerut','Gorakhpur','Bareilly','Jhansi','Ayodhya','Other'];
+  let creatingNewStudent=false;
+
+  function student(){
+    role='student';localStorage.setItem(demoRoleKey,'student');
+    const pending=paperEndAt>0&&!paperSubmitted, submittedAttempt=paperSubmitted;
+    const actionLabel=pending?'Resume exam':submittedAttempt?'View submission status':'Register & View Exam';
+    shell('Student Dashboard','Student registration is required before starting the examination.',`
+      <div class="demo-card">
+        <div class="demo-row" style="align-items:center;gap:12px;flex-wrap:wrap">
+          <h2 style="margin:0">Student Registration Form</h2>
+          <button type="button" class="secondary" id="registerAnotherStudent">+ Register another student</button>
+        </div>
+        ${registeredStudents.length?`<label class="demo-field" style="display:block;margin:12px 0">Select registered student
+          <select id="registeredStudentSelect">${registeredStudents.map(x=>`<option value="${escapeHtml(x.rollNo)}" ${String(x.rollNo)===String(studentProfile.rollNo)?'selected':''}>${escapeHtml(x.name)} · Roll No. ${escapeHtml(x.rollNo)}</option>`).join('')}</select>
+        </label>`:''}
+        <p class="demo-note">Complete the selected student's details before the test. Register as many students as needed. Each unique roll number has its own registration, answer sheets and results on this computer/browser.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+          <label class="demo-field">Full name *<input id="regName" value="${escapeHtml(studentProfile.name||'')}" placeholder="Enter full name" autocomplete="name"></label>
+          <label class="demo-field">Father's name *<input id="regFather" value="${escapeHtml(studentProfile.fatherName||'')}" placeholder="Enter father's name"></label>
+          <label class="demo-field">Roll number *<input id="regRollNo" value="${escapeHtml(studentProfile.rollNo||'')}" placeholder="Enter examination roll number"></label>
+          <label class="demo-field">Date of birth *<input id="regDob" type="date" value="${escapeHtml(studentProfile.dob||'')}"></label>
+          <label class="demo-field">Gender *<select id="regGender"><option value="">Select gender</option>${['Male','Female','Other','Prefer not to say'].map(x=>`<option ${studentProfile.gender===x?'selected':''}>${x}</option>`).join('')}</select></label>
+          <label class="demo-field">Category *<select id="regCategory"><option value="">Select category</option>${meritCategories.map(c=>`<option value="${c}" ${studentProfile.category===c?'selected':''}>${c}</option>`).join('')}</select></label>
+          <label class="demo-field">Examination centre *<select id="regCenter"><option value="">Select examination centre</option>${examCenters.map(c=>`<option value="${c}" ${studentProfile.examCenter===c?'selected':''}>${c}</option>`).join('')}</select></label>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px">
+          <button type="button" class="primary" id="saveRegistration">Save registration</button>
+          <span id="registrationMsg" class="demo-note">${studentProfile.name?'Saved registration · '+escapeHtml(studentProfile.name):'Fields marked * are required.'}</span>
+        </div>
+        <p class="demo-note">Category is self-declared for this demo. An actual examination must verify category certificates and centre allocation separately.</p>
+      </div>
+      <div class="demo-stats">
+        <div class="demo-stat"><b>${data.exams.length+1}</b>Available exams</div>
+        <div class="demo-stat"><b>${data.results.length}</b>Completed attempts</div>
+        <div class="demo-stat"><b>${data.results.filter(r=>String(r.rollNo||r.registration?.rollNo||'')===String(studentProfile.rollNo||'')).length}</b>Your results</div>
+      </div>
+      <div class="demo-card"><h2>Available examinations</h2>
+        <div class="demo-card" style="background:#f8faff;margin:10px 0">
+          <h3>Question Paper Details</h3>
+          <p><b>Examination:</b> UPPCS Preliminary Examination 2023</p>
+          <p><b>Paper:</b> General Studies Paper-I</p>
+          <p><b>Booklet Series:</b> C &nbsp; · &nbsp; <b>Exam date:</b> 14 May 2023</p>
+          <p><b>Total questions:</b> 150 &nbsp; · &nbsp; <b>Maximum marks:</b> 200</p>
+          <p><b>Duration:</b> 2 hours &nbsp; · &nbsp; <b>Correct:</b> +4/3 marks &nbsp; · &nbsp; <b>Wrong:</b> −4/9 marks</p>
+        </div>
+        <div class="demo-row" style="padding:12px 0;border-bottom:1px solid #eee">
+          <div><b>UPPCS Prelims 2023 — General Studies Paper-I</b><div class="muted small">150 questions · 2-hour test · Booklet Series C · +1⅓ correct · −4/9 wrong</div></div>
+          <button class="primary" id="startUppcsPaper" ${studentProfile.name&&studentProfile.category&&studentProfile.examCenter?'':'disabled'}>${actionLabel}</button>
+        </div>
+        ${data.exams.map(e=>`<div class="demo-row" style="padding:12px 0;border-bottom:1px solid #eee"><div><b>${escapeHtml(e.title)}</b><div class="muted small">${e.questions.length} questions · ${e.duration} minutes</div></div><button class="primary" data-start="${e.id}">Start exam</button></div>`).join('')}
+      </div>
+      <div class="demo-card"><h2>My results</h2>${data.results.filter(r=>(r.rollNo||r.registration?.rollNo)===(studentProfile.rollNo||'')&&studentProfile.rollNo).map(r=>`<div style="padding:10px 0;border-bottom:1px solid #e5e9f2"><p><b>${escapeHtml(r.title||'Examination')}</b></p><p>Name: ${escapeHtml(r.student||'—')} · Roll Number: ${escapeHtml(r.rollNo||'—')}</p><p>Category: ${escapeHtml(r.category||'—')} · Centre: ${escapeHtml(r.examCenter||'—')}</p><p><b>${r.score!==undefined?`${Number(r.score).toFixed(3)}/${r.total} (${Number(r.pct).toFixed(2)}%)`:`${r.answered}/150 answered; ${r.unanswered} unanswered`}</b></p></div>`).join('')||'<p class="muted">No results yet for this roll number.</p>'}</div>
+    `);
+    $('saveRegistration').onclick=()=>{
+      const profile={
+        name:$('regName').value.trim(),fatherName:$('regFather').value.trim(),rollNo:$('regRollNo').value.trim(),dob:$('regDob').value,
+        gender:$('regGender').value,
+        category:$('regCategory').value,examCenter:$('regCenter').value
+      };
+      if(!profile.name||!profile.fatherName||!profile.rollNo||!profile.dob||!profile.gender||!profile.category||!profile.examCenter){
+        $('registrationMsg').textContent='Please complete all required (*) fields.';return;
+      }
+      const existing=registeredStudents.find(x=>String(x.rollNo).trim().toLowerCase()===profile.rollNo.trim().toLowerCase());
+      if(existing&&String(existing.rollNo).trim().toLowerCase()!==String(studentProfile.rollNo).trim().toLowerCase()){
+        $('registrationMsg').textContent='This roll number is already registered. Please use a unique roll number for each student.';return;
+      }
+      if(creatingNewStudent&&existing){
+        $('registrationMsg').textContent='This roll number is already registered. Please enter a different roll number.';return;
+      }
+      const prior=registeredStudents.findIndex(x=>String(x.rollNo).trim().toLowerCase()===profile.rollNo.trim().toLowerCase());
+      if(prior>=0)registeredStudents[prior]={...profile};else registeredStudents.push({...profile});
+      saveStudentRegistry();
+      activateStudentProfile(profile);
+      creatingNewStudent=false;
+      $('registrationMsg').textContent='Registration saved. This student now has a separate account and result record.';
+      $('startUppcsPaper').disabled=false;
+      student();
+    };
+    const studentSelect=$('registeredStudentSelect');
+    if(studentSelect)studentSelect.onchange=()=>{
+      const chosen=registeredStudents.find(x=>String(x.rollNo)===studentSelect.value);
+      if(chosen){activateStudentProfile(chosen);student();}
+    };
+    $('registerAnotherStudent').onclick=()=>{
+      creatingNewStudent=true;
+      ['regName','regFather','regRollNo','regDob','regGender','regCategory','regCenter'].forEach(id=>{const el=$(id);if(el)el.value='';});
+      const msg=$('registrationMsg');if(msg)msg.textContent='Enter the new student details and save registration.';
+      $('regName')?.focus();
+    };
+    $('startUppcsPaper').onclick=()=>{
+      if(!studentProfile.name||!studentProfile.rollNo||!studentProfile.category||!studentProfile.examCenter){
+        alert('Please complete and save the student registration form first.');return;
+      }
+      startUppcsPaper();
+    };
+    document.querySelectorAll('[data-start]').forEach(b=>b.onclick=()=>start(b.dataset.start));
+  }
+  function startUppcsPaper(){
+    clearInterval(timer);
+    if(paperReleaseHandle)clearInterval(paperReleaseHandle);
+    if(paperSubmitted){
+      const r=data.results.find(x=>x.title==='UPPCS Prelims 2023 — General Studies Paper-I'&&String(x.rollNo||x.registration?.rollNo||'')===String(studentProfile.rollNo||''));
+      paperReleaseAt=paperReleaseAt||Date.parse(r?.at||Date.now());
+      const answered=Object.values(paperAnswers).filter(Boolean).length;
+      renderPaperRelease(!!r?.auto,answered);
+      paperReleaseHandle=setInterval(()=>renderPaperRelease(!!r?.auto,answered),1000);
+      return;
+    }
+    if(paperEndAt>0){
+      if(Date.now()>=paperEndAt){finishUppcsPaper(true);return;}
+      renderUppcsPaper();paperTick();timer=setInterval(paperTick,500);return;
+    }
+    const now=Date.now();
+    const gsSlot=getSlot('GS');
+    if(now<gsSlot.start){alert('GS Paper-I starts at '+clockText(gsSlot.start)+'. You can enter from the scheduled start time.');return;}
+    if(now>gsSlot.start+LATE_ENTRY_GRACE_MS){alert('GS late entry is closed. Entry was allowed for 20 minutes after 10:45 AM.');return;}
+    const personalEndAt=now+120*60*1000;
+    if(!confirm('Start GS Paper-I now? You have the full 2-hour test. It will end at '+clockText(personalEndAt)+'.'))return;
+    paperAnswers={};paperSubmitted=false;paperEndAt=personalEndAt;
+    saveUppcs();renderUppcsPaper();paperTick();timer=setInterval(paperTick,500);
+  }
+  async function renderUppcsPaper(){hideAll();$('examView').classList.remove('hidden');let uploaded=null;try{uploaded=await loadGSPdf();}catch(err){console.warn('Could not load uploaded GS paper',err);}const deleted=!uploaded&&await (async()=>{try{const dbx=await openAssetDB();try{return await new Promise(resolve=>{const tx=dbx.transaction('assets','readonly'),r=tx.objectStore('assets').get('gsPdfDeleted');r.onsuccess=()=>resolve(r.result===true);r.onerror=()=>resolve(false);});}finally{dbx.close();}}catch{return false;}})();let paperMarkup='';if(uploaded){if(window.__pvGsObjectUrl)URL.revokeObjectURL(window.__pvGsObjectUrl);window.__pvGsObjectUrl=URL.createObjectURL(uploaded);paperMarkup=`<iframe title="Uploaded GS Paper-I PDF" src="${window.__pvGsObjectUrl}#toolbar=1&navpanes=0" style="display:block;width:100%;height:68vh;border:0;background:#fff"></iframe>`;}else if(deleted){paperMarkup='<p class="muted" style="padding:24px;text-align:center">The administrator has removed the current question paper. A new paper will be uploaded soon.</p>';}else{paperMarkup=`<p class="muted" style="padding:24px;text-align:center">Question paper is not embedded in this lightweight version. Administrator must upload the current paper.</p>`;}$('examView').innerHTML=`<div class="demo-panel"><div class="demo-row"><div><p class="eyebrow">LIVE EXAM · UPPCS 2023</p><h1>General Studies Paper-I</h1><p class="muted">Booklet Series C · 150 questions · 200 marks</p><p class="badge">Negative marking enabled: +1.333 marks for correct answer · −0.444 marks for wrong answer · 0 for unanswered</p></div><div id="paperTimer" class="demo-timer">02:00:00</div></div><div class="demo-card"><b>Question paper</b><p class="demo-note">Read the question paper below. Select your answers in the response sheet. Your paper will submit automatically when your personal 2-hour timer ends.</p>${paperMarkup}</div><div class="demo-card"><div class="demo-row"><h2>Answer sheet</h2><span class="demo-tag"><span id="paperAnswered">0</span>/150 answered</span></div><p class="demo-note">Choose A, B, C or D for each question. You can leave questions blank. Correct: +4/3 marks · Wrong: −4/9 marks (one-third penalty) · Unanswered: 0 marks.</p><div id="paperAnswerGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px"></div><button class="primary" id="paperSubmit" style="margin-top:18px">Submit examination</button></div></div>`;let html='';for(let i=1;i<=150;i++){html+=`<label class="demo-field" style="border:1px solid #e2e8f0;border-radius:8px;padding:8px;margin:0">Q${i}<select data-paper-q="${i}" style="margin-top:5px"><option value="">Not answered</option>${['A','B','C','D'].map(x=>`<option value="${x}">${x}</option>`).join('')}</select></label>`;}$('paperAnswerGrid').innerHTML=html;document.querySelectorAll('[data-paper-q]').forEach(sel=>{sel.value=paperAnswers[sel.dataset.paperQ]||'';sel.onchange=()=>{paperAnswers[sel.dataset.paperQ]=sel.value;saveUppcs();$('paperAnswered').textContent=Object.values(paperAnswers).filter(Boolean).length;};});$('paperAnswered').textContent=Object.values(paperAnswers).filter(Boolean).length;$('paperSubmit').onclick=()=>{if(Date.now()>=paperEndAt){finishUppcsPaper(true);}else{finishUppcsPaper(false);}};}
+  function paperTick(){const left=Math.max(0,Math.ceil((paperEndAt-Date.now())/1000));const h=String(Math.floor(left/3600)).padStart(2,'0'),m=String(Math.floor(left%3600/60)).padStart(2,'0'),s=String(left%60).padStart(2,'0');const el=$('paperTimer');if(el)el.textContent=`${h}:${m}:${s}`;saveUppcs();if(left<=0)finishUppcsPaper(true);}
+  function startPaperReleaseTicker(auto,answered){if(paperReleaseHandle)clearInterval(paperReleaseHandle);const refresh=()=>{if(paperSubmitted&&$('resultView')&&!$('resultView').classList.contains('hidden'))renderPaperRelease(auto,answered);};refresh();paperReleaseHandle=window.setInterval(refresh,1000);}
+  function finishUppcsPaper(auto){if(paperSubmitted)return;paperSubmitted=true;clearInterval(timer);const answered=Object.values(paperAnswers).filter(Boolean).length;const submittedAt=Date.now();paperReleaseAt=submittedAt;saveUppcs();data.results.unshift({student:studentProfile.name||'Student',rollNo:studentProfile.rollNo||'Not provided',category:studentProfile.category||'Not specified',examCenter:studentProfile.examCenter||'Not specified',registration:{...studentProfile},answers:{...paperAnswers},title:'UPPCS Prelims 2023 — General Studies Paper-I',answered,unanswered:150-answered,auto,submitted:true,at:new Date(submittedAt).toISOString(),answerKeyAt:submittedAt+ANSWER_KEY_DELAY_MS,resultAt:submittedAt+RESULT_DELAY_MS});save();startPaperReleaseTicker(auto,answered);}
+
+  function combinedResultNoticeHtml(){
+    const roll=String(studentProfile.rollNo||'').trim();
+    const name=String(studentProfile.name||'Student');
+    const safeName=escapeHtml(name),safeRoll=escapeHtml(roll||'—');
+    const today=dualSchedule.date;
+    const sameDay=r=>{if(!r?.at)return false;const d=new Date(r.at);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`===today;};
+    const mine=data.results.filter(r=>String(r.rollNo||r.registration?.rollNo||'').trim()===roll);
+    const gs=mine.filter(r=>r.title==='UPPCS Prelims 2023 — General Studies Paper-I').sort((a,b)=>Date.parse(b.at)-Date.parse(a.at))[0];
+    const cs=mine.filter(r=>r.title==='UPPCS Prelims 2023 — General Studies Paper-II (CSAT)').sort((a,b)=>Date.parse(b.at)-Date.parse(a.at))[0];
+    const gsReady=!!gs&&Date.now()>=(Date.parse(gs.at)+RESULT_DELAY_MS);
+    const csReady=!!cs&&Date.now()>=(Date.parse(cs.at)+RESULT_DELAY_MS);
+    let message='Final Combined Result will be announced 5 minutes after both individual paper results are published.';
+    let timer='Waiting for both papers to be submitted.';
+    if(gs&&cs){
+      const finalAt=Math.max(Date.parse(gs.at)+RESULT_DELAY_MS,Date.parse(cs.at)+RESULT_DELAY_MS)+5*60*1000;
+      const left=Math.max(0,finalAt-Date.now());
+      if(!gsReady||!csReady) timer=`GS result: ${gsReady?'Published':'Pending'} · CSAT result: ${csReady?'Published':'Pending'} · Final result countdown starts after both results publish.`;
+      else if(left>0) timer=`Final Combined Result will be available in ${fmtCountdown(left)}.`;
+      else timer='Final Combined Result is now available. Open the Student Dashboard to view it.';
+    }else{
+      timer=`GS: ${gs?'Submitted':'Not submitted'} · CSAT: ${cs?'Submitted':'Not submitted'}.`;
+    }
+    return `<div class="demo-card pv-final-result-notice" style="border:2px solid #b9cdfb;background:linear-gradient(135deg,#f4f7ff,#fff);text-align:center">
+      <p class="eyebrow" style="margin:0 0 6px">FINAL RESULT ANNOUNCEMENT</p>
+      <h3 style="margin:0 0 10px;color:#17366f">Final Combined Prelims Result</h3>
+      <p style="margin:4px 0"><b>Student:</b> ${safeName} &nbsp; <b>Roll No.:</b> ${safeRoll}</p>
+      <p style="margin:8px 0;color:#405579">The final result will be released 5 minutes after both GS and CSAT individual results are published.</p>
+      <p style="margin:8px 0;font-weight:750;color:#2458d8">${timer}</p>
+    </div>`;
+  }
+
+  function renderPaperRelease(auto,answered){hideAll();$('resultView').classList.remove('hidden');const now=Date.now(),keyAt=paperReleaseAt+ANSWER_KEY_DELAY_MS,resultAt=paperReleaseAt+RESULT_DELAY_MS;const keyReady=now>=keyAt,resultReady=now>=resultAt;const fmt=ms=>{const s=Math.max(0,Math.ceil(ms/1000));return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;};$('resultView').innerHTML=`<div class="demo-panel demo-card"><p class="eyebrow">EXAMINATION SUBMISSION</p><h1>${auto?'Time over — automatically submitted':'Paper submitted successfully'}</h1><div class="demo-stats"><div class="demo-stat"><b>${answered}/150</b>Answered</div><div class="demo-stat"><b>${150-answered}</b>Unanswered</div><div class="demo-stat"><b>${auto?'Auto':'Manual'}</b>Submission</div></div><div class="demo-card"><h3>Candidate details</h3><p><b>Name:</b> ${escapeHtml(studentProfile.name||'—')} &nbsp; <b>Roll Number:</b> ${escapeHtml(studentProfile.rollNo||'—')}</p><p><b>Category:</b> ${escapeHtml(studentProfile.category||'—')} &nbsp; <b>Examination Centre:</b> ${escapeHtml(studentProfile.examCenter||'—')}</p></div>${combinedResultNoticeHtml()}<p class="demo-note">Your response sheet is locked and submitted. The Answer Key opens 2 minutes after submission. The Result is published 5 minutes after submission.</p><div class="demo-card"><h2>Answer Key</h2><p id="keyStatus" class="muted">${keyReady?'Answer Key access is now open.':'Available in '+fmt(keyAt-now)}</p><button class="primary" id="openAnswerKey" ${keyReady?'':'disabled'}>Open Answer Key</button><p class="demo-note">Negative marking applies: +4/3 for each correct answer, −4/9 for each wrong answer, and 0 for unanswered. The administrator must upload the official answer key before the system can calculate the final score.</p></div><div class="demo-card"><h2>GS Paper-I Result</h2><p id="resultStatus" class="muted">${resultReady?'Result publication time reached.':'Result will be available in '+fmt(resultAt-now)}</p><div id="publishedResult">${resultReady?(()=>{const k=getUppcsAnswerKey();let correct=0,wrong=0,unanswered=0;for(let i=1;i<=150;i++){const a=paperAnswers[String(i)];if(!a)unanswered++;else if(a===k[i-1])correct++;else wrong++;}const score=correct*(4/3)-wrong*(4/9);return `<b>Result published</b><div class="demo-stats"><div class="demo-stat"><b>${score.toFixed(3)}/200</b>Score</div><div class="demo-stat"><b>${correct}</b>Correct</div><div class="demo-stat"><b>${wrong}</b>Wrong</div></div><p>Unanswered: <b>${unanswered}</b> · Percentage: <b>${(score/200*100).toFixed(2)}%</b></p><p class="demo-note">Marking: +4/3 correct · −4/9 wrong · 0 unanswered. Based on the loaded Series C answer key for objection; verify against final revised UPPSC key.</p>`;})():'Result not published yet.'}</div></div><button class="secondary" id="demoBack">Back to student dashboard</button></div>`;$('openAnswerKey').onclick=()=>{
+      if(!keyReady)return;
+      const k=getUppcsAnswerKey();
+      const rows=k.map((a,i)=>`<tr><td>${i+1}</td><td><b>${a}</b></td><td>${paperAnswers[String(i+1)]||'—'}</td><td>${paperAnswers[String(i+1)]?(paperAnswers[String(i+1)]===a?'Correct':'Wrong'):'Unanswered'}</td></tr>`).join('');
+      const w=window.open('','_blank');
+      if(!w){alert('Please allow pop-ups to view the answer key.');return;}
+      w.document.write(`<!doctype html><html><head><title>UPPCS 2023 Series C Answer Key</title><meta charset="utf-8"><style>body{font:15px Arial;margin:24px;color:#172033}table{border-collapse:collapse;width:100%}th,td{border:1px solid #d8deea;padding:7px;text-align:center}th{background:#eef2ff}h1{font-size:24px}</style></head><body><h1>UPPCS Prelims 2023 · GS Paper-I · Booklet C</h1><p>Published answer key for objection · 150 questions</p><table><tr><th>Q No.</th><th>Answer</th><th>Your answer</th><th>Status</th></tr>${rows}</table></body></html>`);
+      w.document.close();
+    };$('demoBack').onclick=()=>{if(paperReleaseHandle)clearInterval(paperReleaseHandle);student();};}
+  function start(id){activeExam=data.exams.find(e=>e.id===id);if(!activeExam)return;index=0;answers={};endAt=Date.now()+activeExam.duration*60000;renderQuestion();tick();timer=setInterval(tick,500);}
+  function renderQuestion(){hideAll();$('examView').classList.remove('hidden');$('examView').innerHTML=`<div class="demo-panel"><div class="demo-row"><div><p class="eyebrow">EXAM IN PROGRESS · DEMO</p><h1>${escapeHtml(activeExam.title)}</h1><span id="demoTimer" class="demo-timer"></span></div><span class="demo-tag">Question ${index+1} of ${activeExam.questions.length}</span></div><div class="progress"><div id="demoProgress" style="width:${Object.keys(answers).length/activeExam.questions.length*100}%"></div></div><div class="demo-card"><h2>${escapeHtml(activeExam.questions[index].text)}</h2>${activeExam.questions[index].options.map((o,i)=>`<label class="demo-option"><input type="radio" name="demoAnswer" value="${i}" ${answers[index]===i?'checked':''}> <b>${'ABCD'[i]}.</b> ${escapeHtml(o)}</label>`).join('')}<div class="demo-row" style="margin-top:20px"><button class="secondary" id="demoPrev" ${index===0?'disabled':''}>Previous</button><div><button class="secondary" id="demoNext">${index===activeExam.questions.length-1?'Review':'Next'}</button> <button class="primary" id="demoSubmit">Submit exam</button></div></div></div><div class="demo-card"><b>Question palette</b><div class="demo-row" style="justify-content:flex-start;margin-top:10px">${activeExam.questions.map((q,i)=>`<button class="secondary" data-jump="${i}">${i+1}${answers[i]!==undefined?' ✓':''}</button>`).join('')}</div></div></div>`;
+    document.querySelectorAll('[name=demoAnswer]').forEach(r=>r.onchange=()=>{answers[index]=+r.value;renderQuestion();});$('demoPrev').onclick=()=>{index=Math.max(0,index-1);renderQuestion();};$('demoNext').onclick=()=>{index=Math.min(activeExam.questions.length-1,index+1);renderQuestion();};$('demoSubmit').onclick=()=>finish(false);document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>{index=+b.dataset.jump;renderQuestion();});
+  }
+  function tick(){const left=Math.max(0,Math.ceil((endAt-Date.now())/1000));const el=$('demoTimer');if(el)el.textContent=`Time remaining ${String(Math.floor(left/60)).padStart(2,'0')}:${String(left%60).padStart(2,'0')}`;if(left<=0)finish(true);}
+  function finish(auto){if(timer)clearInterval(timer);let correct=0,wrong=0;activeExam.questions.forEach((q,i)=>{if(answers[i]===q.correct)correct++;else if(answers[i]!==undefined)wrong++;});const total=activeExam.questions.length*activeExam.marks;const score=Math.max(0,correct*activeExam.marks-wrong*activeExam.negative);const pct=total?Math.round(score/total*100):0;data.results.unshift({student:'Demo Student',title:activeExam.title,score,total,pct,correct,wrong,auto,at:new Date().toISOString()});save();hideAll();$('resultView').classList.remove('hidden');$('resultView').innerHTML=`<div class="demo-panel demo-card"><p class="eyebrow">EXAMINATION RESULT · DEMO</p><h1>${auto?'Time expired — automatically submitted':'Exam submitted successfully'}</h1><div class="demo-stats"><div class="demo-stat"><b>${score}/${total}</b>Score</div><div class="demo-stat"><b>${pct}%</b>Percentage</div><div class="demo-stat"><b>${correct}</b>Correct answers</div></div><p>Wrong answers: <b>${wrong}</b></p><p>Unanswered: <b>${activeExam.questions.length-correct-wrong}</b></p><button class="primary" id="demoBack">Back to student dashboard</button></div>`;$('demoBack').onclick=student;}
+
+  // ===== UPPCS two-paper examination module (GS + CSAT) =====
+  // Check timetable: GS starts 10:30; CSAT starts 13:00. Each student gets a personal 2-hour timer.
+  // Admin may change the date/times before the examination.
+  const dualScheduleKey='pvrajcms_up pcs_dual_schedule_test_0810_latefull_v2';
+  let csatAttemptKey='pvrajcms_csat_attempt_v4_2hour'+studentStorageSuffix(studentProfile.rollNo);
+  // CSAT attempts are strictly isolated by each student's roll number.
+  // Booklet C answer key transcribed from the uploaded UPPSC 2023 CSAT 'Answer Key for Objection'.
+  // Admin can replace this key later using the CSV/TXT upload control.
+  const csatKeyStorage='pvrajcms_up pcs_csat_key_series_c_preloaded_v2'.replace(/ /g,'');
+  const csatAnswerKeySeriesCDefault=["B", "B", "B", "A", "C", "C", "D", "B", "A", "C", "B", "A", "B", "B", "C", "A", "B", "C", "D", "C", "C", "D", "D", "C", "B", "C", "D", "A", "C", "D", "C", "D", "C", "B", "A", "B", "C", "C", "A", "B", "B", "D", "C", "B", "C", "A", "A", "C", "B", "A", "A", "D", "C", "B", "B", "C", "A", "C", "A", "A", "A", "A", "B", "C", "B", "C", "A", "D", "D", "A", "C", "B", "B", "C", "D", "B", "C", "B", "D", "D", "D", "B", "D", "B", "B", "D", "C", "C", "B", "D", "A", "D", "C", "C", "B", "A", "B", "A", "B", "A"];
+  try{if(!localStorage.getItem(csatKeyStorage))localStorage.setItem(csatKeyStorage,JSON.stringify(csatAnswerKeySeriesCDefault));}catch{}
+  const csatPdfDbName='pvrajcms_exam_assets_v1';
+  // Embedded original CSAT Paper-II PDF, Booklet C, uploaded by the administrator.
+  const embeddedCSATPdfBase64='';
+  const csatPageImages=[];
+  const localDateString=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
+  const defaultDualSchedule={date:localDateString(),gsStart:'10:45',gsEnd:'12:45',csatStart:'13:30',csatEnd:'15:30'};
+  let dualSchedule;
+  try{dualSchedule={...defaultDualSchedule,...JSON.parse(localStorage.getItem(dualScheduleKey)||'{}')};}catch{dualSchedule={...defaultDualSchedule};}
+  dualSchedule.date=localDateString();
+  dualSchedule.gsStart='10:45';dualSchedule.gsEnd='12:45';dualSchedule.csatStart='13:30';dualSchedule.csatEnd='15:30';
+  localStorage.setItem(dualScheduleKey,JSON.stringify(dualSchedule));
+  const saveDualSchedule=()=>localStorage.setItem(dualScheduleKey,JSON.stringify(dualSchedule));
+  const slotTime=(day,time)=>new Date(`${day}T${time}:00`).getTime();
+  const getSlot=(paper)=>paper==='GS'
+    ?{start:slotTime(dualSchedule.date,dualSchedule.gsStart),end:slotTime(dualSchedule.date,dualSchedule.gsEnd)}
+    :{start:slotTime(dualSchedule.date,dualSchedule.csatStart),end:slotTime(dualSchedule.date,dualSchedule.csatEnd)};
+  const clockText=ms=>new Date(ms).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  const fmtCountdown=ms=>{const sec=Math.max(0,Math.ceil(ms/1000));return `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`;};
+  const readCSATKey=()=>{try{const a=JSON.parse(localStorage.getItem(csatKeyStorage)||'null');return Array.isArray(a)&&a.length===100&&a.every(x=>['A','B','C','D'].includes(x))?a:csatAnswerKeySeriesCDefault;}catch{return csatAnswerKeySeriesCDefault;}};
+  let csatState={answers:{},endAt:0,submitted:false,submittedAt:0};
+  try{csatState={...csatState,...JSON.parse(localStorage.getItem(csatAttemptKey)||'{}')};}catch{}
+  const saveCSAT=()=>localStorage.setItem(csatAttemptKey,JSON.stringify(csatState));
+  function activateStudentProfile(profile){
+    studentProfile={...emptyStudentProfile,...profile};
+    activeStudentRoll=String(studentProfile.rollNo||'');
+    localStorage.setItem(activeStudentKey,activeStudentRoll);
+    localStorage.setItem(meritProfileKey,JSON.stringify(studentProfile));
+    uppcsAttemptKey=uppcsAttemptBaseKey+studentStorageSuffix(studentProfile.rollNo);
+    let gs=null;try{gs=JSON.parse(localStorage.getItem(uppcsAttemptKey)||'null');}catch{}
+    paperAnswers=gs?.answers||{};paperEndAt=gs?.endAt||0;paperSubmitted=!!gs?.submitted;paperReleaseAt=gs?.submittedAt||0;
+    csatAttemptKey='pvrajcms_csat_attempt_v4_2hour'+studentStorageSuffix(studentProfile.rollNo);
+    csatState={answers:{},endAt:0,submitted:false,submittedAt:0};
+    try{csatState={...csatState,...JSON.parse(localStorage.getItem(csatAttemptKey)||'{}')};}catch{}
+    saveMeritProfile();
+  }
+  const openAssetDB=()=>new Promise((resolve,reject)=>{
+    const req=indexedDB.open(csatPdfDbName,1);
+    req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('assets'))req.result.createObjectStore('assets');};
+    req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
+  });
+  const saveCSATPdf=async blob=>{const dbx=await openAssetDB();await new Promise((resolve,reject)=>{const tx=dbx.transaction('assets','readwrite');tx.objectStore('assets').put(blob,'csatPdf');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});dbx.close();};
+  const saveGSPdf=async blob=>{const dbx=await openAssetDB();await new Promise((resolve,reject)=>{const tx=dbx.transaction('assets','readwrite'),st=tx.objectStore('assets');st.put(blob,'gsPdf');st.put(false,'gsPdfDeleted');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});dbx.close();};
+  const loadGSPdf=async()=>{const dbx=await openAssetDB();try{return await new Promise((resolve,reject)=>{const tx=dbx.transaction('assets','readonly'),st=tx.objectStore('assets'),a=st.get('gsPdf'),d=st.get('gsPdfDeleted');tx.oncomplete=()=>resolve(d.result===true?null:(a.result||null));tx.onerror=()=>reject(tx.error);});}finally{dbx.close();}};
+  const deleteGSPdf=async()=>{const dbx=await openAssetDB();await new Promise((resolve,reject)=>{const tx=dbx.transaction('assets','readwrite'),st=tx.objectStore('assets');st.delete('gsPdf');st.put(true,'gsPdfDeleted');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});dbx.close();};
+  const loadCSATPdf=async()=>{
+    // On Android Chrome opened via content://, IndexedDB can remain pending.
+    // Wait briefly for an admin-uploaded copy, then use the PDF embedded in this HTML.
+    try{
+      const cached=await Promise.race([
+        (async()=>{
+          const dbx=await openAssetDB();
+          try{
+            return await new Promise((resolve,reject)=>{
+              const tx=dbx.transaction('assets','readonly');
+              const req=tx.objectStore('assets').get('csatPdf');
+              req.onsuccess=()=>resolve(req.result||null);
+              req.onerror=()=>reject(req.error);
+              tx.onerror=()=>reject(tx.error);
+            });
+          }finally{try{dbx.close();}catch{}}
+        })(),
+        new Promise(resolve=>setTimeout(()=>resolve(null),1200))
+      ]);
+      if(cached)return cached;
+    }catch{}
+    try{
+      const raw=atob(embeddedCSATPdfBase64),bytes=new Uint8Array(raw.length);
+      for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+      return new Blob([bytes],{type:'application/pdf'});
+    }catch{return null;}
+  };
+  const clearCSATPdf=async()=>{const dbx=await openAssetDB();await new Promise((resolve,reject)=>{const tx=dbx.transaction('assets','readwrite');tx.objectStore('assets').delete('csatPdf');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});dbx.close();};
+  const csatHasPDF=async()=>!!(await loadCSATPdf());
+  let csatTimer=null,csatReleaseTimer=null,csatObjectUrl=null;
+  // Open checking mode: no fixed clock-based start/end windows. Late entry remains enabled;
+  // each student's personal 2-hour timer starts when they press Start.
+  const LATE_ENTRY_GRACE_MS=20*60*1000;
+  const slotState=(paper,attempt)=>{if(attempt?.submitted)return 'submitted';if(attempt?.endAt>0)return 'running';return 'open';};
+  const scheduleValidation=sch=>{
+    if(!sch.date||!sch.gsStart||!sch.gsEnd||!sch.csatStart||!sch.csatEnd)return 'Please complete all schedule fields.';
+    const gsS=slotTime(sch.date,sch.gsStart),gsE=slotTime(sch.date,sch.gsEnd),csS=slotTime(sch.date,sch.csatStart),csE=slotTime(sch.date,sch.csatEnd);
+    if(!(gsS<gsE&&csS<csE))return 'Each paper must have a valid start and end time.';
+    // Checking mode allows the scheduled start times; each candidate's 2-hour timer is independent.
+    if(gsE-gsS<60*1000||csE-csS<60*1000)return 'Each paper must be at least 1 minute long.';
+    return '';
+  };
+
+  // Preserve the original admin dashboard and append schedule + CSAT uploads.
+  const baseAdminDashboard=admin;
+  admin=function(){
+    baseAdminDashboard();
+    const panel=$('dashboardView')?.querySelector('.demo-panel');
+    if(!panel)return;
+    panel.insertAdjacentHTML('beforeend',`
+      <div class="demo-card" id="dualPaperAdmin">
+        <h2>UPPCS Prelims · Two-Paper Schedule</h2>
+        <p class="demo-note">TEST SCHEDULE: GS 10:45 AM–12:45 PM; CSAT 1:30 PM–3:30 PM. Students may enter up to 20 minutes after each scheduled start. Each student's 2-hour timer starts on their own Start click.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+          <label class="demo-field">Exam date<input id="dualDate" type="date" value="${escapeHtml(dualSchedule.date)}"></label>
+          <label class="demo-field">GS start<input id="dualGsStart" type="time" value="${escapeHtml(dualSchedule.gsStart)}"></label>
+          <label class="demo-field">GS end<input id="dualGsEnd" type="time" value="${escapeHtml(dualSchedule.gsEnd)}"></label>
+          <label class="demo-field">CSAT start<input id="dualCsatStart" type="time" value="${escapeHtml(dualSchedule.csatStart)}"></label>
+          <label class="demo-field">CSAT end<input id="dualCsatEnd" type="time" value="${escapeHtml(dualSchedule.csatEnd)}"></label>
+        </div>
+        <p class="demo-note">DEFAULT SCHEDULE: GS 10:45 AM–12:45 PM · CSAT 1:30 PM–3:30 PM. Late entry is allowed for 20 minutes after each scheduled start. Each student receives 2 full hours from their own Start click.</p>
+        <button class="primary" type="button" id="saveDualSchedule">Save examination schedule</button>
+        <span class="demo-note" id="dualScheduleMsg"></span>
+      </div>
+      <div class="demo-card" id="gsAdminUpload">
+        <h2>GS Paper-I · Question Paper Management</h2>
+        <p class="demo-note">Replace the current GS question paper PDF whenever required. The latest uploaded PDF will be shown in the student exam.</p>
+        <label class="demo-field">Upload / replace GS Paper-I PDF<input id="gsPdfUpload" type="file" accept="application/pdf,.pdf"></label>
+        <div class="demo-row"><button type="button" class="secondary" id="gsPdfDelete">Delete current GS paper</button><span class="demo-note" id="gsPdfStatus">Checking uploaded paper…</span></div>
+        <p class="demo-note">Demo mode storage is limited to this browser/device. For all students on different devices, use the Cloud Upload section after signing in as the real administrator.</p>
+      </div>
+      <div class="demo-card" id="csatAdminUpload">
+        <h2>CSAT Paper-II · Booklet Series C</h2>
+        <p class="demo-note">100 questions · 200 marks · 2-hour test · Correct +2 · Wrong −2/3 · Unanswered 0.</p>
+        <label class="demo-field">Upload original CSAT question paper PDF<input id="csatPdfUpload" type="file" accept="application/pdf"></label>
+        <p class="demo-note" id="csatPdfStatus">CSAT PDF is not uploaded yet. Upload the actual paper before students start.</p>
+        <label class="demo-field">Upload CSAT Series C answer key (CSV/TXT)<input id="csatKeyUpload" type="file" accept=".csv,.txt,text/plain,text/csv"></label>
+        <p class="demo-note" id="csatKeyStatus">${readCSATKey()?'CSAT Series C objection answer key preloaded: 100/100 answers. Verify final revised key before official publication.':'CSAT answer key is not available.'}</p>
+      </div>`);
+    const $id=id=>document.getElementById(id);
+    $id('gsPdfUpload').onchange=async e=>{
+      const f=e.target.files?.[0];if(!f)return;
+      if(f.type!=='application/pdf'&&!f.name.toLowerCase().endsWith('.pdf')){alert('Please upload a PDF file.');e.target.value='';return;}
+      if(f.size>25*1024*1024){alert('PDF must be 25 MB or smaller.');e.target.value='';return;}
+      try{await saveGSPdf(f);$id('gsPdfStatus').textContent=`Active paper: ${f.name} (${Math.round(f.size/1024)} KB)`;alert('GS Paper-I uploaded. The new PDF will appear for students using this browser.');}
+      catch(err){alert('Could not save GS PDF: '+err.message);}
+      e.target.value='';
+    };
+    $id('gsPdfDelete').onclick=async()=>{if(!confirm('Delete the current GS Paper-I PDF? Students will no longer see the old paper.'))return;try{await deleteGSPdf();$id('gsPdfStatus').textContent='No GS paper uploaded. Upload a new PDF.';alert('Current GS paper deleted.');}catch(err){alert('Could not delete GS PDF: '+err.message);}};
+    (async()=>{try{const f=await loadGSPdf();$id('gsPdfStatus').textContent=f?`Active paper uploaded: ${f.name||'GS Paper-I PDF'}`:'No replacement PDF uploaded. The built-in sample paper is currently shown.';}catch{$id('gsPdfStatus').textContent='Could not check GS paper status.';}})();
+    $id('saveDualSchedule').onclick=()=>{
+      const next={date:$id('dualDate').value,gsStart:$id('dualGsStart').value,gsEnd:$id('dualGsEnd').value,csatStart:$id('dualCsatStart').value,csatEnd:$id('dualCsatEnd').value};
+      const err=scheduleValidation(next);if(err){$id('dualScheduleMsg').textContent=err;return;}
+      dualSchedule=next;saveDualSchedule();$id('dualScheduleMsg').textContent='Schedule saved. Students will see the updated timetable.';alert('UPPCS two-paper schedule saved.');
+    };
+    $id('csatPdfUpload').onchange=async e=>{
+      const f=e.target.files?.[0];if(!f)return;
+      if(f.type!=='application/pdf'){alert('Please upload a PDF file.');e.target.value='';return;}
+      try{await saveCSATPdf(f);$id('csatPdfStatus').textContent=`Uploaded: ${f.name} (${Math.round(f.size/1024)} KB).`;alert('CSAT question paper PDF uploaded in this browser.');}
+      catch(err){alert('Could not save CSAT PDF: '+err.message);}
+      e.target.value='';
+    };
+    $id('csatKeyUpload').onchange=async e=>{
+      const f=e.target.files?.[0];if(!f)return;
+      try{
+        const raw=(await f.text()).replace(/^\uFEFF/,'').trim();
+        let parsed=[];
+        const lines=raw.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+        if(lines.length===1&&/^[A-Da-d](?:[,\s;]+[A-Da-d]){99}$/.test(lines[0]))parsed=lines[0].split(/[,\s;]+/).map(x=>x.toUpperCase());
+        else for(const line of lines){const parts=line.split(/[,;\t|]/).map(x=>x.trim());if(/^\d+$/.test(parts[0])){const n=+parts[0],a=(parts[1]||'').toUpperCase();if(n>=1&&n<=100&&['A','B','C','D'].includes(a))parsed[n-1]=a;}}
+        if(parsed.length!==100||parsed.some(x=>!['A','B','C','D'].includes(x)))throw new Error('CSAT key must contain exactly 100 A/B/C/D answers.');
+        localStorage.setItem(csatKeyStorage,JSON.stringify(parsed));$id('csatKeyStatus').textContent='CSAT Series C objection answer key preloaded: 100/100 answers. Verify final revised key before official publication.';alert('CSAT Series C answer key uploaded.');
+      }catch(err){alert(err.message||'Could not import CSAT answer key.');}
+      e.target.value='';
+    };
+    (async()=>{try{if(await csatHasPDF())$id('csatPdfStatus').textContent='CSAT PDF uploaded and ready for student preview.';}catch{} })();
+  };
+
+
+  // Combined result is released only when both paper results have passed their 5-minute publication delay.
+  function scoreGSRecord(r){
+    const key=getUppcsAnswerKey(),ans=r?.answers||{};let correct=0,wrong=0,unanswered=0;
+    for(let i=1;i<=150;i++){const a=ans[String(i)]||'';if(!a)unanswered++;else if(a===key[i-1])correct++;else wrong++;}
+    return {score:correct*(4/3)-wrong*(4/9),correct,wrong,unanswered,total:200};
+  }
+  function scoreCSATRecord(r){
+    const key=readCSATKey(),ans=r?.answers||{};let correct=0,wrong=0,unanswered=0;
+    for(let i=1;i<=100;i++){const a=ans[String(i)]||'';if(!a)unanswered++;else if(a===key[i-1])correct++;else wrong++;}
+    return {score:correct*2-wrong*(2/3),correct,wrong,unanswered,total:200};
+  }
+  function renderCombinedFinalCard(){
+    const host=$('combinedFinalContent');if(!host)return;
+    const today=dualSchedule.date;
+    const sameDay=r=>{if(!r?.at)return false;const d=new Date(r.at);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`===today;};
+    const roll=String(studentProfile.rollNo||'').trim();
+    if(!roll){host.textContent='Complete student registration to view the combined result.';return;}
+    const matching=data.results.filter(r=>String(r.rollNo||r.registration?.rollNo||'').trim()===roll);
+    const gs=matching.filter(r=>r.title==='UPPCS Prelims 2023 — General Studies Paper-I').sort((a,b)=>Date.parse(b.at)-Date.parse(a.at))[0];
+    const cs=matching.filter(r=>r.title==='UPPCS Prelims 2023 — General Studies Paper-II (CSAT)').sort((a,b)=>Date.parse(b.at)-Date.parse(a.at))[0];
+    const now=Date.now(),ready=r=>!!r&&now>=((Date.parse(r.at)||0)+RESULT_DELAY_MS);
+    if(!gs||!cs){
+      host.innerHTML=`<p>GS: <b>${gs?'Submitted':'Pending'}</b> · CSAT: <b>${cs?'Submitted':'Pending'}</b></p><p class="demo-note">Final combined result will appear after both papers are submitted and their 5-minute result publication periods are complete.</p>`;
+      return;
+    }
+    const gsPublishedAt=(Date.parse(gs?.at)||0)+RESULT_DELAY_MS;
+    const csPublishedAt=(Date.parse(cs?.at)||0)+RESULT_DELAY_MS;
+    const combinedReleaseAt=Math.max(gsPublishedAt,csPublishedAt)+5*60*1000;
+    if(!ready(gs)||!ready(cs)||now<combinedReleaseAt){
+      const remaining=Math.max(0,combinedReleaseAt-now);
+      const statusText=!ready(gs)||!ready(cs)
+        ? 'Waiting for both individual paper results to publish.'
+        : 'Both paper results are published. Final combined result will be released 5 minutes after both individual results.';
+      host.innerHTML=`<p>GS result: <b>${ready(gs)?'Published':'Pending'}</b> · CSAT result: <b>${ready(cs)?'Published':'Pending'}</b></p><p class="demo-note">${statusText}</p><p><b>Final combined result in ${fmtCountdown(remaining)}</b></p>`;
+      return;
+    }
+    const gsScore=scoreGSRecord(gs),csScore=scoreCSATRecord(cs),csatQualified=csScore.score>=66;
+    // Always print identity from this candidate's own saved submission, never from another active profile.
+    const candidateProfile=gs.registration||cs.registration||{};
+    const candidateName=gs.student||cs.student||candidateProfile.name||'Student';
+    const candidateRoll=String(gs.rollNo||cs.rollNo||candidateProfile.rollNo||roll);
+    const candidateFather=candidateProfile.fatherName||'—';
+    const candidateDob=candidateProfile.dob||'—';
+    const candidateGender=candidateProfile.gender||'—';
+    const candidateCategory=gs.category||cs.category||candidateProfile.category||'—';
+    const candidateCentre=gs.examCenter||cs.examCenter||candidateProfile.examCenter||'—';
+    // DEMO-only selection illustration: provisional GS benchmark is 80/200 and CSAT must be 66/200.
+    // These values are for testing the message flow only, not official UPPSC cut-offs.
+    const demoGsBenchmark=80;
+    const demoSelected=csatQualified&&gsScore.score>=demoGsBenchmark;
+    const candidates=[];
+    const allRolls=[...new Set(data.results.map(r=>String(r.rollNo||r.registration?.rollNo||'').trim()).filter(Boolean))];
+    for(const candidateRoll of allRolls){
+      const rr=data.results.filter(r=>String(r.rollNo||r.registration?.rollNo||'').trim()===candidateRoll);
+      const g=rr.filter(r=>r.title==='UPPCS Prelims 2023 — General Studies Paper-I').sort((a,b)=>Date.parse(b.at)-Date.parse(a.at))[0];
+      const c=rr.filter(r=>r.title==='UPPCS Prelims 2023 — General Studies Paper-II (CSAT)').sort((a,b)=>Date.parse(b.at)-Date.parse(a.at))[0];
+      if(g&&c&&ready(g)&&ready(c)){const sg=scoreGSRecord(g),sc=scoreCSATRecord(c);candidates.push({roll:candidateRoll,student:g.student||c.student||'Student',category:g.category||c.category||'Not specified',gs:sg.score,csat:sc.score,qualified:sc.score>=66});}
+    }
+    const eligible=candidates.filter(x=>x.qualified).sort((a,b)=>b.gs-a.gs);
+    const categoryEligible=eligible.filter(x=>x.category===candidateCategory);
+    const overallRank=eligible.findIndex(x=>x.roll===candidateRoll)+1;
+    const categoryRank=categoryEligible.findIndex(x=>x.roll===candidateRoll)+1;
+    const rankText=csatQualified&&overallRank>0?`#${overallRank}`:'Not ranked (CSAT not qualified)';
+    const catRankText=csatQualified&&categoryRank>0?`#${categoryRank}`:'—';
+    host.innerHTML=`<div class="demo-card" style="margin-bottom:12px;border:1px solid #cbd8f2;background:#f5f8ff">
+      <h3 style="margin:0 0 12px;color:#17366f">Candidate Examination Details</h3>
+      <div class="resultrow"><span>Student name</span><b>${escapeHtml(candidateName)}</b></div>
+      <div class="resultrow"><span>Father's name</span><b>${escapeHtml(candidateFather)}</b></div>
+      <div class="resultrow"><span>Roll number</span><b>${escapeHtml(candidateRoll)}</b></div>
+      <div class="resultrow"><span>Date of birth</span><b>${escapeHtml(candidateDob)}</b></div>
+      <div class="resultrow"><span>Gender</span><b>${escapeHtml(candidateGender)}</b></div>
+      <div class="resultrow"><span>Category</span><b>${escapeHtml(candidateCategory)}</b></div>
+      <div class="resultrow"><span>Examination centre</span><b>${escapeHtml(candidateCentre)}</b></div>
+    </div>
+    <div class="demo-card" style="text-align:center;border:2px solid ${demoSelected?'#16865b':'#d99a32'};background:${demoSelected?'#effaf4':'#fffaf0'}">
+      <div style="font-size:42px;margin-bottom:4px">${demoSelected?'🎉':'🌱'}</div>
+      <h2 style="margin:0;color:${demoSelected?'#126b49':'#8a5a12'}">${demoSelected?'Congratulations! Selected in Demo Result':'Keep Going — Not Selected in Demo Result'}</h2>
+      <p style="font-weight:650;margin:10px 0">${demoSelected?'शानदार प्रयास! अपनी मेहनत जारी रखें और अगले लक्ष्य की तैयारी करें।':'यह प्रयास सीखने का मौका है। गलतियों से सीखें और तैयारी जारी रखें—अगली बार बेहतर करेंगे।'}</p>
+      <p class="demo-note">Demo decision only: GS benchmark ${demoGsBenchmark}/200 and CSAT qualifying benchmark 66/200. This is not an official UPPSC selection or cutoff.</p>
+    </div>
+    <div class="demo-stats">
+      <div class="demo-stat"><b>${gsScore.score.toFixed(2)}/200</b>GS merit score</div>
+      <div class="demo-stat"><b>${csScore.score.toFixed(2)}/200</b>CSAT score</div>
+      <div class="demo-stat"><b>${csatQualified?'Qualified':'Not qualified'}</b>CSAT qualifying status</div>
+    </div>
+    <div class="demo-card"><h3>Final merit position</h3>
+      <div class="resultrow"><span>Candidate</span><b>${escapeHtml(candidateName)}</b></div>
+      <div class="resultrow"><span>Roll number</span><b>${escapeHtml(candidateRoll)}</b></div>
+      <div class="resultrow"><span>Examination centre</span><b>${escapeHtml(candidateCentre)}</b></div>
+      <div class="resultrow"><span>Overall rank among CSAT-qualified demo candidates</span><b>${rankText}</b></div>
+      <div class="resultrow"><span>${escapeHtml(candidateCategory)} rank</span><b>${catRankText}</b></div>
+      <div class="resultrow"><span>GS correct / wrong / unanswered</span><b>${gsScore.correct} / ${gsScore.wrong} / ${gsScore.unanswered}</b></div>
+      <div class="resultrow"><span>CSAT correct / wrong / unanswered</span><b>${csScore.correct} / ${csScore.wrong} / ${csScore.unanswered}</b></div>
+    </div>
+    <p class="demo-note">CSAT qualifying benchmark used: 66/200 (33%). GS score determines merit order among CSAT-qualified candidates. This local demo rank is not an official UPPSC selection; the official GS cutoff and final shortlist are decided by UPPSC.</p>`;
+
+    // Automatically show a one-time popup as soon as the 5-minute post-CSAT final-result wait ends.
+    const popupSeenKey='pvrajcms_final_result_popup_seen_'+today+'_'+encodeURIComponent(candidateRoll);
+    if(!localStorage.getItem(popupSeenKey)&&!document.getElementById('pvFinalResultPopup')){
+      const popup=document.createElement('div');
+      popup.id='pvFinalResultPopup';
+      popup.className='pv-final-popup-backdrop';
+      popup.innerHTML=`<section class="pv-final-popup" role="dialog" aria-modal="true" aria-labelledby="pvFinalPopupTitle">
+        <div class="pv-popup-icon">${demoSelected?'🎉':'🌱'}</div>
+        <h2 id="pvFinalPopupTitle">Final Combined Result Published</h2>
+        <p style="color:#64748b;margin:0">UPPCS Prelims · GS Paper-I + CSAT Paper-II</p>
+        <div class="pv-popup-meta">
+          <div><span>Student Name</span><b>${escapeHtml(candidateName)}</b></div>
+          <div><span>Roll Number</span><b>${escapeHtml(candidateRoll)}</b></div>
+          <div><span>GS Score</span><b>${gsScore.score.toFixed(2)}/200</b></div>
+          <div><span>CSAT Score</span><b>${csScore.score.toFixed(2)}/200</b></div>
+        </div>
+        <h3 style="margin:10px 0;color:${demoSelected?'#126b49':'#8a5a12'}">${demoSelected?'Congratulations! Selected in Demo Result':'Keep Going — Not Selected in Demo Result'}</h3>
+        <p style="color:#52627b;margin:0">${demoSelected?'शानदार प्रयास! अपनी मेहनत जारी रखें।':'यह प्रयास सीखने का मौका है। गलतियों से सीखें और तैयारी जारी रखें—अगली बार बेहतर करेंगे।'}</p>
+        <div class="pv-popup-actions">
+          <button type="button" class="pv-popup-primary" id="pvPopupViewResult">View Final Result</button>
+          <button type="button" class="pv-popup-secondary" id="pvPopupClose">Close</button>
+        </div>
+        <p style="font-size:11px;color:#8793a8;margin:14px 0 0">Demo result only · Not an official UPPSC selection or cutoff.</p>
+      </section>`;
+      document.body.appendChild(popup);
+      const dismiss=()=>{localStorage.setItem(popupSeenKey,'1');popup.remove();};
+      popup.querySelector('#pvPopupClose').addEventListener('click',dismiss);
+      popup.querySelector('#pvPopupViewResult').addEventListener('click',()=>{
+        dismiss();
+        $('combinedFinalCard')?.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+      popup.addEventListener('click',e=>{if(e.target===popup)dismiss();});
+    }
+  }
+
+  // Keep the same registration form, but show the two timed papers separately.
+  const baseStudentDashboard=student;
+  student=function(){
+    baseStudentDashboard();
+    const panel=$('dashboardView')?.querySelector('.demo-panel');
+    if(!panel)return;
+    const startGs=$('startUppcsPaper');
+    if(startGs){
+      const originalAction=startGs.onclick;
+      startGs.onclick=()=>startUppcsPaper();
+    }
+    const oldExamCard=[...panel.querySelectorAll('.demo-card')].find(x=>x.textContent.includes('Available examinations'));
+    if(oldExamCard){
+      const existingGs=oldExamCard.querySelector('#startUppcsPaper')?.parentElement;
+      if(existingGs)existingGs.remove();
+      const details=oldExamCard.querySelector('.demo-card');
+      if(details)details.insertAdjacentHTML('beforeend',`<p class="demo-note">OPEN TEST MODE · No fixed paper timings. Late entry enabled for both GS and CSAT.</p>`);
+      oldExamCard.insertAdjacentHTML('beforeend',`
+        <div class="demo-row" style="padding:12px 0;border-bottom:1px solid #eee">
+          <div><b>Paper-I · General Studies</b><div class="muted small">150 questions · 200 marks · 2 hours · +4/3 correct · −4/9 wrong</div><div class="demo-note" id="gsScheduleStatus"></div></div>
+          <button class="primary" id="startGSNew">Start / Resume GS</button>
+        </div>
+        <div class="demo-row" style="padding:12px 0;border-bottom:1px solid #eee">
+          <div><b>Paper-II · CSAT</b><div class="muted small">100 questions · 200 marks · 2 hours · +2 correct · −2/3 wrong</div><div class="demo-note" id="csatScheduleStatus"></div></div>
+          <button class="primary" id="startCSATNew">Start / Resume CSAT</button>
+        </div>
+        <div class="demo-card" style="background:#f8faff;margin-top:12px">
+          <b>Open examination test mode</b>
+          <p>GS Paper-I and CSAT Paper-II can both be started at any time. No fixed clock-based start or closing time is applied during checking.</p>
+          <p class="demo-note">Late entry is enabled for both papers. Each student's personal 2-hour timer starts on their own Start click and the paper auto-submits when that timer ends.</p>
+        </div>
+        <div class="demo-card" id="combinedFinalCard" style="margin-top:14px">
+          <h2>Final Combined Prelims Result</h2>
+          <p class="demo-note">The combined result is released 5 minutes after the CSAT individual result is published. It displays the candidate's saved name, roll number and registration details with both paper scores.</p>
+          <div id="combinedFinalContent" class="muted">Waiting for both paper submissions and result publication.</div>
+        </div>`);
+    }
+    const updateButtons=async()=>{
+      const gsBtn=$('startGSNew'),csBtn=$('startCSATNew');if(!gsBtn||!csBtn)return;
+      const gsState=slotState('GS',{endAt:paperEndAt,submitted:paperSubmitted});
+      const csState=slotState('CSAT',csatState);
+      const labels={upcoming:'Ready to start',open:'Open for testing · late entry enabled',closed:'Open for testing · late entry enabled',running:'Resume exam',submitted:'View submission'};
+      const gsReg=!!(studentProfile.name&&studentProfile.rollNo&&studentProfile.category&&studentProfile.examCenter);
+      gsBtn.disabled=!gsReg||!['open','running','submitted','late'].includes(gsState);
+      gsBtn.textContent=gsState==='running'?'Resume GS':gsState==='submitted'?'GS submission status':'Start GS';
+      const gsSlot=getSlot('GS'),csatSlot=getSlot('CSAT');
+      $('gsScheduleStatus').textContent=labels[gsState]+' · Starts '+clockText(gsSlot.start)+' · late entry until '+clockText(gsSlot.start+LATE_ENTRY_GRACE_MS)+'. Your 2-hour timer begins when you click Start.';
+
+      // Keep CSAT start available whenever the candidate is registered.
+      // PDF/key are validated after click with a clear message; they must not silently disable the button.
+      let hasPdf=false;try{hasPdf=await csatHasPDF();}catch{}
+      const keyReady=!!readCSATKey();
+      csBtn.disabled=!gsReg;
+      csBtn.style.opacity=gsReg?'1':'0.55';
+      csBtn.style.cursor=gsReg?'pointer':'not-allowed';
+      csBtn.setAttribute('aria-disabled',gsReg?'false':'true');
+      csBtn.textContent=csState==='running'?'Resume CSAT':csState==='submitted'?'CSAT submission status':'Start CSAT';
+      $('csatScheduleStatus').textContent=!hasPdf?'CSAT PDF will be checked when you start.':!keyReady?'CSAT answer key will be checked when you start.':labels[csState]+' · Starts '+clockText(csatSlot.start)+' · late entry until '+clockText(csatSlot.start+LATE_ENTRY_GRACE_MS)+'. Your 2-hour timer begins when you click Start.';
+    };
+    $('startGSNew').onclick=()=>startUppcsPaper();
+    $('startCSATNew').onclick=async()=>{
+      if(!(studentProfile.name&&studentProfile.rollNo&&studentProfile.category&&studentProfile.examCenter)){
+        alert('Please complete student registration before starting CSAT.');
+        return;
+      }
+      const btn=$('startCSATNew');
+      btn.disabled=true;
+      btn.textContent='Opening CSAT paper…';
+      try{
+        await Promise.race([
+          startCSATPaper(),
+          new Promise((_,reject)=>setTimeout(()=>reject(new Error('CSAT start timed out')),15000))
+        ]);
+      }catch(err){
+        console.error('CSAT start error:',err);
+        alert('CSAT could not open. Please tap Start CSAT again. If it continues, reopen the downloaded HTML file in Chrome.');
+      }finally{
+        if($('startCSATNew')){
+          btn.disabled=false;
+          btn.textContent=csatState.submitted?'CSAT submission status':csatState.endAt>0?'Resume CSAT':'Start CSAT';
+        }
+      }
+    };
+    updateButtons();
+    renderCombinedFinalCard();
+    const refresh=setInterval(()=>{
+      if(!$('startGSNew')){clearInterval(refresh);return;}
+      updateButtons();
+      renderCombinedFinalCard();
+    },1000);
+  };
+
+  // Demo recovery: if the previous demo slot has passed, keep the configured 2-hour paper duration.
+  // This is explicitly a local DEMO override; production exams should remain strictly schedule-locked.
+  function localTimeValue(d){return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
+  function moveDemoSlot(which, now){
+    const start=new Date(now), end=new Date(now+5*60*1000);
+    dualSchedule.date=localDateString();
+    if(which==='GS'){
+      const csStart=new Date(end.getTime()+30*60*1000), csEnd=new Date(csStart.getTime()+120*60*1000);
+      dualSchedule.gsStart=localTimeValue(start);dualSchedule.gsEnd=localTimeValue(end);
+      dualSchedule.csatStart=localTimeValue(csStart);dualSchedule.csatEnd=localTimeValue(csEnd);
+    }else{
+      dualSchedule.csatStart=localTimeValue(start);dualSchedule.csatEnd=localTimeValue(end);
+    }
+    saveDualSchedule();
+  }
+
+  // GS follows its scheduled window; DEMO mode offers a fresh slot if the old one has expired.
+  startUppcsPaper=function(){
+    clearInterval(timer);if(paperReleaseHandle)clearInterval(paperReleaseHandle);
+    if(paperSubmitted){const r=data.results.find(x=>x.title==='UPPCS Prelims 2023 — General Studies Paper-I'&&(x.rollNo||x.registration?.rollNo)===(studentProfile.rollNo||''));paperReleaseAt=Date.parse(r?.at||'')||paperReleaseAt||Date.now();const answered=Object.values(paperAnswers).filter(Boolean).length;startPaperReleaseTicker(!!r?.auto,answered);return;}
+    const slot=getSlot('GS'),now=Date.now();
+    if(paperEndAt>0){renderUppcsPaper();paperTick();timer=setInterval(paperTick,500);return;}
+    if(now<slot.start){alert('GS Paper-I opens at '+clockText(slot.start)+'.');return;}
+    if(now>slot.start+LATE_ENTRY_GRACE_MS){alert('GS entry is closed. Students must start within 20 minutes of the scheduled start time.');return;}
+    const lateStart=now>slot.start;
+    const endAt=now+120*60*1000;
+    if(!confirm('Start GS Paper-I now? You have the full 2-hour test. It will end at '+clockText(endAt)+'.'))return;
+    paperAnswers={};paperSubmitted=false;paperEndAt=endAt;saveUppcs();renderUppcsPaper();paperTick();timer=setInterval(paperTick,500);
+  };
+
+  // CSAT Paper-II state, timed answer sheet, delayed key and delayed result.
+  async function startCSATPaper(){
+    if(csatState.submitted){renderCSATRelease();return;}
+    const now=Date.now();
+    if(csatState.endAt>0){if(now>=csatState.endAt){finishCSAT(true);return;}renderCSATPaper();csatTick();csatTimer=setInterval(csatTick,500);return;}
+    const csatSlot=getSlot('CSAT');
+    if(now<csatSlot.start){alert('CSAT Paper-II starts at '+clockText(csatSlot.start)+'. You can enter from the scheduled start time.');return;}
+    if(now>csatSlot.start+LATE_ENTRY_GRACE_MS){alert('CSAT late entry is closed. Entry was allowed for 20 minutes after 1:30 PM.');return;}
+    const csatEndAt=now+120*60*1000;
+    let pdf;try{pdf=await loadCSATPdf();}catch{}
+    if(!pdf||!readCSATKey()){alert('Admin must upload the CSAT PDF and the 100-answer Series C key before the exam.');return;}
+    if(!confirm('Start CSAT Paper-II now? You have the full 2-hour test. It will end at '+clockText(csatEndAt)+'.'))return;
+    csatState={answers:{},endAt:csatEndAt,submitted:false,submittedAt:0};saveCSAT();renderCSATPaper();csatTick();csatTimer=setInterval(csatTick,500);
+  }
+  async function renderCSATPaper(){
+    clearInterval(csatTimer);let pdf;try{pdf=await loadCSATPdf();}catch{}
+    if(!pdf){alert('CSAT question paper PDF is missing. Ask admin to upload it.');student();return;}
+    if(csatObjectUrl)URL.revokeObjectURL(csatObjectUrl);csatObjectUrl=URL.createObjectURL(pdf);
+    hideAll();$('examView').classList.remove('hidden');
+    $('examView').innerHTML=`<div class="demo-panel"><div class="demo-row"><div><p class="eyebrow">LIVE EXAM · UPPCS 2023</p><h1>General Studies Paper-II · CSAT</h1><p class="muted">Booklet Series C · 100 questions · 200 marks · 2-hour test</p><p class="badge">Negative marking: +2 marks correct · −2/3 marks wrong · 0 unanswered</p></div><div id="csatTimer" class="demo-timer">02:00:00</div></div><div class="demo-card"><b>Original CSAT question paper</b><p class="demo-note">Read the question paper pages below and select your answers. This paper submits automatically when your personal 2-hour timer ends.</p><div class="csat-paper-pages" style="max-height:75vh;overflow:auto;border:1px solid #d9dfeb;border-radius:10px;background:#e9edf5;padding:8px"><div id="csatPagesMount"></div></div></div><div class="demo-card"><div class="demo-row"><h2>CSAT Answer Sheet</h2><span class="demo-tag"><span id="csatAnswered">0</span>/100 answered</span></div><p class="demo-note">Correct: +2 · Wrong: −2/3 · Unanswered: 0.</p><div id="csatAnswerGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:8px"></div><button class="primary" id="csatSubmit" style="margin-top:18px">Submit CSAT examination</button></div></div>`;
+    document.getElementById('csatPagesMount').innerHTML=csatPageImages.map((src,i)=>`<div style="max-width:900px;margin:0 auto 12px;background:#fff;box-shadow:0 2px 8px #0002"><div style="padding:6px 9px;font:12px Arial;color:#64748b">CSAT Question Paper · Page ${i+1} of ${csatPageImages.length}</div><img src="${src}" alt="CSAT question paper page ${i+1}" loading="${i<2?'eager':'lazy'}" style="display:block;width:100%;height:auto"></div>`).join('');
+    let grid='';for(let i=1;i<=100;i++)grid+=`<label class="demo-field" style="border:1px solid #e2e8f0;border-radius:8px;padding:8px;margin:0">Q${i}<select data-csat-q="${i}" style="margin-top:5px"><option value="">Not answered</option>${['A','B','C','D'].map(x=>`<option value="${x}">${x}</option>`).join('')}</select></label>`;
+    $('csatAnswerGrid').innerHTML=grid;
+    document.querySelectorAll('[data-csat-q]').forEach(sel=>{sel.value=csatState.answers[sel.dataset.csatQ]||'';sel.onchange=()=>{csatState.answers[sel.dataset.csatQ]=sel.value;saveCSAT();$('csatAnswered').textContent=Object.values(csatState.answers).filter(Boolean).length;};});
+    $('csatAnswered').textContent=Object.values(csatState.answers).filter(Boolean).length;
+    $('csatSubmit').onclick=()=>finishCSAT(false);
+  }
+  function csatTick(){const left=Math.max(0,Math.ceil((csatState.endAt-Date.now())/1000));const el=$('csatTimer');if(el)el.textContent=`${String(Math.floor(left/3600)).padStart(2,'0')}:${String(Math.floor(left%3600/60)).padStart(2,'0')}:${String(left%60).padStart(2,'0')}`;saveCSAT();if(left<=0)finishCSAT(true);}
+  function finishCSAT(auto){
+    if(csatState.submitted)return;clearInterval(csatTimer);
+    const submittedAt=Date.now(),answered=Object.values(csatState.answers).filter(Boolean).length;
+    csatState.submitted=true;csatState.submittedAt=submittedAt;saveCSAT();
+    data.results.unshift({student:studentProfile.name||'Student',rollNo:studentProfile.rollNo||'—',category:studentProfile.category||'Not specified',examCenter:studentProfile.examCenter||'Not specified',registration:{...studentProfile},answers:{...csatState.answers},title:'UPPCS Prelims 2023 — General Studies Paper-II (CSAT)',answered,unanswered:100-answered,auto,submitted:true,at:new Date(submittedAt).toISOString(),answerKeyAt:submittedAt+ANSWER_KEY_DELAY_MS,resultAt:submittedAt+RESULT_DELAY_MS});
+    save();renderCSATRelease();
+    // Keep the CSAT release screen live without requiring a page reload.
+    startCSATReleaseTicker();
+  }
+  function startCSATReleaseTicker(){
+    if(csatReleaseTimer)clearInterval(csatReleaseTimer);
+    csatReleaseTimer=window.setInterval(()=>{
+      try{
+        if(csatState.submitted && $('resultView') && !$('resultView').classList.contains('hidden')) renderCSATRelease();
+        else { clearInterval(csatReleaseTimer); csatReleaseTimer=null; }
+      }catch(err){console.error('CSAT live result refresh failed:',err);}
+    },500);
+  }
+  function renderCSATRelease(){
+    hideAll();$('resultView').classList.remove('hidden');
+    const now=Date.now(),keyAt=csatState.submittedAt+ANSWER_KEY_DELAY_MS,resultAt=csatState.submittedAt+RESULT_DELAY_MS;
+    const keyReady=now>=keyAt,resultReady=now>=resultAt,answered=Object.values(csatState.answers).filter(Boolean).length,unanswered=100-answered;
+    const key=readCSATKey();
+    let scoreHtml='Result not published yet.';
+    if(resultReady&&key){let correct=0,wrong=0;for(let i=1;i<=100;i++){const a=csatState.answers[String(i)]||'';if(a){if(a===key[i-1])correct++;else wrong++;}}const score=correct*2-wrong*(2/3);const pct=score/200*100;scoreHtml=`<b>Result published</b><div class="demo-stats"><div class="demo-stat"><b>${score.toFixed(3)}/200</b>Score</div><div class="demo-stat"><b>${correct}</b>Correct</div><div class="demo-stat"><b>${wrong}</b>Wrong</div></div><p>Unanswered: <b>${unanswered}</b> · Percentage: <b>${pct.toFixed(2)}%</b></p>`;}
+    $('resultView').innerHTML=`<div class="demo-panel demo-card"><p class="eyebrow">EXAMINATION SUBMISSION</p><h1>${csatState.endAt<=csatState.submittedAt?'Time over — automatically submitted':'CSAT Paper submitted successfully'}</h1><div class="demo-stats"><div class="demo-stat"><b>${answered}/100</b>Answered</div><div class="demo-stat"><b>${unanswered}</b>Unanswered</div><div class="demo-stat"><b>2 hours</b>Test duration</div></div><div class="demo-card"><h3>Candidate details</h3><p><b>Name:</b> ${escapeHtml(studentProfile.name||'—')} &nbsp; <b>Roll Number:</b> ${escapeHtml(studentProfile.rollNo||'—')}</p><p><b>Category:</b> ${escapeHtml(studentProfile.category||'—')} &nbsp; <b>Examination Centre:</b> ${escapeHtml(studentProfile.examCenter||'—')}</p></div>${combinedResultNoticeHtml()}<div class="demo-card"><h2>Answer Key</h2><p class="muted">${keyReady?'Answer Key access is now open.':'Available in '+fmtCountdown(keyAt-now)}</p><button class="primary" id="csatOpenKey" ${keyReady?'':'disabled'}>Open CSAT Answer Key</button></div><div class="demo-card"><h2>CSAT Paper Result</h2><p class="muted">${resultReady?'Individual CSAT result is available.':'Result will be available in '+fmtCountdown(resultAt-now)}</p><div>${scoreHtml}</div></div><button class="secondary" id="csatBack">Back to student dashboard</button></div>`;
+    $('csatOpenKey').onclick=()=>{if(!keyReady||!key)return;const rows=key.map((a,i)=>`<tr><td>${i+1}</td><td>${a}</td><td>${csatState.answers[String(i+1)]||'—'}</td><td>${!csatState.answers[String(i+1)]?'Unanswered':csatState.answers[String(i+1)]===a?'Correct':'Wrong'}</td></tr>`).join('');const w=window.open('','_blank');if(!w){alert('Allow pop-ups to view the answer key.');return;}w.document.write(`<html><head><title>CSAT Answer Key</title><meta charset="utf-8"><style>body{font:15px Arial;margin:24px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;padding:7px;text-align:center}</style></head><body><h1>UPPCS Prelims 2023 · CSAT Paper-II · Series C</h1><table><tr><th>Question</th><th>Answer key</th><th>Your answer</th><th>Status</th></tr>${rows}</table></body></html>`);w.document.close();};
+    $('csatBack').onclick=()=>student();
+  }
+
+  // Recalculate release countdowns immediately when the browser tab becomes active.
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible')return;try{if(paperSubmitted&&$('resultView')&&!$('resultView').classList.contains('hidden')){const n=Object.values(paperAnswers).filter(Boolean).length;renderPaperRelease(false,n);}if(csatState?.submitted&&$('resultView')&&!$('resultView').classList.contains('hidden'))renderCSATRelease();if(typeof renderCombinedFinalCard==='function')renderCombinedFinalCard();}catch(e){console.warn('Release countdown refresh skipped:',e);}});
+  window.addEventListener('pageshow',()=>{try{if(paperSubmitted&&$('resultView')&&!$('resultView').classList.contains('hidden'))renderPaperRelease(false,Object.values(paperAnswers).filter(Boolean).length);if(csatState?.submitted&&$('resultView')&&!$('resultView').classList.contains('hidden'))renderCSATRelease();}catch(e){console.warn('Page restore refresh skipped:',e);}});
+  const oldStartGS=startUppcsPaper;
+  // Keep student profile and papers intact; only demo results are reset by this build.
+
+  $('adminDemo').onclick=admin;$('studentDemo').onclick=student;
+
+  // Restore demo mode after refresh instead of sending the user back to Login.
+  // If an UPPCS attempt is in progress, the dashboard shows "Resume exam";
+  // the saved answers and original end time are retained in uppcsAttemptKey.
+  try {
+    const lastDemoRole = localStorage.getItem(demoRoleKey);
+    if (lastDemoRole === 'student') student();
+    else if (lastDemoRole === 'admin') admin();
+  } catch (e) {
+    console.warn('Could not restore demo session:', e);
+  }
+})();
+
+
+document.getElementById('headerLogin')?.addEventListener('click',()=>{document.querySelector('[data-tab="login"]')?.click();});
+document.getElementById('headerRegister')?.addEventListener('click',()=>{document.querySelector('[data-tab="signup"]')?.click();});
+</script></body></html>
