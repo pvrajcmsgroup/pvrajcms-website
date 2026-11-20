@@ -195,7 +195,7 @@ $('backDashboard').onclick=async()=>{if(!user)return;show('dashboardView');$('su
   const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const hideAll=()=>{['authView','dashboardView','examView','resultView'].forEach(id=>$(id)?.classList.add('hidden'));};
   const shell=(title,sub,body)=>{hideAll();$('dashboardView').classList.remove('hidden');$('dashboardView').innerHTML=`<div class="demo-panel"><div class="demo-row"><div><p class="eyebrow">PVRAJCMS GROUP · EXAMINATION PORTAL</p><h1>${title}</h1><p class="muted">${sub}</p></div>${role==='admin'?'<button class="primary" id="openStudentFromAdmin" type="button">Open Student Dashboard</button>':''}<button class="secondary" id="demoExit">Log out</button></div>${body}</div>`;$('demoExit').onclick=async()=>{if(timer)clearInterval(timer);role=null;localStorage.removeItem(demoRoleKey);try{await window.pvSupabase?.auth.signOut();}catch{}hideAll();$('authView').classList.remove('hidden');};if($('openStudentFromAdmin'))$('openStudentFromAdmin').onclick=()=>student();};
-  function admin(){role='admin';localStorage.setItem(demoRoleKey,'admin');const total=data.exams.reduce((n,e)=>n+e.questions.length,0)+150;shell('Admin Dashboard','Manage examinations, questions, and student results.',`
+  async function admin(){await loadDualScheduleFromCloud();role='admin';localStorage.setItem(demoRoleKey,'admin');const total=data.exams.reduce((n,e)=>n+e.questions.length,0)+150;shell('Admin Dashboard','Manage examinations, questions, and student results.',`
     <div class="demo-stats"><div class="demo-stat"><b>${data.exams.length}</b>Examinations</div><div class="demo-stat"><b>${total}</b>Total questions</div><div class="demo-stat"><b>${data.results.length}</b>Submissions</div></div>
     <div class="demo-card"><h2>Uploaded question paper</h2><p class="demo-note">This paper is available to students. Use the Student Dashboard button above to preview the timed examination.</p><p><b>${escapeHtml(dualSchedule.examName||'UPPCS Preliminary Examination')} — General Studies Paper-I</b></p><p class="demo-note">Booklet Series C · Exam date: 14 May 2023 · 150 questions · 2 hours · 200 marks</p><div class="demo-row"><button type="button" class="secondary" id="togglePaper">Show / hide PDF</button><span class="demo-note">Compressed page preview is shown below for faster mobile loading.</span></div><div id="paperViewer" style="margin-top:12px"><div class="uppcs-paper-pages" style="height:70vh;overflow:auto;border:1px solid #dbe3ef;border-radius:10px;background:#e9edf5;padding:12px">${pdfPages.map((page,i)=>`<div style="max-width:850px;margin:0 auto 14px;background:white;box-shadow:0 2px 8px #0002"><div style="padding:6px 10px;font:12px Arial;color:#64748b">Question Paper · Page ${i+1} of ${pdfPages.length}</div><img src="${page}" alt="UPPCS GS question paper page ${i+1}" style="display:block;width:100%;height:auto"></div>`).join('')}</div></div></div>
     <div class="demo-card"><h2>Create a new examination</h2><form id="demoCreate"><label class="demo-field">Exam title<input id="dTitle" required placeholder="e.g. General Knowledge Test"></label><div class="demo-options"><label class="demo-field">Duration (minutes)<input id="dDuration" type="number" min="1" max="180" value="30" required></label><label class="demo-field">Marks per question<input id="dMarks" type="number" min="1" value="1" required></label></div><label class="demo-field">Negative marks per wrong answer<input id="dNegative" type="number" min="0" step="0.25" value="0"></label>
@@ -319,7 +319,8 @@ $('backDashboard').onclick=async()=>{if(!user)return;show('dashboardView');$('su
   const examCenters=['Lucknow','Prayagraj','Varanasi','Kanpur','Agra','Meerut','Gorakhpur','Bareilly','Jhansi','Ayodhya','Other'];
   let creatingNewStudent=false;
 
-  function student(){
+  async function student(){
+    await loadDualScheduleFromCloud();
     role='student';localStorage.setItem(demoRoleKey,'student');
     const pending=paperEndAt>0&&!paperSubmitted, submittedAttempt=paperSubmitted;
     const actionLabel=pending?'Resume exam':submittedAttempt?'View submission status':'Register & View Exam';
@@ -510,7 +511,23 @@ $('backDashboard').onclick=async()=>{if(!user)return;show('dashboardView');$('su
   let dualSchedule;
   try{dualSchedule={...defaultDualSchedule,...JSON.parse(localStorage.getItem(dualScheduleKey)||'{}')};}catch{dualSchedule={...defaultDualSchedule};}
   localStorage.setItem(dualScheduleKey,JSON.stringify(dualSchedule));
+  // Shared schedule: Supabase is the source of truth across devices; localStorage is fallback only.
+  const loadDualScheduleFromCloud=async()=>{
+    if(!db)return dualSchedule;
+    try{
+      const {data,error}=await db.from('pv_exam_schedule').select('*').eq('id','uppcs').maybeSingle();
+      if(error)throw error;
+      if(data){dualSchedule={examName:data.exam_name||defaultDualSchedule.examName,date:data.exam_date||defaultDualSchedule.date,gsStart:data.gs_start||defaultDualSchedule.gsStart,gsEnd:data.gs_end||defaultDualSchedule.gsEnd,csatStart:data.csat_start||defaultDualSchedule.csatStart,csatEnd:data.csat_end||defaultDualSchedule.csatEnd};localStorage.setItem(dualScheduleKey,JSON.stringify(dualSchedule));}
+    }catch(e){console.warn('Cloud schedule read failed; using local fallback:',e.message||e);}
+    return dualSchedule;
+  };
   const saveDualSchedule=()=>localStorage.setItem(dualScheduleKey,JSON.stringify(dualSchedule));
+  const saveDualScheduleToCloud=async sch=>{
+    if(!db)throw new Error('Supabase is not configured.');
+    const payload={id:'uppcs',exam_name:sch.examName,exam_date:sch.date,gs_start:sch.gsStart,gs_end:sch.gsEnd,csat_start:sch.csatStart,csat_end:sch.csatEnd,updated_at:new Date().toISOString()};
+    const {error}=await db.from('pv_exam_schedule').upsert(payload,{onConflict:'id'});
+    if(error)throw error;
+  };
   const gsPracticeScheduleKey='pvrajcms_gs_practice_schedule_v1';
   const defaultGsPracticeSchedule={date:localDateString(),start:'10:00',end:'10:05'};
   let gsPracticeSchedule;
@@ -664,11 +681,11 @@ $('backDashboard').onclick=async()=>{if(!user)return;show('dashboardView');$('su
       $id('gsPracticeScheduleMsg').textContent='Schedule saved. Students will see the updated date and time.';
       alert('General Studies Practice Test schedule saved.');
     };
-    $id('saveDualSchedule').onclick=()=>{
-
+    $id('saveDualSchedule').onclick=async()=>{
       const next={examName:$id('dualExamName').value.trim()||'UPPCS Preliminary Examination',date:$id('dualDate').value,gsStart:$id('dualGsStart').value,gsEnd:$id('dualGsEnd').value,csatStart:$id('dualCsatStart').value,csatEnd:$id('dualCsatEnd').value};
       const err=scheduleValidation(next);if(err){$id('dualScheduleMsg').textContent=err;return;}
-      dualSchedule=next;saveDualSchedule();$id('dualScheduleMsg').textContent='Schedule saved. Students will see the updated timetable.';alert('UPPCS two-paper schedule saved.');
+      try{await saveDualScheduleToCloud(next);dualSchedule=next;saveDualSchedule();$id('dualScheduleMsg').textContent='Schedule saved to cloud. All devices will receive the updated timetable.';alert('UPPCS schedule saved to Supabase. Students on other devices will receive the new schedule.');}
+      catch(e){$id('dualScheduleMsg').textContent='Cloud save failed: '+(e.message||'Unknown error');alert('Schedule cloud save failed. Changes were NOT shared to other devices. Please check Supabase table/policies. '+(e.message||''));}
     };
     $id('csatPdfUpload').onchange=async e=>{
       const f=e.target.files?.[0];if(!f)return;
