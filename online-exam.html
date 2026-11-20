@@ -19,7 +19,7 @@
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.exam-card{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 8px 24px #0b345608}.card-head{background:linear-gradient(110deg,#09243d,#075b93);color:white;padding:20px;display:flex;justify-content:space-between;align-items:center;gap:12px}.paper-tag{font-size:11px;font-weight:800;letter-spacing:1px;color:#a7edff}.card-head h3{margin:7px 0 0;font-size:22px}.badge{border-radius:30px;padding:7px 11px;background:#ffffff20;border:1px solid #ffffff30;font-size:11px;font-weight:700;white-space:nowrap}.card-body{padding:20px}.details{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.detail{background:#f5f9fc;border:1px solid #e3edf5;border-radius:11px;padding:12px}.detail small{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.detail strong{font-size:14px}.notice{background:#fff8e8;border:1px solid #f1dfb5;color:#765416;border-radius:11px;padding:12px;margin:14px 0;font-size:12px;line-height:1.5}.card-actions{display:flex;gap:10px;flex-wrap:wrap}.card-actions .btn{flex:1}.secondary{background:#eaf4fc;color:#075b93;border:1px solid #d1e4f3}
 .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}.info{background:white;border:1px solid var(--line);border-radius:14px;padding:18px}.info .icon{font-size:24px}.info h4{margin:10px 0 6px}.info p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
 footer{margin-top:40px;background:var(--navy);color:#d5e4f1;padding:22px 18px}.foot{max-width:1200px;margin:auto;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px}
-.modal{position:fixed;inset:0;background:#06172acc;display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modal.open{display:flex}.modal-box{background:white;width:min(100%,440px);border-radius:16px;padding:22px;box-shadow:0 20px 60px #0004}.modal-box h2{margin:0 0 8px}.modal-box p{color:var(--muted);font-size:13px;line-height:1.5}.modal-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;margin:7px 0;font:inherit}.modal-actions{display:flex;gap:10px;margin-top:12px}.modal-actions button{flex:1}.close{float:right;border:0;background:#eef3f8;border-radius:8px;padding:7px 10px;cursor:pointer}
+.modal{position:fixed;inset:0;background:#06172acc;display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modal.open{display:flex}.modal-box{background:white;width:min(100%,440px);border-radius:16px;padding:22px;box-shadow:0 20px 60px #0004}.modal-box h2{margin:0 0 8px}.modal-box p{color:var(--muted);font-size:13px;line-height:1.5}.modal-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;margin:7px 0;font:inherit}.modal-box label{display:block;font-size:12px;font-weight:700;margin-top:8px}.modal-actions{display:flex;gap:10px;margin-top:12px}.modal-actions button{flex:1}.close{float:right;border:0;background:#eef3f8;border-radius:8px;padding:7px 10px;cursor:pointer}
 @media(max-width:800px){.navlinks{display:none;position:absolute;top:74px;left:0;right:0;background:var(--navy);padding:18px;flex-direction:column}.navlinks.open{display:flex}.mobile-menu{display:block;margin-left:auto}.hero-inner{flex-direction:column;align-items:flex-start}.hero-art{align-self:center}.cards{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}.section-title{align-items:flex-start;flex-direction:column}}
 @media(max-width:480px){.nav{padding:9px 12px}.brand-text{font-size:14px}.hero{padding:27px 15px}.container{padding:0 13px}.card-head{padding:16px}.card-head h3{font-size:19px}.card-body{padding:15px}.details{grid-template-columns:1fr 1fr}.detail strong{font-size:13px}.card-actions{flex-direction:column}.card-actions .btn{width:100%}}
 </style>
@@ -36,6 +36,7 @@ footer{margin-top:40px;background:var(--navy);color:#d5e4f1;padding:22px 18px}.f
       <a href="pv-education.html">Main Website</a>
       <a href="#exams">Prelims Exams</a>
       <a href="#instructions">Instructions</a>
+      <a href="#" onclick="openAdmin();return false;">Admin</a>
     </div>
   </nav>
 </header>
@@ -65,6 +66,8 @@ footer{margin-top:40px;background:var(--navy);color:#d5e4f1;padding:22px 18px}.f
           <div class="detail"><small>Schedule</small><strong id="gsTime">Admin द्वारा घोषित</strong></div>
         </div>
         <div class="notice">परीक्षा शुरू होने से पहले Login करें। निर्धारित समय और परीक्षा संबंधी निर्देशों का पालन करें।</div>
+        <div class="detail"><small>Answer Key Publish</small><strong id="gsKeyPublish">Admin द्वारा घोषित</strong></div>
+        <div class="detail" style="margin-top:8px"><small>GS Result Publish</small><strong id="gsResultPublish">Admin द्वारा घोषित</strong></div>
         <div class="card-actions"><button class="btn primary" onclick="openLogin('GS Paper-I')">Login & Start Examination →</button><button class="btn secondary" onclick="showInstructions('GS Paper-I')">Instructions</button></div>
       </div>
     </article>
@@ -78,10 +81,13 @@ footer{margin-top:40px;background:var(--navy);color:#d5e4f1;padding:22px 18px}.f
           <div class="detail"><small>Schedule</small><strong id="csatTime">Admin द्वारा घोषित</strong></div>
         </div>
         <div class="notice">CSAT पेपर के लिए अलग Login/Start विकल्प होगा। परीक्षा की तारीख और समय Admin द्वारा प्रकाशित किया जाएगा।</div>
+        <div class="detail"><small>Answer Key Publish</small><strong id="csatKeyPublish">Admin द्वारा घोषित</strong></div>
+        <div class="detail" style="margin-top:8px"><small>CSAT Result Publish</small><strong id="csatResultPublish">Admin द्वारा घोषित</strong></div>
         <div class="card-actions"><button class="btn primary" onclick="openLogin('CSAT Paper-II')">Login & Start Examination →</button><button class="btn secondary" onclick="showInstructions('CSAT Paper-II')">Instructions</button></div>
       </div>
     </article>
   </div>
+  <div class="detail" style="margin-top:18px"><small>Combined Result / Merit List Publish</small><strong id="combinedPublish">Admin द्वारा घोषित</strong></div>
   <div class="info-grid" id="instructions">
     <div class="info"><span class="icon">⏱️</span><h4>Timed Examination</h4><p>हर पेपर की निर्धारित अवधि के अनुसार परीक्षा होगी।</p></div>
     <div class="info"><span class="icon">📝</span><h4>Response Sheet</h4><p>परीक्षा के बाद विद्यार्थी अपने उत्तर और परिणाम देख सकेगा।</p></div>
@@ -90,6 +96,47 @@ footer{margin-top:40px;background:var(--navy);color:#d5e4f1;padding:22px 18px}.f
 </section>
 </main>
 <footer><div class="foot"><span>© 2026 PV Education · A Unit of PVrajCMS Group</span><span><a href="pv-education.html">Back to Main Website</a></span></div></footer>
+<div class="modal" id="adminModal" role="dialog" aria-modal="true">
+  <div class="modal-box" style="width:min(100%,760px);max-height:90vh;overflow:auto">
+    <button class="close" onclick="closeAdmin()">✕</button>
+    <h2>Admin Dashboard · Exam Schedule</h2>
+    <p>GS और CSAT की तारीख, समय, अवधि और Late Entry Limit यहाँ सेट करें। Save करने पर इस browser में schedule दिखाई देगा।</p>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
+      <section style="border:1px solid var(--line);border-radius:12px;padding:14px">
+        <h3>GS Paper-I</h3>
+        <label>Exam Date<input type="date" id="gsAdminDate"></label>
+        <label>Start Time<input type="time" id="gsAdminStart"></label>
+        <label>End Time<input type="time" id="gsAdminEnd"></label>
+        <label>Duration (minutes)<input type="number" id="gsAdminDuration" min="1" value="120"></label>
+        <label>Late Entry Allowed (minutes)<input type="number" id="gsAdminLate" min="0" value="20"></label>
+        <label>Answer Key Publish Date<input type="date" id="gsKeyDate"></label>
+        <label>Answer Key Publish Time<input type="time" id="gsKeyTime"></label>
+        <label>GS Result Publish Date<input type="date" id="gsResultDate"></label>
+        <label>GS Result Publish Time<input type="time" id="gsResultTime"></label>
+      </section>
+      <section style="border:1px solid var(--line);border-radius:12px;padding:14px">
+        <h3>CSAT Paper-II</h3>
+        <label>Exam Date<input type="date" id="csatAdminDate"></label>
+        <label>Start Time<input type="time" id="csatAdminStart"></label>
+        <label>End Time<input type="time" id="csatAdminEnd"></label>
+        <label>Duration (minutes)<input type="number" id="csatAdminDuration" min="1" value="120"></label>
+        <label>Late Entry Allowed (minutes)<input type="number" id="csatAdminLate" min="0" value="20"></label>
+        <label>Answer Key Publish Date<input type="date" id="csatKeyDate"></label>
+        <label>Answer Key Publish Time<input type="time" id="csatKeyTime"></label>
+        <label>CSAT Result Publish Date<input type="date" id="csatResultDate"></label>
+        <label>CSAT Result Publish Time<input type="time" id="csatResultTime"></label>
+      </section>
+    </div>
+    <section style="margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:14px">
+      <h3>Combined Result Publication</h3>
+      <label>Combined Result Publish Date<input type="date" id="combinedResultDate"></label>
+      <label>Combined Result Publish Time<input type="time" id="combinedResultTime"></label>
+      <p style="font-size:12px;color:var(--muted)">GS और CSAT दोनों के परिणाम प्रकाशित होने के बाद Combined Result/Merit List प्रकाशित करने का समय।</p>
+    </section>
+    <div class="modal-actions"><button class="btn secondary" onclick="closeAdmin()">Cancel</button><button class="btn primary" onclick="saveSchedule()">Save Schedule</button></div>
+    <p id="adminStatus" style="color:var(--green);font-weight:700"></p>
+  </div>
+</div>
 <div class="modal" id="loginModal" role="dialog" aria-modal="true">
   <div class="modal-box"><button class="close" onclick="closeModal()">✕</button><h2 id="modalTitle">Student Login</h2><p id="modalText">Login सुविधा अगले चरण में backend से जोड़ी जाएगी।</p><input placeholder="Roll Number / Email" autocomplete="username"><input type="password" placeholder="Password" autocomplete="current-password"><div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Close</button><button class="btn primary" onclick="alert('अभी यह UI prototype है। Login backend अगले चरण में जोड़ा जाएगा।')">Login</button></div></div>
 </div>
@@ -98,6 +145,67 @@ function openLogin(paper){document.getElementById('modalTitle').textContent='Stu
 function closeModal(){document.getElementById('loginModal').classList.remove('open')}
 function showInstructions(paper){alert(paper+'\\n\\n• परीक्षा की निर्धारित अवधि में पेपर पूरा करें।\\n• प्रत्येक प्रश्न का उत्तर ध्यान से चुनें।\\n• वास्तविक परीक्षा निर्देश Admin द्वारा प्रकाशित किए जाएंगे।')}
 document.getElementById('loginModal').addEventListener('click',e=>{if(e.target.id==='loginModal')closeModal()});
+ 
+function openAdmin(){
+  const saved=JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');
+  ['gs','csat'].forEach(k=>{
+    const v=saved[k]||{};
+    const prefix=k==='gs'?'gsAdmin':'csatAdmin';
+    document.getElementById(prefix+'Date').value=v.date||'';
+    document.getElementById(prefix+'Start').value=v.start||'';
+    document.getElementById(prefix+'End').value=v.end||'';
+    document.getElementById(prefix+'Duration').value=v.duration||120;
+    document.getElementById(prefix+'Late').value=v.late||20;
+    document.getElementById(k+'KeyDate').value=v.keyDate||'';
+    document.getElementById(k+'KeyTime').value=v.keyTime||'';
+    document.getElementById(k+'ResultDate').value=v.resultDate||'';
+    document.getElementById(k+'ResultTime').value=v.resultTime||'';
+  });
+  document.getElementById('combinedResultDate').value=saved.combinedResultDate||'';
+  document.getElementById('combinedResultTime').value=saved.combinedResultTime||'';
+  document.getElementById('adminModal').classList.add('open');
+}
+function closeAdmin(){document.getElementById('adminModal').classList.remove('open')}
+function saveSchedule(){
+  const data={};
+  ['gs','csat'].forEach(k=>{
+    const prefix=k==='gs'?'gsAdmin':'csatAdmin';
+    data[k]={
+      date:document.getElementById(prefix+'Date').value,
+      start:document.getElementById(prefix+'Start').value,
+      end:document.getElementById(prefix+'End').value,
+      duration:document.getElementById(prefix+'Duration').value,
+      late:document.getElementById(prefix+'Late').value,
+      keyDate:document.getElementById(k+'KeyDate').value,
+      keyTime:document.getElementById(k+'KeyTime').value,
+      resultDate:document.getElementById(k+'ResultDate').value,
+      resultTime:document.getElementById(k+'ResultTime').value
+    };
+  });
+  data.combinedResultDate=document.getElementById('combinedResultDate').value;
+  data.combinedResultTime=document.getElementById('combinedResultTime').value;
+  localStorage.setItem('pvPrelimsSchedule',JSON.stringify(data));
+  renderSchedule(data);
+  document.getElementById('adminStatus').textContent='Schedule saved on this browser.';
+}
+function renderSchedule(data){
+  data=data||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');
+  ['gs','csat'].forEach(k=>{
+    const v=data[k]||{};
+    const date=v.date?new Date(v.date+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'Admin द्वारा घोषित';
+    const time=(v.start&&v.end)?v.start+' – '+v.end:'Admin द्वारा घोषित';
+    const fmt=(d,t)=>d?new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})+(t?' · '+t:''):'Admin द्वारा घोषित';
+    document.getElementById(k+'Date').textContent=date;
+    document.getElementById(k+'Time').textContent=time+(v.late?(' · Late Entry '+v.late+' min'):'');
+    document.getElementById(k+'KeyPublish').textContent=fmt(v.keyDate,v.keyTime);
+    document.getElementById(k+'ResultPublish').textContent=fmt(v.resultDate,v.resultTime);
+  });
+  const fmtCombined=(d,t)=>d?new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})+(t?' · '+t:''):'Admin द्वारा घोषित';
+  document.getElementById('combinedPublish').textContent=fmtCombined(data.combinedResultDate,data.combinedResultTime);
+}
+renderSchedule();
+document.getElementById('adminModal').addEventListener('click',e=>{if(e.target.id==='adminModal')closeAdmin()});
+
 </script>
 </body>
 </html>
