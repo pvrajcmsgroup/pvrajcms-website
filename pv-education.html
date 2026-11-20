@@ -134,7 +134,7 @@ border-radius:8px;
 padding:9px 12px;
 }
 
-/* HERO SECTION */
+/* HERO SECTION - COMPACT */
 
 .hero{
 background:linear-gradient(110deg,#06172a 0%,#0b3456 57%,#087a9a 100%);
@@ -225,7 +225,6 @@ bottom:12px;
 /* ONLINE EXAMINATION PORTAL */
 
 .exam-portal{
-display:none;
 max-width:1196px;
 margin:30px auto 0;
 padding:0 22px;
@@ -718,32 +717,15 @@ font-size:13px;
 
 }
 
-/* EXAM PORTAL ONLY ON EXAMS PAGE */
 
-.exam-portal{
-display:none;
-}
-
-body.exam-page .hero{
-display:none;
-}
-
-body.exam-page .exam-portal{
-display:block;
-}
-
-body:not(.exam-page) .exam-portal{
-display:none!important;
-}
-
+/* PAGE ROUTING: keep the examination portal exclusive to the Exams view */
+.exam-portal{display:none;}
+body.exam-page .hero{display:none;}
+body.exam-page .exam-portal{display:block;}
+body:not(.exam-page) .exam-portal{display:none!important;}
 @media(max-width:768px){
-.exam-portal-inner{
-margin:16px auto;
-}
-
-.exam-portal{
-padding:18px 12px;
-}
+  .exam-portal-inner{margin:16px auto;}
+  .exam-portal{padding:18px 12px;}
 }
 
 </style>
@@ -802,7 +784,7 @@ aria-label="Toggle menu">☰</button>
 
 <main>
 
-<!-- HOME HERO -->
+<!-- COMPACT HERO SECTION -->
 
 <section class="hero">
 
@@ -1086,43 +1068,21 @@ View All Exams →
 
 </footer>
 
+
 <script>
-
-/* SHOW EXAM PORTAL ONLY WHEN #EXAMS IS OPEN */
-
 (function(){
-
-function updatePage(){
-
-var isExam = (window.location.hash || "").toLowerCase() === "#exams";
-
-document.body.classList.toggle("exam-page",isExam);
-
-if(isExam){
-
-var portal=document.getElementById("exams");
-
-if(portal){
-
-portal.scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
-
-}
-
-}
-
-}
-
-window.addEventListener("hashchange",updatePage);
-
-document.addEventListener("DOMContentLoaded",updatePage);
-
-updatePage();
-
+  function updatePage(){
+    var isExam = (window.location.hash || '').toLowerCase() === '#exams';
+    document.body.classList.toggle('exam-page', isExam);
+    if(isExam){
+      var portal=document.getElementById('exams');
+      if(portal) portal.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  }
+  window.addEventListener('hashchange', updatePage);
+  document.addEventListener('DOMContentLoaded', updatePage);
+  updatePage();
 })();
-
 </script>
 
 </body>
