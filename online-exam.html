@@ -350,6 +350,15 @@ align-items:flex-start
 .card-actions .btn{width:100%}
 .admin-grid{grid-template-columns:1fr}
 }
+
+/* Upload UI readability fixes */
+.detail strong{display:block;overflow-wrap:anywhere;word-break:break-word;white-space:normal;max-width:100%;}
+#gsPaperDownload,#gsKeyDownload,#csatPaperDownload,#csatKeyDownload{min-width:0;overflow:hidden;}
+#gsUploadStatus,#csatUploadStatus{display:block;min-height:20px;margin:10px 0 0;padding:8px;border-radius:8px;background:#f0f8ff;color:#075b93;font-size:12px;line-height:1.45;overflow-wrap:anywhere;word-break:break-word;}
+.admin-section input[type=file]{max-width:100%;width:100%;}
+.admin-section button{max-width:100%;white-space:normal;}
+@media(max-width:800px){.admin-grid{grid-template-columns:1fr;}}
+
 </style>
 </head>
 
