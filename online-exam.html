@@ -13,7 +13,7 @@
 --ink:#10213b;
 --muted:#607087;
 --bg:#f4f8fc;
---line:#dce7f1
+--line:#dce7f1;
 }
 *{box-sizing:border-box}
 body{
@@ -176,8 +176,7 @@ margin-bottom:5px
 .detail strong{
 font-size:14px;
 display:block;
-overflow-wrap:anywhere;
-word-break:break-word
+overflow-wrap:anywhere
 }
 .notice{
 background:#fff8e8;
@@ -210,7 +209,8 @@ border:1px solid #d1e4f3
 .card-actions{
 display:flex;
 gap:10px;
-margin-top:14px
+margin-top:14px;
+flex-wrap:wrap
 }
 .card-actions .btn{flex:1}
 .info-grid{
@@ -312,17 +312,6 @@ border-radius:12px;
 padding:14px;
 min-width:0
 }
-table{
-width:100%;
-border-collapse:collapse;
-min-width:700px
-}
-th,td{
-padding:12px;
-border-bottom:1px solid var(--line);
-text-align:left
-}
-th{background:#eaf4fc}
 .upload-status{
 display:block;
 min-height:20px;
@@ -333,8 +322,7 @@ background:#f0f8ff;
 color:#075b93;
 font-size:12px;
 line-height:1.45;
-overflow-wrap:anywhere;
-word-break:break-word
+overflow-wrap:anywhere
 }
 .upload-preview{
 margin-top:8px;
@@ -354,7 +342,40 @@ max-width:100%;
 white-space:normal;
 margin-top:5px
 }
-.detail a{margin-top:8px}
+table{
+width:100%;
+border-collapse:collapse;
+min-width:700px
+}
+th,td{
+padding:12px;
+border-bottom:1px solid var(--line);
+text-align:left
+}
+th{background:#eaf4fc}
+.student-dashboard{
+background:white;
+border:1px solid var(--line);
+border-radius:18px;
+padding:20px;
+box-shadow:0 8px 24px #0b345608
+}
+.student-paper{
+border:1px solid var(--line);
+border-radius:14px;
+overflow:hidden;
+background:white
+}
+.student-paper-body{padding:18px}
+.student-file-status{
+padding:12px;
+background:#f5f9fc;
+border:1px solid #e3edf5;
+border-radius:10px;
+margin:10px 0;
+overflow-wrap:anywhere
+}
+.hidden{display:none!important}
 @media(max-width:800px){
 .navlinks{
 display:none;
@@ -368,10 +389,7 @@ flex-direction:column
 }
 .navlinks.open{display:flex}
 .mobile-menu{display:block;margin-left:auto}
-.hero-inner{
-flex-direction:column;
-align-items:flex-start
-}
+.hero-inner{flex-direction:column;align-items:flex-start}
 .cards{grid-template-columns:1fr}
 .info-grid{grid-template-columns:1fr}
 .admin-grid{grid-template-columns:1fr}
@@ -411,6 +429,7 @@ onclick="document.querySelector('.navlinks').classList.toggle('open')">
 <div class="navlinks">
 <a href="pv-education.html">Main Website</a>
 <a href="#exams">Prelims Exams</a>
+<a href="#studentDashboard">Student Dashboard</a>
 <a href="#instructions">Instructions</a>
 <a href="#" onclick="openAdmin();return false;">Admin</a>
 </div>
@@ -430,6 +449,8 @@ onclick="document.querySelector('.navlinks').classList.toggle('open')">
 </section>
 
 <main>
+
+<!-- EXAMS -->
 <section class="container" id="exams">
 
 <div class="section-title">
@@ -439,7 +460,7 @@ onclick="document.querySelector('.navlinks').classList.toggle('open')">
 
 <div class="cards">
 
-<!-- GS PAPER -->
+<!-- GS -->
 <article class="exam-card">
 <div class="card-head">
 <div>
@@ -450,6 +471,7 @@ onclick="document.querySelector('.navlinks').classList.toggle('open')">
 </div>
 
 <div class="card-body">
+
 <div class="details">
 <div class="detail"><small>Questions</small><strong>150</strong></div>
 <div class="detail"><small>Duration</small><strong id="gsDuration">2 Hours</strong></div>
@@ -472,23 +494,18 @@ onclick="document.querySelector('.navlinks').classList.toggle('open')">
 </div>
 
 <div class="card-actions">
-<button class="btn primary" onclick="openLogin('GS Paper-I')">Login & Start Examination →</button>
-<button class="btn secondary" onclick="showInstructions('GS Paper-I')">Instructions</button>
+<button class="btn primary" onclick="openLogin('GS Paper-I')">
+Login & Start Examination →
+</button>
+<button class="btn secondary" onclick="showInstructions('GS Paper-I')">
+Instructions
+</button>
 </div>
 
-<div class="detail" id="gsPaperDownload">
-<small>Uploaded Question Paper</small>
-<strong>Paper अभी upload नहीं हुआ है।</strong>
-</div>
-
-<div class="detail" id="gsKeyDownload">
-<small>Uploaded Answer Key</small>
-<strong>Answer Key अभी upload नहीं हुई है।</strong>
-</div>
 </div>
 </article>
 
-<!-- CSAT PAPER -->
+<!-- CSAT -->
 <article class="exam-card">
 <div class="card-head">
 <div>
@@ -499,6 +516,7 @@ onclick="document.querySelector('.navlinks').classList.toggle('open')">
 </div>
 
 <div class="card-body">
+
 <div class="details">
 <div class="detail"><small>Questions</small><strong>100</strong></div>
 <div class="detail"><small>Duration</small><strong id="csatDuration">2 Hours</strong></div>
@@ -521,21 +539,17 @@ CSAT पेपर के लिए अलग Login/Start विकल्प ह�
 </div>
 
 <div class="card-actions">
-<button class="btn primary" onclick="openLogin('CSAT Paper-II')">Login & Start Examination →</button>
-<button class="btn secondary" onclick="showInstructions('CSAT Paper-II')">Instructions</button>
+<button class="btn primary" onclick="openLogin('CSAT Paper-II')">
+Login & Start Examination →
+</button>
+<button class="btn secondary" onclick="showInstructions('CSAT Paper-II')">
+Instructions
+</button>
 </div>
 
-<div class="detail" id="csatPaperDownload">
-<small>Uploaded Question Paper</small>
-<strong>Paper अभी upload नहीं हुआ है।</strong>
-</div>
-
-<div class="detail" id="csatKeyDownload">
-<small>Uploaded Answer Key</small>
-<strong>Answer Key अभी upload नहीं हुई है।</strong>
-</div>
 </div>
 </article>
+
 </div>
 
 <div class="detail">
@@ -543,26 +557,127 @@ CSAT पेपर के लिए अलग Login/Start विकल्प ह�
 <strong id="combinedPublish">Admin द्वारा घोषित</strong>
 </div>
 
-<!-- FINAL RESULT -->
+</section>
+
+<!-- STUDENT DASHBOARD -->
+<section class="container" id="studentDashboard">
+
+<div class="section-title">
+<h2>🎓 Student Dashboard</h2>
+<p>विद्यार्थी यहाँ अपने Question Papers देख और Download कर सकते हैं।</p>
+</div>
+
+<div class="student-dashboard">
+
+<div class="details">
+<div class="detail">
+<small>Student Name</small>
+<strong id="studentName">Student</strong>
+</div>
+
+<div class="detail">
+<small>Roll Number</small>
+<strong id="studentRoll">Not Logged In</strong>
+</div>
+</div>
+
+<div class="notice">
+यह Student Dashboard का प्रारंभिक संस्करण है। वास्तविक Student Login और परीक्षा प्रणाली Backend से जोड़ी जाएगी।
+</div>
+
+<div class="cards">
+
+<!-- STUDENT GS -->
+<div class="student-paper">
+<div class="card-head">
+<div>
+<span class="paper-tag">PAPER – I</span>
+<h3>General Studies</h3>
+</div>
+<span class="badge">GS-I</span>
+</div>
+
+<div class="student-paper-body">
+
+<div id="studentGSFile" class="student-file-status">
+GS Paper अभी उपलब्ध नहीं है।
+</div>
+
+<div class="card-actions">
+<button class="btn primary" onclick="studentOpenPaper('gsPaper')">
+📄 View GS Paper
+</button>
+
+<button class="btn secondary" onclick="studentDownloadPaper('gsPaper')">
+⬇ Download GS Paper
+</button>
+</div>
+
+</div>
+
+<!-- STUDENT CSAT -->
+<div class="student-paper">
+<div class="card-head">
+<div>
+<span class="paper-tag">PAPER – II</span>
+<h3>CSAT</h3>
+</div>
+<span class="badge">CSAT</span>
+</div>
+
+<div class="student-paper-body">
+
+<div id="studentCSATFile" class="student-file-status">
+CSAT Paper अभी उपलब्ध नहीं है।
+</div>
+
+<div class="card-actions">
+<button class="btn primary" onclick="studentOpenPaper('csatPaper')">
+📄 View CSAT Paper
+</button>
+
+<button class="btn secondary" onclick="studentDownloadPaper('csatPaper')">
+⬇ Download CSAT Paper
+</button>
+</div>
+
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- RESULTS -->
 <section class="container" id="final-results">
+
 <div class="section-title">
 <h2>🏆 PCS Prelims Final Result</h2>
 <p>Combined GS + CSAT Result · Overall और Category-wise Merit List</p>
 </div>
 
 <div class="exam-card" style="padding:20px">
+
 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+
 <button class="btn primary result-filter" data-category="ALL" onclick="filterResult('ALL')">Overall Merit</button>
 <button class="btn secondary result-filter" data-category="GENERAL" onclick="filterResult('GENERAL')">General</button>
 <button class="btn secondary result-filter" data-category="OBC" onclick="filterResult('OBC')">OBC</button>
 <button class="btn secondary result-filter" data-category="EWS" onclick="filterResult('EWS')">EWS</button>
 <button class="btn secondary result-filter" data-category="SC" onclick="filterResult('SC')">SC</button>
 <button class="btn secondary result-filter" data-category="ST" onclick="filterResult('ST')">ST</button>
+
 </div>
 
 <div class="details">
-<div class="detail"><small>Result Type</small><strong id="resultType">Overall Combined Merit List</strong></div>
-<div class="detail"><small>Publication</small><strong id="resultStatus">Admin द्वारा घोषित</strong></div>
+<div class="detail">
+<small>Result Type</small>
+<strong id="resultType">Overall Combined Merit List</strong>
+</div>
+
+<div class="detail">
+<small>Publication</small>
+<strong id="resultStatus">Admin द्वारा घोषित</strong>
+</div>
 </div>
 
 <div style="overflow-x:auto;margin-top:16px">
@@ -579,10 +694,11 @@ CSAT पेपर के लिए अलग Login/Start विकल्प ह�
 <th>Status</th>
 </tr>
 </thead>
+
 <tbody id="resultTableBody">
 <tr>
 <td colspan="8" style="padding:22px;text-align:center;color:#607087">
-Result अभी प्रकाशित नहीं हुआ है। Result publish होने के बाद Merit List यहाँ दिखाई जाएगी।
+Result अभी प्रकाशित नहीं हुआ है।
 </td>
 </tr>
 </tbody>
@@ -592,29 +708,35 @@ Result अभी प्रकाशित नहीं हुआ है। Resul
 <p class="notice">
 Category-wise Merit List में संबंधित Category के विद्यार्थियों की Rank दिखाई जाएगी। Overall Merit List में सभी विद्यार्थियों की संयुक्त Rank होगी।
 </p>
+
 </div>
 </section>
 
 <!-- INSTRUCTIONS -->
-<div class="info-grid" id="instructions">
+<section class="container" id="instructions">
+<div class="info-grid">
+
 <div class="info">
 <span style="font-size:24px">⏱️</span>
 <h4>Timed Examination</h4>
 <p>हर पेपर की निर्धारित अवधि के अनुसार परीक्षा होगी।</p>
 </div>
+
 <div class="info">
 <span style="font-size:24px">📝</span>
 <h4>Response Sheet</h4>
 <p>परीक्षा के बाद विद्यार्थी अपने उत्तर और परिणाम देख सकेगा।</p>
 </div>
+
 <div class="info">
 <span style="font-size:24px">📊</span>
 <h4>Results</h4>
 <p>Answer Key और परिणाम प्रकाशित होने पर उपलब्ध होंगे।</p>
 </div>
-</div>
 
+</div>
 </section>
+
 </main>
 
 <footer>
@@ -627,9 +749,11 @@ Category-wise Merit List में संबंधित Category के वि�
 <!-- ADMIN MODAL -->
 <div class="modal" id="adminModal">
 <div class="modal-box">
+
 <button class="close" onclick="closeAdmin()">✕</button>
 
 <h2>Admin Dashboard · Exam Schedule</h2>
+
 <p>GS और CSAT की तारीख, समय, अवधि, Late Entry और Result Publication Schedule यहाँ सेट करें।</p>
 
 <div class="admin-grid">
@@ -715,6 +839,7 @@ Category-wise Merit List में संबंधित Category के वि�
 <input type="time" id="csatResultTime">
 </label>
 </section>
+
 </div>
 
 <!-- COMBINED RESULT -->
@@ -732,44 +857,67 @@ Category-wise Merit List में संबंधित Category के वि�
 <p>GS और CSAT दोनों के परिणाम प्रकाशित होने के बाद Combined Result/Merit List प्रकाशित करने का समय।</p>
 </section>
 
-<!-- PAPER AND ANSWER KEY UPLOADS -->
+<!-- UPLOADS -->
 <section class="admin-section" style="margin-top:14px">
 <h3>📄 Paper & Answer Key Upload / Replace</h3>
-<p>यहाँ नई फ़ाइल upload करके पुराने paper या answer key को replace करें। फ़ाइल इस ब्राउज़र में सुरक्षित होगी। सभी विद्यार्थियों तक पहुँचाने के लिए Supabase Storage/backend connection आवश्यक है।</p>
+
+<p>
+नई फ़ाइल Upload करके पुराने Paper या Answer Key को Replace करें।
+अभी फ़ाइल इसी ब्राउज़र में सुरक्षित होगी।
+</p>
 
 <div class="admin-grid">
 
+<!-- GS UPLOAD -->
 <div class="admin-section">
 <h4>GS Paper-I</h4>
+
 <label>Question Paper (PDF/CSV/TXT)
 <input type="file" id="gsPaperFile" accept=".pdf,.csv,.txt">
 </label>
-<button class="btn primary" onclick="saveExamFile('gsPaperFile','gsPaper')">Upload / Replace GS Paper</button>
+
+<button class="btn primary" onclick="saveExamFile('gsPaperFile','gsPaper')">
+Upload / Replace GS Paper
+</button>
 
 <label>Answer Key (CSV/TXT)
 <input type="file" id="gsKeyFile" accept=".csv,.txt">
 </label>
-<button class="btn primary" onclick="saveExamFile('gsKeyFile','gsKey')">Upload / Replace GS Answer Key</button>
+
+<button class="btn primary" onclick="saveExamFile('gsKeyFile','gsKey')">
+Upload / Replace GS Answer Key
+</button>
 
 <p id="gsUploadStatus" class="upload-status"></p>
+
 <div id="gsAdminPaperPreview"></div>
 </div>
 
+<!-- CSAT UPLOAD -->
 <div class="admin-section">
 <h4>CSAT Paper-II</h4>
+
 <label>Question Paper (PDF/CSV/TXT)
 <input type="file" id="csatPaperFile" accept=".pdf,.csv,.txt">
 </label>
-<button class="btn primary" onclick="saveExamFile('csatPaperFile','csatPaper')">Upload / Replace CSAT Paper</button>
+
+<button class="btn primary" onclick="saveExamFile('csatPaperFile','csatPaper')">
+Upload / Replace CSAT Paper
+</button>
 
 <label>Answer Key (CSV/TXT)
 <input type="file" id="csatKeyFile" accept=".csv,.txt">
 </label>
-<button class="btn primary" onclick="saveExamFile('csatKeyFile','csatKey')">Upload / Replace CSAT Answer Key</button>
+
+<button class="btn primary" onclick="saveExamFile('csatKeyFile','csatKey')">
+Upload / Replace CSAT Answer Key
+</button>
 
 <p id="csatUploadStatus" class="upload-status"></p>
+
 <div id="csatAdminPaperPreview"></div>
 </div>
+
 </div>
 </section>
 
@@ -779,29 +927,45 @@ Category-wise Merit List में संबंधित Category के वि�
 </div>
 
 <p id="adminStatus" style="color:green;font-weight:bold"></p>
+
 </div>
 </div>
 
 <!-- LOGIN MODAL -->
 <div class="modal" id="loginModal">
 <div class="modal-box" style="max-width:440px">
+
 <button class="close" onclick="closeModal()">✕</button>
+
 <h2 id="modalTitle">Student Login</h2>
-<p id="modalText">Login सुविधा अगले चरण में Backend से जोड़ी जाएगी।</p>
+
+<p id="modalText">
+Login सुविधा अगले चरण में Backend से जोड़ी जाएगी।
+</p>
+
 <input placeholder="Roll Number / Email">
 <input type="password" placeholder="Password">
 
 <div class="modal-actions">
 <button class="btn secondary" onclick="closeModal()">Close</button>
-<button class="btn primary" onclick="alert('अभी यह UI prototype है। Login backend अगले चरण में जोड़ा जाएगा।')">Login</button>
+<button class="btn primary" onclick="alert('अभी यह UI prototype है। Login backend अगले चरण में जोड़ा जाएगा।')">
+Login
+</button>
 </div>
+
 </div>
 </div>
 
 <script>
+
+/* RESULTS */
+
 function filterResult(category){
+
 document.getElementById("resultType").textContent=
-category==="ALL"?"Overall Combined Merit List":category+" Category Merit List";
+category==="ALL"
+?"Overall Combined Merit List"
+:category+" Category Merit List";
 
 document.querySelectorAll(".result-filter").forEach(btn=>{
 let active=btn.dataset.category===category;
@@ -810,31 +974,47 @@ btn.classList.toggle("secondary",!active);
 });
 
 document.getElementById("resultTableBody").innerHTML=
-'<tr><td colspan="8" style="padding:22px;text-align:center;color:#607087">Result अभी प्रकाशित नहीं हुआ है। '+(category==="ALL"?"Overall":category+" Category")+' Merit List publish होने के बाद यहाँ दिखाई जाएगी।</td></tr>';
+'<tr><td colspan="8" style="padding:22px;text-align:center;color:#607087">Result अभी प्रकाशित नहीं हुआ है।</td></tr>';
+
 }
 
+/* LOGIN */
+
 function openLogin(paper){
-document.getElementById("modalTitle").textContent="Student Login · "+paper;
+
+document.getElementById("modalTitle").textContent=
+"Student Login · "+paper;
+
 document.getElementById("modalText").textContent=
 "इस पेपर की परीक्षा देने के लिए विद्यार्थी Login करेंगे। वास्तविक Login और परीक्षा प्रणाली Backend जुड़ने के बाद सक्रिय होगी।";
+
 document.getElementById("loginModal").classList.add("open");
+
 }
 
 function closeModal(){
 document.getElementById("loginModal").classList.remove("open");
 }
 
+/* INSTRUCTIONS */
+
 function showInstructions(paper){
+
 alert(paper+"\n\n"+
 "• परीक्षा की निर्धारित अवधि में पेपर पूरा करें।\n"+
 "• प्रत्येक प्रश्न का उत्तर ध्यान से चुनें।\n"+
 "• वास्तविक परीक्षा निर्देश Admin द्वारा प्रकाशित किए जाएंगे।");
+
 }
 
+/* ADMIN */
+
 function openAdmin(){
+
 const saved=JSON.parse(localStorage.getItem("pvPrelimsSchedule")||"{}");
 
 ["gs","csat"].forEach(k=>{
+
 const v=saved[k]||{};
 const prefix=k==="gs"?"gsAdmin":"csatAdmin";
 
@@ -848,26 +1028,37 @@ document.getElementById(k+"KeyDate").value=v.keyDate||"";
 document.getElementById(k+"KeyTime").value=v.keyTime||"";
 document.getElementById(k+"ResultDate").value=v.resultDate||"";
 document.getElementById(k+"ResultTime").value=v.resultTime||"";
+
 });
 
-document.getElementById("combinedResultDate").value=saved.combinedResultDate||"";
-document.getElementById("combinedResultTime").value=saved.combinedResultTime||"";
+document.getElementById("combinedResultDate").value=
+saved.combinedResultDate||"";
+
+document.getElementById("combinedResultTime").value=
+saved.combinedResultTime||"";
 
 document.getElementById("adminModal").classList.add("open");
+
 renderUploadedFiles();
+
 }
 
 function closeAdmin(){
 document.getElementById("adminModal").classList.remove("open");
 }
 
+/* SAVE SCHEDULE */
+
 function saveSchedule(){
+
 const data={};
 
 ["gs","csat"].forEach(k=>{
+
 const prefix=k==="gs"?"gsAdmin":"csatAdmin";
 
 data[k]={
+
 date:document.getElementById(prefix+"Date").value,
 start:document.getElementById(prefix+"Start").value,
 end:document.getElementById(prefix+"End").value,
@@ -877,42 +1068,62 @@ keyDate:document.getElementById(k+"KeyDate").value,
 keyTime:document.getElementById(k+"KeyTime").value,
 resultDate:document.getElementById(k+"ResultDate").value,
 resultTime:document.getElementById(k+"ResultTime").value
+
 };
+
 });
 
-data.combinedResultDate=document.getElementById("combinedResultDate").value;
-data.combinedResultTime=document.getElementById("combinedResultTime").value;
+data.combinedResultDate=
+document.getElementById("combinedResultDate").value;
+
+data.combinedResultTime=
+document.getElementById("combinedResultTime").value;
 
 localStorage.setItem("pvPrelimsSchedule",JSON.stringify(data));
+
 renderSchedule(data);
 
 document.getElementById("adminStatus").textContent=
 "Schedule saved on this browser.";
+
 }
 
+/* RENDER SCHEDULE */
+
 function renderSchedule(data){
+
 data=data||JSON.parse(localStorage.getItem("pvPrelimsSchedule")||"{}");
 
 ["gs","csat"].forEach(k=>{
+
 const v=data[k]||{};
 
 const date=v.date
 ?new Date(v.date+"T00:00:00").toLocaleDateString("en-IN")
 :"Admin द्वारा घोषित";
 
-const time=(v.start&&v.end)?v.start+" – "+v.end:"Admin द्वारा घोषित";
+const time=(v.start&&v.end)
+?v.start+" – "+v.end
+:"Admin द्वारा घोषित";
 
 const fmt=(d,t)=>d
 ?new Date(d+"T00:00:00").toLocaleDateString("en-IN")+(t?" · "+t:"")
 :"Admin द्वारा घोषित";
 
 document.getElementById(k+"Date").textContent=date;
+
 document.getElementById(k+"Time").textContent=
 time+(v.late?" · Late Entry "+v.late+" min":"");
 
-document.getElementById(k+"KeyPublish").textContent=fmt(v.keyDate,v.keyTime);
-document.getElementById(k+"ResultPublish").textContent=fmt(v.resultDate,v.resultTime);
-document.getElementById(k+"Duration").textContent=v.duration?v.duration+" Minutes":"2 Hours";
+document.getElementById(k+"KeyPublish").textContent=
+fmt(v.keyDate,v.keyTime);
+
+document.getElementById(k+"ResultPublish").textContent=
+fmt(v.resultDate,v.resultTime);
+
+document.getElementById(k+"Duration").textContent=
+v.duration?v.duration+" Minutes":"2 Hours";
+
 });
 
 const fmtCombined=(d,t)=>d
@@ -921,9 +1132,12 @@ const fmtCombined=(d,t)=>d
 
 document.getElementById("combinedPublish").textContent=
 fmtCombined(data.combinedResultDate,data.combinedResultTime);
+
 }
 
 renderSchedule();
+
+/* MODAL EVENTS */
 
 document.getElementById("adminModal").addEventListener("click",e=>{
 if(e.target.id==="adminModal")closeAdmin();
@@ -933,105 +1147,214 @@ document.getElementById("loginModal").addEventListener("click",e=>{
 if(e.target.id==="loginModal")closeModal();
 });
 
-/* IndexedDB local file storage */
+/* FILE DATABASE */
+
 const PV_FILE_DB_NAME="PVEducationExamFiles";
 const PV_FILE_DB_VERSION=1;
 
 function pvOpenFileDB(){
+
 return new Promise((resolve,reject)=>{
+
 const req=indexedDB.open(PV_FILE_DB_NAME,PV_FILE_DB_VERSION);
+
 req.onupgradeneeded=()=>{
+
 const db=req.result;
-if(!db.objectStoreNames.contains("files"))
+
+if(!db.objectStoreNames.contains("files")){
 db.createObjectStore("files",{keyPath:"key"});
+}
+
 };
+
 req.onsuccess=()=>resolve(req.result);
 req.onerror=()=>reject(req.error);
+
 });
+
 }
 
 async function pvSaveFileRecord(key,file){
+
 const db=await pvOpenFileDB();
+
 return new Promise((resolve,reject)=>{
+
 const tx=db.transaction("files","readwrite");
+
 tx.objectStore("files").put({
-key,
+
+key:key,
 name:file.name,
 type:file.type,
 size:file.size,
 updatedAt:new Date().toISOString(),
 blob:file
+
 });
-tx.oncomplete=()=>{db.close();resolve();};
-tx.onerror=()=>{db.close();reject(tx.error);};
+
+tx.oncomplete=()=>{
+db.close();
+resolve();
+};
+
+tx.onerror=()=>{
+db.close();
+reject(tx.error);
+};
+
 });
+
 }
 
 async function pvGetFileRecord(key){
+
 const db=await pvOpenFileDB();
+
 return new Promise((resolve,reject)=>{
+
 const tx=db.transaction("files","readonly");
+
 const req=tx.objectStore("files").get(key);
-req.onsuccess=()=>{db.close();resolve(req.result||null);};
-req.onerror=()=>{db.close();reject(req.error);};
+
+req.onsuccess=()=>{
+db.close();
+resolve(req.result||null);
+};
+
+req.onerror=()=>{
+db.close();
+reject(req.error);
+};
+
 });
+
 }
 
+/* UPLOAD */
+
 async function saveExamFile(inputId,key){
+
 const input=document.getElementById(inputId);
+
 const file=input&&input.files&&input.files[0];
-const statusId=key.startsWith("gs")?"gsUploadStatus":"csatUploadStatus";
+
+const statusId=key.startsWith("gs")
+?"gsUploadStatus"
+:"csatUploadStatus";
+
 const status=document.getElementById(statusId);
 
 if(!file){
-if(status)status.textContent="कृपया पहले फ़ाइल चुनें।";
+
+if(status){
+status.textContent="कृपया पहले फ़ाइल चुनें।";
+}
+
 return;
+
 }
 
 if(file.size>25*1024*1024){
-if(status)status.textContent="फ़ाइल 25 MB से बड़ी है। कृपया छोटी फ़ाइल चुनें।";
-return;
+
+if(status){
+status.textContent="फ़ाइल 25 MB से बड़ी है। कृपया छोटी फ़ाइल चुनें।";
 }
 
-if(status)status.textContent="फ़ाइल सेव हो रही है…";
+return;
+
+}
+
+if(status){
+status.textContent="फ़ाइल सेव हो रही है…";
+}
 
 try{
+
 await pvSaveFileRecord(key,file);
+
 if(status){
-status.textContent="✅ "+file.name+
+
+status.textContent=
+"✅ "+file.name+
 " सफलतापूर्वक सेव/Replace हो गई ("+
 (file.size/1024/1024).toFixed(2)+" MB)।";
-}
-input.value="";
-await renderUploadedFiles();
-}catch(err){
-console.error(err);
-if(status)status.textContent="❌ फ़ाइल सेव नहीं हुई: "+(err.message||err);
-}
+
 }
 
+input.value="";
+
+await renderUploadedFiles();
+
+await renderStudentDashboard();
+
+}catch(err){
+
+console.error(err);
+
+if(status){
+status.textContent="❌ फ़ाइल सेव नहीं हुई: "+(err.message||err);
+}
+
+}
+
+}
+
+/* SAFE HTML */
+
+function escapeHtml(value){
+
+return String(value).replace(/[&<>"']/g,c=>({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+
+}[c]));
+
+}
+
+/* ADMIN PAPER PREVIEW */
+
 async function renderUploadedFiles(){
+
 const map=[
+
 ["gsPaper","gsPaperDownload","Uploaded Question Paper"],
 ["gsKey","gsKeyDownload","Uploaded Answer Key"],
 ["csatPaper","csatPaperDownload","Uploaded Question Paper"],
 ["csatKey","csatKeyDownload","Uploaded Answer Key"]
+
 ];
 
 for(const [key,elementId,label] of map){
+
 const el=document.getElementById(elementId);
+
 if(!el)continue;
 
 const rec=await pvGetFileRecord(key);
 
 if(!rec){
-el.innerHTML="<small>"+label+"</small><strong>Paper अभी upload नहीं हुआ है।</strong>";
+
+el.innerHTML=
+"<small>"+label+"</small>"+
+"<strong>Paper अभी upload नहीं हुआ है।</strong>";
+
 continue;
+
 }
 
 const url=URL.createObjectURL(rec.blob);
+
 const isPaper=key==="gsPaper"||key==="csatPaper";
-const isPdf=rec.type==="application/pdf"||rec.name.toLowerCase().endsWith(".pdf");
+
+const isPdf=
+rec.type==="application/pdf"||
+rec.name.toLowerCase().endsWith(".pdf");
 
 const viewLink=isPaper
 ?'<a class="btn secondary" style="margin-top:8px;margin-right:6px" target="_blank" rel="noopener" href="'+url+'">👁 View '+(isPdf?"PDF":"File")+"</a>"
@@ -1048,10 +1371,16 @@ new Date(rec.updatedAt).toLocaleString("en-IN")+
 "</small>";
 
 if(isPaper){
-const adminId=key==="gsPaper"?"gsAdminPaperPreview":"csatAdminPaperPreview";
+
+const adminId=
+key==="gsPaper"
+?"gsAdminPaperPreview"
+:"csatAdminPaperPreview";
+
 const adminEl=document.getElementById(adminId);
 
 if(adminEl){
+
 adminEl.innerHTML=
 '<div class="upload-preview">'+
 "<strong>Uploaded Paper Preview:</strong> "+
@@ -1059,24 +1388,116 @@ escapeHtml(rec.name)+"<br>"+
 '<a target="_blank" rel="noopener" href="'+url+'">👁 View Uploaded Paper</a> · '+
 '<a download="'+escapeHtml(rec.name)+'" href="'+url+'">⬇ Download</a>'+
 "</div>";
-}
-}
-}
+
 }
 
-function escapeHtml(value){
-return String(value).replace(/[&<>"']/g,c=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[c]));
 }
+
+}
+
+}
+
+/* STUDENT DASHBOARD */
+
+async function renderStudentDashboard(){
+
+const gs=await pvGetFileRecord("gsPaper");
+
+const csat=await pvGetFileRecord("csatPaper");
+
+const gsElement=document.getElementById("studentGSFile");
+
+const csatElement=document.getElementById("studentCSATFile");
+
+if(gs){
+
+gsElement.innerHTML=
+'<strong>✅ GS Paper-I उपलब्ध है</strong>'+
+'<br>'+escapeHtml(gs.name)+
+'<br>'+(gs.size/1024/1024).toFixed(2)+" MB";
+
+}else{
+
+gsElement.innerHTML=
+"<strong>GS Paper अभी उपलब्ध नहीं है।</strong>";
+
+}
+
+if(csat){
+
+csatElement.innerHTML=
+'<strong>✅ CSAT Paper-II उपलब्ध है</strong>'+
+'<br>'+escapeHtml(csat.name)+
+'<br>'+(csat.size/1024/1024).toFixed(2)+" MB";
+
+}else{
+
+csatElement.innerHTML=
+"<strong>CSAT Paper अभी उपलब्ध नहीं है।</strong>";
+
+}
+
+}
+
+/* STUDENT VIEW PAPER */
+
+async function studentOpenPaper(key){
+
+const record=await pvGetFileRecord(key);
+
+if(!record){
+
+alert("Question Paper अभी Upload नहीं हुआ है।");
+
+return;
+
+}
+
+const url=URL.createObjectURL(record.blob);
+
+window.open(url,"_blank");
+
+}
+
+/* STUDENT DOWNLOAD */
+
+async function studentDownloadPaper(key){
+
+const record=await pvGetFileRecord(key);
+
+if(!record){
+
+alert("Question Paper अभी Upload नहीं हुआ है।");
+
+return;
+
+}
+
+const url=URL.createObjectURL(record.blob);
+
+const a=document.createElement("a");
+
+a.href=url;
+a.download=record.name;
+
+document.body.appendChild(a);
+
+a.click();
+
+a.remove();
+
+}
+
+/* PAGE LOAD */
 
 window.addEventListener("DOMContentLoaded",()=>{
+
 renderUploadedFiles().catch(console.error);
+
+renderStudentDashboard().catch(console.error);
+
 });
+
 </script>
 
 </body>
