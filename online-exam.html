@@ -406,6 +406,52 @@ flex-direction:column
 .card-actions .btn{width:100%}
 }
 </style>
+
+<style>
+/* Exam modal viewport and navigation fix */
+#examModal .modal-box{
+  max-height:92vh!important;
+  height:auto!important;
+  overflow-y:auto!important;
+  box-sizing:border-box!important;
+  padding-bottom:18px!important;
+}
+#examPanel{
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+}
+#examQuestionArea{
+  min-height:110px!important;
+  max-height:28vh;
+  overflow:auto;
+}
+#examOptions{
+  max-height:35vh;
+  overflow-y:auto;
+}
+#examPanel > div[style*="flex-wrap:wrap"]{
+  position:sticky!important;
+  bottom:0!important;
+  z-index:5;
+  background:#fff!important;
+  padding:12px 0!important;
+  border-top:1px solid #dbe5f0;
+  box-shadow:0 -4px 12px rgba(0,0,0,.06);
+}
+#examPalette{
+  padding-bottom:8px;
+}
+@media(max-width:600px){
+  #examModal .modal-box{max-height:94vh!important;padding:14px!important}
+  #examPanel > div[style*="flex-wrap:wrap"] button{
+    flex:1 1 42%!important;
+    min-height:44px!important;
+  }
+  #examQuestionArea{max-height:25vh!important}
+  #examOptions{max-height:30vh!important}
+}
+</style>
 </head>
 
 <body>
