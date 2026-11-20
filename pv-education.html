@@ -3,603 +3,747 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="description" content="PV Education Online Examination Portal">
 <title>PV Education | PVrajCMS Group</title>
 
-<meta name="description" content="PV Education by PVrajCMS Group - Online examinations, courses, study materials and student services.">
-
 <style>
-
 :root{
-    --navy:#06172a;
-    --navy2:#0b3456;
-    --blue:#087bd8;
-    --cyan:#18c4e8;
-    --ink:#10213b;
-    --muted:#607087;
-    --bg:#f4f8fc;
-    --line:#dce7f1;
-    --white:#ffffff;
+--navy:#06172a;
+--blue:#087bd8;
+--cyan:#18c4e8;
+--ink:#10213b;
+--muted:#607087;
+--bg:#f4f8fc;
+--line:#dce7f1;
 }
 
 *{
-    box-sizing:border-box;
+box-sizing:border-box;
 }
 
 html{
-    scroll-behavior:smooth;
-    scroll-padding-top:90px;
+scroll-behavior:smooth;
 }
 
 body{
-    margin:0;
-    font-family:Arial,Helvetica,sans-serif;
-    background:var(--bg);
-    color:var(--ink);
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:var(--bg);
+color:var(--ink);
 }
 
 a{
-    text-decoration:none;
-    color:inherit;
+text-decoration:none;
+color:inherit;
 }
 
-/* ================= HEADER ================= */
+/* HEADER */
 
 .topbar{
-    background:var(--navy);
-    color:#fff;
-    border-bottom:1px solid #24435f;
-    position:sticky;
-    top:0;
-    z-index:100;
+background:var(--navy);
+color:#fff;
+border-bottom:1px solid #24435f;
+position:sticky;
+top:0;
+z-index:20;
 }
 
 .nav{
-    width:100%;
-    min-height:76px;
-    padding:10px 14px;
-    display:flex;
-    align-items:center;
-    gap:16px;
+width:100%;
+margin:0;
+min-height:76px;
+padding:10px 12px;
+display:flex;
+align-items:center;
+gap:18px;
 }
 
 .brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    flex-shrink:0;
+display:flex;
+align-items:center;
+gap:12px;
+flex-shrink:0;
 }
 
 .brand img{
-    width:180px;
-    max-height:55px;
-    object-fit:contain;
-    object-position:left center;
+width:190px;
+max-height:58px;
+object-fit:contain;
+object-position:left center;
 }
 
 .brand .edu-logo{
-    width:205px;
-    max-height:58px;
+width:220px;
+max-height:62px;
+object-fit:contain;
+object-position:left center;
 }
 
 .brand-divider{
-    height:45px;
-    width:1px;
-    background:#456078;
+height:48px;
+width:1px;
+background:#456078;
 }
 
 .links{
-    margin-left:auto;
-    display:flex;
-    align-items:center;
-    gap:20px;
-    font-size:14px;
-    font-weight:700;
-}
-
-.links a{
-    color:#fff;
-    transition:.2s;
+margin-left:auto;
+display:flex;
+align-items:center;
+gap:22px;
+font-size:14px;
+font-weight:700;
 }
 
 .links a:hover{
-    color:#43d5f2;
+color:#43d5f2;
 }
 
 .nav-actions{
-    display:flex;
-    gap:9px;
+display:flex;
+gap:9px;
 }
 
 .btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:9px;
-    padding:11px 16px;
-    font-weight:700;
-    font-size:14px;
-    border:1px solid transparent;
-    cursor:pointer;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+border-radius:10px;
+padding:10px 16px;
+font-weight:700;
+font-size:14px;
+border:1px solid transparent;
+cursor:pointer;
 }
 
 .btn-primary{
-    background:var(--blue);
-    color:#fff;
-}
-
-.btn-primary:hover{
-    background:#006ac0;
+background:var(--blue);
+color:#fff;
 }
 
 .btn-outline{
-    border-color:#8aa8c4;
-    color:#fff;
+border-color:#8aa8c4;
+color:#fff;
 }
 
 .menu-btn{
-    display:none;
-    background:transparent;
-    border:1px solid #56718a;
-    color:white;
-    border-radius:8px;
-    padding:9px 12px;
-    font-size:20px;
+display:none;
+background:transparent;
+border:1px solid #56718a;
+color:white;
+border-radius:8px;
+padding:9px 12px;
 }
 
-/* ================= EXAM PORTAL ================= */
+/* HERO SECTION */
 
-.exam-section{
-    padding:30px 16px;
-    background:var(--bg);
+.hero{
+background:linear-gradient(110deg,#06172a 0%,#0b3456 57%,#087a9a 100%);
+color:#fff;
+overflow:hidden;
 }
 
-.exam-container{
-    max-width:1000px;
-    margin:auto;
+.hero-inner{
+max-width:1240px;
+margin:auto;
+padding:35px 28px 32px;
+display:grid;
+grid-template-columns:1.08fr .92fr;
+gap:24px;
+align-items:center;
+min-height:300px;
 }
 
-.exam-header{
-    position:relative;
-    overflow:hidden;
-    background:linear-gradient(
-        110deg,
-        #06172a,
-        #0b3456 60%,
-        #087a9a
-    );
-    color:#fff;
-    border-radius:15px;
-    padding:25px 28px;
+.eyebrow{
+display:inline-block;
+color:#8eeaff;
+background:#0e4963;
+border:1px solid #267b9a;
+padding:7px 13px;
+border-radius:30px;
+font-size:11px;
+letter-spacing:1.1px;
+font-weight:800;
 }
 
-.exam-header:after{
-    content:"";
-    position:absolute;
-    right:-75px;
-    top:-100px;
-    width:220px;
-    height:220px;
-    border-radius:50%;
-    background:#18c4e8;
-    opacity:.10;
-    pointer-events:none;
+.hero h1{
+font-size:clamp(34px,4vw,48px);
+line-height:1.05;
+margin:12px 0 8px;
+}
+
+.hero h2{
+font-size:19px;
+margin:0 0 10px;
+}
+
+.hero p{
+font-size:14px;
+line-height:1.55;
+color:#d5e7f6;
+max-width:600px;
+margin:10px 0;
+}
+
+.hero-buttons{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:18px;
+}
+
+.hero-art{
+min-height:190px;
+border:1px solid #3b7895;
+border-radius:20px;
+background:radial-gradient(circle at 75% 20%,#1a9bb3 0,#125474 32%,#09233d 75%);
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+overflow:hidden;
+}
+
+.hero-art .cap{
+font-size:75px;
+filter:drop-shadow(0 10px 10px #00101d);
+}
+
+.hero-art .book{
+position:absolute;
+font-size:48px;
+right:18%;
+bottom:15px;
+}
+
+.hero-art .laptop{
+position:absolute;
+font-size:58px;
+left:18%;
+bottom:12px;
+}
+
+/* ONLINE EXAMINATION PORTAL */
+
+.exam-portal{
+display:none;
+max-width:1196px;
+margin:30px auto 0;
+padding:0 22px;
+}
+
+.exam-portal-inner{
+position:relative;
+overflow:hidden;
+background:linear-gradient(120deg,#06172a 0%,#0b3456 58%,#087a9a 100%);
+color:#fff;
+border:1px solid #1b577a;
+border-radius:20px;
+padding:30px;
+box-shadow:0 12px 32px #0b345615;
+}
+
+.exam-portal-inner:after{
+content:"";
+position:absolute;
+width:260px;
+height:260px;
+border-radius:50%;
+right:-95px;
+top:-120px;
+background:#18c4e8;
+opacity:.12;
 }
 
 .exam-brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-bottom:13px;
-    color:#8eeaff;
-    font-size:12px;
-    font-weight:800;
-    letter-spacing:1px;
+display:flex;
+align-items:center;
+gap:10px;
+color:#8eeaff;
+font-size:12px;
+letter-spacing:1.4px;
+font-weight:800;
+margin-bottom:12px;
 }
 
-.exam-logo{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:35px;
-    height:35px;
-    flex-shrink:0;
-    background:#0e4963;
-    border:1px solid #2b8eb1;
-    border-radius:9px;
-    font-size:18px;
+.exam-brand-mark{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:36px;
+height:36px;
+border:1px solid #2b8eb1;
+border-radius:10px;
+background:#0e4963;
+font-size:20px;
 }
 
-.exam-header h1{
-    margin:0 0 9px;
-    color:#fff;
-    font-size:30px;
-    font-weight:800;
-    line-height:1.25;
+.exam-portal h2{
+font-size:clamp(25px,3vw,34px);
+margin:0 0 10px;
+color:#fff;
 }
 
-.exam-header p{
-    margin:0;
-    max-width:720px;
-    color:#d5e7f6;
-    font-size:14px;
-    line-height:1.6;
+.exam-portal-intro{
+max-width:700px;
+color:#d5e7f6;
+line-height:1.6;
+margin:0 0 20px;
+font-size:14px;
 }
 
-.exam-card-wrapper{
-    margin-top:15px;
+.exam-highlights{
+display:grid;
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:12px;
+max-width:780px;
+margin-bottom:22px;
 }
 
-.exam-card{
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:13px;
-    padding:22px;
-    box-shadow:0 4px 14px rgba(15,45,75,.035);
+.exam-highlight{
+background:#ffffff12;
+border:1px solid #ffffff25;
+border-radius:12px;
+padding:13px;
+display:flex;
+align-items:center;
+gap:10px;
 }
 
-.exam-card h2{
-    margin:0 0 8px;
-    color:var(--ink);
-    font-size:20px;
-    font-weight:800;
+.exam-highlight-icon{
+font-size:23px;
+flex-shrink:0;
 }
 
-.exam-card p{
-    margin:0 0 18px;
-    color:var(--muted);
-    font-size:14px;
-    line-height:1.65;
+.exam-highlight strong{
+display:block;
+font-size:14px;
+margin-bottom:4px;
+color:#fff;
 }
 
-.exam-enter-button{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    background:var(--blue);
-    color:#fff !important;
-    border:1px solid var(--blue);
-    border-radius:9px;
-    padding:13px 22px;
-    font-size:14px;
-    font-weight:800;
-    transition:all .2s ease;
+.exam-highlight small{
+color:#d2e7f5;
+line-height:1.4;
+font-size:12px;
 }
 
-.exam-enter-button:hover{
-    background:#006ac0;
-    border-color:#006ac0;
-    transform:translateY(-1px);
-    box-shadow:0 5px 12px rgba(8,123,216,.20);
+.exam-cta{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+background:#087bd8;
+color:#fff;
+padding:12px 19px;
+border-radius:10px;
+font-weight:800;
+font-size:14px;
+border:1px solid #35a1f5;
+box-shadow:0 5px 16px #00192c35;
 }
 
-/* ================= OTHER EDUCATION SERVICES ================= */
+.exam-cta:hover{
+background:#1291f3;
+}
+
+.exam-portal-note{
+margin:13px 0 0;
+color:#b9d9ec;
+font-size:12px;
+}
+
+/* STUDENT SERVICES */
+
+.forms{
+background:#eaf4fc;
+border-top:1px solid #d8e8f5;
+border-bottom:1px solid #d8e8f5;
+margin-top:40px;
+padding-bottom:35px;
+}
 
 .section{
-    max-width:1200px;
-    margin:0 auto;
-    padding:42px 20px;
+max-width:1240px;
+margin:0 auto;
+padding:42px 22px 8px;
 }
 
 .section-head{
-    text-align:center;
-    margin-bottom:25px;
+text-align:center;
+margin-bottom:24px;
 }
 
 .section-head h2{
-    font-size:28px;
-    margin:0 0 8px;
+font-size:28px;
+margin:0 0 8px;
 }
 
 .section-head p{
-    color:var(--muted);
-    margin:0;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-}
-
-.card{
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:14px;
-    padding:20px;
-    display:flex;
-    flex-direction:column;
-    min-height:190px;
-    box-shadow:0 5px 18px rgba(16,33,59,.03);
-}
-
-.card .icon{
-    font-size:30px;
-}
-
-.card h3{
-    font-size:17px;
-    margin:12px 0 8px;
-}
-
-.card p{
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.6;
-    flex:1;
-}
-
-.card a{
-    color:var(--blue);
-    font-size:13px;
-    font-weight:800;
-}
-
-/* ================= STUDENT SERVICES ================= */
-
-.forms{
-    background:#eaf4fc;
-    border-top:1px solid #d8e8f5;
-    border-bottom:1px solid #d8e8f5;
+color:var(--muted);
+margin:0;
 }
 
 .form-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:12px;
 }
 
 .form-tile{
-    background:#fff;
-    border:1px solid #d7e5f1;
-    border-radius:12px;
-    padding:16px;
-    display:flex;
-    align-items:center;
-    gap:11px;
-    font-weight:700;
-    font-size:14px;
-    transition:.2s;
-}
-
-.form-tile:hover{
-    border-color:var(--blue);
-    transform:translateY(-2px);
+background:#fff;
+border:1px solid #d7e5f1;
+border-radius:12px;
+padding:15px;
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:700;
+font-size:13px;
 }
 
 .form-tile span{
-    font-size:24px;
+font-size:23px;
 }
 
-/* ================= FOOTER ================= */
+/* UPCOMING EXAMINATIONS */
+
+.exam-banner{
+max-width:1196px;
+margin:38px auto 0;
+padding:0 22px;
+}
+
+.exam-inner{
+background:linear-gradient(100deg,#06172a,#075ca5);
+border-radius:16px;
+padding:22px 25px;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+}
+
+.exam-inner h2{
+margin:0 0 6px;
+font-size:22px;
+}
+
+.exam-inner p{
+margin:0;
+color:#d7eaff;
+font-size:14px;
+}
+
+/* FEATURES */
+
+.features{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+}
+
+.feature{
+display:flex;
+gap:11px;
+align-items:flex-start;
+padding:16px;
+background:#fff;
+border:1px solid var(--line);
+border-radius:12px;
+}
+
+.feature span{
+font-size:23px;
+}
+
+.feature strong{
+display:block;
+margin-bottom:5px;
+font-size:14px;
+}
+
+.feature small{
+color:var(--muted);
+line-height:1.5;
+font-size:12px;
+}
+
+/* FOOTER */
 
 footer{
-    background:var(--navy);
-    color:#d5e4f1;
-    padding:25px 20px;
+background:var(--navy);
+color:#d5e4f1;
+margin-top:45px;
+padding:24px 22px;
 }
 
 .foot{
-    max-width:1200px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    gap:20px;
-    flex-wrap:wrap;
-    font-size:13px;
+max-width:1196px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+gap:20px;
+flex-wrap:wrap;
+font-size:13px;
 }
 
 .foot a{
-    color:#72dff5;
+color:#72dff5;
 }
 
-/* ================= TABLET ================= */
+/* TABLET */
 
-@media(max-width:1000px){
+@media(max-width:980px){
 
-    .brand img{
-        width:145px;
-    }
+.links{
+gap:12px;
+}
 
-    .brand .edu-logo{
-        width:170px;
-    }
+.brand img{
+width:150px;
+}
 
-    .links{
-        gap:12px;
-        font-size:13px;
-    }
+.brand .edu-logo{
+width:190px;
+max-height:54px;
+}
 
-    .cards{
-        grid-template-columns:repeat(2,1fr);
-    }
+.form-grid{
+grid-template-columns:repeat(3,1fr);
+}
 
-    .form-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+.features{
+grid-template-columns:repeat(2,1fr);
+}
 
 }
 
-/* ================= MOBILE ================= */
+/* MOBILE */
 
 @media(max-width:700px){
 
-    .nav{
-        min-height:66px;
-        padding:9px 10px;
-        gap:8px;
-    }
+.nav{
+min-height:66px;
+padding:9px 10px;
+gap:8px;
+}
 
-    .brand{
-        gap:7px;
-    }
+.brand img{
+width:112px;
+max-height:44px;
+}
 
-    .brand img{
-        width:105px;
-        max-height:42px;
-    }
+.brand .edu-logo{
+width:160px;
+max-height:46px;
+}
 
-    .brand .edu-logo{
-        width:145px;
-        max-height:43px;
-    }
+.brand-divider{
+display:none;
+}
 
-    .brand-divider{
-        display:none;
-    }
+.menu-btn{
+display:block;
+margin-left:auto;
+}
 
-    .menu-btn{
-        display:block;
-        margin-left:auto;
-    }
+.links{
+display:none;
+position:absolute;
+top:66px;
+left:0;
+right:0;
+background:var(--navy);
+padding:16px 22px;
+flex-direction:column;
+align-items:flex-start;
+border-top:1px solid #29455e;
+}
 
-    .links{
-        display:none;
-        position:absolute;
-        top:66px;
-        left:0;
-        right:0;
-        background:var(--navy);
-        padding:17px 22px;
-        flex-direction:column;
-        align-items:flex-start;
-        border-top:1px solid #29455e;
-        gap:18px;
-    }
+.links.open{
+display:flex;
+}
 
-    .links.open{
-        display:flex;
-    }
+.nav-actions{
+display:none;
+}
 
-    .nav-actions{
-        display:none;
-    }
+/* COMPACT MOBILE HERO */
 
-    .exam-section{
-        padding:17px 12px 22px;
-    }
+.hero-inner{
+grid-template-columns:1fr;
+padding:25px 18px;
+gap:18px;
+min-height:auto;
+}
 
-    .exam-header{
-        padding:20px 17px;
-        border-radius:12px;
-    }
+.hero h1{
+font-size:36px;
+margin:10px 0 7px;
+}
 
-    .exam-brand{
-        font-size:10px;
-        letter-spacing:.6px;
-        margin-bottom:11px;
-    }
+.hero h2{
+font-size:17px;
+}
 
-    .exam-logo{
-        width:32px;
-        height:32px;
-        font-size:16px;
-    }
+.hero p{
+font-size:14px;
+line-height:1.5;
+}
 
-    .exam-header h1{
-        font-size:24px;
-        margin-bottom:8px;
-    }
+.hero-art{
+min-height:145px;
+border-radius:16px;
+}
 
-    .exam-header p{
-        font-size:13px;
-        line-height:1.6;
-    }
+.hero-art .cap{
+font-size:60px;
+}
 
-    .exam-card-wrapper{
-        margin-top:12px;
-    }
+.hero-art .book{
+font-size:38px;
+bottom:10px;
+}
 
-    .exam-card{
-        padding:18px 15px;
-        border-radius:12px;
-    }
+.hero-art .laptop{
+font-size:45px;
+bottom:8px;
+}
 
-    .exam-card h2{
-        font-size:18px;
-    }
+.hero-buttons{
+margin-top:14px;
+}
 
-    .exam-card p{
-        font-size:13px;
-        margin-bottom:16px;
-    }
+.section{
+padding:35px 15px 0;
+}
 
-    .exam-enter-button{
-        width:100%;
-        padding:14px 15px;
-        font-size:14px;
-    }
+.form-grid{
+grid-template-columns:repeat(2,1fr);
+}
 
-    .section{
-        padding:32px 15px;
-    }
+.exam-banner{
+margin-top:30px;
+padding:0 15px;
+}
 
-    .section-head h2{
-        font-size:23px;
-    }
+.exam-inner{
+align-items:flex-start;
+flex-direction:column;
+padding:20px;
+}
 
-    .cards{
-        grid-template-columns:repeat(2,1fr);
-        gap:12px;
-    }
+.features{
+grid-template-columns:repeat(2,1fr);
+}
 
-    .card{
-        padding:16px;
-        min-height:185px;
-    }
+.exam-portal{
+margin-top:24px;
+padding:0 15px;
+}
 
-    .card h3{
-        font-size:15px;
-    }
+.exam-portal-inner{
+padding:22px 18px;
+}
 
-    .card p{
-        font-size:12px;
-    }
+.exam-highlights{
+grid-template-columns:1fr;
+gap:9px;
+}
 
-    .form-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+.exam-highlight{
+padding:12px;
+}
 
-    .form-tile{
-        padding:13px;
-        font-size:12px;
-    }
+.exam-portal h2{
+font-size:26px;
+}
+
+.forms{
+margin-top:32px;
+}
 
 }
 
-/* ================= SMALL MOBILE ================= */
+/* SMALL MOBILE */
 
 @media(max-width:420px){
 
-    .brand img{
-        width:95px;
-    }
+.brand .edu-logo{
+width:145px;
+}
 
-    .brand .edu-logo{
-        width:125px;
-    }
+.form-grid{
+grid-template-columns:1fr;
+}
 
-    .exam-header h1{
-        font-size:22px;
-    }
+.features{
+grid-template-columns:1fr;
+}
 
-    .exam-brand{
-        font-size:9px;
-    }
+.hero-inner{
+padding:22px 15px;
+}
 
-    .cards{
-        grid-template-columns:1fr;
-    }
+.hero h1{
+font-size:32px;
+}
 
-    .card{
-        min-height:160px;
-    }
+.hero-art{
+min-height:130px;
+}
 
-    .form-grid{
-        grid-template-columns:1fr;
-    }
+.exam-portal-inner{
+padding:20px 16px;
+}
 
+.exam-portal h2{
+font-size:24px;
+}
+
+.exam-brand{
+font-size:10px;
+letter-spacing:1px;
+}
+
+.exam-cta{
+width:100%;
+text-align:center;
+}
+
+.hero-buttons .btn{
+padding:10px 13px;
+font-size:13px;
+}
+
+}
+
+/* EXAM PORTAL ONLY ON EXAMS PAGE */
+
+.exam-portal{
+display:none;
+}
+
+body.exam-page .hero{
+display:none;
+}
+
+body.exam-page .exam-portal{
+display:block;
+}
+
+body:not(.exam-page) .exam-portal{
+display:none!important;
+}
+
+@media(max-width:768px){
+.exam-portal-inner{
+margin:16px auto;
+}
+
+.exam-portal{
+padding:18px 12px;
+}
 }
 
 </style>
@@ -607,50 +751,40 @@ footer{
 
 <body>
 
-<!-- ================= MAIN WEBSITE HEADER ================= -->
-
 <header class="topbar">
 
 <nav class="nav">
 
-<a class="brand" href="pv-education.html">
+<a class="brand" href="index.html" aria-label="PVrajCMS Group home">
 
-<img
-src="logo.png"
-alt="PVrajCMS Group Logo"
-onerror="this.style.display='none'"
->
+<img src="logo.png"
+alt="PVrajCMS Group logo"
+onerror="this.style.display='none'">
 
 <span class="brand-divider"></span>
 
-<img
-class="edu-logo"
+<img class="edu-logo"
 src="pv-education-logo.png"
-alt="PV Education Logo"
->
+alt="PV Education — A Unit of PVrajCMS Group">
 
 </a>
 
-<button
-class="menu-btn"
+<button class="menu-btn"
 type="button"
 onclick="document.querySelector('.links').classList.toggle('open')"
-aria-label="Open navigation menu"
->
-☰
-</button>
+aria-label="Toggle menu">☰</button>
 
 <div class="links">
 
 <a href="pv-education.html">Home</a>
 
-<a href="#exams">Exams</a>
+<a href="pv-education.html#exams">Exams</a>
 
-<a href="#courses">Courses</a>
+<a href="pv-education.html#courses">Courses</a>
 
-<a href="#study">Study Material</a>
+<a href="pv-education.html#study">Study Material</a>
 
-<a href="#student-services">Student Services</a>
+<a href="pv-education.html#student-services">Student Services</a>
 
 </div>
 
@@ -666,137 +800,130 @@ aria-label="Open navigation menu"
 
 </header>
 
-<!-- ================= MAIN CONTENT ================= -->
-
 <main>
 
-<!-- ================= ONLINE EXAMINATION ================= -->
+<!-- HOME HERO -->
 
-<section class="exam-section" id="exams">
+<section class="hero">
 
-<div class="exam-container">
+<div class="hero-inner">
 
-<div class="exam-header">
+<div>
+
+<span class="eyebrow">LEARN • PRACTICE • TEST • GROW</span>
+
+<h1>PV Education</h1>
+
+<h2>Your Online Learning & Examination Platform</h2>
+
+<p>
+Prepare, practice and test yourself with online examinations,
+courses, study material and student services — all in one place.
+</p>
+
+<div class="hero-buttons">
+
+<a class="btn btn-primary" href="#exams">Explore Exams →</a>
+
+<a class="btn btn-outline" href="#courses">Browse Courses</a>
+
+</div>
+
+</div>
+
+<div class="hero-art" aria-label="Education themed illustration">
+
+<span class="cap">🎓</span>
+
+<span class="book">📚</span>
+
+<span class="laptop">💻</span>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ONLINE EXAMINATION PORTAL -->
+
+<section class="exam-portal" id="exams">
+
+<div class="exam-portal-inner">
 
 <div class="exam-brand">
 
-<span class="exam-logo">🎓</span>
+<span class="exam-brand-mark">🎓</span>
 
 <span>PV EDUCATION · PVRAJCMS GROUP</span>
 
 </div>
 
-<h1>Online Examination Portal</h1>
+<h2>Online Examination Portal</h2>
 
-<p>
-Practice and appear in online examinations through
-the PV Education examination platform.
+<p class="exam-portal-intro">
+Practice, appear in timed examinations and check your performance through the PV Education online examination platform.
 </p>
+
+<div class="exam-highlights">
+
+<div class="exam-highlight">
+
+<span class="exam-highlight-icon">📝</span>
+
+<div>
+
+<strong>Online Tests</strong>
+
+<small>Practice and attempt exam papers</small>
 
 </div>
 
-<div class="exam-card-wrapper">
+</div>
 
-<div class="exam-card">
+<div class="exam-highlight">
 
-<h2>Online Examination</h2>
+<span class="exam-highlight-icon">⏱️</span>
 
-<p>
-Access your examination and attempt the question paper.
-</p>
+<div>
 
-<a
-href="online-exam.html"
-class="exam-enter-button"
->
+<strong>Timed Examination</strong>
+
+<small>Experience exam-style timing</small>
+
+</div>
+
+</div>
+
+<div class="exam-highlight">
+
+<span class="exam-highlight-icon">📊</span>
+
+<div>
+
+<strong>Results & Evaluation</strong>
+
+<small>Review your performance</small>
+
+</div>
+
+</div>
+
+</div>
+
+<a class="exam-cta" href="online-exam.html">
 Enter Online Examination →
 </a>
 
-</div>
-
-</div>
+<p class="exam-portal-note">
+A dedicated examination experience by PV Education
+</p>
 
 </div>
 
 </section>
 
-<!-- ================= COURSES & STUDY MATERIAL ================= -->
-
-<section class="section" id="education-services">
-
-<div class="section-head">
-
-<h2>Education Services</h2>
-
-<p>Explore learning resources and student support services.</p>
-
-</div>
-
-<div class="cards">
-
-<article class="card" id="courses">
-
-<span class="icon">🎥</span>
-
-<h3>Online Courses</h3>
-
-<p>
-Build practical knowledge with structured learning
-and skill programs.
-</p>
-
-<a href="#courses">Explore Courses →</a>
-
-</article>
-
-<article class="card" id="study">
-
-<span class="icon">📚</span>
-
-<h3>Study Material</h3>
-
-<p>
-Access notes, PDFs, practice sets and learning resources.
-</p>
-
-<a href="#study">View Material →</a>
-
-</article>
-
-<article class="card">
-
-<span class="icon">🗣️</span>
-
-<h3>Spoken English</h3>
-
-<p>
-Improve English speaking, communication and confidence.
-</p>
-
-<a href="#student-services">Start Learning →</a>
-
-</article>
-
-<article class="card">
-
-<span class="icon">🤖</span>
-
-<h3>AI Learning Assistant</h3>
-
-<p>
-Get learning support, concept explanations
-and study guidance.
-</p>
-
-<a href="#student-services">Explore AI →</a>
-
-</article>
-
-</div>
-
-</section>
-
-<!-- ================= STUDENT SERVICES ================= -->
+<!-- ONLINE FORMS AND STUDENT SERVICES -->
 
 <section class="forms" id="student-services">
 
@@ -806,43 +933,132 @@ and study guidance.
 
 <h2>Online Forms & Student Services</h2>
 
-<p>Apply online and access student services.</p>
+<p>Apply online and keep track of your application.</p>
 
 </div>
 
 <div class="form-grid">
 
 <a class="form-tile" href="admission-form.html">
-
 <span>🎓</span>
-
 Admission Form
-
 </a>
 
 <a class="form-tile" href="exam-form.html">
-
 <span>📋</span>
-
 Examination Form
-
 </a>
 
 <a class="form-tile" href="scholarship-form.html">
-
 <span>🏅</span>
-
 Scholarship Form
-
 </a>
 
 <a class="form-tile" href="course-registration.html">
-
 <span>📖</span>
-
 Course Registration
-
 </a>
+
+<a class="form-tile" href="certificate-application.html">
+<span>📜</span>
+Certificate Application
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- UPCOMING EXAMINATIONS -->
+
+<section class="exam-banner">
+
+<div class="exam-inner">
+
+<div>
+
+<h2>Upcoming Online Examinations</h2>
+
+<p>Check available examinations and their schedules.</p>
+
+</div>
+
+<a class="btn btn-outline" href="online-exam.html">
+View All Exams →
+</a>
+
+</div>
+
+</section>
+
+<!-- FEATURES -->
+
+<section class="section">
+
+<div class="section-head">
+
+<h2>A Better Learning Experience</h2>
+
+<p>Simple access for students across devices.</p>
+
+</div>
+
+<div class="features">
+
+<div class="feature">
+
+<span>⚡</span>
+
+<div>
+
+<strong>Timely Results</strong>
+
+<small>View results when they are officially published.</small>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<span>🔐</span>
+
+<div>
+
+<strong>Student Access</strong>
+
+<small>Designed for individual student accounts and records.</small>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<span>📱</span>
+
+<div>
+
+<strong>Any Device</strong>
+
+<small>Access the portal on mobile, tablet or desktop.</small>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<span>📜</span>
+
+<div>
+
+<strong>Digital Records</strong>
+
+<small>Keep your learning and application information organized.</small>
+
+</div>
 
 </div>
 
@@ -852,21 +1068,15 @@ Course Registration
 
 </main>
 
-<!-- ================= FOOTER ================= -->
-
 <footer>
 
 <div class="foot">
 
-<span>
-© 2026 PV Education · A Unit of PVrajCMS Group
-</span>
+<span>© 2026 PV Education · A Unit of PVrajCMS Group</span>
 
 <span>
 
-<a href="index.html">Main Website</a>
-
-&nbsp; · &nbsp;
+<a href="index.html">Main Website</a> ·
 
 <a href="contact.html">Contact</a>
 
@@ -875,6 +1085,45 @@ Course Registration
 </div>
 
 </footer>
+
+<script>
+
+/* SHOW EXAM PORTAL ONLY WHEN #EXAMS IS OPEN */
+
+(function(){
+
+function updatePage(){
+
+var isExam = (window.location.hash || "").toLowerCase() === "#exams";
+
+document.body.classList.toggle("exam-page",isExam);
+
+if(isExam){
+
+var portal=document.getElementById("exams");
+
+if(portal){
+
+portal.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
+
+}
+
+}
+
+window.addEventListener("hashchange",updatePage);
+
+document.addEventListener("DOMContentLoaded",updatePage);
+
+updatePage();
+
+})();
+
+</script>
 
 </body>
 </html>
