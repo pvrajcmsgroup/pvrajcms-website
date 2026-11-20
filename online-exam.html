@@ -503,7 +503,7 @@ $('backDashboard').onclick=async()=>{if(!user)return;show('dashboardView');$('su
   for(let i=localStorage.length-1;i>=0;i--){const k=localStorage.key(i)||'';if(/2023|legacy_uppcs_attempt/.test(k)||k.includes('csat_attempt_v3_student_')||k.includes('final_result_popup_seen_'))localStorage.removeItem(k);}
   const req=indexedDB.open('pvrajcms_exam_assets_v1');req.onsuccess=function(){const db=req.result;if(db.objectStoreNames.contains('assets')){try{const tx=db.transaction('assets','readwrite');tx.objectStore('assets').delete('csatPdf');tx.oncomplete=()=>db.close();tx.onerror=()=>db.close();}catch(e){db.close();}}else db.close();};
 }catch(e){console.warn('Legacy legacy cleanup failed:',e);}})();
-</script>
+<\/script>
 </body></html>`);
       w.document.close();
     };$('demoBack').onclick=()=>{if(paperReleaseHandle)clearInterval(paperReleaseHandle);student();};}
