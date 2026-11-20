@@ -2,21 +2,32 @@
 <section class="page-section" id="exams">
 
 <style>
+/* EXAM PORTAL DESIGN */
+
+.exam-page,
+.exam-page *{
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif !important;
+}
+
 .exam-page{
     background:#f4f8fc;
-    padding:24px 15px;
+    padding:28px 16px;
+    color:#10213b;
 }
 
 .exam-container{
     max-width:1000px;
-    margin:auto;
+    margin:0 auto;
 }
+
+/* HEADER */
 
 .exam-header{
     background:linear-gradient(110deg,#06172a,#0b3456 60%,#087a9a);
     color:#fff;
-    border-radius:14px;
-    padding:24px;
+    border-radius:16px;
+    padding:26px 28px;
     position:relative;
     overflow:hidden;
 }
@@ -31,6 +42,7 @@
     border-radius:50%;
     background:#18c4e8;
     opacity:.10;
+    pointer-events:none;
 }
 
 .exam-brand{
@@ -41,112 +53,179 @@
     font-size:12px;
     font-weight:800;
     letter-spacing:1px;
-    margin-bottom:12px;
+    margin-bottom:14px;
 }
 
 .exam-mark{
-    width:34px;
-    height:34px;
+    width:36px;
+    height:36px;
     display:flex;
     align-items:center;
     justify-content:center;
-    border-radius:9px;
+    border-radius:10px;
     background:#0e4963;
     border:1px solid #2b8eb1;
     font-size:18px;
+    flex-shrink:0;
 }
 
 .exam-header h1{
-    font-size:clamp(24px,3vw,32px);
-    margin:0 0 8px;
+    font-size:32px;
+    font-weight:800;
+    margin:0 0 10px;
+    color:#fff;
+    line-height:1.2;
 }
 
 .exam-header p{
     margin:0;
     color:#d5e7f6;
     font-size:14px;
-    line-height:1.6;
+    line-height:1.65;
     max-width:700px;
 }
 
+/* MAIN CARD */
+
 .exam-content{
-    margin-top:16px;
+    margin-top:18px;
 }
 
 .exam-main-card{
     background:#fff;
     border:1px solid #dce7f1;
     border-radius:14px;
-    padding:22px;
+    padding:24px;
+    box-shadow:0 4px 15px rgba(15,45,75,.03);
 }
 
 .exam-main-card h2{
-    font-size:20px;
+    font-size:21px;
+    font-weight:800;
     color:#10213b;
-    margin:0 0 8px;
+    margin:0 0 9px;
 }
 
 .exam-main-card p{
     color:#607087;
     font-size:14px;
-    line-height:1.6;
-    margin:0 0 18px;
+    line-height:1.7;
+    margin:0 0 20px;
 }
+
+/* EXAM BUTTON */
 
 .exam-button{
     display:inline-flex;
     align-items:center;
     justify-content:center;
+    gap:8px;
     background:#087bd8;
-    color:#fff;
+    color:#fff !important;
+    text-decoration:none !important;
     padding:13px 22px;
     border-radius:9px;
     font-weight:800;
     font-size:14px;
-    transition:.2s;
+    border:1px solid #087bd8;
+    transition:all .2s ease;
 }
 
 .exam-button:hover{
     background:#006ac0;
+    border-color:#006ac0;
     transform:translateY(-1px);
+    box-shadow:0 5px 12px rgba(8,123,216,.20);
 }
 
 .exam-note{
-    margin-top:12px;
+    margin-top:14px;
     color:#607087;
     font-size:12px;
+    line-height:1.5;
 }
 
-@media(max-width:600px){
+/* MOBILE */
+
+@media(max-width:700px){
 
     .exam-page{
-        padding:15px 10px;
+        padding:17px 12px;
     }
 
     .exam-header{
-        padding:20px 17px;
-        border-radius:12px;
+        padding:21px 18px;
+        border-radius:13px;
+    }
+
+    .exam-brand{
+        font-size:10px;
+        letter-spacing:.7px;
+        margin-bottom:12px;
+    }
+
+    .exam-mark{
+        width:32px;
+        height:32px;
+        font-size:16px;
     }
 
     .exam-header h1{
-        font-size:24px;
+        font-size:25px;
+        margin-bottom:8px;
     }
 
     .exam-header p{
         font-size:13px;
+        line-height:1.6;
+    }
+
+    .exam-content{
+        margin-top:13px;
     }
 
     .exam-main-card{
-        padding:18px 15px;
+        padding:19px 16px;
+        border-radius:12px;
     }
 
     .exam-main-card h2{
         font-size:18px;
     }
 
+    .exam-main-card p{
+        font-size:13px;
+        margin-bottom:17px;
+    }
+
     .exam-button{
         width:100%;
-        padding:13px;
+        padding:14px 15px;
+        font-size:14px;
+        border-radius:9px;
+    }
+
+    .exam-note{
+        font-size:11px;
+        margin-top:12px;
+    }
+
+}
+
+/* SMALL MOBILE */
+
+@media(max-width:380px){
+
+    .exam-header h1{
+        font-size:22px;
+    }
+
+    .exam-brand{
+        font-size:9px;
+    }
+
+    .exam-main-card{
+        padding:16px 13px;
     }
 
 }
@@ -155,6 +234,8 @@
 <div class="exam-page">
 
 <div class="exam-container">
+
+<!-- PORTAL HEADER -->
 
 <div class="exam-header">
 
@@ -175,6 +256,8 @@ PV Education examination platform.
 
 </div>
 
+<!-- EXAMINATION CARD -->
+
 <div class="exam-content">
 
 <div class="exam-main-card">
@@ -187,11 +270,13 @@ and evaluate your performance.
 </p>
 
 <a class="exam-button" href="online-exam.html">
-Enter Online Examination →
+Enter Online Examination <span>→</span>
 </a>
 
 <div class="exam-note">
 Official Online Examination Portal · PV Education
+</div>
+
 </div>
 
 </div>
