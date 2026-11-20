@@ -214,61 +214,11 @@ left:18%;
 bottom:18px
 }
 
-/* PLATFORM STATS */
-
-.stats{
-max-width:1180px;
-margin:30px auto 0;
-padding:0 22px;
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:14px
-}
-
-.stat{
-background:#fff;
-border:1px solid var(--line);
-border-radius:13px;
-padding:17px;
-text-align:center
-}
-
-.stat strong{
-display:block;
-color:#087bd8;
-font-size:25px
-}
-
-.stat small{color:var(--muted)}
-
-/* GENERAL SECTION */
-
-.section{
-max-width:1240px;
-margin:0 auto;
-padding:54px 22px 8px
-}
-
-.section-head{
-text-align:center;
-margin-bottom:26px
-}
-
-.section-head h2{
-font-size:30px;
-margin:0 0 8px
-}
-
-.section-head p{
-color:var(--muted);
-margin:0
-}
-
 /* ONLINE EXAMINATION PORTAL */
 
 .exam-portal{
 max-width:1196px;
-margin:34px auto 0;
+margin:38px auto 0;
 padding:0 22px
 }
 
@@ -390,7 +340,7 @@ color:#b9d9ec;
 font-size:12px
 }
 
-/* STUDENT SERVICES */
+/* ONLINE FORMS AND STUDENT SERVICES */
 
 .forms{
 background:#eaf4fc;
@@ -398,6 +348,27 @@ border-top:1px solid #d8e8f5;
 border-bottom:1px solid #d8e8f5;
 margin-top:48px;
 padding-bottom:48px
+}
+
+.section{
+max-width:1240px;
+margin:0 auto;
+padding:54px 22px 8px
+}
+
+.section-head{
+text-align:center;
+margin-bottom:26px
+}
+
+.section-head h2{
+font-size:30px;
+margin:0 0 8px
+}
+
+.section-head p{
+color:var(--muted);
+margin:0
 }
 
 .form-grid{
@@ -420,7 +391,7 @@ font-size:14px
 
 .form-tile span{font-size:25px}
 
-/* EXAM BANNER */
+/* EXAMINATION BANNER */
 
 .exam-banner{
 max-width:1196px;
@@ -573,11 +544,6 @@ padding:42px 20px 42px
 
 .hero-art .laptop{font-size:55px}
 
-.stats{
-grid-template-columns:repeat(2,1fr);
-padding:0 15px
-}
-
 .section{padding:42px 15px 0}
 
 .form-grid{grid-template-columns:repeat(2,1fr)}
@@ -633,17 +599,14 @@ padding:10px 13px;
 font-size:13px
 }
 
-.stats{gap:10px}
-
-.stat{padding:13px 8px}
-
-.stat strong{font-size:21px}
-
 .exam-portal-inner{padding:20px 16px}
 
 .exam-portal h2{font-size:24px}
 
-.exam-brand{font-size:10px;letter-spacing:1px}
+.exam-brand{
+font-size:10px;
+letter-spacing:1px
+}
 
 .exam-cta{
 width:100%;
@@ -651,6 +614,7 @@ text-align:center
 }
 
 }
+
 </style>
 </head>
 
@@ -670,7 +634,9 @@ text-align:center
 
 </a>
 
-<button class="menu-btn" type="button" onclick="document.querySelector('.links').classList.toggle('open')" aria-label="Toggle menu">☰</button>
+<button class="menu-btn" type="button"
+onclick="document.querySelector('.links').classList.toggle('open')"
+aria-label="Toggle menu">☰</button>
 
 <div class="links">
 
@@ -743,33 +709,7 @@ courses, study material and student services — all in one place.
 
 </section>
 
-<!-- PLATFORM STATS -->
-
-<section class="stats" aria-label="Platform highlights">
-
-<div class="stat">
-<strong>Online</strong>
-<small>Examination Access</small>
-</div>
-
-<div class="stat">
-<strong>Anytime</strong>
-<small>Learn at Your Pace</small>
-</div>
-
-<div class="stat">
-<strong>One Place</strong>
-<small>Student Services</small>
-</div>
-
-<div class="stat">
-<strong>Digital</strong>
-<small>Learning Platform</small>
-</div>
-
-</section>
-
-<!-- PV EDUCATION ONLINE EXAMINATION PORTAL -->
+<!-- ONLINE EXAMINATION PORTAL -->
 
 <section class="exam-portal" id="exams">
 
