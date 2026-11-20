@@ -1056,6 +1056,53 @@ document.getElementById("loginModal").addEventListener("click",e=>{
 if(e.target.id==="loginModal")closeModal();
 });
 
+
+/* FIX: Real local-browser upload/replace handler. The previous file had buttons
+   calling saveExamFile(), but that function was missing, so clicks did nothing. */
+const PV_FILE_DB_NAME = 'PVEducationExamFiles';
+const PV_FILE_DB_VERSION = 1;
+function pvOpenFileDB(){
+  return new Promise((resolve,reject)=>{
+    const req=indexedDB.open(PV_FILE_DB_NAME,PV_FILE_DB_VERSION);
+    req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains('files'))db.createObjectStore('files',{keyPath:'key'});};
+    req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
+  });
+}
+async function pvSaveFileRecord(key,file){
+  const db=await pvOpenFileDB();
+  return new Promise((resolve,reject)=>{const tx=db.transaction('files','readwrite');tx.objectStore('files').put({key,name:file.name,type:file.type,size:file.size,updatedAt:new Date().toISOString(),blob:file});tx.oncomplete=()=>{db.close();resolve();};tx.onerror=()=>{db.close();reject(tx.error);};});
+}
+async function pvGetFileRecord(key){
+  const db=await pvOpenFileDB();
+  return new Promise((resolve,reject)=>{const tx=db.transaction('files','readonly');const req=tx.objectStore('files').get(key);req.onsuccess=()=>{db.close();resolve(req.result||null);};req.onerror=()=>{db.close();reject(req.error);};});
+}
+async function saveExamFile(inputId,key){
+  const input=document.getElementById(inputId), file=input&&input.files&&input.files[0];
+  const statusId=key.startsWith('gs')?'gsUploadStatus':'csatUploadStatus';
+  const status=document.getElementById(statusId);
+  if(!file){if(status)status.textContent='कृपया पहले फ़ाइल चुनें।';return;}
+  if(file.size>25*1024*1024){if(status)status.textContent='फ़ाइल 25 MB से बड़ी है। कृपया छोटी फ़ाइल चुनें।';return;}
+  if(status)status.textContent='फ़ाइल सेव हो रही है…';
+  try{
+    await pvSaveFileRecord(key,file);
+    if(status)status.textContent='✅ '+file.name+' सफलतापूर्वक सेव/Replace हो गई ('+(file.size/1024/1024).toFixed(2)+' MB)।';
+    input.value='';
+    await renderUploadedFiles();
+  }catch(err){console.error(err);if(status)status.textContent='❌ फ़ाइल सेव नहीं हुई: '+(err.message||err);}
+}
+async function renderUploadedFiles(){
+  const map=[['gsPaper','gsPaperDownload','Uploaded Question Paper'],['gsKey','gsKeyDownload','Uploaded Answer Key'],['csatPaper','csatPaperDownload','Uploaded Question Paper'],['csatKey','csatKeyDownload','Uploaded Answer Key']];
+  for(const [key,elementId,label] of map){
+    const el=document.getElementById(elementId);if(!el)continue;
+    const rec=await pvGetFileRecord(key);
+    if(!rec){el.innerHTML='<small>'+label+'</small><strong>Paper अभी upload नहीं हुआ है।</strong>';continue;}
+    const url=URL.createObjectURL(rec.blob);
+    el.innerHTML='<small>'+label+'</small><strong>'+escapeHtml(rec.name)+'</strong><br><a class="btn secondary" style="margin-top:8px" download="'+escapeHtml(rec.name)+'" href="'+url+'">⬇ Download '+(key.endsWith('Key')?'Answer Key':'Paper')+'</a><small style="display:block;margin-top:6px">'+(rec.size/1024/1024).toFixed(2)+' MB · '+new Date(rec.updatedAt).toLocaleString('en-IN')+'</small>';
+  }
+}
+function escapeHtml(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+window.addEventListener('DOMContentLoaded',()=>{renderUploadedFiles().catch(console.error);});
+
 </script>
 
 </body>
