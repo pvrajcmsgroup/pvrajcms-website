@@ -718,11 +718,14 @@ font-size:13px;
 }
 
 
-/* PAGE ROUTING: keep the examination portal exclusive to the Exams view */
+/* PAGE ROUTING: show only the Exams portal when Exams is selected */
 .exam-portal{display:none;}
 body.exam-page .hero{display:none;}
 body.exam-page .exam-portal{display:block;}
 body:not(.exam-page) .exam-portal{display:none!important;}
+body.exam-page .forms,
+body.exam-page .exam-banner,
+body.exam-page main > .section{display:none!important;}
 @media(max-width:768px){
   .exam-portal-inner{margin:16px auto;}
   .exam-portal{padding:18px 12px;}
