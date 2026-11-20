@@ -479,32 +479,7 @@ $('backDashboard').onclick=async()=>{if(!user)return;show('dashboardView');$('su
       const rows=k.map((a,i)=>`<tr><td>${i+1}</td><td><b>${a}</b></td><td>${paperAnswers[String(i+1)]||'—'}</td><td>${paperAnswers[String(i+1)]?(paperAnswers[String(i+1)]===a?'Correct':'Wrong'):'Unanswered'}</td></tr>`).join('');
       const w=window.open('','_blank');
       if(!w){alert('Please allow pop-ups to view the answer key.');return;}
-      w.document.write(`<!doctype html><html><head><title>UPPCS 2023 Series C Answer Key</title><meta charset="utf-8"><style>body{font:15px Arial;margin:24px;color:#172033}table{border-collapse:collapse;width:100%}th,td{border:1px solid #d8deea;padding:7px;text-align:center}th{background:#eef2ff}h1{font-size:24px} .pv-back-btn{border:1px solid #8ba4c4;background:transparent;color:#fff;border-radius:9px;padding:9px 13px;font-weight:700;cursor:pointer;white-space:nowrap}.pv-header-logos{height:48px;max-width:min(55vw,442px);object-fit:contain;object-position:left center}.pv-brand-header{gap:14px;justify-content:flex-start}.pv-brand-header #logout{margin-left:auto}@media(max-width:600px){.pv-brand-header{padding:8px 10px;gap:8px}.pv-back-btn{padding:7px 9px;font-size:12px}.pv-header-logos{height:38px;max-width:calc(100vw - 120px)}}</style></head><body><h1>PV Education · UPPCS Practice Paper · Final Answer Key</h1><p>PVrajCMS Education test answer key · ${k.length} questions</p><table><tr><th>Q No.</th><th>Answer</th><th>Your answer</th><th>Status</th></tr>${rows}</table>
-<script>
-/* PV Education cleanup: remove any previously cached 2023 CSAT paper/PDF and its metadata. */
-(function(){
-  try {
-    localStorage.removeItem('pvrajcms_csat_pdf_meta_v1');
-  } catch(e) {}
-  try {
-    var req=indexedDB.open('pvrajcms_exam_assets_v1',1);
-    req.onsuccess=function(){
-      var db=req.result;
-      if(db.objectStoreNames.contains('assets')){
-        try {
-          var tx=db.transaction('assets','readwrite');
-          tx.objectStore('assets').delete('csatPdf');
-          tx.oncomplete=function(){db.close();};
-          tx.onerror=function(){db.close();};
-        } catch(e){db.close();}
-      } else {db.close();}
-    };
-    req.onerror=function(){};
-  } catch(e) {}
-})();
-</script>
-
-</body></html>`);
+      w.document.write(`<!doctype html><html><head><title>UPPCS 2023 Series C Answer Key</title><meta charset="utf-8"><style>body{font:15px Arial;margin:24px;color:#172033}table{border-collapse:collapse;width:100%}th,td{border:1px solid #d8deea;padding:7px;text-align:center}th{background:#eef2ff}h1{font-size:24px} .pv-back-btn{border:1px solid #8ba4c4;background:transparent;color:#fff;border-radius:9px;padding:9px 13px;font-weight:700;cursor:pointer;white-space:nowrap}.pv-header-logos{height:48px;max-width:min(55vw,442px);object-fit:contain;object-position:left center}.pv-brand-header{gap:14px;justify-content:flex-start}.pv-brand-header #logout{margin-left:auto}@media(max-width:600px){.pv-brand-header{padding:8px 10px;gap:8px}.pv-back-btn{padding:7px 9px;font-size:12px}.pv-header-logos{height:38px;max-width:calc(100vw - 120px)}}</style></head><body><h1>PV Education · UPPCS Practice Paper · Final Answer Key</h1><p>PVrajCMS Education test answer key · ${k.length} questions</p><table><tr><th>Q No.</th><th>Answer</th><th>Your answer</th><th>Status</th></tr>${rows}</table></body></html>`);
       w.document.close();
     };$('demoBack').onclick=()=>{if(paperReleaseHandle)clearInterval(paperReleaseHandle);student();};}
   function start(id){activeExam=data.exams.find(e=>e.id===id);if(!activeExam)return;index=0;answers={};endAt=Date.now()+activeExam.duration*60000;renderQuestion();tick();timer=setInterval(tick,500);}
@@ -1113,32 +1088,7 @@ $('backDashboard').onclick=async()=>{if(!user)return;show('dashboardView');$('su
     let scoreHtml='Result not published yet.';
     if(resultReady&&key){let correct=0,wrong=0,bonusMarks=0;const bonusQs=readCSATBonus();for(let i=1;i<=100;i++){const a=csatState.answers[String(i)]||'';if(a){if(bonusQs.includes(i)){bonusMarks+=1;}else if(a===key[i-1])correct++;else wrong++;}}const score=correct*2-wrong*(2/3)+bonusMarks;const pct=score/200*100;scoreHtml=`<b>Result published</b><div class="demo-stats"><div class="demo-stat"><b>${score.toFixed(3)}/200</b>Score</div><div class="demo-stat"><b>${correct}</b>Correct</div><div class="demo-stat"><b>${wrong}</b>Wrong</div><div class="demo-stat"><b>${bonusMarks}</b>Bonus Marks</div></div><p>Unanswered: <b>${unanswered}</b> · Percentage: <b>${pct.toFixed(2)}%</b></p>`;}
     $('resultView').innerHTML=`<div class="demo-panel demo-card"><p class="eyebrow">EXAMINATION SUBMISSION</p><h1>${csatState.endAt<=csatState.submittedAt?'Time over — automatically submitted':'CSAT Paper submitted successfully'}</h1><div class="demo-stats"><div class="demo-stat"><b>${answered}/100</b>Answered</div><div class="demo-stat"><b>${unanswered}</b>Unanswered</div><div class="demo-stat"><b>2 hours</b>Test duration</div></div><div class="demo-card"><h3>Candidate details</h3><p><b>Name:</b> ${escapeHtml(studentProfile.name||'—')} &nbsp; <b>Roll Number:</b> ${escapeHtml(studentProfile.rollNo||'—')}</p><p><b>Category:</b> ${escapeHtml(studentProfile.category||'—')} &nbsp; <b>Examination Centre:</b> ${escapeHtml(studentProfile.examCenter||'—')}</p></div>${combinedResultNoticeHtml()}<div class="demo-card"><h2>Answer Key</h2><p class="muted">${keyReady?'Answer Key access is now open.':'Available in '+fmtCountdown(keyAt-now)}</p><button class="primary" id="csatOpenKey" ${keyReady?'':'disabled'}>Open CSAT Answer Key</button></div><div class="demo-card"><h2>CSAT Paper Result</h2><p class="muted">${resultReady?'Individual CSAT result is available.':'Result will be available in '+fmtCountdown(resultAt-now)}</p><div>${scoreHtml}</div></div><button class="secondary" id="csatBack">Back to student dashboard</button></div>`;
-    $('csatOpenKey').onclick=()=>{if(!keyReady||!key)return;const bonusQs=readCSATBonus();const rows=key.map((a,i)=>{const q=i+1,student=csatState.answers[String(q)]||'';const status=bonusQs.includes(q)?(student?'Bonus (+1)':'Bonus · Unanswered'):(!student?'Unanswered':student===a?'Correct':'Wrong');return `<tr><td>${q}</td><td>${bonusQs.includes(q)?'BONUS':a}</td><td>${student||'—'}</td><td>${status}</td></tr>`;}).join('');const w=window.open('','_blank');if(!w){alert('Allow pop-ups to view the answer key.');return;}w.document.write(`<html><head><title>CSAT Answer Key</title><meta charset="utf-8"><style>body{font:15px Arial;margin:24px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;padding:7px;text-align:center} .pv-back-btn{border:1px solid #8ba4c4;background:transparent;color:#fff;border-radius:9px;padding:9px 13px;font-weight:700;cursor:pointer;white-space:nowrap}.pv-header-logos{height:48px;max-width:min(55vw,442px);object-fit:contain;object-position:left center}.pv-brand-header{gap:14px;justify-content:flex-start}.pv-brand-header #logout{margin-left:auto}@media(max-width:600px){.pv-brand-header{padding:8px 10px;gap:8px}.pv-back-btn{padding:7px 9px;font-size:12px}.pv-header-logos{height:38px;max-width:calc(100vw - 120px)}}</style></head><body><h1>UPPCS Prelims · CSAT Paper-II · Uploaded Answer Key</h1><table><tr><th>Question</th><th>Answer key</th><th>Your answer</th><th>Status</th></tr>${rows}</table>
-<script>
-/* PV Education cleanup: remove any previously cached 2023 CSAT paper/PDF and its metadata. */
-(function(){
-  try {
-    localStorage.removeItem('pvrajcms_csat_pdf_meta_v1');
-  } catch(e) {}
-  try {
-    var req=indexedDB.open('pvrajcms_exam_assets_v1',1);
-    req.onsuccess=function(){
-      var db=req.result;
-      if(db.objectStoreNames.contains('assets')){
-        try {
-          var tx=db.transaction('assets','readwrite');
-          tx.objectStore('assets').delete('csatPdf');
-          tx.oncomplete=function(){db.close();};
-          tx.onerror=function(){db.close();};
-        } catch(e){db.close();}
-      } else {db.close();}
-    };
-    req.onerror=function(){};
-  } catch(e) {}
-})();
-</script>
-
-</body></html>`);w.document.close();};
+    $('csatOpenKey').onclick=()=>{if(!keyReady||!key)return;const bonusQs=readCSATBonus();const rows=key.map((a,i)=>{const q=i+1,student=csatState.answers[String(q)]||'';const status=bonusQs.includes(q)?(student?'Bonus (+1)':'Bonus · Unanswered'):(!student?'Unanswered':student===a?'Correct':'Wrong');return `<tr><td>${q}</td><td>${bonusQs.includes(q)?'BONUS':a}</td><td>${student||'—'}</td><td>${status}</td></tr>`;}).join('');const w=window.open('','_blank');if(!w){alert('Allow pop-ups to view the answer key.');return;}w.document.write(`<html><head><title>CSAT Answer Key</title><meta charset="utf-8"><style>body{font:15px Arial;margin:24px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;padding:7px;text-align:center} .pv-back-btn{border:1px solid #8ba4c4;background:transparent;color:#fff;border-radius:9px;padding:9px 13px;font-weight:700;cursor:pointer;white-space:nowrap}.pv-header-logos{height:48px;max-width:min(55vw,442px);object-fit:contain;object-position:left center}.pv-brand-header{gap:14px;justify-content:flex-start}.pv-brand-header #logout{margin-left:auto}@media(max-width:600px){.pv-brand-header{padding:8px 10px;gap:8px}.pv-back-btn{padding:7px 9px;font-size:12px}.pv-header-logos{height:38px;max-width:calc(100vw - 120px)}}</style></head><body><h1>UPPCS Prelims · CSAT Paper-II · Uploaded Answer Key</h1><table><tr><th>Question</th><th>Answer key</th><th>Your answer</th><th>Status</th></tr>${rows}</table></body></html>`);w.document.close();};
     $('csatBack').onclick=()=>student();
   }
 
@@ -1150,29 +1100,4 @@ $('backDashboard').onclick=async()=>{if(!user)return;show('dashboardView');$('su
   window.PVExamApp={admin,student};
 })();
 
-</script>
-<script>
-/* PV Education cleanup: remove any previously cached 2023 CSAT paper/PDF and its metadata. */
-(function(){
-  try {
-    localStorage.removeItem('pvrajcms_csat_pdf_meta_v1');
-  } catch(e) {}
-  try {
-    var req=indexedDB.open('pvrajcms_exam_assets_v1',1);
-    req.onsuccess=function(){
-      var db=req.result;
-      if(db.objectStoreNames.contains('assets')){
-        try {
-          var tx=db.transaction('assets','readwrite');
-          tx.objectStore('assets').delete('csatPdf');
-          tx.oncomplete=function(){db.close();};
-          tx.onerror=function(){db.close();};
-        } catch(e){db.close();}
-      } else {db.close();}
-    };
-    req.onerror=function(){};
-  } catch(e) {}
-})();
-</script>
-
-</body></html>
+</script><script>/* PV Education: remove cached legacy 2023 CSAT PDF only. */(function(){try{localStorage.removeItem('pvrajcms_csat_pdf_meta_v1');}catch(e){}try{const req=indexedDB.open('pvrajcms_exam_assets_v1');req.onsuccess=function(){const db=req.result;if(db.objectStoreNames.contains('assets')){try{const tx=db.transaction('assets','readwrite');tx.objectStore('assets').delete('csatPdf');tx.oncomplete=function(){db.close();};tx.onerror=function(){db.close();};}catch(e){db.close();}}else db.close();};req.onerror=function(){};}catch(e){}})();</script></body></html>
