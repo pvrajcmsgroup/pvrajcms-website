@@ -463,6 +463,9 @@ Instructions
 </button>
 </div>
 
+<div class="detail" id="gsPaperDownload"><small>Uploaded Question Paper</small><strong>Paper अभी upload नहीं हुआ है।</strong></div>
+<div class="detail" id="gsKeyDownload"><small>Uploaded Answer Key</small><strong>Answer Key अभी upload नहीं हुई है।</strong></div>
+
 </div>
 </article>
 
@@ -525,6 +528,9 @@ Login & Start Examination →
 Instructions
 </button>
 </div>
+
+<div class="detail" id="csatPaperDownload"><small>Uploaded Question Paper</small><strong>Paper अभी upload नहीं हुआ है।</strong></div>
+<div class="detail" id="csatKeyDownload"><small>Uploaded Answer Key</small><strong>Answer Key अभी upload नहीं हुई है।</strong></div>
 
 </div>
 </article>
@@ -797,6 +803,26 @@ GS और CSAT दोनों के परिणाम प्रकाशि�
 
 </section>
 
+
+<!-- PAPER AND ANSWER KEY UPLOADS -->
+<section class="admin-section" style="margin-top:14px">
+<h3>📄 Paper & Answer Key Upload / Replace</h3>
+<p>यहाँ नई फ़ाइल upload करके पुराने paper या answer key को replace करें। फ़ाइल इस ब्राउज़र में सुरक्षित होगी। सभी विद्यार्थियों तक पहुँचाने के लिए Supabase Storage/backend connection आवश्यक है।</p>
+<div class="admin-grid">
+<div class="admin-section"><h4>GS Paper-I</h4>
+<label>Question Paper (PDF/CSV/TXT)<input type="file" id="gsPaperFile" accept=".pdf,.csv,.txt"></label>
+<button class="btn primary" onclick="saveExamFile('gsPaperFile','gsPaper')">Upload / Replace GS Paper</button>
+<label>Answer Key (CSV/TXT)<input type="file" id="gsKeyFile" accept=".csv,.txt"></label>
+<button class="btn primary" onclick="saveExamFile('gsKeyFile','gsKey')">Upload / Replace GS Answer Key</button>
+<p id="gsUploadStatus"></p></div>
+<div class="admin-section"><h4>CSAT Paper-II</h4>
+<label>Question Paper (PDF/CSV/TXT)<input type="file" id="csatPaperFile" accept=".pdf,.csv,.txt"></label>
+<button class="btn primary" onclick="saveExamFile('csatPaperFile','csatPaper')">Upload / Replace CSAT Paper</button>
+<label>Answer Key (CSV/TXT)<input type="file" id="csatKeyFile" accept=".csv,.txt"></label>
+<button class="btn primary" onclick="saveExamFile('csatKeyFile','csatKey')">Upload / Replace CSAT Answer Key</button>
+<p id="csatUploadStatus"></p></div>
+</div>
+</section>
 <div class="modal-actions">
 
 <button class="btn secondary" onclick="closeAdmin()">Cancel</button>
