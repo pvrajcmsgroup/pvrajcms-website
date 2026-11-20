@@ -841,9 +841,9 @@ $('backDashboard').onclick=async()=>{if(!user)return;show('dashboardView');$('su
       <div class="resultrow"><span>Examination centre</span><b>${escapeHtml(candidateCentre)}</b></div>
     </div>
     <div class="demo-card" style="text-align:center;border:2px solid ${demoSelected?'#16865b':'#d99a32'};background:${demoSelected?'#effaf4':'#fffaf0'}">
-      <div style="font-size:42px;margin-bottom:4px">${demoSelected?'🎉':'🌱'}</div>
-      <h2 style="margin:0;color:${demoSelected?'#126b49':'#8a5a12'}">${demoSelected?'Congratulations! Selected':'Keep Going — Not Selected'}</h2>
-      <p style="font-weight:650;margin:10px 0">${demoSelected?'शानदार प्रयास! अपनी मेहनत जारी रखें और अगले लक्ष्य की तैयारी करें।':'यह प्रयास सीखने का मौका है। गलतियों से सीखें और तैयारी जारी रखें—अगली बार बेहतर करेंगे।'}</p>
+      <div class="pv-result-celebration ${demoSelected?'selected':'practice'}" aria-label="Result celebration">${demoSelected?'🎉 👨‍✈️ 🏆':'🎯 📚 💪'}</div>
+      <h2 style="margin:0;color:${demoSelected?'#126b49':'#8a5a12'}">${demoSelected?'Congratulations!':'अभ्यास जारी रखें!'}</h2>
+      <p style="font-weight:650;margin:10px 0">${demoSelected?'यह सफलता आपकी मेहनत का परिणाम है। अभी मंज़िल बाकी है—तैयारी जारी रखें और PCS अधिकारी बनने का सपना पूरा करें। आपके परिवार को एक दिन आप पर गर्व होगा! ❤️':'मंज़िल अभी बाकी है! यह केवल अभ्यास है, हार नहीं। अपनी गलतियों से सीखें, मेहनत जारी रखें और PCS अधिकारी बनने का सपना पूरा करें। आपके परिवार की उम्मीदें और आपकी मंज़िल आपका इंतजार कर रही हैं। ❤️'}</p>
       <p class="demo-note">Decision criteria: GS benchmark ${demoGsBenchmark}/200 and CSAT qualifying benchmark 66/200. This is not an official UPPSC selection or cutoff.</p>
     </div>
     <div class="demo-stats">
@@ -869,7 +869,7 @@ $('backDashboard').onclick=async()=>{if(!user)return;show('dashboardView');$('su
       popup.id='pvFinalResultPopup';
       popup.className='pv-final-popup-backdrop';
       popup.innerHTML=`<section class="pv-final-popup" role="dialog" aria-modal="true" aria-labelledby="pvFinalPopupTitle">
-        <div class="pv-popup-icon">${demoSelected?'🎉':'🌱'}</div>
+        <div class="pv-popup-icon pv-result-celebration ${demoSelected?'selected':'practice'}">${demoSelected?'🎉 👨‍✈️ 🏆':'🎯 📚 💪'}</div>
         <h2 id="pvFinalPopupTitle">Final Combined Result Published</h2>
         <p style="color:#64748b;margin:0">UPPCS Prelims · GS Paper-I + CSAT Paper-II</p>
         <div class="pv-popup-meta">
@@ -878,8 +878,8 @@ $('backDashboard').onclick=async()=>{if(!user)return;show('dashboardView');$('su
           <div><span>GS Score</span><b>${gsScore.score.toFixed(2)}/200</b></div>
           <div><span>CSAT Score</span><b>${csScore.score.toFixed(2)}/200</b></div>
         </div>
-        <h3 style="margin:10px 0;color:${demoSelected?'#126b49':'#8a5a12'}">${demoSelected?'Congratulations! Selected':'Keep Going — Not Selected'}</h3>
-        <p style="color:#52627b;margin:0">${demoSelected?'शानदार प्रयास! अपनी मेहनत जारी रखें।':'यह प्रयास सीखने का मौका है। गलतियों से सीखें और तैयारी जारी रखें—अगली बार बेहतर करेंगे।'}</p>
+        <h3 style="margin:10px 0;color:${demoSelected?'#126b49':'#8a5a12'}">${demoSelected?'Congratulations!':'अभ्यास जारी रखें!'}</h3>
+        <p style="color:#52627b;margin:0">${demoSelected?'यह सफलता आपकी मेहनत का परिणाम है। अभी मंज़िल बाकी है—तैयारी जारी रखें और PCS अधिकारी बनने का सपना पूरा करें। आपके परिवार को एक दिन आप पर गर्व होगा! ❤️':'मंज़िल अभी बाकी है! यह केवल अभ्यास है, हार नहीं। अपनी गलतियों से सीखें, मेहनत जारी रखें और PCS अधिकारी बनने का सपना पूरा करें। आपके परिवार की उम्मीदें और आपकी मंज़िल आपका इंतजार कर रही हैं। ❤️'}</p>
         <div class="pv-popup-actions">
           <button type="button" class="pv-popup-primary" id="pvPopupViewResult">View Final Result</button>
           <button type="button" class="pv-popup-secondary" id="pvPopupClose">Close</button>
@@ -1101,3 +1101,11 @@ $('backDashboard').onclick=async()=>{if(!user)return;show('dashboardView');$('su
 })();
 
 </script><script>/* PV Education: remove cached legacy 2023 CSAT PDF only. */(function(){try{localStorage.removeItem('pvrajcms_csat_pdf_meta_v1');}catch(e){}try{const req=indexedDB.open('pvrajcms_exam_assets_v1');req.onsuccess=function(){const db=req.result;if(db.objectStoreNames.contains('assets')){try{const tx=db.transaction('assets','readwrite');tx.objectStore('assets').delete('csatPdf');tx.oncomplete=function(){db.close();};tx.onerror=function(){db.close();};}catch(e){db.close();}}else db.close();};req.onerror=function(){};}catch(e){}})();</script></body></html>
+
+/* Result celebration: restrained 3-emoji animation and mobile-safe popup */
+.pv-result-celebration{font-size:34px;line-height:1.35;display:inline-flex;align-items:center;justify-content:center;gap:5px;margin:4px auto 10px;white-space:nowrap}
+.pv-result-celebration.selected{animation:pvResultDance 1.15s ease-in-out 2}
+.pv-result-celebration.practice{animation:pvResultPulse 1.3s ease-in-out 1}
+@keyframes pvResultDance{0%,100%{transform:translateY(0) rotate(0)}20%{transform:translateY(-9px) rotate(-7deg)}40%{transform:translateY(3px) rotate(6deg)}60%{transform:translateY(-6px) rotate(-5deg)}80%{transform:translateY(2px) rotate(4deg)}}
+@keyframes pvResultPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@media(max-width:600px){.pv-final-popup-backdrop{padding:8px;align-items:center}.pv-final-popup{width:100%;max-width:100%;max-height:calc(100dvh - 16px);padding:18px 14px;border-radius:16px}.pv-final-popup h2{font-size:21px;line-height:1.25}.pv-final-popup .pv-popup-meta{grid-template-columns:1fr;gap:7px;margin:12px 0}.pv-final-popup .pv-popup-meta div{padding:9px}.pv-final-popup .pv-popup-actions{display:grid;grid-template-columns:1fr;gap:8px}.pv-final-popup .pv-popup-actions button{width:100%;padding:12px}.pv-result-celebration{font-size:29px;white-space:normal;gap:3px}.demo-card[style*="text-align:center"]{padding:15px 12px}}
