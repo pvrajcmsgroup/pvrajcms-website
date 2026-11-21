@@ -406,3 +406,1447 @@ flex-direction:column
 .card-actions .btn{width:100%}
 }
 </style>
+
+<style>
+/* PV EDUCATION FINAL EXAM LAYOUT */
+#examModal,#examModal *{box-sizing:border-box!important}
+#examModal{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;padding:0!important;overflow:hidden!important;z-index:99999!important}
+#examModal .modal-box{width:100vw!important;max-width:100vw!important;height:100vh!important;height:100dvh!important;max-height:100vh!important;max-height:100dvh!important;margin:0!important;border-radius:0!important;padding:10px!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+#examModal #examPanel{display:flex!important;flex-direction:column!important;flex:1 1 auto!important;min-height:0!important;width:100%!important;gap:7px!important;overflow:hidden!important}
+#examModal #examPanel>div:first-child{flex-shrink:0!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important}
+#examModal #examPaperTitle{font-size:clamp(17px,2vw,24px)!important;margin:0!important;line-height:1.25!important}
+#examModal #examTimer{white-space:nowrap!important;font-size:clamp(18px,2vw,24px)!important}
+#examModal #examQuestionArea{width:100%!important;flex:0 1 auto!important;max-height:30%!important;min-height:65px!important;margin:0!important;padding:10px!important;overflow-y:auto!important;overflow-x:hidden!important;overflow-wrap:anywhere!important}
+#examModal #examOptions{width:100%!important;flex:1 1 auto!important;min-height:0!important;max-height:none!important;display:flex!important;flex-direction:column!important;gap:6px!important;overflow-y:auto!important;overflow-x:hidden!important}
+#examModal #examOptions label{width:100%!important;max-width:100%!important;display:flex!important;align-items:flex-start!important;justify-content:flex-start!important;gap:9px!important;padding:9px 11px!important;margin:0!important;min-height:40px!important;height:auto!important;white-space:normal!important;overflow-wrap:anywhere!important;text-align:left!important;line-height:1.4!important;overflow:visible!important}
+#examModal #examOptions input[type=radio]{flex:0 0 18px!important;width:18px!important;height:18px!important;margin:2px 0 0!important;position:static!important;transform:none!important}
+#examModal .exam-controls{flex-shrink:0!important;display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:7px!important;padding:7px 0!important;margin:0!important;background:#fff!important;border-top:1px solid #dbe5f0!important;z-index:5!important}
+#examModal .exam-controls button{min-height:40px!important}
+#examModal .exam-submit{margin-left:auto!important;background:#b91c1c!important;color:#fff!important;border-color:#b91c1c!important}
+#examModal .palette-toggle{background:#eef6ff!important;color:#075985!important}
+#examModal #examPaletteWrap{display:none!important;flex-shrink:0!important;height:40dvh!important;max-height:40dvh!important;overflow:hidden!important;border:1px solid #dbe5f0!important;border-radius:10px!important;background:#fff!important}
+#examModal #examPaletteWrap.palette-open{display:block!important}
+#examModal #examPalette{display:grid!important;grid-template-columns:repeat(15,minmax(0,1fr))!important;align-content:start!important;width:100%!important;height:100%!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;gap:5px!important;padding:7px!important;scrollbar-width:thin!important}
+#examModal #examPalette button{min-width:0!important;width:100%!important;padding:6px 2px!important;min-height:32px!important}
+#examModal .modal-box,#examModal #examPanel,#examModal #examQuestionArea,#examModal #examOptions,#examModal #examPalette{overflow-x:hidden!important}
+#examModal #examResultPanel{flex:0 0 auto!important;width:min(100%,760px)!important;max-height:calc(100dvh - 24px)!important;overflow-y:auto!important;padding:18px!important;margin:auto!important;background:#fff!important;border:1px solid #dce7f1!important;border-radius:16px!important;box-shadow:0 12px 35px #06172a18!important}
+#examModal #examResultPanel h2{margin:0 0 14px!important;font-size:22px!important}
+#examModal #examResultText .result-summary{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;margin:0 0 12px!important}
+#examModal #examResultText .result-item{background:#f4f8fc!important;border:1px solid #dce7f1!important;border-radius:10px!important;padding:10px 12px!important;min-width:0!important}
+#examModal #examResultText .result-item small{display:block!important;color:#607087!important;font-size:11px!important;margin-bottom:4px!important}
+#examModal #examResultText .result-item strong{display:block!important;font-size:15px!important;overflow-wrap:anywhere!important}
+#examModal #examResultText .result-total{background:#eaf4fc!important;border-color:#c8e2f8!important}
+#examModal #examResultText .result-student{margin:8px 0!important;color:#607087!important;font-size:13px!important}
+#examModal #examResultText .exam-motivation{margin:10px 0!important;padding:10px!important;font-size:14px!important}
+#examModal #examResultText .result-note{margin:8px 0!important;font-size:11px!important;color:#607087!important}
+@media(max-width:600px){#examModal #examResultPanel{padding:12px!important;width:calc(100% - 12px)!important}#examModal #examResultText .result-summary{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important}#examModal #examResultText .result-item{padding:8px!important}#examModal #examResultText .result-item strong{font-size:14px!important}}
+#examModal .pv-result-brand{display:flex;align-items:center;gap:10px;padding:10px 12px;margin-bottom:10px;border-radius:10px;background:linear-gradient(110deg,#06172a,#075b93);color:#fff}#examModal .pv-result-mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#087bd8,#18c4e8);display:grid;place-items:center;font-size:21px}#examModal .pv-result-brand strong{display:block;font-size:16px;letter-spacing:.5px}#examModal .pv-result-brand small{display:block;color:#a7edff;font-size:10px;margin-top:3px;letter-spacing:1px}#examModal .pv-result-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}#examModal .pv-result-actions .btn{min-height:38px} @media(max-width:600px){#examModal .pv-result-actions .btn{flex:1 1 100%}}
+#examModal .exam-motivation{margin:16px 0;padding:14px;border-radius:12px;background:#eaf6ff;border:1px solid #c8e5ff;color:#075985;font-weight:700;text-align:center;font-size:16px;line-height:1.5}
+@media(max-width:700px){
+ #examModal .modal-box{padding:6px!important}
+ #examModal #examPanel{gap:5px!important}
+ #examModal #examQuestionArea{max-height:27%!important;min-height:55px!important;padding:8px!important;font-size:14px!important}
+ #examModal #examOptions{gap:5px!important}
+ #examModal #examOptions label{padding:8px!important;min-height:36px!important;font-size:14px!important}
+ #examModal #examOptions input[type=radio]{width:17px!important;height:17px!important;flex-basis:17px!important}
+ #examModal .exam-controls{gap:5px!important;padding:5px 0!important}
+ #examModal .exam-controls button{flex:1 1 calc(33.333% - 5px)!important;min-height:38px!important;font-size:12px!important;padding:6px!important}
+ #examModal .exam-submit{flex:1 1 100%!important;margin-left:0!important;order:5!important}
+ #examModal #examPaletteWrap.palette-open{max-height:32dvh!important;height:32dvh!important}
+ #examModal #examPalette{max-height:30dvh!important;height:30dvh!important;overflow-y:auto!important;overflow-x:hidden!important;display:grid!important;grid-template-columns:repeat(auto-fill,minmax(38px,1fr))!important;align-content:start!important;padding:5px!important}
+}
+@media(max-width:400px){#examModal .modal-box{padding:4px!important}#examModal #examQuestionArea{font-size:13px!important;padding:7px!important}#examModal #examOptions label{font-size:13px!important;padding:7px!important}}
+</style>
+
+
+<style>
+/* Final viewport correction: keep timer fully visible and tighten exam spacing */
+#examModal .modal-box{padding-right:16px!important;padding-left:16px!important}
+#examModal #examPanel>div:first-child{width:100%!important;max-width:100%!important;padding-right:8px!important;gap:12px!important}
+#examModal #examPaperTitle{flex:1 1 auto!important;min-width:0!important;overflow-wrap:anywhere!important}
+#examModal #examTimer{flex:0 0 auto!important;max-width:100%!important;padding-right:3px!important}
+#examModal #examQuestionArea{max-height:25%!important}
+@media(max-width:700px){
+ #examModal .modal-box{padding:6px 10px!important}
+ #examModal #examPanel>div:first-child{padding-right:5px!important}
+ #examModal #examTimer{font-size:17px!important}
+ #examModal #examQuestionArea{max-height:24dvh!important}
+}
+</style>
+
+
+<style>
+/* FIX: Question palette must scroll through all 150 questions */
+#examModal #examPaletteWrap.palette-open{
+  display:flex!important; flex-direction:column!important;
+  height:38dvh!important; max-height:38dvh!important; min-height:120px!important;
+  overflow:hidden!important;
+}
+#examModal #examPaletteWrap>h4{flex:0 0 auto!important;margin:8px 10px!important}
+#examModal #examPalette{
+  flex:1 1 auto!important; min-height:0!important; height:auto!important;
+  max-height:none!important; overflow-y:auto!important; overflow-x:hidden!important;
+  display:grid!important; grid-template-columns:repeat(15,minmax(0,1fr))!important;
+  align-content:start!important; gap:5px!important; padding:7px!important;
+  scrollbar-width:thin!important; overscroll-behavior:contain!important;
+}
+#examModal #examPalette button{min-width:0!important;width:100%!important}
+@media(max-width:700px){
+ #examModal #examPaletteWrap.palette-open{height:34dvh!important;max-height:34dvh!important}
+ #examModal #examPalette{grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:4px!important;padding:5px!important}
+}
+</style>
+
+
+<style>
+/* FIX 21 NOV: prevent accidental exam close and fit all four choices */
+#examModal .modal-box > .close{display:none!important}
+#examModal #examQuestionArea{max-height:20%!important;min-height:45px!important;padding:7px!important}
+#examModal #examOptions{gap:4px!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+#examModal #examOptions label{
+  min-height:30px!important;
+  padding:5px 8px!important;
+  margin:0!important;
+  line-height:1.2!important;
+  font-size:13px!important;
+  gap:7px!important;
+}
+#examModal #examOptions input[type=radio]{
+  width:16px!important;height:16px!important;flex-basis:16px!important;margin-top:1px!important
+}
+@media(max-width:700px){
+  #examModal #examQuestionArea{max-height:19dvh!important;min-height:42px!important;padding:6px!important}
+  #examModal #examOptions label{min-height:28px!important;padding:4px 6px!important;font-size:12.5px!important}
+}
+</style>
+
+
+<style>
+/* PV EDUCATION SSC-STYLE CBT INTERFACE */
+#examModal{background:#e9eef5!important}
+#examModal .modal-box{padding:0!important;background:#f5f7fb!important;color:#10213b!important}
+#examModal #examPanel{display:grid!important;grid-template-columns:minmax(0,1fr) 310px;grid-template-rows:auto minmax(100px,auto) minmax(0,1fr) auto;grid-template-areas:"head head" "question palette" "options palette" "controls controls";gap:10px!important;padding:12px!important;background:#f5f7fb!important}
+#examModal #examPanel>div:first-child{grid-area:head!important;background:#073b78!important;color:white!important;border-radius:10px!important;padding:13px 16px!important;min-height:62px!important}
+#examModal #examPaperTitle{color:#fff!important;font-size:clamp(17px,2vw,23px)!important;font-weight:800!important}
+#examModal #examTimer{color:#fff!important;background:#c62828!important;border-radius:8px!important;padding:8px 12px!important;font-weight:800!important}
+#examModal #examQuestionArea{grid-area:question!important;max-height:none!important;min-height:100px!important;overflow:auto!important;background:white!important;border:1px solid #c9d9ea!important;border-radius:10px!important;margin:0!important;padding:16px!important;font-size:16px!important;line-height:1.55!important}
+#examModal #examQuestionArea strong{display:block;background:#e7f0ff!important;color:#092d65!important;margin:-16px -16px 12px!important;padding:10px 14px!important;border-radius:10px 10px 0 0!important;font-size:16px!important}
+#examModal #examQuestionArea p{margin:10px 0 0!important;font-size:17px!important;font-weight:600!important}
+#examModal #examOptions{grid-area:options!important;display:flex!important;flex-direction:column!important;gap:9px!important;overflow:auto!important;min-height:0!important;padding:0!important}
+#examModal #examOptions label{background:#fff!important;border:1px solid #c9d9ea!important;border-radius:9px!important;padding:13px 14px!important;min-height:48px!important;font-size:15px!important;line-height:1.4!important;color:#10213b!important}
+#examModal #examOptions label:has(input:checked){background:#dceaff!important;border:2px solid #1674df!important}
+#examModal #examOptions input[type=radio]{accent-color:#086bd6!important}
+#examModal #examPaletteWrap{grid-area:palette!important;display:flex!important;flex-direction:column!important;height:auto!important;max-height:none!important;min-height:0!important;overflow:hidden!important;background:#fff!important;border:1px solid #c9d9ea!important;border-radius:10px!important;padding:0!important}
+#examModal #examPaletteWrap h4{flex:0 0 auto!important;margin:0!important;padding:12px!important;background:#075b93!important;color:#fff!important;font-size:17px!important;border-radius:9px 9px 0 0!important}
+#examModal #examPalette{flex:1 1 auto!important;min-height:0!important;height:auto!important;max-height:none!important;overflow-y:auto!important;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;align-content:start!important;gap:7px!important;padding:10px!important}
+#examModal #examPalette button{min-width:0!important;width:100%!important;min-height:38px!important;height:auto!important;border:1px solid #c5cfda!important;border-radius:7px!important;font-weight:800!important;font-size:13px!important;padding:6px 2px!important;color:#14253b!important;background:#fff!important}
+#examModal #examPalette button.palette-answered{background:#20a34a!important;border-color:#20a34a!important;color:white!important}
+#examModal #examPalette button.palette-unanswered{background:#dc3636!important;border-color:#dc3636!important;color:white!important}
+#examModal #examPalette button.palette-unvisited{background:#fff!important;border-color:#aeb9c7!important;color:#14253b!important}
+#examModal #examPalette button.palette-review{background:#7c3aed!important;border-color:#7c3aed!important;color:white!important}
+#examModal #examPalette button.palette-current{outline:3px solid #facc15!important;outline-offset:1px;background:#1674df!important;color:white!important;border-color:#1674df!important}
+#examModal .exam-controls{grid-area:controls!important;display:flex!important;align-items:center!important;gap:8px!important;padding:10px 0 0!important;border-top:1px solid #cbd8e6!important;background:transparent!important;flex-wrap:wrap!important}
+#examModal .exam-controls button{min-height:42px!important;padding:9px 13px!important;border-radius:8px!important;font-size:13px!important}
+#examModal .exam-controls .exam-submit{margin-left:auto!important;background:#c62828!important;color:#fff!important}
+#examModal .palette-toggle{display:none!important}
+#examModal .clear-response{background:#fff!important;color:#46566c!important;border:1px solid #cbd8e6!important}
+#examModal #examResultPanel{background:#fff!important}
+@media(max-width:800px){
+ #examModal .modal-box{padding:0!important}
+ #examModal #examPanel{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto minmax(0,1fr) auto auto!important;grid-template-areas:"head" "question" "options" "controls" "palette"!important;padding:7px!important;gap:6px!important}
+ #examModal #examPanel>div:first-child{padding:9px 10px!important;min-height:50px!important}
+ #examModal #examPaperTitle{font-size:15px!important}
+ #examModal #examTimer{font-size:16px!important;padding:6px 8px!important}
+ #examModal #examQuestionArea{min-height:70px!important;max-height:22dvh!important;padding:9px!important;font-size:14px!important}
+ #examModal #examQuestionArea strong{margin:-9px -9px 7px!important;padding:7px 9px!important;font-size:14px!important}
+ #examModal #examQuestionArea p{font-size:14px!important;margin:6px 0 0!important}
+ #examModal #examOptions{min-height:0!important;max-height:none!important;gap:6px!important}
+ #examModal #examOptions label{min-height:40px!important;padding:8px 9px!important;font-size:13px!important}
+ #examModal .exam-controls{padding:5px 0!important;gap:5px!important}
+ #examModal .exam-controls button{flex:1 1 calc(33.333% - 5px)!important;min-height:38px!important;font-size:11px!important;padding:6px!important}
+ #examModal .exam-controls .palette-toggle{display:inline-flex!important}
+ #examModal .exam-controls .exam-submit{flex:1 1 100%!important;margin:0!important;order:10!important}
+ #examModal #examPaletteWrap{display:none!important;height:30dvh!important;max-height:30dvh!important;min-height:0!important}
+ #examModal #examPaletteWrap.palette-open{display:flex!important}
+ #examModal #examPalette{grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:4px!important;padding:5px!important}
+ #examModal #examPalette button{min-height:32px!important;font-size:12px!important}
+}
+@media(max-width:420px){
+ #examModal #examPanel{padding:5px!important}
+ #examModal #examOptions label{font-size:12px!important;padding:7px!important}
+ #examModal .exam-controls button{font-size:10px!important}
+}
+</style>
+
+
+<style>
+/* PV EDUCATION MOBILE VIEW PATCH - preserves existing JavaScript */
+@media(max-width:800px){
+  body{overflow-x:hidden}
+  .nav{min-height:62px;padding:8px 12px}
+  .brand-mark{width:38px;height:38px}
+  .hero-inner{gap:10px}
+  .hero-art{font-size:48px;align-self:center}
+  .container{margin:20px auto;padding:0 12px}
+  .cards{grid-template-columns:1fr!important}
+  .details{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .card-actions{flex-direction:column}
+  .card-actions .btn{width:100%;min-width:0}
+  .student-dashboard{padding:12px}
+  .admin-grid{grid-template-columns:1fr}
+  .modal{padding:0}
+  .modal-box{width:100%;max-width:100%;max-height:100dvh;border-radius:0;padding:12px}
+}
+/* Exam modal: compact mobile layout; all controls remain visible */
+@media(max-width:800px){
+  #examModal{padding:0!important}
+  #examModal .modal-box{width:100vw!important;max-width:100vw!important;height:100dvh!important;max-height:100dvh!important;border-radius:0!important;padding:6px!important;overflow:hidden!important}
+  #examModal #examPanel{display:flex!important;flex-direction:column!important;gap:6px!important;height:100%!important;min-height:0!important;padding:6px!important;overflow:hidden!important}
+  #examModal #examPanel>div:first-child{flex:0 0 auto!important;min-height:46px!important;padding:8px 10px!important;gap:8px!important}
+  #examModal #examPaperTitle{font-size:clamp(14px,4vw,18px)!important;line-height:1.2!important}
+  #examModal #examTimer{font-size:clamp(15px,4vw,18px)!important;padding:5px 7px!important}
+  #examModal #examQuestionArea{flex:0 0 auto!important;min-height:50px!important;max-height:25dvh!important;overflow:auto!important;padding:8px!important;font-size:14px!important;line-height:1.4!important}
+  #examModal #examQuestionArea strong{margin:-8px -8px 6px!important;padding:7px 8px!important;font-size:14px!important}
+  #examModal #examQuestionArea p{font-size:14px!important;margin:5px 0!important}
+  #examModal #examOptions{flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-y:auto!important;gap:5px!important}
+  #examModal #examOptions label{min-height:36px!important;padding:7px 8px!important;font-size:13px!important;line-height:1.35!important}
+  #examModal #examOptions input[type=radio]{width:17px!important;height:17px!important;flex:0 0 17px!important}
+  #examModal .exam-controls{flex:0 0 auto!important;display:flex!important;flex-wrap:wrap!important;gap:5px!important;padding:5px 0!important}
+  #examModal .exam-controls button{flex:1 1 calc(33.333% - 5px)!important;min-height:36px!important;padding:6px 4px!important;font-size:11px!important}
+  #examModal .exam-controls .exam-submit{flex:1 1 100%!important;margin:0!important;order:10!important}
+  #examModal .exam-controls .palette-toggle{display:inline-flex!important}
+  #examModal #examPaletteWrap{display:none!important;flex:0 0 28dvh!important;height:28dvh!important;max-height:28dvh!important;min-height:0!important;overflow:hidden!important}
+  #examModal #examPaletteWrap.palette-open{display:flex!important}
+  #examModal #examPaletteWrap h4{flex:0 0 auto!important;margin:0!important;padding:8px!important}
+  #examModal #examPalette{flex:1 1 auto!important;min-height:0!important;overflow:auto!important;display:grid!important;grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:4px!important;padding:5px!important}
+  #examModal #examPalette button{min-height:30px!important;padding:4px 2px!important;font-size:11px!important}
+  #examModal #examResultPanel{width:calc(100vw - 12px)!important;max-height:calc(100dvh - 12px)!important;margin:auto!important;padding:12px!important;overflow:auto!important}
+}
+@media(max-width:420px){
+  .nav{padding:7px 9px}
+  .brand{gap:8px;font-size:14px}
+  .brand-text small{font-size:9px}
+  .hero{padding:22px 12px}
+  .hero h1{font-size:26px}
+  .section-title h2{font-size:21px}
+  #examModal #examQuestionArea{max-height:23dvh!important;font-size:13px!important}
+  #examModal #examOptions label{font-size:12px!important;padding:6px!important}
+  #examModal .exam-controls button{font-size:10px!important}
+}
+</style>
+
+</head>
+
+<body>
+
+<header class="topbar">
+<nav class="nav">
+
+<a class="brand" href="pv-education.html">
+<span class="brand-mark">🎓</span>
+<span class="brand-text">
+PV EDUCATION
+<small>PVRAJCMS GROUP</small>
+</span>
+</a>
+
+<button class="mobile-menu"
+onclick="document.querySelector('.navlinks').classList.toggle('open')">
+☰
+</button>
+
+<div class="navlinks">
+<a href="pv-education.html">Main Website</a>
+<a href="#exams">Prelims Exams</a>
+<a href="#studentDashboard">Student Dashboard</a>
+<a href="#instructions">Instructions</a>
+<a href="#" onclick="openAdmin();return false;">Admin</a>
+</div>
+
+</nav>
+</header>
+
+<section class="hero">
+<div class="hero-inner">
+<div>
+<span class="eyebrow">IAS · PCS · PRELIMINARY EXAMINATION</span>
+<h1>IAS PCS Prelims Examination</h1>
+<p>General Studies Paper-I और CSAT Paper-II के लिए ऑनलाइन परीक्षा पोर्टल। परीक्षा का Schedule, निर्देश और उपलब्ध टेस्ट यहाँ देखें।</p>
+</div>
+<div class="hero-art">📚🎓</div>
+</div>
+</section>
+
+<main>
+
+<!-- EXAMS -->
+<section class="container" id="exams">
+
+<div class="section-title">
+<h2>Available Prelims Papers</h2>
+<p>दोनों पेपर का Schedule और परीक्षा विवरण</p>
+</div>
+
+<div class="cards">
+
+<!-- GS -->
+<article class="exam-card">
+<div class="card-head">
+<div>
+<span class="paper-tag">PAPER – I</span>
+<h3>General Studies</h3>
+</div>
+<span class="badge">GS-I</span>
+</div>
+
+<div class="card-body">
+
+<div class="details">
+<div class="detail"><small>Questions</small><strong>150</strong></div>
+<div class="detail"><small>Duration</small><strong id="gsDuration">2 Hours</strong></div>
+<div class="detail"><small>Exam Date</small><strong id="gsDate">Admin द्वारा घोषित</strong></div>
+<div class="detail"><small>Schedule</small><strong id="gsTime">Admin द्वारा घोषित</strong></div>
+</div>
+
+<div class="notice">
+परीक्षा शुरू होने से पहले Login करें। निर्धारित समय और परीक्षा संबंधी निर्देशों का पालन करें।
+</div>
+
+<div class="detail">
+<small>Answer Key Publish</small>
+<strong id="gsKeyPublish">Admin द्वारा घोषित</strong>
+</div>
+
+<div class="detail">
+<small>GS Result Publish</small>
+<strong id="gsResultPublish">Admin द्वारा घोषित</strong>
+</div>
+
+<div class="card-actions">
+<button class="btn primary" onclick="openExam('gs')">
+Login & Start Examination →
+</button>
+<button class="btn secondary" onclick="showInstructions('GS Paper-I')">
+Instructions
+</button>
+</div>
+
+</div>
+</article>
+
+<!-- CSAT -->
+<article class="exam-card">
+<div class="card-head">
+<div>
+<span class="paper-tag">PAPER – II</span>
+<h3>CSAT</h3>
+</div>
+<span class="badge">CSAT</span>
+</div>
+
+<div class="card-body">
+
+<div class="details">
+<div class="detail"><small>Questions</small><strong>100</strong></div>
+<div class="detail"><small>Duration</small><strong id="csatDuration">2 Hours</strong></div>
+<div class="detail"><small>Exam Date</small><strong id="csatDate">Admin द्वारा घोषित</strong></div>
+<div class="detail"><small>Schedule</small><strong id="csatTime">Admin द्वारा घोषित</strong></div>
+</div>
+
+<div class="notice">
+CSAT पेपर के लिए अलग Login/Start विकल्प होगा। परीक्षा की तारीख और समय Admin द्वारा प्रकाशित किया जाएगा।
+</div>
+
+<div class="detail">
+<small>Answer Key Publish</small>
+<strong id="csatKeyPublish">Admin द्वारा घोषित</strong>
+</div>
+
+<div class="detail">
+<small>CSAT Result Publish</small>
+<strong id="csatResultPublish">Admin द्वारा घोषित</strong>
+</div>
+
+<div class="card-actions">
+<button class="btn primary" onclick="openExam('csat')">
+Login & Start Examination →
+</button>
+<button class="btn secondary" onclick="showInstructions('CSAT Paper-II')">
+Instructions
+</button>
+</div>
+
+</div>
+</article>
+
+</div>
+
+<div class="detail">
+<small>Combined Result / Merit List Publish</small>
+<strong id="combinedPublish">Admin द्वारा घोषित</strong>
+</div>
+
+</section>
+
+<!-- STUDENT DASHBOARD -->
+<section class="container" id="studentDashboard">
+
+<div class="section-title">
+<h2>🎓 Student Dashboard</h2>
+<p>विद्यार्थी यहाँ अपने Question Papers देख और Download कर सकते हैं।</p>
+</div>
+
+<div class="student-dashboard">
+
+<div class="details">
+<div class="detail">
+<small>Student Name</small>
+<strong id="studentName">Student</strong>
+</div>
+
+<div class="detail">
+<small>Roll Number</small>
+<strong id="studentRoll">Not Logged In</strong>
+</div>
+</div>
+
+<div class="notice">
+यह Student Dashboard का प्रारंभिक संस्करण है। वास्तविक Student Login और परीक्षा प्रणाली Backend से जोड़ी जाएगी।
+</div>
+
+<div class="cards">
+
+<!-- STUDENT GS -->
+<div class="student-paper">
+<div class="card-head">
+<div>
+<span class="paper-tag">PAPER – I</span>
+<h3>General Studies</h3>
+</div>
+<span class="badge">GS-I</span>
+</div>
+
+<div class="student-paper-body">
+
+<div id="studentGSFile" class="student-file-status">
+GS Paper अभी उपलब्ध नहीं है।
+</div>
+
+<div class="card-actions">
+<button class="btn primary" onclick="studentOpenPaper('gsPaper')">
+📄 View GS Paper
+</button>
+
+<button class="btn secondary" onclick="studentDownloadPaper('gsPaper')">
+⬇ Download GS Paper
+</button>
+</div>
+
+</div>
+
+<!-- STUDENT CSAT -->
+<div class="student-paper">
+<div class="card-head">
+<div>
+<span class="paper-tag">PAPER – II</span>
+<h3>CSAT</h3>
+</div>
+<span class="badge">CSAT</span>
+</div>
+
+<div class="student-paper-body">
+
+<div id="studentCSATFile" class="student-file-status">
+CSAT Paper अभी उपलब्ध नहीं है।
+</div>
+
+<div class="card-actions">
+<button class="btn primary" onclick="studentOpenPaper('csatPaper')">
+📄 View CSAT Paper
+</button>
+
+<button class="btn secondary" onclick="studentDownloadPaper('csatPaper')">
+⬇ Download CSAT Paper
+</button>
+</div>
+
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- RESULTS -->
+<section class="container" id="final-results">
+
+<div class="section-title">
+<h2>🏆 PCS Prelims Final Result</h2>
+<p>Combined GS + CSAT Result · Overall और Category-wise Merit List</p>
+</div>
+
+<div class="exam-card" style="padding:20px">
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+
+<button class="btn primary result-filter" data-category="ALL" onclick="filterResult('ALL')">Overall Merit</button>
+<button class="btn secondary result-filter" data-category="GENERAL" onclick="filterResult('GENERAL')">General</button>
+<button class="btn secondary result-filter" data-category="OBC" onclick="filterResult('OBC')">OBC</button>
+<button class="btn secondary result-filter" data-category="EWS" onclick="filterResult('EWS')">EWS</button>
+<button class="btn secondary result-filter" data-category="SC" onclick="filterResult('SC')">SC</button>
+<button class="btn secondary result-filter" data-category="ST" onclick="filterResult('ST')">ST</button>
+
+</div>
+
+<div class="details">
+<div class="detail">
+<small>Result Type</small>
+<strong id="resultType">Overall Combined Merit List</strong>
+</div>
+
+<div class="detail">
+<small>Publication</small>
+<strong id="resultStatus">Admin द्वारा घोषित</strong>
+</div>
+</div>
+
+<div style="overflow-x:auto;margin-top:16px">
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Roll Number</th>
+<th>Student Name</th>
+<th>Category</th>
+<th>GS Marks</th>
+<th>CSAT Marks</th>
+<th>Total</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="resultTableBody">
+<tr>
+<td colspan="8" style="padding:22px;text-align:center;color:#607087">
+Result अभी प्रकाशित नहीं हुआ है।
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p class="notice">
+Category-wise Merit List में संबंधित Category के विद्यार्थियों की Rank दिखाई जाएगी। Overall Merit List में सभी विद्यार्थियों की संयुक्त Rank होगी।
+</p>
+
+</div>
+</section>
+
+<!-- INSTRUCTIONS -->
+<section class="container" id="instructions">
+<div class="info-grid">
+
+<div class="info">
+<span style="font-size:24px">⏱️</span>
+<h4>Timed Examination</h4>
+<p>हर पेपर की निर्धारित अवधि के अनुसार परीक्षा होगी।</p>
+</div>
+
+<div class="info">
+<span style="font-size:24px">📝</span>
+<h4>Response Sheet</h4>
+<p>परीक्षा के बाद विद्यार्थी अपने उत्तर और परिणाम देख सकेगा।</p>
+</div>
+
+<div class="info">
+<span style="font-size:24px">📊</span>
+<h4>Results</h4>
+<p>Answer Key और परिणाम प्रकाशित होने पर उपलब्ध होंगे।</p>
+</div>
+
+</div>
+</section>
+
+</main>
+
+<footer>
+<div class="foot">
+<span>© 2026 PV Education · A Unit of PVrajCMS Group</span>
+<span><a href="pv-education.html">Back to Main Website</a></span>
+</div>
+</footer>
+
+<!-- ADMIN MODAL -->
+<div class="modal" id="adminModal">
+<div class="modal-box">
+
+<button class="close" onclick="closeAdmin()">✕</button>
+
+<h2>Admin Dashboard · Exam Schedule</h2>
+
+<p>GS और CSAT की तारीख, समय, अवधि, Late Entry और Result Publication Schedule यहाँ सेट करें।</p>
+
+<div class="admin-grid">
+
+<!-- GS ADMIN -->
+<section class="admin-section">
+<h3>GS Paper-I</h3>
+
+<label>Exam Date
+<input type="date" id="gsAdminDate">
+</label>
+
+<label>Start Time
+<input type="time" id="gsAdminStart">
+</label>
+
+<label>End Time
+<input type="time" id="gsAdminEnd">
+</label>
+
+<label>Duration (Minutes)
+<input type="number" id="gsAdminDuration" value="120">
+</label>
+
+<label>Late Entry Allowed (Minutes)
+<input type="number" id="gsAdminLate" value="20">
+</label>
+
+<label>Answer Key Publish Date
+<input type="date" id="gsKeyDate">
+</label>
+
+<label>Answer Key Publish Time
+<input type="time" id="gsKeyTime">
+</label>
+
+<label>GS Result Publish Date
+<input type="date" id="gsResultDate">
+</label>
+
+<label>GS Result Publish Time
+<input type="time" id="gsResultTime">
+</label>
+</section>
+
+<!-- CSAT ADMIN -->
+<section class="admin-section">
+<h3>CSAT Paper-II</h3>
+
+<label>Exam Date
+<input type="date" id="csatAdminDate">
+</label>
+
+<label>Start Time
+<input type="time" id="csatAdminStart">
+</label>
+
+<label>End Time
+<input type="time" id="csatAdminEnd">
+</label>
+
+<label>Duration (Minutes)
+<input type="number" id="csatAdminDuration" value="120">
+</label>
+
+<label>Late Entry Allowed (Minutes)
+<input type="number" id="csatAdminLate" value="20">
+</label>
+
+<label>Answer Key Publish Date
+<input type="date" id="csatKeyDate">
+</label>
+
+<label>Answer Key Publish Time
+<input type="time" id="csatKeyTime">
+</label>
+
+<label>CSAT Result Publish Date
+<input type="date" id="csatResultDate">
+</label>
+
+<label>CSAT Result Publish Time
+<input type="time" id="csatResultTime">
+</label>
+</section>
+
+</div>
+
+<!-- COMBINED RESULT -->
+<section class="admin-section" style="margin-top:14px">
+<h3>Combined Result Publication</h3>
+<label>GS Bonus Question Numbers (comma-separated; attempted questions receive bonus, no negative marking)<input id="gsBonusQuestions" placeholder="e.g. 12, 25, 78"></label>
+<label>CSAT Bonus Question Numbers (comma-separated)<input id="csatBonusQuestions" placeholder="e.g. 5, 19"></label>
+
+<label>Combined Result Publish Date
+<input type="date" id="combinedResultDate">
+</label>
+
+<label>Combined Result Publish Time
+<input type="time" id="combinedResultTime">
+</label>
+
+<p>GS और CSAT दोनों के परिणाम प्रकाशित होने के बाद Combined Result/Merit List प्रकाशित करने का समय।</p>
+</section>
+
+<!-- UPLOADS -->
+<section class="admin-section" style="margin-top:14px">
+<h3>📄 Paper & Answer Key Upload / Replace</h3>
+
+<p>
+नई फ़ाइल Upload करके पुराने Paper या Answer Key को Replace करें।
+अभी फ़ाइल इसी ब्राउज़र में सुरक्षित होगी।
+</p>
+
+<div class="admin-grid">
+
+<!-- GS UPLOAD -->
+<div class="admin-section">
+<h4>GS Paper-I</h4>
+<label>Online Questions CSV/TXT (Question | Option A | Option B | Option C | Option D)</label><input type="file" id="gsQuestionsFile" accept=".csv,.txt"><button class="btn primary" onclick="saveExamFile('gsQuestionsFile','gsQuestions')">Upload Online GS Questions</button>
+
+<label>Question Paper (PDF/CSV/TXT)
+<input type="file" id="gsPaperFile" accept=".pdf,.csv,.txt">
+</label>
+
+<button class="btn primary" onclick="saveExamFile('gsPaperFile','gsPaper')">
+Upload / Replace GS Paper
+</button>
+
+<label>Answer Key (CSV/TXT)
+<input type="file" id="gsKeyFile" accept=".csv,.txt">
+</label>
+
+<button class="btn primary" onclick="saveExamFile('gsKeyFile','gsKey')">
+Upload / Replace GS Answer Key
+</button>
+
+<p id="gsUploadStatus" class="upload-status"></p>
+
+<div id="gsAdminPaperPreview"></div>
+</div>
+
+<!-- CSAT UPLOAD -->
+<div class="admin-section">
+<h4>CSAT Paper-II</h4>
+<label>Online Questions CSV/TXT (Question | Option A | Option B | Option C | Option D)</label><input type="file" id="csatQuestionsFile" accept=".csv,.txt"><button class="btn primary" onclick="saveExamFile('csatQuestionsFile','csatQuestions')">Upload Online CSAT Questions</button>
+
+<label>Question Paper (PDF/CSV/TXT)
+<input type="file" id="csatPaperFile" accept=".pdf,.csv,.txt">
+</label>
+
+<button class="btn primary" onclick="saveExamFile('csatPaperFile','csatPaper')">
+Upload / Replace CSAT Paper
+</button>
+
+<label>Answer Key (CSV/TXT)
+<input type="file" id="csatKeyFile" accept=".csv,.txt">
+</label>
+
+<button class="btn primary" onclick="saveExamFile('csatKeyFile','csatKey')">
+Upload / Replace CSAT Answer Key
+</button>
+
+<p id="csatUploadStatus" class="upload-status"></p>
+
+<div id="csatAdminPaperPreview"></div>
+</div>
+
+</div>
+</section>
+
+<div class="modal-actions">
+<button class="btn secondary" onclick="closeAdmin()">Cancel</button>
+<button class="btn primary" onclick="saveSchedule()">Save Schedule</button>
+</div>
+
+<p id="adminStatus" style="color:green;font-weight:bold"></p>
+
+</div>
+</div>
+
+
+<!-- ONLINE EXAM MODAL -->
+<div class="modal" id="examModal">
+ <div class="modal-box" style="max-width:1000px">
+  <button class="close" onclick="closeExam()">✕</button>
+  <div id="examLoginPanel">
+   <h2 id="examHeading">Online Examination</h2>
+   <p>अपना नाम और Roll Number दर्ज करके परीक्षा शुरू करें।</p>
+   <label>Student Name<input id="examStudentName" placeholder="पूरा नाम"></label>
+   <label>Roll Number<input id="examStudentRoll" placeholder="Roll Number"></label>
+   <button class="btn primary" onclick="beginExam()">Start Exam</button>
+   <p class="notice">एक बार परीक्षा शुरू होने के बाद Timer चलेगा। उत्तर इसी ब्राउज़र में सेव होंगे।</p>
+  </div>
+  <div id="examPanel" class="hidden">
+   <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+    <h2 id="examPaperTitle"></h2><strong id="examTimer" style="font-size:22px;color:#c62828">02:00:00</strong>
+   </div>
+   <div id="examQuestionArea" class="detail" style="margin:15px 0;min-height:160px"></div>
+   <div id="examOptions"></div>
+   <div class="exam-controls">
+    <button class="btn secondary" onclick="examPrev()">← Previous</button>
+    <button class="btn secondary" onclick="examMarkReview()">★ Mark Review</button>
+     <button class="btn clear-response" onclick="examClearResponse()">Clear Response</button>
+    <button class="btn primary" onclick="examNext()">Next →</button>
+    <button class="btn secondary palette-toggle" onclick="toggleExamPalette()">☷ Questions</button>
+    <button class="btn danger exam-submit" onclick="submitExam(false)">Submit Exam</button>
+   </div>
+   <div id="examPaletteWrap"><h4>Question Palette</h4><div id="examPalette" style="display:flex;flex-wrap:wrap;gap:6px"></div></div>
+  </div>
+  <div id="examResultPanel" class="hidden"><div class="pv-result-brand"><div class="pv-result-mark">🎓</div><div><strong>PV EDUCATION</strong><small>PVRAJCMS GROUP · IAS / PCS PRELIMS</small></div></div><h2>Exam Submitted</h2><div id="examResultText"></div><div class="pv-result-actions"><button class="btn secondary" onclick="downloadExamResult()">⬇ Download Result</button><button class="btn secondary" onclick="printExamResult()">🖨 Print / Save PDF</button><button class="btn primary" onclick="closeExam()">Close</button></div></div>
+ </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+<div class="modal-box" style="max-width:440px">
+
+<button class="close" onclick="closeModal()">✕</button>
+
+<h2 id="modalTitle">Student Login</h2>
+
+<p id="modalText">
+Login सुविधा अगले चरण में Backend से जोड़ी जाएगी।
+</p>
+
+<input placeholder="Roll Number / Email">
+<input type="password" placeholder="Password">
+
+<div class="modal-actions">
+<button class="btn secondary" onclick="closeModal()">Close</button>
+<button class="btn primary" onclick="alert('अभी यह UI prototype है। Login backend अगले चरण में जोड़ा जाएगा।')">
+Login
+</button>
+</div>
+
+</div>
+</div>
+
+<script>
+
+/* RESULTS */
+
+function filterResult(category){
+
+document.getElementById("resultType").textContent=
+category==="ALL"
+?"Overall Combined Merit List"
+:category+" Category Merit List";
+
+document.querySelectorAll(".result-filter").forEach(btn=>{
+let active=btn.dataset.category===category;
+btn.classList.toggle("primary",active);
+btn.classList.toggle("secondary",!active);
+});
+
+document.getElementById("resultTableBody").innerHTML=
+'<tr><td colspan="8" style="padding:22px;text-align:center;color:#607087">Result अभी प्रकाशित नहीं हुआ है।</td></tr>';
+
+}
+
+/* LOGIN */
+
+function openLogin(paper){
+
+document.getElementById("modalTitle").textContent=
+"Student Login · "+paper;
+
+document.getElementById("modalText").textContent=
+"इस पेपर की परीक्षा देने के लिए विद्यार्थी Login करेंगे। वास्तविक Login और परीक्षा प्रणाली Backend जुड़ने के बाद सक्रिय होगी।";
+
+document.getElementById("loginModal").classList.add("open");
+
+}
+
+function closeModal(){
+document.getElementById("loginModal").classList.remove("open");
+}
+
+/* INSTRUCTIONS */
+
+function showInstructions(paper){
+
+alert(paper+"\n\n"+
+"• परीक्षा की निर्धारित अवधि में पेपर पूरा करें।\n"+
+"• प्रत्येक प्रश्न का उत्तर ध्यान से चुनें।\n"+
+"• वास्तविक परीक्षा निर्देश Admin द्वारा प्रकाशित किए जाएंगे।");
+
+}
+
+/* ADMIN */
+
+function openAdmin(){
+
+const saved=JSON.parse(localStorage.getItem("pvPrelimsSchedule")||"{}");
+
+["gs","csat"].forEach(k=>{
+
+const v=saved[k]||{};
+const prefix=k==="gs"?"gsAdmin":"csatAdmin";
+
+document.getElementById(prefix+"Date").value=v.date||"";
+document.getElementById(prefix+"Start").value=v.start||"";
+document.getElementById(prefix+"End").value=v.end||"";
+document.getElementById(prefix+"Duration").value=v.duration||120;
+document.getElementById(prefix+"Late").value=v.late||20;
+
+document.getElementById(k+"KeyDate").value=v.keyDate||"";
+document.getElementById(k+"KeyTime").value=v.keyTime||"";
+document.getElementById(k+"ResultDate").value=v.resultDate||"";
+document.getElementById(k+"ResultTime").value=v.resultTime||"";
+
+});
+
+document.getElementById("combinedResultDate").value=
+saved.combinedResultDate||"";
+
+document.getElementById("combinedResultTime").value=
+saved.combinedResultTime||"";
+
+document.getElementById("gsBonusQuestions").value=saved.gsBonusQuestions||"";
+document.getElementById("csatBonusQuestions").value=saved.csatBonusQuestions||"";
+
+document.getElementById("adminModal").classList.add("open");
+
+renderUploadedFiles();
+
+}
+
+function closeAdmin(){
+document.getElementById("adminModal").classList.remove("open");
+}
+
+/* SAVE SCHEDULE */
+
+function saveSchedule(){
+
+const data={};
+
+["gs","csat"].forEach(k=>{
+
+const prefix=k==="gs"?"gsAdmin":"csatAdmin";
+
+data[k]={
+
+date:document.getElementById(prefix+"Date").value,
+start:document.getElementById(prefix+"Start").value,
+end:document.getElementById(prefix+"End").value,
+duration:document.getElementById(prefix+"Duration").value,
+late:document.getElementById(prefix+"Late").value,
+keyDate:document.getElementById(k+"KeyDate").value,
+keyTime:document.getElementById(k+"KeyTime").value,
+resultDate:document.getElementById(k+"ResultDate").value,
+resultTime:document.getElementById(k+"ResultTime").value
+
+};
+
+});
+
+data.combinedResultDate=
+document.getElementById("combinedResultDate").value;
+
+data.combinedResultTime=
+document.getElementById("combinedResultTime").value;
+
+data.gsBonusQuestions=document.getElementById("gsBonusQuestions").value.trim();
+data.csatBonusQuestions=document.getElementById("csatBonusQuestions").value.trim();
+
+localStorage.setItem("pvPrelimsSchedule",JSON.stringify(data));
+
+renderSchedule(data);
+
+document.getElementById("adminStatus").textContent=
+"Schedule saved on this browser.";
+
+}
+
+/* RENDER SCHEDULE */
+
+function renderSchedule(data){
+
+data=data||JSON.parse(localStorage.getItem("pvPrelimsSchedule")||"{}");
+
+["gs","csat"].forEach(k=>{
+
+const v=data[k]||{};
+
+const date=v.date
+?new Date(v.date+"T00:00:00").toLocaleDateString("en-IN")
+:"Admin द्वारा घोषित";
+
+const time=(v.start&&v.end)
+?v.start+" – "+v.end
+:"Admin द्वारा घोषित";
+
+const fmt=(d,t)=>d
+?new Date(d+"T00:00:00").toLocaleDateString("en-IN")+(t?" · "+t:"")
+:"Admin द्वारा घोषित";
+
+document.getElementById(k+"Date").textContent=date;
+
+document.getElementById(k+"Time").textContent=
+time+(v.late?" · Late Entry "+v.late+" min":"");
+
+document.getElementById(k+"KeyPublish").textContent=
+fmt(v.keyDate,v.keyTime);
+
+document.getElementById(k+"ResultPublish").textContent=
+fmt(v.resultDate,v.resultTime);
+
+document.getElementById(k+"Duration").textContent=
+v.duration?v.duration+" Minutes":"2 Hours";
+
+});
+
+const fmtCombined=(d,t)=>d
+?new Date(d+"T00:00:00").toLocaleDateString("en-IN")+(t?" · "+t:"")
+:"Admin द्वारा घोषित";
+
+document.getElementById("combinedPublish").textContent=
+fmtCombined(data.combinedResultDate,data.combinedResultTime);
+
+}
+
+renderSchedule();
+
+/* MODAL EVENTS */
+
+document.getElementById("adminModal").addEventListener("click",e=>{
+if(e.target.id==="adminModal")closeAdmin();
+});
+
+document.getElementById("examModal").addEventListener("click",e=>{if(e.target.id==="examModal")closeExam();});
+document.getElementById("loginModal").addEventListener("click",e=>{
+if(e.target.id==="loginModal")closeModal();
+});
+
+/* FILE DATABASE */
+
+const PV_FILE_DB_NAME="PVEducationExamFiles";
+const PV_FILE_DB_VERSION=1;
+
+function pvOpenFileDB(){
+
+return new Promise((resolve,reject)=>{
+
+const req=indexedDB.open(PV_FILE_DB_NAME,PV_FILE_DB_VERSION);
+
+req.onupgradeneeded=()=>{
+
+const db=req.result;
+
+if(!db.objectStoreNames.contains("files")){
+db.createObjectStore("files",{keyPath:"key"});
+}
+
+};
+
+req.onsuccess=()=>resolve(req.result);
+req.onerror=()=>reject(req.error);
+
+});
+
+}
+
+async function pvSaveFileRecord(key,file){
+
+const db=await pvOpenFileDB();
+
+return new Promise((resolve,reject)=>{
+
+const tx=db.transaction("files","readwrite");
+
+tx.objectStore("files").put({
+
+key:key,
+name:file.name,
+type:file.type,
+size:file.size,
+updatedAt:new Date().toISOString(),
+blob:file
+
+});
+
+tx.oncomplete=()=>{
+db.close();
+resolve();
+};
+
+tx.onerror=()=>{
+db.close();
+reject(tx.error);
+};
+
+});
+
+}
+
+async function pvGetFileRecord(key){
+
+const db=await pvOpenFileDB();
+
+return new Promise((resolve,reject)=>{
+
+const tx=db.transaction("files","readonly");
+
+const req=tx.objectStore("files").get(key);
+
+req.onsuccess=()=>{
+db.close();
+resolve(req.result||null);
+};
+
+req.onerror=()=>{
+db.close();
+reject(req.error);
+};
+
+});
+
+}
+
+/* UPLOAD */
+
+async function saveExamFile(inputId,key){
+
+const input=document.getElementById(inputId);
+
+const file=input&&input.files&&input.files[0];
+
+const statusId=key.startsWith("gs")
+?"gsUploadStatus"
+:"csatUploadStatus";
+
+const status=document.getElementById(statusId);
+
+if(!file){
+
+if(status){
+status.textContent="कृपया पहले फ़ाइल चुनें।";
+}
+
+return;
+
+}
+
+if(file.size>25*1024*1024){
+
+if(status){
+status.textContent="फ़ाइल 25 MB से बड़ी है। कृपया छोटी फ़ाइल चुनें।";
+}
+
+return;
+
+}
+
+if(status){
+status.textContent="फ़ाइल सेव हो रही है…";
+}
+
+try{
+
+await pvSaveFileRecord(key,file);
+
+if(status){
+
+status.textContent=
+"✅ "+file.name+
+" सफलतापूर्वक सेव/Replace हो गई ("+
+(file.size/1024/1024).toFixed(2)+" MB)।";
+
+}
+
+input.value="";
+
+await renderUploadedFiles();
+
+await renderStudentDashboard();
+
+}catch(err){
+
+console.error(err);
+
+if(status){
+status.textContent="❌ फ़ाइल सेव नहीं हुई: "+(err.message||err);
+}
+
+}
+
+}
+
+/* SAFE HTML */
+
+function escapeHtml(value){
+
+return String(value).replace(/[&<>"']/g,c=>({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+
+}[c]));
+
+}
+
+/* ADMIN PAPER PREVIEW */
+
+async function renderUploadedFiles(){
+
+const map=[
+
+["gsPaper","gsPaperDownload","Uploaded Question Paper"],
+["gsKey","gsKeyDownload","Uploaded Answer Key"],
+["csatPaper","csatPaperDownload","Uploaded Question Paper"],
+["csatKey","csatKeyDownload","Uploaded Answer Key"]
+
+];
+
+for(const [key,elementId,label] of map){
+
+const el=document.getElementById(elementId);
+
+if(!el)continue;
+
+const rec=await pvGetFileRecord(key);
+
+if(!rec){
+
+el.innerHTML=
+"<small>"+label+"</small>"+
+"<strong>Paper अभी upload नहीं हुआ है।</strong>";
+
+continue;
+
+}
+
+const url=URL.createObjectURL(rec.blob);
+
+const isPaper=key==="gsPaper"||key==="csatPaper";
+
+const isPdf=
+rec.type==="application/pdf"||
+rec.name.toLowerCase().endsWith(".pdf");
+
+const viewLink=isPaper
+?'<a class="btn secondary" style="margin-top:8px;margin-right:6px" target="_blank" rel="noopener" href="'+url+'">👁 View '+(isPdf?"PDF":"File")+"</a>"
+:"";
+
+el.innerHTML=
+"<small>"+label+"</small>"+
+"<strong>"+escapeHtml(rec.name)+"</strong><br>"+
+viewLink+
+'<a class="btn secondary" style="margin-top:8px" download="'+escapeHtml(rec.name)+'" href="'+url+'">⬇ Download '+(key.endsWith("Key")?"Answer Key":"Paper")+"</a>"+
+'<small style="display:block;margin-top:6px">'+
+(rec.size/1024/1024).toFixed(2)+" MB · "+
+new Date(rec.updatedAt).toLocaleString("en-IN")+
+"</small>";
+
+if(isPaper){
+
+const adminId=
+key==="gsPaper"
+?"gsAdminPaperPreview"
+:"csatAdminPaperPreview";
+
+const adminEl=document.getElementById(adminId);
+
+if(adminEl){
+
+adminEl.innerHTML=
+'<div class="upload-preview">'+
+"<strong>Uploaded Paper Preview:</strong> "+
+escapeHtml(rec.name)+"<br>"+
+'<a target="_blank" rel="noopener" href="'+url+'">👁 View Uploaded Paper</a> · '+
+'<a download="'+escapeHtml(rec.name)+'" href="'+url+'">⬇ Download</a>'+
+"</div>";
+
+}
+
+}
+
+}
+
+}
+
+/* STUDENT DASHBOARD */
+
+async function renderStudentDashboard(){
+
+const gs=await pvGetFileRecord("gsPaper");
+
+const csat=await pvGetFileRecord("csatPaper");
+
+const gsElement=document.getElementById("studentGSFile");
+
+const csatElement=document.getElementById("studentCSATFile");
+
+if(gs){
+
+gsElement.innerHTML=
+'<strong>✅ GS Paper-I उपलब्ध है</strong>'+
+'<br>'+escapeHtml(gs.name)+
+'<br>'+(gs.size/1024/1024).toFixed(2)+" MB";
+
+}else{
+
+gsElement.innerHTML=
+"<strong>GS Paper अभी उपलब्ध नहीं है।</strong>";
+
+}
+
+if(csat){
+
+csatElement.innerHTML=
+'<strong>✅ CSAT Paper-II उपलब्ध है</strong>'+
+'<br>'+escapeHtml(csat.name)+
+'<br>'+(csat.size/1024/1024).toFixed(2)+" MB";
+
+}else{
+
+csatElement.innerHTML=
+"<strong>CSAT Paper अभी उपलब्ध नहीं है।</strong>";
+
+}
+
+}
+
+/* STUDENT VIEW PAPER */
+
+async function studentOpenPaper(key){
+
+const record=await pvGetFileRecord(key);
+
+if(!record){
+
+alert("Question Paper अभी Upload नहीं हुआ है।");
+
+return;
+
+}
+
+const url=URL.createObjectURL(record.blob);
+
+window.open(url,"_blank");
+
+}
+
+/* STUDENT DOWNLOAD */
+
+async function studentDownloadPaper(key){
+
+const record=await pvGetFileRecord(key);
+
+if(!record){
+
+alert("Question Paper अभी Upload नहीं हुआ है।");
+
+return;
+
+}
+
+const url=URL.createObjectURL(record.blob);
+
+const a=document.createElement("a");
+
+a.href=url;
+a.download=record.name;
+
+document.body.appendChild(a);
+
+a.click();
+
+a.remove();
+
+}
+
+
+/* ONLINE EXAM ENGINE - local prototype */
+let examPaper='gs', examQuestions=[], examKey={}, examAnswers={}, examReview=new Set(), examVisited=new Set(), examIndex=0, examEndAt=0, examTimer=null, examStudent={};
+function parseDelimited(text){
+ const lines=text.replace(/\r/g,'').split('\n').filter(x=>x.trim());
+ return lines.map(line=>{let out=[],cur='',q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c==='"'){if(q&&line[i+1]==='"'){cur+='"';i++;}else q=!q;}else if((c===','||c==='|'||c==='\t')&&!q){out.push(cur.trim());cur='';}else cur+=c;}out.push(cur.trim());return out;});
+}
+function parseQuestions(text){let rows=parseDelimited(text);if(rows.length&&/question/i.test(rows[0][0]||''))rows.shift();return rows.map((r,i)=>({q:r[0]||'',opts:r.slice(1,5),n:i+1})).filter(x=>x.q&&x.opts.length>=4);}
+function parseKey(text){let rows=parseDelimited(text),key={};if(rows.length===1&&rows[0].length>=50){rows[0].forEach((a,i)=>key[i+1]=a.toUpperCase().replace(/[^ABCD]/g,''));return key;}rows.forEach(r=>{let n=parseInt(r[0]);let a=(r[1]||r[0]).toUpperCase().replace(/[^ABCD]/g,'');if(n&&a)key[n]=a;});return key;}
+function openExam(paper){examPaper=paper;document.getElementById('examHeading').textContent=paper==='gs'?'GS Paper-I Online Examination':'CSAT Paper-II Online Examination';document.getElementById('examLoginPanel').classList.remove('hidden');document.getElementById('examPanel').classList.add('hidden');document.getElementById('examResultPanel').classList.add('hidden');document.getElementById('examModal').classList.add('open');}
+function closeExam(){document.getElementById('examModal').classList.remove('open');if(examTimer)clearInterval(examTimer);}
+async function beginExam(){let name=document.getElementById('examStudentName').value.trim(),roll=document.getElementById('examStudentRoll').value.trim();if(!name||!roll){alert('Student Name aur Roll Number bhariye.');return;}let qrec=await pvGetFileRecord(examPaper+'Questions');let krec=await pvGetFileRecord(examPaper+'Key');if(!qrec){alert('Admin ne online questions CSV/TXT upload nahi kiya hai. PDF se online questions automatically nahi ban sakte.');return;}let text=await qrec.blob.text();examQuestions=parseQuestions(text);if(!examQuestions.length){alert('Question file format sahi nahi hai. Format: Question,Option A,Option B,Option C,Option D');return;}examKey=krec?parseKey(await krec.blob.text()):{};examStudent={name,roll};localStorage.setItem('pvExamActive',JSON.stringify({paper:examPaper,name,roll}));examAnswers={};examReview=new Set();examVisited=new Set([0]);examIndex=0;let mins=120;examEndAt=Date.now()+mins*60000;let saved=null;try{saved=JSON.parse(localStorage.getItem('pvExam_'+examPaper+'_'+roll)||'null');}catch(e){}if(saved&&saved.questionsCount===examQuestions.length&&saved.student&&saved.student.name===name&&saved.endAt>Date.now()){if(confirm('Is roll number ki exam progress mili hai. Kya aap wahi exam resume karna chahte hain?')){examAnswers=saved.answers||{};examReview=new Set(saved.review||[]);examVisited=new Set(saved.visited||[]);examIndex=Math.min(saved.index||0,examQuestions.length-1);examVisited.add(examIndex);examEndAt=saved.endAt;}}document.getElementById('examLoginPanel').classList.add('hidden');document.getElementById('examPanel').classList.remove('hidden');document.getElementById('examPaperTitle').textContent=(examPaper==='gs'?'GS Paper-I':'CSAT Paper-II')+' · '+name+' · '+roll;renderExamQuestion();saveExamProgress();examTimer=setInterval(updateExamTimer,1000);}
+function updateExamTimer(){let left=Math.max(0,Math.floor((examEndAt-Date.now())/1000));document.getElementById('examTimer').textContent=[Math.floor(left/3600),Math.floor(left%3600/60),left%60].map(x=>String(x).padStart(2,'0')).join(':');if(left<=0)submitExam(true);}
+function renderExamQuestion(){let q=examQuestions[examIndex];examVisited.add(examIndex);document.getElementById('examQuestionArea').innerHTML='<strong>Question '+(examIndex+1)+' / '+examQuestions.length+'</strong><p>'+escapeHtml(q.q)+'</p>';let letters=['A','B','C','D'];document.getElementById('examOptions').innerHTML=q.opts.slice(0,4).map((o,i)=>'<label style="display:block;background:#f5f9fc;border:1px solid #dce7f1;border-radius:10px;padding:12px;margin:8px 0;cursor:pointer"><input type="radio" name="examOption" value="'+letters[i]+'" '+(examAnswers[examIndex]===letters[i]?'checked':'')+' onchange="examAnswers[examIndex]=this.value;saveExamProgress()"> <strong>'+letters[i]+'.</strong> '+escapeHtml(o)+'</label>').join('');renderPalette();}
+function renderPalette(){document.getElementById('examPalette').innerHTML=examQuestions.map((q,i)=>{let cls=examAnswers[i]?'palette-answered':examReview.has(i)?'palette-review':examVisited.has(i)?'palette-unanswered':'palette-unvisited';if(i===examIndex)cls+=' palette-current';return '<button class="'+cls+'" aria-label="Question '+(i+1)+'" onclick="examIndex='+i+';examVisited.add('+i+');renderExamQuestion();saveExamProgress()">'+(i+1)+(examReview.has(i)?' ★':'')+'</button>';}).join('');}
+function toggleExamPalette(){const w=document.getElementById('examPaletteWrap');w.classList.toggle('palette-open');if(w.classList.contains('palette-open'))renderPalette();}
+function examPrev(){if(examIndex>0){examIndex--;examVisited.add(examIndex);renderExamQuestion();saveExamProgress();}}function examNext(){if(examIndex<examQuestions.length-1){examIndex++;examVisited.add(examIndex);renderExamQuestion();saveExamProgress();}}function examClearResponse(){delete examAnswers[examIndex];renderExamQuestion();saveExamProgress();}function examMarkReview(){if(examReview.has(examIndex))examReview.delete(examIndex);else examReview.add(examIndex);renderPalette();saveExamProgress();document.querySelector('.exam-controls button[onclick=\"examMarkReview()\"]')?.classList.toggle('primary',examReview.has(examIndex));}
+function saveExamProgress(){try{localStorage.setItem('pvExam_'+examPaper+'_'+examStudent.roll,JSON.stringify({answers:examAnswers,review:[...examReview],visited:[...examVisited],student:examStudent,index:examIndex,endAt:examEndAt,questionsCount:examQuestions.length}));}catch(e){}}
+function submitExam(auto){
+if(!examQuestions.length)return;
+if(!auto&&!confirm('Kya aap exam submit karna chahte hain?'))return;
+if(examTimer)clearInterval(examTimer);
+let schedule=JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');
+let bonusRaw=schedule[examPaper+'BonusQuestions']||'';
+let bonus=[...new Set(bonusRaw.split(/[;,\\s]+/).map(x=>parseInt(x.trim(),10)).filter(x=>Number.isInteger(x)&&x>=1&&x<=examQuestions.length))];
+let correct=0,wrong=0,unattempted=0,bonusMarks=0,total=0,bonusAttempted=0;
+let correctMark=examPaper==='gs'?4/3:2,wrongMark=examPaper==='gs'?-(4/9):-(2/3);
+examQuestions.forEach((q,i)=>{
+let ans=examAnswers[i],isBonus=bonus.includes(i+1);
+if(!ans){unattempted++;return;}
+if(isBonus){bonusAttempted++;bonusMarks+=correctMark;total+=correctMark;}
+else if(ans===examKey[i+1]){correct++;total+=correctMark;}
+else{wrong++;total+=wrongMark;}
+});
+document.getElementById('examPanel').classList.add('hidden');
+document.getElementById('examResultPanel').classList.remove('hidden');
+let attempted=Object.keys(examAnswers).filter(i=>examAnswers[i]).length;
+document.getElementById('examResultText').innerHTML='<div class="result-summary"><div class="result-item"><small>Total Questions</small><strong>'+examQuestions.length+'</strong></div><div class="result-item"><small>Attempted</small><strong>'+attempted+'</strong></div><div class="result-item"><small>Correct</small><strong>'+correct+'</strong></div><div class="result-item"><small>Wrong</small><strong>'+wrong+'</strong></div><div class="result-item"><small>Unattempted</small><strong>'+unattempted+'</strong></div><div class="result-item"><small>Bonus Questions</small><strong>'+bonus.length+'</strong></div><div class="result-item"><small>Bonus Attempted</small><strong>'+bonusAttempted+'</strong></div><div class="result-item"><small>Bonus Marks</small><strong>'+bonusMarks.toFixed(3)+'</strong></div><div class="result-item result-total"><small>Total Marks</small><strong>'+total.toFixed(3)+'</strong></div></div><p class="result-student">Student: '+escapeHtml(examStudent.name)+' · Roll: '+escapeHtml(examStudent.roll)+'</p><div class="exam-motivation">🌟 परीक्षा समाप्त हुई! अपने प्रयास पर गर्व करें। हर परीक्षा आपको सफलता के एक कदम और करीब ले जाती है। मेहनत जारी रखें—आपका लक्ष्य आपका इंतज़ार कर रहा है! 🌟</div><p class="result-note"><strong>Bonus Questions:</strong> '+(bonus.length?bonus.join(', '):'Admin ने कोई Bonus Question सेट नहीं किया')+'</p><p class="result-note"><strong>Note:</strong> Result is saved only in this browser prototype; it is not centrally visible to Admin or other devices.</p>';
+let result={paper:examPaper,student:examStudent,correct,wrong,unattempted,bonusQuestions:bonus,bonusAttempted,bonusMarks,total:total.toFixed(3),answers:examAnswers,submittedAt:new Date().toISOString()};
+localStorage.setItem('pvResult_'+examPaper+'_'+examStudent.roll,JSON.stringify(result));
+localStorage.removeItem('pvExamActive');
+localStorage.removeItem('pvExam_'+examPaper+'_'+examStudent.roll);
+}
+
+
+async function restoreExamAfterReload(){
+ try{
+  const active=JSON.parse(localStorage.getItem('pvExamActive')||'null');
+  if(!active||!active.paper||!active.roll)return;
+  const saved=JSON.parse(localStorage.getItem('pvExam_'+active.paper+'_'+active.roll)||'null');
+  if(!saved||!saved.endAt||saved.endAt<=Date.now()||!saved.student)return;
+  const qrec=await pvGetFileRecord(active.paper+'Questions');
+  const krec=await pvGetFileRecord(active.paper+'Key');
+  if(!qrec)return;
+  examPaper=active.paper;examQuestions=parseQuestions(await qrec.blob.text());examKey=krec?parseKey(await krec.blob.text()):{};
+  examStudent=saved.student;examAnswers=saved.answers||{};examReview=new Set(saved.review||[]);examVisited=new Set(saved.visited||[]);examIndex=Math.min(saved.index||0,examQuestions.length-1);examVisited.add(examIndex);examEndAt=saved.endAt;
+  document.getElementById('examLoginPanel').classList.add('hidden');document.getElementById('examPanel').classList.remove('hidden');document.getElementById('examResultPanel').classList.add('hidden');document.getElementById('examModal').classList.add('open');
+  document.getElementById('examPaperTitle').textContent=(examPaper==='gs'?'GS Paper-I':'CSAT Paper-II')+' · '+examStudent.name+' · '+examStudent.roll;
+  renderExamQuestion();examTimer=setInterval(updateExamTimer,1000);
+ }catch(e){console.warn('Exam resume failed',e);}
+}
+
+/* PAGE LOAD */
+
+window.addEventListener("DOMContentLoaded",()=>{
+
+renderUploadedFiles().catch(console.error);restoreExamAfterReload();
+
+renderStudentDashboard().catch(console.error);
+
+});
+
+
+function downloadExamResult(){
+ const result=JSON.parse(localStorage.getItem('pvResult_'+examPaper+'_'+examStudent.roll)||'null');
+ if(!result){alert('Result data nahi mila.');return;}
+ const paperName=examPaper==='gs'?'GS Paper-I':'CSAT Paper-II';
+ const attempted=Object.keys(result.answers||{}).filter(k=>result.answers[k]).length;
+ const totalQuestions=examQuestions.length;
+ const safe=(v)=>String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));
+ const html='<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PV Education Result</title><style>body{font-family:Arial,sans-serif;background:#f4f8fc;color:#10213b;margin:0;padding:24px}.card{max-width:760px;margin:auto;background:white;border:1px solid #dce7f1;border-radius:16px;padding:24px;box-shadow:0 8px 24px #0b345608}.brand{background:linear-gradient(110deg,#06172a,#075b93);color:white;padding:14px;border-radius:12px;display:flex;gap:12px;align-items:center}.mark{font-size:28px}.brand small{display:block;color:#a7edff;margin-top:4px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}.item{background:#f4f8fc;border:1px solid #dce7f1;border-radius:10px;padding:12px}.item small{display:block;color:#607087;margin-bottom:5px}.item strong{font-size:18px}.total{background:#eaf4fc}.motivation{background:#eaf6ff;border:1px solid #c8e5ff;padding:14px;border-radius:12px;text-align:center;color:#075985;font-weight:bold}.meta{color:#607087;font-size:13px}@media(max-width:500px){body{padding:10px}.card{padding:14px}.grid{grid-template-columns:repeat(2,1fr)}}</style></head><body><main class="card"><div class="brand"><div class="mark">🎓</div><div><strong>PV EDUCATION</strong><small>PVRAJCMS GROUP · IAS / PCS PRELIMS</small></div></div><h2>Exam Result</h2><p><strong>'+safe(paperName)+'</strong></p><div class="grid"><div class="item"><small>Total Questions</small><strong>'+totalQuestions+'</strong></div><div class="item"><small>Attempted</small><strong>'+attempted+'</strong></div><div class="item"><small>Correct</small><strong>'+result.correct+'</strong></div><div class="item"><small>Wrong</small><strong>'+result.wrong+'</strong></div><div class="item"><small>Unattempted</small><strong>'+result.unattempted+'</strong></div><div class="item"><small>Bonus Marks</small><strong>'+Number(result.bonusMarks||0).toFixed(3)+'</strong></div><div class="item total"><small>Total Marks</small><strong>'+safe(result.total)+'</strong></div></div><p class="meta">Student: '+safe(result.student.name)+' · Roll: '+safe(result.student.roll)+'<br>Submitted: '+safe(new Date(result.submittedAt).toLocaleString('en-IN'))+'</p><div class="motivation">🌟 परीक्षा समाप्त हुई! अपने प्रयास पर गर्व करें। मेहनत जारी रखें—आपका लक्ष्य आपका इंतज़ार कर रहा है! 🌟</div><p class="meta">This result was generated by PV Education browser-based exam prototype.</p></main></body></html>';
+ const blob=new Blob([html],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='PV_Education_'+paperName.replace(/[^a-z0-9]+/gi,'_')+'_Result_'+safe(result.student.roll)+'.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function printExamResult(){const panel=document.getElementById('examResultPanel');const w=window.open('','_blank');if(!w){alert('Popup allow karein, phir Print / Save PDF dabayein.');return;}w.document.write('<html><head><title>PV Education Result</title><style>body{font-family:Arial;padding:20px;color:#10213b}'+document.querySelector('style')?.innerHTML+'</style></head><body>'+panel.innerHTML+'</body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),300);}
+
+</script>
+
+</body>
+</html>
