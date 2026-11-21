@@ -1887,6 +1887,44 @@ function downloadExamResult(){
 #examModal{z-index:99999!important}
 </style>
 
+
+<style>
+/* Critical fix: exam layout CSS must not override hidden state */
+#examModal #examLoginPanel.hidden,
+#examModal #examPanel.hidden,
+#examModal #examResultPanel.hidden,
+#examModal .hidden{
+  display:none!important;
+}
+#examModal #examPanel:not(.hidden){
+  display:flex!important;
+}
+</style>
+<script>
+/* Make Start Exam report missing uploads clearly and keep the login view */
+(function(){
+ const originalBegin=window.beginExam;
+ window.beginExam=async function(){
+   try{
+     const paper=window.examPaper||'csat';
+     const qrec=await window.pvGetFileRecord(paper+'Questions');
+     if(!qrec){
+       alert('Admin Dashboard में इस पेपर के Online Questions CSV/TXT अपलोड नहीं हैं। केवल PDF अपलोड होने से Online Exam शुरू नहीं होगा।');
+       const panel=document.getElementById('examPanel');
+       if(panel)panel.classList.add('hidden');
+       const login=document.getElementById('examLoginPanel');
+       if(login)login.classList.remove('hidden');
+       return;
+     }
+     if(typeof originalBegin==='function') return await originalBegin.apply(this,arguments);
+   }catch(err){
+     console.error('Start Exam error:',err);
+     alert('Exam शुरू नहीं हो पाया: '+(err.message||err));
+   }
+ };
+})();
+</script>
+
 </body></html>';
  const blob=new Blob([html],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='PV_Education_'+paperName.replace(/[^a-z0-9]+/gi,'_')+'_Result_'+safe(result.student.roll)+'.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
@@ -1969,6 +2007,44 @@ function printExamResult(){const panel=document.getElementById('examResultPanel'
 #examModal{z-index:99999!important}
 </style>
 
+
+<style>
+/* Critical fix: exam layout CSS must not override hidden state */
+#examModal #examLoginPanel.hidden,
+#examModal #examPanel.hidden,
+#examModal #examResultPanel.hidden,
+#examModal .hidden{
+  display:none!important;
+}
+#examModal #examPanel:not(.hidden){
+  display:flex!important;
+}
+</style>
+<script>
+/* Make Start Exam report missing uploads clearly and keep the login view */
+(function(){
+ const originalBegin=window.beginExam;
+ window.beginExam=async function(){
+   try{
+     const paper=window.examPaper||'csat';
+     const qrec=await window.pvGetFileRecord(paper+'Questions');
+     if(!qrec){
+       alert('Admin Dashboard में इस पेपर के Online Questions CSV/TXT अपलोड नहीं हैं। केवल PDF अपलोड होने से Online Exam शुरू नहीं होगा।');
+       const panel=document.getElementById('examPanel');
+       if(panel)panel.classList.add('hidden');
+       const login=document.getElementById('examLoginPanel');
+       if(login)login.classList.remove('hidden');
+       return;
+     }
+     if(typeof originalBegin==='function') return await originalBegin.apply(this,arguments);
+   }catch(err){
+     console.error('Start Exam error:',err);
+     alert('Exam शुरू नहीं हो पाया: '+(err.message||err));
+   }
+ };
+})();
+</script>
+
 </body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),300);}
 
 </script>
@@ -2027,6 +2103,44 @@ function printExamResult(){const panel=document.getElementById('examResultPanel'
 #examModal.open{display:flex!important;visibility:visible!important;opacity:1!important}
 #examModal{z-index:99999!important}
 </style>
+
+
+<style>
+/* Critical fix: exam layout CSS must not override hidden state */
+#examModal #examLoginPanel.hidden,
+#examModal #examPanel.hidden,
+#examModal #examResultPanel.hidden,
+#examModal .hidden{
+  display:none!important;
+}
+#examModal #examPanel:not(.hidden){
+  display:flex!important;
+}
+</style>
+<script>
+/* Make Start Exam report missing uploads clearly and keep the login view */
+(function(){
+ const originalBegin=window.beginExam;
+ window.beginExam=async function(){
+   try{
+     const paper=window.examPaper||'csat';
+     const qrec=await window.pvGetFileRecord(paper+'Questions');
+     if(!qrec){
+       alert('Admin Dashboard में इस पेपर के Online Questions CSV/TXT अपलोड नहीं हैं। केवल PDF अपलोड होने से Online Exam शुरू नहीं होगा।');
+       const panel=document.getElementById('examPanel');
+       if(panel)panel.classList.add('hidden');
+       const login=document.getElementById('examLoginPanel');
+       if(login)login.classList.remove('hidden');
+       return;
+     }
+     if(typeof originalBegin==='function') return await originalBegin.apply(this,arguments);
+   }catch(err){
+     console.error('Start Exam error:',err);
+     alert('Exam शुरू नहीं हो पाया: '+(err.message||err));
+   }
+ };
+})();
+</script>
 
 </body>
 </html>
