@@ -1187,6 +1187,10 @@ saved.combinedResultDate||"";
 document.getElementById("combinedResultTime").value=
 saved.combinedResultTime||"";
 
+/* Load saved Bonus Question Numbers */
+document.getElementById("gsBonusQuestions").value=saved.gsBonusQuestions||"";
+document.getElementById("csatBonusQuestions").value=saved.csatBonusQuestions||"";
+
 document.getElementById("adminModal").classList.add("open");
 
 renderUploadedFiles();
@@ -1228,6 +1232,10 @@ document.getElementById("combinedResultDate").value;
 
 data.combinedResultTime=
 document.getElementById("combinedResultTime").value;
+
+/* Save Bonus Question Numbers for GS and CSAT */
+data.gsBonusQuestions=document.getElementById("gsBonusQuestions").value.trim();
+data.csatBonusQuestions=document.getElementById("csatBonusQuestions").value.trim();
 
 localStorage.setItem("pvPrelimsSchedule",JSON.stringify(data));
 
