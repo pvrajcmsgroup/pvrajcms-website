@@ -463,6 +463,29 @@ flex-direction:column
 }
 </style>
 
+
+<style>
+/* FIX: Question palette must scroll through all 150 questions */
+#examModal #examPaletteWrap.palette-open{
+  display:flex!important; flex-direction:column!important;
+  height:38dvh!important; max-height:38dvh!important; min-height:120px!important;
+  overflow:hidden!important;
+}
+#examModal #examPaletteWrap>h4{flex:0 0 auto!important;margin:8px 10px!important}
+#examModal #examPalette{
+  flex:1 1 auto!important; min-height:0!important; height:auto!important;
+  max-height:none!important; overflow-y:auto!important; overflow-x:hidden!important;
+  display:grid!important; grid-template-columns:repeat(15,minmax(0,1fr))!important;
+  align-content:start!important; gap:5px!important; padding:7px!important;
+  scrollbar-width:thin!important; overscroll-behavior:contain!important;
+}
+#examModal #examPalette button{min-width:0!important;width:100%!important}
+@media(max-width:700px){
+ #examModal #examPaletteWrap.palette-open{height:34dvh!important;max-height:34dvh!important}
+ #examModal #examPalette{grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:4px!important;padding:5px!important}
+}
+</style>
+
 </head>
 
 <body>
