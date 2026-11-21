@@ -447,6 +447,22 @@ flex-direction:column
 @media(max-width:400px){#examModal .modal-box{padding:4px!important}#examModal #examQuestionArea{font-size:13px!important;padding:7px!important}#examModal #examOptions label{font-size:13px!important;padding:7px!important}}
 </style>
 
+
+<style>
+/* Final viewport correction: keep timer fully visible and tighten exam spacing */
+#examModal .modal-box{padding-right:16px!important;padding-left:16px!important}
+#examModal #examPanel>div:first-child{width:100%!important;max-width:100%!important;padding-right:8px!important;gap:12px!important}
+#examModal #examPaperTitle{flex:1 1 auto!important;min-width:0!important;overflow-wrap:anywhere!important}
+#examModal #examTimer{flex:0 0 auto!important;max-width:100%!important;padding-right:3px!important}
+#examModal #examQuestionArea{max-height:25%!important}
+@media(max-width:700px){
+ #examModal .modal-box{padding:6px 10px!important}
+ #examModal #examPanel>div:first-child{padding-right:5px!important}
+ #examModal #examTimer{font-size:17px!important}
+ #examModal #examQuestionArea{max-height:24dvh!important}
+}
+</style>
+
 </head>
 
 <body>
