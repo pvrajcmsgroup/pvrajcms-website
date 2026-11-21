@@ -440,6 +440,7 @@ flex-direction:column
 #examModal #examResultText .exam-motivation{margin:10px 0!important;padding:10px!important;font-size:14px!important}
 #examModal #examResultText .result-note{margin:8px 0!important;font-size:11px!important;color:#607087!important}
 @media(max-width:600px){#examModal #examResultPanel{padding:12px!important;width:calc(100% - 12px)!important}#examModal #examResultText .result-summary{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important}#examModal #examResultText .result-item{padding:8px!important}#examModal #examResultText .result-item strong{font-size:14px!important}}
+#examModal .pv-result-brand{display:flex;align-items:center;gap:10px;padding:10px 12px;margin-bottom:10px;border-radius:10px;background:linear-gradient(110deg,#06172a,#075b93);color:#fff}#examModal .pv-result-mark{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#087bd8,#18c4e8);display:grid;place-items:center;font-size:21px}#examModal .pv-result-brand strong{display:block;font-size:16px;letter-spacing:.5px}#examModal .pv-result-brand small{display:block;color:#a7edff;font-size:10px;margin-top:3px;letter-spacing:1px}#examModal .pv-result-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}#examModal .pv-result-actions .btn{min-height:38px} @media(max-width:600px){#examModal .pv-result-actions .btn{flex:1 1 100%}}
 #examModal .exam-motivation{margin:16px 0;padding:14px;border-radius:12px;background:#eaf6ff;border:1px solid #c8e5ff;color:#075985;font-weight:700;text-align:center;font-size:16px;line-height:1.5}
 @media(max-width:700px){
  #examModal .modal-box{padding:6px!important}
@@ -1076,7 +1077,7 @@ Upload / Replace CSAT Answer Key
    </div>
    <div id="examPaletteWrap"><h4>Question Palette</h4><div id="examPalette" style="display:flex;flex-wrap:wrap;gap:6px"></div></div>
   </div>
-  <div id="examResultPanel" class="hidden"><h2>Exam Submitted</h2><div id="examResultText"></div><button class="btn primary" onclick="closeExam()">Close</button></div>
+  <div id="examResultPanel" class="hidden"><div class="pv-result-brand"><div class="pv-result-mark">🎓</div><div><strong>PV EDUCATION</strong><small>PVRAJCMS GROUP · IAS / PCS PRELIMS</small></div></div><h2>Exam Submitted</h2><div id="examResultText"></div><div class="pv-result-actions"><button class="btn secondary" onclick="downloadExamResult()">⬇ Download Result</button><button class="btn secondary" onclick="printExamResult()">🖨 Print / Save PDF</button><button class="btn primary" onclick="closeExam()">Close</button></div></div>
  </div>
 </div>
 
@@ -1685,6 +1686,19 @@ renderUploadedFiles().catch(console.error);restoreExamAfterReload();
 renderStudentDashboard().catch(console.error);
 
 });
+
+
+function downloadExamResult(){
+ const result=JSON.parse(localStorage.getItem('pvResult_'+examPaper+'_'+examStudent.roll)||'null');
+ if(!result){alert('Result data nahi mila.');return;}
+ const paperName=examPaper==='gs'?'GS Paper-I':'CSAT Paper-II';
+ const attempted=Object.keys(result.answers||{}).filter(k=>result.answers[k]).length;
+ const totalQuestions=examQuestions.length;
+ const safe=(v)=>String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));
+ const html='<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PV Education Result</title><style>body{font-family:Arial,sans-serif;background:#f4f8fc;color:#10213b;margin:0;padding:24px}.card{max-width:760px;margin:auto;background:white;border:1px solid #dce7f1;border-radius:16px;padding:24px;box-shadow:0 8px 24px #0b345608}.brand{background:linear-gradient(110deg,#06172a,#075b93);color:white;padding:14px;border-radius:12px;display:flex;gap:12px;align-items:center}.mark{font-size:28px}.brand small{display:block;color:#a7edff;margin-top:4px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}.item{background:#f4f8fc;border:1px solid #dce7f1;border-radius:10px;padding:12px}.item small{display:block;color:#607087;margin-bottom:5px}.item strong{font-size:18px}.total{background:#eaf4fc}.motivation{background:#eaf6ff;border:1px solid #c8e5ff;padding:14px;border-radius:12px;text-align:center;color:#075985;font-weight:bold}.meta{color:#607087;font-size:13px}@media(max-width:500px){body{padding:10px}.card{padding:14px}.grid{grid-template-columns:repeat(2,1fr)}}</style></head><body><main class="card"><div class="brand"><div class="mark">🎓</div><div><strong>PV EDUCATION</strong><small>PVRAJCMS GROUP · IAS / PCS PRELIMS</small></div></div><h2>Exam Result</h2><p><strong>'+safe(paperName)+'</strong></p><div class="grid"><div class="item"><small>Total Questions</small><strong>'+totalQuestions+'</strong></div><div class="item"><small>Attempted</small><strong>'+attempted+'</strong></div><div class="item"><small>Correct</small><strong>'+result.correct+'</strong></div><div class="item"><small>Wrong</small><strong>'+result.wrong+'</strong></div><div class="item"><small>Unattempted</small><strong>'+result.unattempted+'</strong></div><div class="item"><small>Bonus Marks</small><strong>'+Number(result.bonusMarks||0).toFixed(3)+'</strong></div><div class="item total"><small>Total Marks</small><strong>'+safe(result.total)+'</strong></div></div><p class="meta">Student: '+safe(result.student.name)+' · Roll: '+safe(result.student.roll)+'<br>Submitted: '+safe(new Date(result.submittedAt).toLocaleString('en-IN'))+'</p><div class="motivation">🌟 परीक्षा समाप्त हुई! अपने प्रयास पर गर्व करें। मेहनत जारी रखें—आपका लक्ष्य आपका इंतज़ार कर रहा है! 🌟</div><p class="meta">This result was generated by PV Education browser-based exam prototype.</p></main></body></html>';
+ const blob=new Blob([html],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='PV_Education_'+paperName.replace(/[^a-z0-9]+/gi,'_')+'_Result_'+safe(result.student.roll)+'.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function printExamResult(){const panel=document.getElementById('examResultPanel');const w=window.open('','_blank');if(!w){alert('Popup allow karein, phir Print / Save PDF dabayein.');return;}w.document.write('<html><head><title>PV Education Result</title><style>body{font-family:Arial;padding:20px;color:#10213b}'+document.querySelector('style')?.innerHTML+'</style></head><body>'+panel.innerHTML+'</body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),300);}
 
 </script>
 
