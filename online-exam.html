@@ -408,144 +408,45 @@ flex-direction:column
 </style>
 
 <style>
-/* Exam modal viewport and navigation fix */
-#examModal .modal-box{
-  max-height:92vh!important;
-  height:auto!important;
-  overflow-y:auto!important;
-  box-sizing:border-box!important;
-  padding-bottom:18px!important;
-}
-#examPanel{
-  display:flex;
-  flex-direction:column;
-  min-height:0;
-}
-#examQuestionArea{
-  min-height:110px!important;
-  max-height:28vh;
-  overflow:auto;
-}
-#examOptions{
-  max-height:35vh;
-  overflow-y:auto;
-}
-#examPanel > div[style*="flex-wrap:wrap"]{
-  position:sticky!important;
-  bottom:0!important;
-  z-index:5;
-  background:#fff!important;
-  padding:12px 0!important;
-  border-top:1px solid #dbe5f0;
-  box-shadow:0 -4px 12px rgba(0,0,0,.06);
-}
-#examPalette{
-  padding-bottom:8px;
-}
-@media(max-width:600px){
-  #examModal .modal-box{max-height:94vh!important;padding:14px!important}
-  #examPanel > div[style*="flex-wrap:wrap"] button{
-    flex:1 1 42%!important;
-    min-height:44px!important;
-  }
-  #examQuestionArea{max-height:25vh!important}
-  #examOptions{max-height:30vh!important}
-}
-</style>
-
-<style>
-/* One-screen question + all options layout */
-#examModal .modal-box{max-height:94vh!important;height:94vh!important;overflow-y:auto!important;padding:16px!important;box-sizing:border-box!important}
-#examPanel{display:flex;flex-direction:column;gap:8px;min-height:0}
-#examQuestionArea{margin:6px 0!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:12px!important}
-#examQuestionArea p{margin:8px 0 0!important;line-height:1.35!important}
-#examOptions{max-height:none!important;overflow:visible!important}
-#examOptions label{padding:8px 10px!important;margin:5px 0!important;line-height:1.3!important}
-#examPanel > div[style*="flex-wrap:wrap"]{position:sticky!important;bottom:0!important;z-index:8;background:#fff!important;padding:8px 0!important;margin-top:4px!important;border-top:1px solid #dbe5f0;box-shadow:0 -3px 10px rgba(0,0,0,.04)}
-#examPalette{max-height:22vh;overflow-y:auto;padding:5px 0 8px!important}
-@media(max-width:600px){
- #examModal .modal-box{max-height:96vh!important;height:96vh!important;padding:10px!important}
- #examQuestionArea{padding:9px!important}
- #examOptions label{padding:7px 8px!important;margin:4px 0!important}
- #examPanel > div[style*="flex-wrap:wrap"] button{flex:1 1 42%!important;min-height:42px!important}
- #examPalette{max-height:18vh!important}
-}
-</style>
-
-
-<style>
-/* Fullscreen responsive examination layout */
-#examModal{position:fixed!important;inset:0!important;padding:0!important;align-items:stretch!important;justify-content:stretch!important}
-#examModal .modal-box{width:100vw!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;margin:0!important;border-radius:0!important;overflow:hidden!important;box-sizing:border-box!important;padding:clamp(10px,2vw,24px)!important;display:flex!important;flex-direction:column!important}
-#examModal #examPanel{flex:1;min-height:0;display:flex;flex-direction:column;gap:clamp(6px,1.2vh,12px);overflow:hidden!important}
-#examModal #examPanel>div:first-child{flex:0 0 auto!important;margin:0!important}
-#examModal #examQuestionArea{flex:0 0 auto!important;min-height:0!important;max-height:30dvh!important;overflow:auto!important;margin:0!important;padding:clamp(10px,1.5vw,18px)!important}
-#examModal #examQuestionArea p{line-height:1.35!important;margin:6px 0 0!important}
-#examModal #examOptions{flex:1 1 auto!important;min-height:0!important;max-height:45dvh!important;overflow:auto!important;display:flex!important;flex-direction:column!important;justify-content:center!important;gap:clamp(5px,1vh,10px)!important}
-#examModal #examOptions label{padding:clamp(8px,1.4vh,14px)!important;margin:0!important;min-height:0!important;display:flex!important;align-items:center!important;gap:8px!important;line-height:1.3!important}
-#examModal #examOptions input{flex:0 0 auto!important}
-#examModal #examPanel>div[style*="flex-wrap:wrap"]{flex:0 0 auto!important;position:static!important;display:flex!important;flex-wrap:wrap!important;gap:8px!important;margin:0!important;padding:8px 0!important;border-top:1px solid #dbe5f0!important;box-shadow:none!important;background:transparent!important}
-#examModal #examPanel>div[style*="flex-wrap:wrap"] button{min-height:42px!important}
-#examModal #paletteToggle{flex:0 0 auto!important;align-self:flex-start!important}
-#examModal #examPalette{flex:0 0 auto!important;max-height:22dvh!important;overflow:auto!important;padding:5px 0!important}
+/* PV EDUCATION FINAL EXAM LAYOUT */
+#examModal,#examModal *{box-sizing:border-box!important}
+#examModal{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;padding:0!important;overflow:hidden!important;z-index:99999!important}
+#examModal .modal-box{width:100vw!important;max-width:100vw!important;height:100vh!important;height:100dvh!important;max-height:100vh!important;max-height:100dvh!important;margin:0!important;border-radius:0!important;padding:10px!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}
+#examModal #examPanel{display:flex!important;flex-direction:column!important;flex:1 1 auto!important;min-height:0!important;width:100%!important;gap:7px!important;overflow:hidden!important}
+#examModal #examPanel>div:first-child{flex-shrink:0!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important}
+#examModal #examPaperTitle{font-size:clamp(17px,2vw,24px)!important;margin:0!important;line-height:1.25!important}
+#examModal #examTimer{white-space:nowrap!important;font-size:clamp(18px,2vw,24px)!important}
+#examModal #examQuestionArea{width:100%!important;flex:0 1 auto!important;max-height:30%!important;min-height:65px!important;margin:0!important;padding:10px!important;overflow-y:auto!important;overflow-x:hidden!important;overflow-wrap:anywhere!important}
+#examModal #examOptions{width:100%!important;flex:1 1 auto!important;min-height:0!important;max-height:none!important;display:flex!important;flex-direction:column!important;gap:6px!important;overflow-y:auto!important;overflow-x:hidden!important}
+#examModal #examOptions label{width:100%!important;max-width:100%!important;display:flex!important;align-items:flex-start!important;justify-content:flex-start!important;gap:9px!important;padding:9px 11px!important;margin:0!important;min-height:40px!important;height:auto!important;white-space:normal!important;overflow-wrap:anywhere!important;text-align:left!important;line-height:1.4!important;overflow:visible!important}
+#examModal #examOptions input[type=radio]{flex:0 0 18px!important;width:18px!important;height:18px!important;margin:2px 0 0!important;position:static!important;transform:none!important}
+#examModal .exam-controls{flex-shrink:0!important;display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:7px!important;padding:7px 0!important;margin:0!important;background:#fff!important;border-top:1px solid #dbe5f0!important;z-index:5!important}
+#examModal .exam-controls button{min-height:40px!important}
+#examModal .exam-submit{margin-left:auto!important;background:#b91c1c!important;color:#fff!important;border-color:#b91c1c!important}
+#examModal .palette-toggle{background:#eef6ff!important;color:#075985!important}
+#examModal #examPaletteWrap{display:none!important;flex-shrink:0!important;max-height:22dvh!important;overflow:hidden!important}
+#examModal #examPaletteWrap.palette-open{display:block!important}
+#examModal #examPalette{display:flex!important;flex-wrap:wrap!important;width:100%!important;max-height:18dvh!important;overflow-y:auto!important;overflow-x:hidden!important;gap:5px!important}
+#examModal #examPalette button{min-width:34px!important;padding:6px!important}
+#examModal .modal-box,#examModal #examPanel,#examModal #examQuestionArea,#examModal #examOptions,#examModal #examPalette{overflow-x:hidden!important}
+#examModal #examResultPanel{flex:1 1 auto!important;overflow-y:auto!important;padding:12px!important}
+#examModal .exam-motivation{margin:16px 0;padding:14px;border-radius:12px;background:#eaf6ff;border:1px solid #c8e5ff;color:#075985;font-weight:700;text-align:center;font-size:16px;line-height:1.5}
 @media(max-width:700px){
- #examModal .modal-box{padding:9px!important}
- #examModal #examPaperTitle{font-size:clamp(17px,5vw,22px)!important}
- #examModal #examTimer{font-size:clamp(17px,5vw,22px)!important}
- #examModal #examQuestionArea{max-height:28dvh!important;padding:9px!important;font-size:14px!important}
- #examModal #examOptions{max-height:42dvh!important;justify-content:flex-start!important}
- #examModal #examOptions label{font-size:14px!important;padding:8px!important}
- #examModal #examPanel>div[style*="flex-wrap:wrap"] button{flex:1 1 40%!important;font-size:13px!important}
- #examModal #examPalette{max-height:20dvh!important}
+ #examModal .modal-box{padding:6px!important}
+ #examModal #examPanel{gap:5px!important}
+ #examModal #examQuestionArea{max-height:27%!important;min-height:55px!important;padding:8px!important;font-size:14px!important}
+ #examModal #examOptions{gap:5px!important}
+ #examModal #examOptions label{padding:8px!important;min-height:36px!important;font-size:14px!important}
+ #examModal #examOptions input[type=radio]{width:17px!important;height:17px!important;flex-basis:17px!important}
+ #examModal .exam-controls{gap:5px!important;padding:5px 0!important}
+ #examModal .exam-controls button{flex:1 1 calc(33.333% - 5px)!important;min-height:38px!important;font-size:12px!important;padding:6px!important}
+ #examModal .exam-submit{flex:1 1 100%!important;margin-left:0!important;order:5!important}
+ #examModal #examPaletteWrap.palette-open{max-height:18dvh!important}
+ #examModal #examPalette{max-height:15dvh!important}
 }
+@media(max-width:400px){#examModal .modal-box{padding:4px!important}#examModal #examQuestionArea{font-size:13px!important;padding:7px!important}#examModal #examOptions label{font-size:13px!important;padding:7px!important}}
 </style>
-<script>
-function toggleExamPalette(){
- const p=document.getElementById('examPalette'),b=document.getElementById('paletteToggle');
- if(!p||!b)return;
- const open=p.style.display!=='none';
- p.style.display=open?'none':'flex';
- b.textContent=open?'☷ Question Palette':'✕ Hide Question Palette';
-}
-</script>
 
-<style>
-/* Correct broken option alignment and prevent horizontal scrolling */
-#examModal,#examModal *{box-sizing:border-box}
-#examModal .modal-box{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
-#examModal #examOptions{width:100%!important;overflow-x:hidden!important;display:flex!important;flex-direction:column!important;gap:8px!important}
-#examModal #examOptions label{
- width:100%!important;max-width:100%!important;display:flex!important;
- align-items:flex-start!important;justify-content:flex-start!important;
- gap:10px!important;white-space:normal!important;overflow-wrap:anywhere!important;
- word-break:normal!important;text-align:left!important;overflow:hidden!important;
- margin:0!important;padding:12px!important;min-height:48px!important;
-}
-#examModal #examOptions label input[type=radio]{
- flex:0 0 auto!important;display:inline-block!important;position:static!important;
- margin:2px 0 0!important;float:none!important;transform:none!important;
-}
-#examModal #examOptions label strong{flex:0 0 auto!important}
-#examModal #examOptions label{line-height:1.45!important}
-#examModal #examPalette{display:none!important;flex-wrap:wrap!important;width:100%!important;max-height:22dvh!important;overflow:auto!important}
-#examModal #examPalette.palette-open{display:flex!important}
-#examModal #paletteToggle{display:inline-flex!important}
-#examModal{overflow:hidden!important}
-@media(max-width:700px){
- #examModal .modal-box{padding:8px!important}
- #examModal #examOptions label{padding:10px!important;font-size:14px!important}
- #examModal #examQuestionArea{max-height:30dvh!important}
-}
-</style>
-<script>
-function toggleExamPalette(){
- const p=document.getElementById('examPalette'),b=document.getElementById('paletteToggle');
- if(!p||!b)return;
- const open=!p.classList.contains('palette-open');
- p.classList.toggle('palette-open',open);
- b.textContent=open?'✕ Hide Question Palette':'☷ Question Palette';
-}
-</script>
 </head>
 
 <body>
@@ -1094,14 +995,14 @@ Upload / Replace CSAT Answer Key
    </div>
    <div id="examQuestionArea" class="detail" style="margin:15px 0;min-height:160px"></div>
    <div id="examOptions"></div>
-   <div style="display:flex;gap:8px;flex-wrap:wrap;margin:15px 0">
+   <div class="exam-controls">
     <button class="btn secondary" onclick="examPrev()">← Previous</button>
-    <button class="btn secondary" onclick="examMarkReview()">Mark for Review</button>
+    <button class="btn secondary" onclick="examMarkReview()">★ Review</button>
     <button class="btn primary" onclick="examNext()">Next →</button>
-    <button class="btn primary submit-safe" style="background:#b91c1c" onclick="confirmSubmitExam()">Submit Exam</button>
+    <button class="btn secondary palette-toggle" onclick="toggleExamPalette()">☷ Questions</button>
+    <button class="btn danger exam-submit" onclick="submitExam(false)">Submit Exam</button>
    </div>
-   <button class="btn secondary" id="paletteToggle" onclick="toggleExamPalette()">☷ Question Palette</button>
-   <div id="examPalette" style="display:none;flex-wrap:wrap;gap:6px"></div>
+   <div id="examPaletteWrap"><h4>Question Palette</h4><div id="examPalette" style="display:flex;flex-wrap:wrap;gap:6px"></div></div>
   </div>
   <div id="examResultPanel" class="hidden"><h2>Exam Submitted</h2><div id="examResultText"></div><button class="btn primary" onclick="closeExam()">Close</button></div>
  </div>
@@ -1680,15 +1581,10 @@ async function beginExam(){let name=document.getElementById('examStudentName').v
 function updateExamTimer(){let left=Math.max(0,Math.floor((examEndAt-Date.now())/1000));document.getElementById('examTimer').textContent=[Math.floor(left/3600),Math.floor(left%3600/60),left%60].map(x=>String(x).padStart(2,'0')).join(':');if(left<=0)submitExam(true);}
 function renderExamQuestion(){let q=examQuestions[examIndex];document.getElementById('examQuestionArea').innerHTML='<strong>Question '+(examIndex+1)+' / '+examQuestions.length+'</strong><p>'+escapeHtml(q.q)+'</p>';let letters=['A','B','C','D'];document.getElementById('examOptions').innerHTML=q.opts.slice(0,4).map((o,i)=>'<label style="display:block;background:#f5f9fc;border:1px solid #dce7f1;border-radius:10px;padding:12px;margin:8px 0;cursor:pointer"><input type="radio" name="examOption" value="'+letters[i]+'" '+(examAnswers[examIndex]===letters[i]?'checked':'')+' onchange="examAnswers[examIndex]=this.value;saveExamProgress()"> <strong>'+letters[i]+'.</strong> '+escapeHtml(o)+'</label>').join('');renderPalette();}
 function renderPalette(){document.getElementById('examPalette').innerHTML=examQuestions.map((q,i)=>'<button class="btn '+(i===examIndex?'primary':examAnswers[i]?'secondary':'')+'" style="min-width:42px;padding:8px" onclick="examIndex='+i+';renderExamQuestion()">'+(i+1)+(examReview.has(i)?' ★':'')+'</button>').join('');}
+function toggleExamPalette(){document.getElementById('examPaletteWrap').classList.toggle('palette-open');}
 function examPrev(){if(examIndex>0){examIndex--;renderExamQuestion();}}function examNext(){if(examIndex<examQuestions.length-1){examIndex++;renderExamQuestion();}}function examMarkReview(){examReview.add(examIndex);renderPalette();}
 function saveExamProgress(){try{localStorage.setItem('pvExam_'+examPaper+'_'+examStudent.roll,JSON.stringify({answers:examAnswers,review:[...examReview],student:examStudent}));}catch(e){}}
-function confirmSubmitExam(){
- const attempted=examAnswers.filter(Boolean).length;
- const unanswered=examQuestions.length-attempted;
- const msg='क्या आप परीक्षा Submit करना चाहते हैं?\n\nAttempted: '+attempted+'\nUnattempted: '+unanswered+'\n\nSubmit करने के बाद उत्तर बदल नहीं सकेंगे।';
- if(confirm(msg)) submitExam(false);
-}
-function submitExam(auto){if(!examQuestions.length)return;if(examTimer)clearInterval(examTimer);let schedule=JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');let bonus=(schedule[examPaper+'BonusQuestions']||'').split(',').map(x=>parseInt(x.trim())).filter(Boolean);let correct=0,wrong=0,unattempted=0,bonusMarks=0,total=0;let correctMark=examPaper==='gs'?4/3:2,wrongMark=examPaper==='gs'?-(4/9):-(2/3);examQuestions.forEach((q,i)=>{let ans=examAnswers[i],isBonus=bonus.includes(i+1);if(!ans){unattempted++;return;}if(isBonus){bonusMarks+=correctMark;total+=correctMark;}else if(ans===examKey[i+1]){correct++;total+=correctMark;}else{wrong++;total+=wrongMark;}});document.getElementById('examPanel').classList.add('hidden');document.getElementById('examResultPanel').classList.remove('hidden');document.getElementById('examResultText').innerHTML='<div class="details"><div class="detail"><small>Correct</small><strong>'+correct+'</strong></div><div class="detail"><small>Wrong</small><strong>'+wrong+'</strong></div><div class="detail"><small>Unattempted</small><strong>'+unattempted+'</strong></div><div class="detail"><small>Bonus Marks</small><strong>'+bonusMarks.toFixed(3)+'</strong></div><div class="detail"><small>Total Marks</small><strong>'+total.toFixed(3)+'</strong></div></div><p>Student: '+escapeHtml(examStudent.name)+' · Roll: '+escapeHtml(examStudent.roll)+'</p><div style="margin:16px 0;padding:14px;border-radius:12px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-weight:600;text-align:center">🌟 मेहनत कभी व्यर्थ नहीं जाती। अपनी गलतियों से सीखिए और अगली परीक्षा में और बेहतर कीजिए! 💪</div><p><strong>Note:</strong> Result is saved only in this browser prototype; it is not centrally visible to Admin or other devices.</p>';let result={paper:examPaper,student:examStudent,correct,wrong,unattempted,bonusMarks,total:total.toFixed(3),answers:examAnswers,submittedAt:new Date().toISOString()};localStorage.setItem('pvResult_'+examPaper+'_'+examStudent.roll,JSON.stringify(result));}
+function submitExam(auto){if(!examQuestions.length)return;if(!auto&&!confirm('Kya aap exam submit karna chahte hain?'))return;if(examTimer)clearInterval(examTimer);let schedule=JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');let bonus=(schedule[examPaper+'BonusQuestions']||'').split(',').map(x=>parseInt(x.trim())).filter(Boolean);let correct=0,wrong=0,unattempted=0,bonusMarks=0,total=0;let correctMark=examPaper==='gs'?4/3:2,wrongMark=examPaper==='gs'?-(4/9):-(2/3);examQuestions.forEach((q,i)=>{let ans=examAnswers[i],isBonus=bonus.includes(i+1);if(!ans){unattempted++;return;}if(isBonus){bonusMarks+=correctMark;total+=correctMark;}else if(ans===examKey[i+1]){correct++;total+=correctMark;}else{wrong++;total+=wrongMark;}});document.getElementById('examPanel').classList.add('hidden');document.getElementById('examResultPanel').classList.remove('hidden');document.getElementById('examResultText').innerHTML='<div class="details"><div class="detail"><small>Correct</small><strong>'+correct+'</strong></div><div class="detail"><small>Wrong</small><strong>'+wrong+'</strong></div><div class="detail"><small>Unattempted</small><strong>'+unattempted+'</strong></div><div class="detail"><small>Bonus Marks</small><strong>'+bonusMarks.toFixed(3)+'</strong></div><div class="detail"><small>Total Marks</small><strong>'+total.toFixed(3)+'</strong></div></div><p>Student: '+escapeHtml(examStudent.name)+' · Roll: '+escapeHtml(examStudent.roll)+'</p><div class="exam-motivation">🌟 परीक्षा समाप्त हुई! अपने प्रयास पर गर्व करें। हर परीक्षा आपको सफलता के एक कदम और करीब ले जाती है। मेहनत जारी रखें—आपका लक्ष्य आपका इंतज़ार कर रहा है! 🌟</div><p><strong>Note:</strong> Result is saved only in this browser prototype; it is not centrally visible to Admin or other devices.</p>';let result={paper:examPaper,student:examStudent,correct,wrong,unattempted,bonusMarks,total:total.toFixed(3),answers:examAnswers,submittedAt:new Date().toISOString()};localStorage.setItem('pvResult_'+examPaper+'_'+examStudent.roll,JSON.stringify(result));}
 
 /* PAGE LOAD */
 
