@@ -1908,3 +1908,67 @@ function printExamResult(){const panel=document.getElementById('examResultPanel'
   }
 }
 </style>
+
+<style>
+/* MOBILE FIX v3: remove overlapping fixed/grid exam areas */
+@media(max-width:800px){
+ #examModal .modal-box{
+   width:100%!important;max-width:100%!important;height:100dvh!important;
+   max-height:100dvh!important;overflow-y:auto!important;overflow-x:hidden!important;
+   padding:6px!important;border-radius:0!important;
+ }
+ #examModal #examPanel{
+   display:flex!important;flex-direction:column!important;
+   width:100%!important;height:auto!important;min-height:0!important;
+   max-height:none!important;overflow:visible!important;
+   gap:7px!important;padding:6px!important;
+ }
+ #examModal #examPanel>div:first-child{
+   position:sticky!important;top:0!important;z-index:10!important;
+   flex:0 0 auto!important;width:100%!important;
+ }
+ #examModal #examQuestionArea{
+   flex:0 0 auto!important;width:100%!important;
+   height:auto!important;max-height:30dvh!important;min-height:55px!important;
+   overflow-y:auto!important;
+ }
+ #examModal #examOptions{
+   display:flex!important;flex:0 0 auto!important;
+   width:100%!important;height:auto!important;min-height:0!important;
+   max-height:none!important;overflow:visible!important;
+   flex-direction:column!important;gap:6px!important;
+ }
+ #examModal #examOptions label{
+   display:flex!important;flex:0 0 auto!important;
+   width:100%!important;min-height:42px!important;height:auto!important;
+   align-items:flex-start!important;padding:9px!important;
+ }
+ #examModal .exam-controls{
+   position:static!important;inset:auto!important;
+   display:flex!important;flex:0 0 auto!important;
+   width:100%!important;overflow:visible!important;
+   background:transparent!important;z-index:1!important;
+   flex-wrap:wrap!important;gap:5px!important;
+ }
+ #examModal .exam-controls button{
+   position:static!important;flex:1 1 calc(33.333% - 5px)!important;
+   min-width:0!important;height:auto!important;min-height:38px!important;
+ }
+ #examModal .exam-controls .exam-submit{
+   flex:1 1 100%!important;order:10!important;margin:0!important;
+ }
+ #examModal #examPaletteWrap{
+   display:none!important;position:static!important;
+   width:100%!important;height:34dvh!important;max-height:34dvh!important;
+   min-height:120px!important;overflow:hidden!important;flex:0 0 auto!important;
+ }
+ #examModal #examPaletteWrap.palette-open{
+   display:flex!important;flex-direction:column!important;
+ }
+ #examModal #examPalette{
+   flex:1 1 auto!important;min-height:0!important;height:auto!important;
+   max-height:none!important;overflow-y:auto!important;
+   grid-template-columns:repeat(8,minmax(0,1fr))!important;
+ }
+}
+</style>
