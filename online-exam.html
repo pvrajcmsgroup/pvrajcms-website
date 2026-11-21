@@ -988,6 +988,7 @@ Category-wise Merit List में संबंधित Category के वि�
 <div class="admin-section">
 <h4>GS Paper-I</h4>
 <label>Online Questions CSV/TXT (Question | Option A | Option B | Option C | Option D)</label><input type="file" id="gsQuestionsFile" accept=".csv,.txt"><button class="btn primary" onclick="saveExamFile('gsQuestionsFile','gsQuestions')">Upload Online GS Questions</button>
+<div id="gsQuestionsCurrentFile" class="upload-preview"></div>
 
 <label>Question Paper (PDF/CSV/TXT)
 <input type="file" id="gsPaperFile" accept=".pdf,.csv,.txt">
@@ -996,6 +997,7 @@ Category-wise Merit List में संबंधित Category के वि�
 <button class="btn primary" onclick="saveExamFile('gsPaperFile','gsPaper')">
 Upload / Replace GS Paper
 </button>
+<div id="gsPaperCurrentFile" class="upload-preview"></div>
 
 <label>Answer Key (CSV/TXT)
 <input type="file" id="gsKeyFile" accept=".csv,.txt">
@@ -1004,6 +1006,7 @@ Upload / Replace GS Paper
 <button class="btn primary" onclick="saveExamFile('gsKeyFile','gsKey')">
 Upload / Replace GS Answer Key
 </button>
+<div id="gsKeyCurrentFile" class="upload-preview"></div>
 
 <p id="gsUploadStatus" class="upload-status"></p>
 
@@ -1014,6 +1017,7 @@ Upload / Replace GS Answer Key
 <div class="admin-section">
 <h4>CSAT Paper-II</h4>
 <label>Online Questions CSV/TXT (Question | Option A | Option B | Option C | Option D)</label><input type="file" id="csatQuestionsFile" accept=".csv,.txt"><button class="btn primary" onclick="saveExamFile('csatQuestionsFile','csatQuestions')">Upload Online CSAT Questions</button>
+<div id="csatQuestionsCurrentFile" class="upload-preview"></div>
 
 <label>Question Paper (PDF/CSV/TXT)
 <input type="file" id="csatPaperFile" accept=".pdf,.csv,.txt">
@@ -1022,6 +1026,7 @@ Upload / Replace GS Answer Key
 <button class="btn primary" onclick="saveExamFile('csatPaperFile','csatPaper')">
 Upload / Replace CSAT Paper
 </button>
+<div id="csatPaperCurrentFile" class="upload-preview"></div>
 
 <label>Answer Key (CSV/TXT)
 <input type="file" id="csatKeyFile" accept=".csv,.txt">
@@ -1030,6 +1035,7 @@ Upload / Replace CSAT Paper
 <button class="btn primary" onclick="saveExamFile('csatKeyFile','csatKey')">
 Upload / Replace CSAT Answer Key
 </button>
+<div id="csatKeyCurrentFile" class="upload-preview"></div>
 
 <p id="csatUploadStatus" class="upload-status"></p>
 
@@ -1163,10 +1169,6 @@ function openAdmin(){
 
 const saved=JSON.parse(localStorage.getItem("pvPrelimsSchedule")||"{}");
 
-/* Load Bonus Question settings */
-document.getElementById("gsBonusQuestions").value=saved.gsBonusQuestions||"";
-document.getElementById("csatBonusQuestions").value=saved.csatBonusQuestions||"";
-
 ["gs","csat"].forEach(k=>{
 
 const v=saved[k]||{};
@@ -1232,10 +1234,6 @@ document.getElementById("combinedResultDate").value;
 
 data.combinedResultTime=
 document.getElementById("combinedResultTime").value;
-
-/* Save Bonus Question settings */
-data.gsBonusQuestions=document.getElementById("gsBonusQuestions").value.trim();
-data.csatBonusQuestions=document.getElementById("csatBonusQuestions").value.trim();
 
 localStorage.setItem("pvPrelimsSchedule",JSON.stringify(data));
 
@@ -1481,77 +1479,40 @@ return String(value).replace(/[&<>"']/g,c=>({
 async function renderUploadedFiles(){
 
 const map=[
-
-["gsPaper","gsPaperDownload","Uploaded Question Paper"],
-["gsKey","gsKeyDownload","Uploaded Answer Key"],
-["csatPaper","csatPaperDownload","Uploaded Question Paper"],
-["csatKey","csatKeyDownload","Uploaded Answer Key"]
-
+["gsQuestions","gsQuestionsCurrentFile","Uploaded Online Questions"],
+["gsPaper","gsPaperCurrentFile","Uploaded GS Paper"],
+["gsKey","gsKeyCurrentFile","Uploaded GS Answer Key"],
+["csatQuestions","csatQuestionsCurrentFile","Uploaded Online Questions"],
+["csatPaper","csatPaperCurrentFile","Uploaded CSAT Paper"],
+["csatKey","csatKeyCurrentFile","Uploaded CSAT Answer Key"]
 ];
 
 for(const [key,elementId,label] of map){
-
 const el=document.getElementById(elementId);
-
 if(!el)continue;
-
 const rec=await pvGetFileRecord(key);
 
 if(!rec){
-
-el.innerHTML=
-"<small>"+label+"</small>"+
-"<strong>Paper अभी upload नहीं हुआ है।</strong>";
-
+el.innerHTML='<small>'+label+'</small><strong>अभी कोई फ़ाइल upload नहीं हुई है।</strong>';
 continue;
-
 }
 
 const url=URL.createObjectURL(rec.blob);
-
 const isPaper=key==="gsPaper"||key==="csatPaper";
-
-const isPdf=
-rec.type==="application/pdf"||
-rec.name.toLowerCase().endsWith(".pdf");
-
+const isPdf=rec.type==="application/pdf"||rec.name.toLowerCase().endsWith(".pdf");
 const viewLink=isPaper
-?'<a class="btn secondary" style="margin-top:8px;margin-right:6px" target="_blank" rel="noopener" href="'+url+'">👁 View '+(isPdf?"PDF":"File")+"</a>"
+?'<a target="_blank" rel="noopener" href="'+url+'">👁 View File</a> · '
 :"";
 
 el.innerHTML=
-"<small>"+label+"</small>"+
-"<strong>"+escapeHtml(rec.name)+"</strong><br>"+
+'<small>'+label+'</small>'+
+'<strong>📄 '+escapeHtml(rec.name)+'</strong><br>'+
 viewLink+
-'<a class="btn secondary" style="margin-top:8px" download="'+escapeHtml(rec.name)+'" href="'+url+'">⬇ Download '+(key.endsWith("Key")?"Answer Key":"Paper")+"</a>"+
-'<small style="display:block;margin-top:6px">'+
-(rec.size/1024/1024).toFixed(2)+" MB · "+
-new Date(rec.updatedAt).toLocaleString("en-IN")+
-"</small>";
-
-if(isPaper){
-
-const adminId=
-key==="gsPaper"
-?"gsAdminPaperPreview"
-:"csatAdminPaperPreview";
-
-const adminEl=document.getElementById(adminId);
-
-if(adminEl){
-
-adminEl.innerHTML=
-'<div class="upload-preview">'+
-"<strong>Uploaded Paper Preview:</strong> "+
-escapeHtml(rec.name)+"<br>"+
-'<a target="_blank" rel="noopener" href="'+url+'">👁 View Uploaded Paper</a> · '+
 '<a download="'+escapeHtml(rec.name)+'" href="'+url+'">⬇ Download</a>'+
-"</div>";
-
-}
-
-}
-
+'<small style="display:block;margin-top:5px">'+
+(rec.size/1024/1024).toFixed(2)+' MB · Uploaded: '+
+new Date(rec.updatedAt).toLocaleString("en-IN")+
+'</small>';
 }
 
 }
@@ -1665,7 +1626,7 @@ function renderPalette(){document.getElementById('examPalette').innerHTML=examQu
 function toggleExamPalette(){document.getElementById('examPaletteWrap').classList.toggle('palette-open');}
 function examPrev(){if(examIndex>0){examIndex--;renderExamQuestion();saveExamProgress();}}function examNext(){if(examIndex<examQuestions.length-1){examIndex++;renderExamQuestion();saveExamProgress();}}function examMarkReview(){if(examReview.has(examIndex))examReview.delete(examIndex);else examReview.add(examIndex);renderPalette();saveExamProgress();document.querySelector('.exam-controls button[onclick=\"examMarkReview()\"]')?.classList.toggle('primary',examReview.has(examIndex));}
 function saveExamProgress(){try{localStorage.setItem('pvExam_'+examPaper+'_'+examStudent.roll,JSON.stringify({answers:examAnswers,review:[...examReview],student:examStudent,index:examIndex,endAt:examEndAt,questionsCount:examQuestions.length}));}catch(e){}}
-function submitExam(auto){if(!examQuestions.length)return;if(!auto&&!confirm('Kya aap exam submit karna chahte hain?'))return;if(examTimer)clearInterval(examTimer);let schedule=JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');let bonusRaw=schedule[examPaper+'BonusQuestions']||schedule[examPaper]?.bonusQuestions||'';let bonus=(Array.isArray(bonusRaw)?bonusRaw:String(bonusRaw).split(/[;,\s]+/)).map(x=>parseInt(String(x).trim(),10)).filter(n=>Number.isInteger(n)&&n>0);let correct=0,wrong=0,unattempted=0,bonusMarks=0,total=0;let correctMark=examPaper==='gs'?4/3:2,wrongMark=examPaper==='gs'?-(4/9):-(2/3);examQuestions.forEach((q,i)=>{let ans=examAnswers[i],isBonus=bonus.includes(i+1);if(!ans){unattempted++;return;}if(isBonus){bonusMarks+=correctMark;total+=correctMark;}else if(ans===examKey[i+1]){correct++;total+=correctMark;}else{wrong++;total+=wrongMark;}});document.getElementById('examPanel').classList.add('hidden');document.getElementById('examResultPanel').classList.remove('hidden');let attempted=Object.keys(examAnswers).filter(i=>examAnswers[i]).length;document.getElementById('examResultText').innerHTML='<div class="result-summary"><div class="result-item"><small>Total Questions</small><strong>'+examQuestions.length+'</strong></div><div class="result-item"><small>Attempted</small><strong>'+attempted+'</strong></div><div class="result-item"><small>Correct</small><strong>'+correct+'</strong></div><div class="result-item"><small>Wrong</small><strong>'+wrong+'</strong></div><div class="result-item"><small>Unattempted</small><strong>'+unattempted+'</strong></div><div class="result-item"><small>Bonus Marks</small><strong>'+bonusMarks.toFixed(3)+'</strong></div><div class="result-item result-total"><small>Total Marks</small><strong>'+total.toFixed(3)+'</strong></div></div><p class="result-student">Student: '+escapeHtml(examStudent.name)+' · Roll: '+escapeHtml(examStudent.roll)+'</p><div class="exam-motivation">🌟 परीक्षा समाप्त हुई! अपने प्रयास पर गर्व करें। हर परीक्षा आपको सफलता के एक कदम और करीब ले जाती है। मेहनत जारी रखें—आपका लक्ष्य आपका इंतज़ार कर रहा है! 🌟</div><p class="result-note"><strong>Note:</strong> Result is saved only in this browser prototype; it is not centrally visible to Admin or other devices.</p>';let result={paper:examPaper,student:examStudent,correct,wrong,unattempted,bonusMarks,total:total.toFixed(3),answers:examAnswers,submittedAt:new Date().toISOString()};localStorage.setItem('pvResult_'+examPaper+'_'+examStudent.roll,JSON.stringify(result));localStorage.removeItem('pvExamActive');localStorage.removeItem('pvExam_'+examPaper+'_'+examStudent.roll);}
+function submitExam(auto){if(!examQuestions.length)return;if(!auto&&!confirm('Kya aap exam submit karna chahte hain?'))return;if(examTimer)clearInterval(examTimer);let schedule=JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');let bonus=(schedule[examPaper+'BonusQuestions']||'').split(',').map(x=>parseInt(x.trim())).filter(Boolean);let correct=0,wrong=0,unattempted=0,bonusMarks=0,total=0;let correctMark=examPaper==='gs'?4/3:2,wrongMark=examPaper==='gs'?-(4/9):-(2/3);examQuestions.forEach((q,i)=>{let ans=examAnswers[i],isBonus=bonus.includes(i+1);if(!ans){unattempted++;return;}if(isBonus){bonusMarks+=correctMark;total+=correctMark;}else if(ans===examKey[i+1]){correct++;total+=correctMark;}else{wrong++;total+=wrongMark;}});document.getElementById('examPanel').classList.add('hidden');document.getElementById('examResultPanel').classList.remove('hidden');let attempted=Object.keys(examAnswers).filter(i=>examAnswers[i]).length;document.getElementById('examResultText').innerHTML='<div class="result-summary"><div class="result-item"><small>Total Questions</small><strong>'+examQuestions.length+'</strong></div><div class="result-item"><small>Attempted</small><strong>'+attempted+'</strong></div><div class="result-item"><small>Correct</small><strong>'+correct+'</strong></div><div class="result-item"><small>Wrong</small><strong>'+wrong+'</strong></div><div class="result-item"><small>Unattempted</small><strong>'+unattempted+'</strong></div><div class="result-item"><small>Bonus Marks</small><strong>'+bonusMarks.toFixed(3)+'</strong></div><div class="result-item result-total"><small>Total Marks</small><strong>'+total.toFixed(3)+'</strong></div></div><p class="result-student">Student: '+escapeHtml(examStudent.name)+' · Roll: '+escapeHtml(examStudent.roll)+'</p><div class="exam-motivation">🌟 परीक्षा समाप्त हुई! अपने प्रयास पर गर्व करें। हर परीक्षा आपको सफलता के एक कदम और करीब ले जाती है। मेहनत जारी रखें—आपका लक्ष्य आपका इंतज़ार कर रहा है! 🌟</div><p class="result-note"><strong>Note:</strong> Result is saved only in this browser prototype; it is not centrally visible to Admin or other devices.</p>';let result={paper:examPaper,student:examStudent,correct,wrong,unattempted,bonusMarks,total:total.toFixed(3),answers:examAnswers,submittedAt:new Date().toISOString()};localStorage.setItem('pvResult_'+examPaper+'_'+examStudent.roll,JSON.stringify(result));localStorage.removeItem('pvExamActive');localStorage.removeItem('pvExam_'+examPaper+'_'+examStudent.roll);}
 
 
 async function restoreExamAfterReload(){
