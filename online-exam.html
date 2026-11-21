@@ -1164,7 +1164,16 @@ Upload / Replace CSAT Answer Key
     <label>4. Date of Birth<input id="examStudentDob" type="date" required></label>
     <label>5. Gender<select id="examStudentGender" required><option value="">Select Gender</option><option>Male</option><option>Female</option><option>Other</option></select></label>
     <label>6. Category<select id="examStudentCategory" required><option value="">Select Category</option><option>General</option><option>OBC</option><option>SC</option><option>ST</option><option>EWS</option></select></label>
-    <label style="grid-column:1/-1">7. Examination Centre<input id="examStudentCentre" placeholder="Examination Centre" required></label>
+    <label style="grid-column:1/-1">7. Examination Centre
+<select id="examStudentCentre" required>
+<option value="">Select Examination Centre</option>
+<optgroup label="Uttar Pradesh">
+<option>Azamgarh</option><option>Mau</option><option>Mahoba</option><option>Jhansi</option><option>Kanpur</option><option>Lucknow</option><option>Prayagraj</option><option>Varanasi</option><option>Gorakhpur</option><option>Agra</option><option>Meerut</option><option>Mathura</option><option>Aligarh</option><option>Ayodhya</option><option>Bareilly</option><option>Gonda</option><option>Ballia</option><option>Jaunpur</option><option>Mirzapur</option><option>Ghaziabad</option><option>Greater Noida</option><option>Noida</option><option>Rampur</option><option>Sultanpur</option><option>Deoria</option><option>Fatehpur</option><option>Hardoi</option><option>Unnao</option><option>Etawah</option><option>Ghazipur</option><option>Chandauli</option><option>Sonbhadra</option><option>Banda</option><option>Chitrakoot</option><option>Hathras</option><option>Moradabad</option><option>Muzaffarnagar</option><option>Shahjahanpur</option><option>Rae Bareli</option><option>Pratapgarh</option>
+</optgroup>
+<optgroup label="Other States / Cities">
+<option>Delhi</option><option>Surat</option><option>Chennai</option><option>Bengaluru</option><option>Mumbai</option><option>Pune</option><option>Hyderabad</option><option>Kolkata</option><option>Ahmedabad</option><option>Jaipur</option><option>Bhopal</option><option>Indore</option><option>Patna</option><option>Dehradun</option><option>Other</option>
+</optgroup>
+</select></label>
    </div>
    <p id="examProfileSaved" class="notice" style="display:none">आपके विवरण इस Account के लिए सेव हैं। Start करने से पहले Verify करें।</p>
    <button class="btn primary" id="startExamButton" onclick="beginExam()">Start Exam</button>
