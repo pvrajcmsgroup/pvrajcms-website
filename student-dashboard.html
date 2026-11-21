@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard | PV Education</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f2f7fc;color:#10213b}
+header{background:#06172a;color:#fff;padding:12px 4%;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand img{width:min(45vw,260px);max-height:55px;object-fit:contain}
+.actions{display:flex;gap:10px;align-items:center}
+button,.btn{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.primary{background:#087bd8;color:white}
+.outline{background:transparent;border:1px solid #9db4c9;color:white}
+main{max-width:1200px;margin:auto;padding:28px 18px}
+.welcome{background:linear-gradient(110deg,#06172a,#0b5b94,#087d9a);color:white;border-radius:18px;padding:28px;margin-bottom:24px}
+.welcome h1{margin:0 0 10px;font-size:clamp(26px,4vw,36px)}
+.welcome p{margin:6px 0;color:#d9efff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.card{background:#fff;border:1px solid #dce7f1;border-radius:15px;padding:22px;box-shadow:0 5px 18px #0b345608}
+.card .icon{font-size:30px;margin-bottom:10px}
+.card h2{font-size:19px;margin:0 0 8px}
+.card p{color:#607087;font-size:14px;line-height:1.5;min-height:42px}
+.card a{display:inline-block;margin-top:8px;color:#087bd8;font-weight:800;text-decoration:none}
+.notice{background:#e8f5ff;border:1px solid #c4e5fb;color:#17486c;padding:14px;border-radius:12px;margin-top:20px;font-size:14px;line-height:1.5}
+#status{padding:30px;text-align:center;color:#53677d}
+@media(max-width:600px){header{padding:10px 12px}.brand img{width:160px}.actions button{padding:9px 11px;font-size:12px}main{padding:18px 12px}.welcome{padding:22px}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="pv-education.html"><img src="pv-education-logo.png" alt="PV Education"></a>
+  <div class="actions">
+    <a class="btn outline" href="pv-education.html">Home</a>
+    <button class="primary" id="logoutBtn" type="button">Logout</button>
+  </div>
+</header>
+<main>
+  <div id="status">Checking your account...</div>
+  <section id="dashboard" hidden>
+    <div class="welcome">
+      <h1>Student Dashboard</h1>
+      <p>Welcome to PV Education.</p>
+      <p id="studentEmail"></p>
+    </div>
+    <div class="grid">
+      <article class="card">
+        <div class="icon">📝</div><h2>Online Examinations</h2>
+        <p>View available exams and access your online examination portal.</p>
+        <a href="online-exam.html">Open Examinations →</a>
+      </article>
+      <article class="card">
+        <div class="icon">📚</div><h2>Courses</h2>
+        <p>Explore courses and learning programmes offered by PV Education.</p>
+        <a href="pv-education.html#courses">Browse Courses →</a>
+      </article>
+      <article class="card">
+        <div class="icon">📖</div><h2>Study Material</h2>
+        <p>Access study resources and educational material.</p>
+        <a href="pv-education.html#study">Study Material →</a>
+      </article>
+      <article class="card">
+        <div class="icon">🎓</div><h2>Student Services</h2>
+        <p>Explore forms, applications and other student services.</p>
+        <a href="pv-education.html#student-services">View Services →</a>
+      </article>
+      <article class="card">
+        <div class="icon">📊</div><h2>My Results</h2>
+        <p>Your exam results and response sheets will appear here as they become available.</p>
+        <a href="online-exam.html">Exam Portal →</a>
+      </article>
+      <article class="card">
+        <div class="icon">👤</div><h2>My Account</h2>
+        <p>Your account is connected to your PVrajCMS Group login.</p>
+        <a href="index.html">Main Website →</a>
+      </article>
+    </div>
+    <div class="notice">Use this same PVrajCMS Group account for PV Education exams, courses and other services. Service-specific details or payment may be required when you select a service.</div>
+  </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+(async()=>{
+  const status=document.getElementById("status");
+  const dashboard=document.getElementById("dashboard");
+  const emailEl=document.getElementById("studentEmail");
+  const client=(typeof pvSupabase!=="undefined"&&pvSupabase)?pvSupabase:window.pvSupabase;
+  if(!client?.auth){
+    status.textContent="Account connection could not be initialized. Please check supabase-config.js.";
+    return;
+  }
+  try{
+    const {data,error}=await client.auth.getSession();
+    if(error)throw error;
+    const user=data?.session?.user;
+    if(!user){
+      window.location.replace("login.html?redirect="+encodeURIComponent("student-dashboard.html"));
+      return;
+    }
+    emailEl.textContent=user.email||"Logged in student";
+    status.hidden=true;
+    dashboard.hidden=false;
+  }catch(err){
+    status.textContent="Unable to verify your login. Please sign in again.";
+    console.error(err);
+  }
+})();
+document.getElementById("logoutBtn").addEventListener("click",async()=>{
+  const client=(typeof pvSupabase!=="undefined"&&pvSupabase)?pvSupabase:window.pvSupabase;
+  if(client?.auth){
+    await client.auth.signOut();
+  }
+  window.location.replace("login.html");
+});
+</script>
+</body>
+</html>
