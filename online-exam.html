@@ -486,6 +486,29 @@ flex-direction:column
 }
 </style>
 
+
+<style>
+/* FIX 21 NOV: prevent accidental exam close and fit all four choices */
+#examModal .modal-box > .close{display:none!important}
+#examModal #examQuestionArea{max-height:20%!important;min-height:45px!important;padding:7px!important}
+#examModal #examOptions{gap:4px!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+#examModal #examOptions label{
+  min-height:30px!important;
+  padding:5px 8px!important;
+  margin:0!important;
+  line-height:1.2!important;
+  font-size:13px!important;
+  gap:7px!important;
+}
+#examModal #examOptions input[type=radio]{
+  width:16px!important;height:16px!important;flex-basis:16px!important;margin-top:1px!important
+}
+@media(max-width:700px){
+  #examModal #examQuestionArea{max-height:19dvh!important;min-height:42px!important;padding:6px!important}
+  #examModal #examOptions label{min-height:28px!important;padding:4px 6px!important;font-size:12.5px!important}
+}
+</style>
+
 </head>
 
 <body>
