@@ -1072,6 +1072,40 @@ Category-wise Merit List में संबंधित Category के वि�
 <p>GS और CSAT दोनों के परिणाम प्रकाशित होने के बाद Combined Result/Merit List प्रकाशित करने का समय।</p>
 </section>
 
+
+<!-- RESULT RECOVERY -->
+<section class="admin-section" style="margin-top:14px">
+<h3>🔎 Exam Result Recovery</h3>
+<p>विद्यार्थी के नाम, पेपर और तारीख के आधार पर Supabase में सेव परीक्षा परिणाम खोजें।</p>
+<div class="admin-grid">
+  <label>Student Name
+    <input id="recoveryName" type="search" placeholder="विद्यार्थी का नाम">
+  </label>
+  <label>Exam Paper
+    <select id="recoveryPaper">
+      <option value="">All Papers</option>
+      <option value="gs">GS Paper-I</option>
+      <option value="csat">CSAT Paper-II</option>
+    </select>
+  </label>
+  <label>Submitted Date
+    <input id="recoveryDate" type="date">
+  </label>
+  <div style="display:flex;align-items:end;gap:8px;flex-wrap:wrap">
+    <button class="btn primary" onclick="pvSearchRecoveredResults()">🔍 Search Results</button>
+    <button class="btn secondary" onclick="pvSearchRecoveredResults(true)">📅 Today's Results</button>
+  </div>
+</div>
+<p id="recoveryStatus" class="upload-status">Search करने के लिए नाम डालें या Today's Results दबाएँ।</p>
+<div style="overflow-x:auto;margin-top:12px">
+<table style="min-width:850px">
+<thead><tr><th>Student</th><th>Roll Number</th><th>Paper</th><th>Marks</th><th>Percentage</th><th>Submitted</th><th>Action</th></tr></thead>
+<tbody id="recoveryResults"><tr><td colspan="7" style="text-align:center;color:#607087">कोई Search नहीं किया गया।</td></tr></tbody>
+</table>
+</div>
+<div id="recoveryView" class="upload-preview" style="display:none"></div>
+</section>
+
 <!-- UPLOADS -->
 <section class="admin-section" style="margin-top:14px">
 <h3>📄 Paper & Answer Key Upload / Replace</h3>
@@ -1244,6 +1278,87 @@ async function pvCloudSaveSchedule(data){if(!pvSupabase||!pvAdminSession)throw n
 async function pvCloudFileGet(key){if(!pvSupabase)return null;try{const {data,error}=await pvSupabase.from("exam_files").select("file_name,mime_type,size_bytes,storage_path").eq("key",key).maybeSingle();if(error)throw error;if(!data)return null;const {data:blob,error:downloadError}=await pvSupabase.storage.from("exam-files").download(data.storage_path);if(downloadError)throw downloadError;return {key,name:data.file_name,type:data.mime_type||blob.type,size:data.size_bytes,updatedAt:new Date().toISOString(),blob};}catch(e){console.warn("Cloud file read:",key,e.message);return null;}}
 async function pvCloudFileSave(key,file){if(!pvSupabase||!pvAdminSession)throw new Error("Admin cloud login required");const path=key+"/"+encodeURIComponent(file.name);const {error:uploadError}=await pvSupabase.storage.from("exam-files").upload(path,file,{upsert:true,contentType:file.type||"application/octet-stream"});if(uploadError)throw uploadError;const {error:metaError}=await pvSupabase.from("exam_files").upsert({key,file_name:file.name,mime_type:file.type||"application/octet-stream",size_bytes:file.size,storage_path:path,updated_at:new Date().toISOString(),updated_by:pvAdminSession.user.id});if(metaError)throw metaError;}
 async function pvCloudSaveResult(result){if(!pvSupabase)return;const {error}=await pvSupabase.from("exam_results").insert({paper:result.paper,student_name:result.student.name,roll_number:result.student.roll,result});if(error)console.warn("Cloud result save:",error.message);}
+
+
+/* ADMIN RESULT RECOVERY */
+let pvRecoveredResults=[];
+async function pvSearchRecoveredResults(todayOnly=false){
+  const status=document.getElementById("recoveryStatus");
+  const body=document.getElementById("recoveryResults");
+  const view=document.getElementById("recoveryView");
+  view.style.display="none";
+  if(!pvSupabase){status.textContent="Supabase connection उपलब्ध नहीं है।";return;}
+  if(!pvAdminSession){status.textContent="Admin login आवश्यक है।";return;}
+  let name=document.getElementById("recoveryName").value.trim();
+  let paper=document.getElementById("recoveryPaper").value;
+  let date=document.getElementById("recoveryDate").value;
+  if(todayOnly){
+    date=new Date().toISOString().slice(0,10);
+    document.getElementById("recoveryDate").value=date;
+  }
+  if(!name&&!date){status.textContent="नाम डालें या Today's Results चुनें।";return;}
+  status.textContent="Results खोजे जा रहे हैं...";
+  body.innerHTML='<tr><td colspan="7" style="text-align:center">Loading...</td></tr>';
+  try{
+    let query=pvSupabase.from("exam_results").select("paper,student_name,roll_number,result,created_at").order("created_at",{ascending:false}).limit(500);
+    if(name) query=query.ilike("student_name","%"+name+"%");
+    if(paper) query=query.eq("paper",paper);
+    if(date){
+      const start=date+"T00:00:00";
+      const end=new Date(new Date(start).getTime()+86400000).toISOString();
+      query=query.gte("created_at",start).lt("created_at",end);
+    }
+    const {data,error}=await query;
+    if(error)throw error;
+    pvRecoveredResults=data||[];
+    if(!pvRecoveredResults.length){
+      body.innerHTML='<tr><td colspan="7" style="text-align:center">कोई परिणाम नहीं मिला।</td></tr>';
+      status.textContent="Search पूरा हुआ — कोई matching result नहीं मिला।";
+      return;
+    }
+    body.innerHTML=pvRecoveredResults.map((row,i)=>{
+      const r=row.result||{};
+      const marks=r.total??"—";
+      const pct=r.percentage??"—";
+      const submitted=row.created_at?new Date(row.created_at).toLocaleString("en-IN"):(r.submittedAt?new Date(r.submittedAt).toLocaleString("en-IN"):"—");
+      return `<tr><td>${pvRecoveryEscape(row.student_name||r.student?.name||"—")}</td><td>${pvRecoveryEscape(row.roll_number||r.student?.roll||"—")}</td><td>${pvRecoveryEscape(row.paper||r.paper||"—").toUpperCase()}</td><td>${pvRecoveryEscape(String(marks))}</td><td>${pvRecoveryEscape(String(pct))}%</td><td>${pvRecoveryEscape(submitted)}</td><td><button class="btn secondary" onclick="pvViewRecoveredResult(${i})">View</button></td></tr>`;
+    }).join("");
+    status.textContent=`${pvRecoveredResults.length} result(s) मिले।`;
+  }catch(e){
+    console.error("Result recovery search:",e);
+    body.innerHTML='<tr><td colspan="7" style="text-align:center">Search failed.</td></tr>';
+    status.textContent="Search error: "+e.message+" — Supabase table/RLS policy जाँचें।";
+  }
+}
+function pvRecoveryEscape(value){
+  return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function pvViewRecoveredResult(index){
+  const row=pvRecoveredResults[index];
+  if(!row)return;
+  const r=row.result||{};
+  const view=document.getElementById("recoveryView");
+  view.style.display="block";
+  view.innerHTML=`<h4>📋 ${pvRecoveryEscape(row.student_name||r.student?.name||"Student Result")}</h4>
+  <p><b>Paper:</b> ${pvRecoveryEscape(row.paper||r.paper||"—")} &nbsp; <b>Roll:</b> ${pvRecoveryEscape(row.roll_number||r.student?.roll||"—")}</p>
+  <p><b>Correct:</b> ${pvRecoveryEscape(String(r.correct??"—"))} &nbsp; <b>Wrong:</b> ${pvRecoveryEscape(String(r.wrong??"—"))} &nbsp; <b>Unattempted:</b> ${pvRecoveryEscape(String(r.unattempted??"—"))}</p>
+  <p><b>Marks:</b> ${pvRecoveryEscape(String(r.total??"—"))} / <b>Percentage:</b> ${pvRecoveryEscape(String(r.percentage??"—"))}% &nbsp; <b>Duration:</b> ${pvRecoveryEscape(r.durationText||"—")}</p>
+  <button class="btn secondary" onclick="pvDownloadRecoveredResult(${index})">⬇ Download JSON</button>
+  <button class="btn secondary" onclick="pvPrintRecoveredResult(${index})">🖨 Print</button>`;
+}
+function pvDownloadRecoveredResult(index){
+  const row=pvRecoveredResults[index];if(!row)return;
+  const blob=new Blob([JSON.stringify(row.result||row,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="exam-result-"+(row.roll_number||"student")+".json";a.click();URL.revokeObjectURL(a.href);
+}
+function pvPrintRecoveredResult(index){
+  const row=pvRecoveredResults[index];if(!row)return;
+  const r=row.result||{};
+  const w=window.open("","_blank");
+  if(!w){alert("Popup blocked. Please allow popups to print.");return;}
+  w.document.write(`<html><head><title>Exam Result</title><style>body{font-family:Arial;padding:24px;color:#10213b}h1{color:#075b93}table{width:100%;border-collapse:collapse}td{padding:10px;border:1px solid #ddd}</style></head><body><h1>PV Education — Exam Result</h1><table><tr><td>Student</td><td>${pvRecoveryEscape(row.student_name||r.student?.name||"—")}</td></tr><tr><td>Roll Number</td><td>${pvRecoveryEscape(row.roll_number||r.student?.roll||"—")}</td></tr><tr><td>Paper</td><td>${pvRecoveryEscape(row.paper||r.paper||"—")}</td></tr><tr><td>Correct</td><td>${pvRecoveryEscape(String(r.correct??"—"))}</td></tr><tr><td>Wrong</td><td>${pvRecoveryEscape(String(r.wrong??"—"))}</td></tr><tr><td>Unattempted</td><td>${pvRecoveryEscape(String(r.unattempted??"—"))}</td></tr><tr><td>Marks</td><td>${pvRecoveryEscape(String(r.total??"—"))}</td></tr><tr><td>Percentage</td><td>${pvRecoveryEscape(String(r.percentage??"—"))}%</td></tr><tr><td>Submitted</td><td>${pvRecoveryEscape(row.created_at?new Date(row.created_at).toLocaleString("en-IN"):(r.submittedAt||"—"))}</td></tr></table><script>window.onload=()=>window.print()<\/script></body></html>`);
+  w.document.close();
+}
 
 /* RESULTS */
 
