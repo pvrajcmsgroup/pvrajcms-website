@@ -1338,6 +1338,15 @@ async function pvSearchRecoveredResults(todayOnly=false){
 function pvRecoveryEscape(value){
   return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
+function pvRecoveryDuration(r){
+  const maxSeconds=8*60*60;
+  const start=r?.startedAt?Date.parse(r.startedAt):NaN;
+  const end=r?.submittedAt?Date.parse(r.submittedAt):NaN;
+  let seconds=(!Number.isNaN(start)&&!Number.isNaN(end))?Math.floor((end-start)/1000):Number(r?.durationSeconds);
+  if(!Number.isFinite(seconds)||seconds<0||seconds>maxSeconds)return "Unavailable (invalid saved duration)";
+  const h=Math.floor(seconds/3600),m=Math.floor((seconds%3600)/60),sec=seconds%60;
+  return h?`${h} घंटे ${m} मिनट ${sec} सेकंड`:`${m} मिनट ${sec} सेकंड`;
+}
 function pvViewRecoveredResult(index){
   const row=pvRecoveredResults[index];
   if(!row)return;
@@ -1382,7 +1391,7 @@ function pvPrintRecoveredResult(index){
   const r=row.result||{};
   const w=window.open("","_blank");
   if(!w){alert("Popup blocked. Please allow popups to print.");return;}
-  w.document.write(`<html><head><title>Exam Result</title><style>body{font-family:Arial;padding:24px;color:#10213b}h1{color:#075b93}table{width:100%;border-collapse:collapse}td{padding:10px;border:1px solid #ddd}</style></head><body><h1>PV Education — Exam Result</h1><table><tr><td>Student</td><td>${pvRecoveryEscape(row.student_name||r.student?.name||"—")}</td></tr><tr><td>Roll Number</td><td>${pvRecoveryEscape(row.roll_number||r.student?.roll||"—")}</td></tr><tr><td>Paper</td><td>${pvRecoveryEscape(row.paper||r.paper||"—")}</td></tr><tr><td>Correct</td><td>${pvRecoveryEscape(String(r.correct??"—"))}</td></tr><tr><td>Wrong</td><td>${pvRecoveryEscape(String(r.wrong??"—"))}</td></tr><tr><td>Unattempted</td><td>${pvRecoveryEscape(String(r.unattempted??"—"))}</td></tr><tr><td>Marks</td><td>${pvRecoveryEscape(String(r.total??"—"))}</td></tr><tr><td>Percentage</td><td>${pvRecoveryEscape(String(r.percentage??"—"))}%</td></tr><tr><td>Submitted</td><td>${pvRecoveryEscape(row.created_at?new Date(row.created_at).toLocaleString("en-IN"):(r.submittedAt||"—"))}</td></tr></table><script>window.onload=()=>window.print()<\/script></body></html>`);
+  w.document.write(`<html><head><title>Exam Result</title><style>body{font-family:Arial;padding:24px;color:#10213b}h1{color:#075b93}table{width:100%;border-collapse:collapse}td{padding:10px;border:1px solid #ddd}</style></head><body><h1>PV Education — Exam Result</h1><table><tr><td>Student</td><td>${pvRecoveryEscape(row.student_name||r.student?.name||"—")}</td></tr><tr><td>Roll Number</td><td>${pvRecoveryEscape(row.roll_number||r.student?.roll||"—")}</td></tr><tr><td>Paper</td><td>${pvRecoveryEscape(row.paper||r.paper||"—")}</td></tr><tr><td>Correct</td><td>${pvRecoveryEscape(String(r.correct??"—"))}</td></tr><tr><td>Wrong</td><td>${pvRecoveryEscape(String(r.wrong??"—"))}</td></tr><tr><td>Unattempted</td><td>${pvRecoveryEscape(String(r.unattempted??"—"))}</td></tr><tr><td>Marks</td><td>${pvRecoveryEscape(String(r.total??"—"))}</td></tr><tr><td>Percentage</td><td>${pvRecoveryEscape(String(r.percentage??"—"))}%</td></tr><tr><td>Duration</td><td>${pvRecoveryEscape(pvRecoveryDuration(r))}</td></tr><tr><td>Submitted</td><td>${pvRecoveryEscape(row.created_at?new Date(row.created_at).toLocaleString("en-IN"):(r.submittedAt||"—"))}</td></tr></table><script>window.onload=()=>window.print()<\/script></body></html>`);
   w.document.close();
 }
 
