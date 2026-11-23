@@ -731,7 +731,86 @@ body.exam-page main > .section{display:none!important;}
   .exam-portal{padding:18px 12px;}
 }
 
-</style>
+/* COURSES SECTION */
+
+.courses-section{
+    background:#f4f8fc;
+}
+
+.course-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,350px));
+    justify-content:center;
+    gap:20px;
+}
+
+.course-card{
+    background:#fff;
+    border:1px solid #dce7f1;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 8px 25px #0b345610;
+    transition:transform .25s,box-shadow .25s;
+}
+
+.course-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 14px 35px #0b345620;
+}
+
+.course-icon{
+    font-size:45px;
+    margin-bottom:12px;
+}
+
+.course-tag{
+    display:inline-block;
+    background:#e5f4ff;
+    color:#087bd8;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:800;
+}
+
+.course-card h3{
+    font-size:23px;
+    color:#06172a;
+    margin:15px 0 10px;
+}
+
+.course-card p{
+    color:#607087;
+    font-size:14px;
+    line-height:1.7;
+}
+
+.course-info{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin:20px 0;
+    color:#334b63;
+    font-size:14px;
+}
+
+.course-btn{
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    background:#087bd8;
+    color:white;
+    padding:13px 18px;
+    border-radius:10px;
+    font-weight:800;
+    width:100%;
+}
+
+.course-btn:hover{
+    background:#0566b8;
+}
+
+\n</style>
 </head>
 
 <body>
@@ -905,6 +984,46 @@ A dedicated examination experience by PV Education
 </p>
 
 </div>
+
+</section>
+
+<!-- COURSES SECTION -->
+
+<section class="section courses-section" id="courses">
+
+    <div class="section-head">
+        <h2>Our Courses</h2>
+        <p>Structured learning programs to help you achieve your goals.</p>
+    </div>
+
+    <div class="course-grid">
+
+        <div class="course-card">
+
+            <div class="course-icon">🎓</div>
+
+            <span class="course-tag">UPPCS 2027</span>
+
+            <h3>UPPCS 2027 Mission Selection</h3>
+
+            <p>
+                A structured preparation journey for UPPCS aspirants
+                covering Foundation, Deep Study, Revision and Test Series.
+            </p>
+
+            <div class="course-info">
+                <span>📚 Complete Syllabus</span>
+                <span>📝 Notes &amp; MCQs</span>
+                <span>🎯 Test Series</span>
+            </div>
+
+            <a href="uppcs-2027.html" class="course-btn">
+                Explore Course →
+            </a>
+
+        </div>
+
+    </div>
 
 </section>
 
