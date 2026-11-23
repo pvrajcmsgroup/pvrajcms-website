@@ -1014,6 +1014,16 @@ Category-wise Merit List में संबंधित Category के वि�
 <label>GS Result Publish Time
 <input type="time" id="gsResultTime">
 </label>
+
+<label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="gsAutoPublish" checked> Submit के बाद Automatic Publish</label>
+
+<label>Answer Key Delay (Minutes)
+<input type="number" min="0" id="gsKeyDelay" value="2">
+</label>
+
+<label>Result Delay after Answer Key (Minutes)
+<input type="number" min="0" id="gsResultDelay" value="5">
+</label>
 </section>
 
 <!-- CSAT ADMIN -->
@@ -1054,6 +1064,16 @@ Category-wise Merit List में संबंधित Category के वि�
 
 <label>CSAT Result Publish Time
 <input type="time" id="csatResultTime">
+</label>
+
+<label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="csatAutoPublish" checked> Submit के बाद Automatic Publish</label>
+
+<label>Answer Key Delay (Minutes)
+<input type="number" min="0" id="csatKeyDelay" value="2">
+</label>
+
+<label>Result Delay after Answer Key (Minutes)
+<input type="number" min="0" id="csatResultDelay" value="5">
 </label>
 </section>
 
@@ -1477,6 +1497,9 @@ document.getElementById(k+"KeyDate").value=v.keyDate||"";
 document.getElementById(k+"KeyTime").value=v.keyTime||"";
 document.getElementById(k+"ResultDate").value=v.resultDate||"";
 document.getElementById(k+"ResultTime").value=v.resultTime||"";
+document.getElementById(k+"AutoPublish").checked=v.autoPublish!==false;
+document.getElementById(k+"KeyDelay").value=v.keyDelay??2;
+document.getElementById(k+"ResultDelay").value=v.resultDelay??5;
 
 });
 
@@ -1519,7 +1542,10 @@ late:document.getElementById(prefix+"Late").value,
 keyDate:document.getElementById(k+"KeyDate").value,
 keyTime:document.getElementById(k+"KeyTime").value,
 resultDate:document.getElementById(k+"ResultDate").value,
-resultTime:document.getElementById(k+"ResultTime").value
+resultTime:document.getElementById(k+"ResultTime").value,
+autoPublish:document.getElementById(k+"AutoPublish").checked,
+keyDelay:document.getElementById(k+"KeyDelay").value,
+resultDelay:document.getElementById(k+"ResultDelay").value
 
 };
 
@@ -2038,17 +2064,27 @@ async function submitExam(auto){
  examQuestions.forEach((q,i)=>{let ans=examAnswers[i],isBonus=bonus.includes(i+1);if(!ans){unattempted++;return;}if(isBonus){bonusAttempted++;bonusMarks+=correctMark;total+=correctMark;}else if(ans===examKey[i+1]){correct++;total+=correctMark;}else{wrong++;total+=wrongMark;}});
  let attempted=Object.keys(examAnswers).filter(i=>examAnswers[i]).length,durationSeconds=Math.max(0,Math.floor((Date.now()-examStartedAt)/1000)),durationText=pvFormatDuration(durationSeconds),submittedAt=new Date().toISOString();
  let previousAttempts=0;if(pvSupabase){try{const {count,error}=await pvSupabase.from('exam_attempts').select('id',{count:'exact',head:true}).eq('paper',examPaper).eq('roll_number',examStudent.roll);if(!error)previousAttempts=count||0;}catch(e){console.warn('Attempt count lookup:',e.message);}}
- let result={paper:examPaper,student:examStudent,attemptNumber:previousAttempts+1,correct,wrong,unattempted,bonusQuestions:bonus,bonusAttempted,bonusMarks,total:total.toFixed(3),percentage:(total/200*100).toFixed(2),answers:{...examAnswers},questions:examQuestions.map(q=>({q:q.q,opts:q.opts,n:q.n})),answerKey:{...examKey},durationSeconds,durationText,startedAt:new Date(examStartedAt).toISOString(),submittedAt};
+ let result={paper:examPaper,student:examStudent,attemptNumber:previousAttempts+1,correct,wrong,unattempted,bonusQuestions:bonus,bonusAttempted,bonusMarks,total:total.toFixed(3),percentage:(total/200*100).toFixed(2),answers:{...examAnswers},questions:examQuestions.map(q=>({q:q.q,opts:q.opts,n:q.n})),answerKey:{...examKey},durationSeconds,durationText,startedAt:new Date(examStartedAt).toISOString(),submittedAt,autoPublish:schedule[examPaper]?.autoPublish!==false,keyPublishAt:Date.now()+Math.max(0,Number(schedule[examPaper]?.keyDelay??2))*60000,resultPublishAt:Date.now()+(Math.max(0,Number(schedule[examPaper]?.keyDelay??2))+Math.max(0,Number(schedule[examPaper]?.resultDelay??5)))*60000};
  localStorage.setItem('pvResult_'+examPaper+'_'+examStudent.roll,JSON.stringify(result));localStorage.setItem('pvResultHistory_'+examPaper+'_'+examStudent.roll+'_'+submittedAt,JSON.stringify(result));try{result.resultId=await pvCloudSaveResult(result);await pvCloudSaveAttempt(result);}catch(err){console.warn('Cloud result save failed:',err);}try{pvLoadStudentResultHistory();}catch(e){}
  localStorage.removeItem('pvExamActive');localStorage.removeItem('pvExam_'+examPaper+'_'+examStudent.roll);document.getElementById('examPanel').classList.add('hidden');document.getElementById('examResultPanel').classList.remove('hidden');
- let publishAt=getExamResultPublishTime(schedule,examPaper);if(publishAt&&Date.now()<publishAt){pvShowPendingResult(result,publishAt);}else{pvRenderResult(result);}
+ let publishAt=result.autoPublish?result.resultPublishAt:getExamResultPublishTime(schedule,examPaper);let keyAt=result.autoPublish?result.keyPublishAt:getExamKeyPublishTime(schedule,examPaper);if((keyAt&&Date.now()<keyAt)||(publishAt&&Date.now()<publishAt)){pvShowPendingResult(result,keyAt,publishAt);}else{pvRenderResult(result);}
 }
-function pvShowPendingResult(result,publishAt){
- const box=document.getElementById('examResultText');function update(){const left=Math.max(0,publishAt-Date.now());if(left<=0){clearInterval(window.pvResultCountdown);pvRenderResult(result);return;}const sec=Math.ceil(left/1000),h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s=sec%60;box.innerHTML='<div style="background:#fff7e6;border:1px solid #f3d28b;border-radius:12px;padding:18px;text-align:center"><h3>✅ परीक्षा सफलतापूर्वक Submit हो गई!</h3><p>आपका Result निर्धारित समय पर प्रकाशित होगा।</p><p><strong>Result Publish:</strong> '+new Date(publishAt).toLocaleString('en-IN')+'</p><p style="font-size:22px;font-weight:bold;color:#075b93">'+[h,m,s].map(x=>String(x).padStart(2,'0')).join(':')+'</p><p>Result प्रकाशित होते ही यह पेज स्वतः अपडेट होगा।</p></div>';}
+function pvAnswerKeyHTML(result){const qs=result.questions||[],key=result.answerKey||{};return '<section class="answer-sheet"><h3>📘 Answer Key</h3>'+qs.map((q,i)=>'<article class="answer-question"><h4>Question '+(i+1)+'. '+escapeHtml(q.q||'')+'</h4><ul>'+((q.opts||[]).map((o,j)=>'<li><strong>'+['A','B','C','D'][j]+'.</strong> '+escapeHtml(o)+'</li>').join(''))+'</ul><div class="answer-status">Correct Answer: <strong>'+escapeHtml(key[i+1]||'Not Available')+'</strong></div></article>').join('')+'</section>';}
+function pvShowPendingResult(result,keyPublishAt,resultPublishAt){
+ const box=document.getElementById('examResultText');
+ function fmtCountdown(target){const sec=Math.max(0,Math.ceil((target-Date.now())/1000)),h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s=sec%60;return [h,m,s].map(x=>String(x).padStart(2,'0')).join(':');}
+ function update(){
+  const now=Date.now(),keyReady=!keyPublishAt||now>=keyPublishAt,resultReady=!resultPublishAt||now>=resultPublishAt;
+  if(resultReady){clearInterval(window.pvResultCountdown);pvRenderResult(result);return;}
+  const keyCountdown=keyPublishAt?fmtCountdown(keyPublishAt):'00:00:00',resultCountdown=resultPublishAt?fmtCountdown(resultPublishAt):'00:00:00';
+  const stage=keyReady?'📘 Answer Key प्रकाशित हो चुकी है। अब Result का countdown चल रहा है।':'📘 Answer Key publish होने का countdown चल रहा है।';
+  box.innerHTML='<div style="background:#fff7e6;border:1px solid #f3d28b;border-radius:12px;padding:18px;text-align:center"><h3>✅ परीक्षा सफलतापूर्वक Submit हो गई!</h3><p>'+stage+'</p><div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0"><div style="background:#fff;border:1px solid #f3d28b;border-radius:10px;padding:12px;min-width:220px"><strong>📘 Answer Key Countdown</strong><div style="font-size:24px;font-weight:bold;color:#075b93;margin:8px 0">'+(keyReady?'PUBLISHED':keyCountdown)+'</div><small>'+(keyPublishAt?new Date(keyPublishAt).toLocaleString('en-IN'):'Publish time not set')+'</small></div><div style="background:#fff;border:1px solid #f3d28b;border-radius:10px;padding:12px;min-width:220px"><strong>🏆 Result Countdown</strong><div style="font-size:24px;font-weight:bold;color:#075b93;margin:8px 0">'+resultCountdown+'</div><small>'+(resultPublishAt?new Date(resultPublishAt).toLocaleString('en-IN'):'Publish time not set')+'</small></div></div>'+(keyReady?pvAnswerKeyHTML(result):'<p>Answer Key निर्धारित समय पर स्वतः प्रकाशित होगी।</p>')+'<p><strong>Result प्रकाशित होने पर यह पेज स्वतः अपडेट होगा।</strong></p></div>';
+ }
  update();window.pvResultCountdown=setInterval(update,1000);document.querySelector('#examResultPanel .pv-result-actions').innerHTML='<button class="btn secondary" onclick="printExamResult()">🖨 Print Submission</button><button class="btn primary" onclick="closeExam()">Close</button>';
 }
+function getExamKeyPublishTime(schedule,paper){let d=schedule?.[paper]?.keyDate,t=schedule?.[paper]?.keyTime;if(!d||!t)return 0;let stamp=new Date(d+'T'+t+':00').getTime();return Number.isFinite(stamp)?stamp:0;}
 function getExamResultPublishTime(schedule,paper){let d=schedule?.[paper]?.resultDate,t=schedule?.[paper]?.resultTime;if(!d||!t)return 0;let stamp=new Date(d+'T'+t+':00').getTime();return Number.isFinite(stamp)?stamp:0;}
-function checkExamResult(){let roll=examStudent.roll||JSON.parse(localStorage.getItem('pvExamActive')||'{}').roll;let result=JSON.parse(localStorage.getItem('pvResult_'+examPaper+'_'+roll)||'null');if(!result){alert('Result record nahi mila.');return;}Promise.resolve(pvCloudGetSchedule()).then(s=>{let at=getExamResultPublishTime(s||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}'),examPaper);if(at&&Date.now()<at){pvShowPendingResult(result,at);return;}pvRenderResult(result);});}
+function checkExamResult(){let roll=examStudent.roll||JSON.parse(localStorage.getItem('pvExamActive')||'{}').roll;let result=JSON.parse(localStorage.getItem('pvResult_'+examPaper+'_'+roll)||'null');if(!result){alert('Result record nahi mila.');return;}Promise.resolve(pvCloudGetSchedule()).then(s=>{let sch=s||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');let at=result.autoPublish?result.resultPublishAt:getExamResultPublishTime(sch,examPaper),keyAt=result.autoPublish?result.keyPublishAt:getExamKeyPublishTime(sch,examPaper);if((at&&Date.now()<at)||(keyAt&&Date.now()<keyAt)){pvShowPendingResult(result,keyAt,at);return;}pvRenderResult(result);});}
 function showExamResult(result){pvRenderResult(result);}
 async function pvLoadStudentResultHistory(){
  const body=document.getElementById("studentResultHistory");const status=document.getElementById("studentResultHistoryStatus");if(!body)return;
@@ -2059,7 +2095,7 @@ async function pvLoadStudentResultHistory(){
  if(!rows.length&&roll){try{const {data,error}=await pvSupabase.from("exam_results").select("id,paper,roll_number,result,created_at").eq("roll_number",roll).order("created_at",{ascending:false}).limit(100);if(!error)rows=data||[];}catch(e){}}
  // Include locally saved results as a fallback, deduplicated by submission timestamp.
  const local=[];for(const paper of ["gs","csat"]){if(roll){try{const latest=JSON.parse(localStorage.getItem("pvResult_"+paper+"_"+roll)||"null");if(latest)local.push({paper,roll_number:roll,result:latest,local:true});for(let j=0;j<localStorage.length;j++){const key=localStorage.key(j);if(key&&key.startsWith("pvResultHistory_"+paper+"_"+roll+"_")){const r=JSON.parse(localStorage.getItem(key)||"null");if(r)local.push({paper,roll_number:roll,result:r,local:true});}}}catch(e){}}}
- const merged=[...rows,...local].filter(x=>x.result);const seen=new Set();const all=merged.filter(x=>{const k=(x.result.paper||x.paper)+"|"+(x.result.student?.roll||x.roll_number||"")+"|"+(x.result.submittedAt||x.created_at||"");if(seen.has(k))return false;seen.add(k);return true;}).sort((a,b)=>Date.parse(b.result.submittedAt||b.created_at||0)-Date.parse(a.result.submittedAt||a.created_at||0));
+ const merged=[...rows,...local].filter(x=>x.result&&(!x.result.resultPublishAt||Date.now()>=Number(x.result.resultPublishAt)));const seen=new Set();const all=merged.filter(x=>{const k=(x.result.paper||x.paper)+"|"+(x.result.student?.roll||x.roll_number||"")+"|"+(x.result.submittedAt||x.created_at||"");if(seen.has(k))return false;seen.add(k);return true;}).sort((a,b)=>Date.parse(b.result.submittedAt||b.created_at||0)-Date.parse(a.result.submittedAt||a.created_at||0));
  if(!all.length){body.innerHTML='<tr><td colspan="5">अभी कोई result सुरक्षित नहीं है।</td></tr>';if(status)status.textContent="";return;}
  const counts={};all.forEach(x=>{const k=x.paper+"|"+(x.roll_number||x.result.student?.roll||"");counts[k]=(counts[k]||0)+1;});
  body.innerHTML=all.map((x,i)=>{const r=x.result,k=x.paper+"|"+(x.roll_number||r.student?.roll||""),attempt=r.attemptNumber||counts[k]-i;return `<tr><td>${(x.paper||r.paper||"").toUpperCase()}</td><td>${attempt||"—"}</td><td>${r.total||"0"}/200</td><td>${r.submittedAt?new Date(r.submittedAt).toLocaleString("en-IN"):"—"}</td><td><button class="btn secondary" onclick="pvStudentViewResult(${i})">View</button> <button class="btn secondary" onclick="pvStudentDownloadResult(${i})">Result</button> <button class="btn secondary" onclick="pvStudentDownloadAnswerKey(${i})">Answer Key</button></td></tr>`;}).join("");
@@ -2082,10 +2118,9 @@ function pvStudentDownloadAnswerKey(i){
 
 function pvLoadCombinedResults(){
  const status=document.getElementById('resultStatus'),body=document.getElementById('resultTableBody');if(!status||!body)return;
- (async()=>{const schedule=await pvCloudGetSchedule()||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}'),at=schedule.combinedResultDate&&schedule.combinedResultTime?new Date(schedule.combinedResultDate+'T'+schedule.combinedResultTime).getTime():0;
- if(at&&Date.now()<at){status.textContent='प्रकाशन शेष · '+new Date(at).toLocaleString('en-IN');body.innerHTML='<tr><td colspan="8" style="text-align:center;padding:22px">Combined Result निर्धारित समय पर प्रकाशित होगा।</td></tr>';return;}
+ (async()=>{const schedule=await pvCloudGetSchedule()||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}'),manualAt=schedule.combinedResultDate&&schedule.combinedResultTime?new Date(schedule.combinedResultDate+'T'+schedule.combinedResultTime).getTime():0;
  if(!pvSupabase){status.textContent='Cloud Result उपलब्ध नहीं';body.innerHTML='<tr><td colspan="8">Combined Result देखने के लिए Cloud Database connection आवश्यक है।</td></tr>';return;}
- try{const {data,error}=await pvSupabase.from('exam_results').select('paper,roll_number,result');if(error)throw error;let map={};(data||[]).forEach(row=>{let r=row.result||{},roll=row.roll_number||r.student?.roll;if(!roll)return;map[roll]=map[roll]||{roll,name:r.student?.name||row.student_name||'',category:r.student?.category||'',gs:null,csat:null};if(row.paper==='gs')map[roll].gs=r;if(row.paper==='csat')map[roll].csat=r;});let list=Object.values(map).filter(x=>x.gs&&x.csat).map(x=>({...x,total:Number(x.gs.total||0)+Number(x.csat.total||0),qualified:Number(x.csat.percentage||Number(x.csat.total||0)/200*100)>=33})).sort((a,b)=>b.total-a.total);status.textContent=list.length+' Combined Results Published';let category=window.pvResultCategory||'ALL';list=list.filter(x=>category==='ALL'||String(x.category||'').toUpperCase()===category);body.innerHTML=list.length?list.map((x,i)=>'<tr><td>'+(i+1)+'</td><td>'+escapeHtml(x.roll)+'</td><td>'+escapeHtml(x.name)+'</td><td>'+escapeHtml(x.category||'—')+'</td><td>'+Number(x.gs.total||0).toFixed(3)+'</td><td>'+Number(x.csat.total||0).toFixed(3)+'</td><td><strong>'+x.total.toFixed(3)+'</strong></td><td>'+(x.qualified?'QUALIFIED':'NOT QUALIFIED')+'</td></tr>').join(''):'<tr><td colspan="8" style="text-align:center;padding:22px">अभी Combined Result उपलब्ध नहीं है। दोनों पेपर के Results प्रकाशित होने के बाद यहाँ दिखेंगे।</td></tr>';
+ try{const {data,error}=await pvSupabase.from('exam_results').select('paper,roll_number,result');if(error)throw error;const csatPublishTimes=(data||[]).filter(row=>row.paper==='csat').map(row=>Number(row.result?.resultPublishAt||0)).filter(Boolean);const autoAt=csatPublishTimes.length?Math.max(...csatPublishTimes):0;const at=manualAt||autoAt;if(at&&Date.now()<at){status.textContent='Combined Result प्रकाशन शेष · '+new Date(at).toLocaleString('en-IN');body.innerHTML='<tr><td colspan="8" style="text-align:center;padding:22px">CSAT Result प्रकाशित होने के बाद Combined Result स्वतः उपलब्ध होगा।</td></tr>';return;}let map={};(data||[]).forEach(row=>{let r=row.result||{},roll=row.roll_number||r.student?.roll;if(!roll)return;map[roll]=map[roll]||{roll,name:r.student?.name||row.student_name||'',category:r.student?.category||'',gs:null,csat:null};if(row.paper==='gs')map[roll].gs=r;if(row.paper==='csat')map[roll].csat=r;});let list=Object.values(map).filter(x=>x.gs&&x.csat).map(x=>({...x,total:Number(x.gs.total||0)+Number(x.csat.total||0),qualified:Number(x.csat.percentage||Number(x.csat.total||0)/200*100)>=33})).sort((a,b)=>b.total-a.total);status.textContent=list.length+' Combined Results Published';let category=window.pvResultCategory||'ALL';list=list.filter(x=>category==='ALL'||String(x.category||'').toUpperCase()===category);body.innerHTML=list.length?list.map((x,i)=>'<tr><td>'+(i+1)+'</td><td>'+escapeHtml(x.roll)+'</td><td>'+escapeHtml(x.name)+'</td><td>'+escapeHtml(x.category||'—')+'</td><td>'+Number(x.gs.total||0).toFixed(3)+'</td><td>'+Number(x.csat.total||0).toFixed(3)+'</td><td><strong>'+x.total.toFixed(3)+'</strong></td><td>'+(x.qualified?'QUALIFIED':'NOT QUALIFIED')+'</td></tr>').join(''):'<tr><td colspan="8" style="text-align:center;padding:22px">अभी Combined Result उपलब्ध नहीं है। दोनों पेपर के Results प्रकाशित होने के बाद यहाँ दिखेंगे।</td></tr>';
  }catch(e){status.textContent='Result fetch नहीं हो पाया';body.innerHTML='<tr><td colspan="8">Cloud Result पढ़ने में समस्या: '+escapeHtml(e.message||e)+'</td></tr>';}
  })();
 }
