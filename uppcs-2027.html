@@ -51,6 +51,14 @@ footer{background:#06172a;color:#fff;padding:22px 5%;font-size:13px;display:flex
   .brand{font-size:12px}
 }
 
+
+/* Overview card reading scroll */
+.overview-card details{max-height:420px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#9bb8d2 #edf3f8;padding-right:8px}
+.overview-card details[open] summary{position:sticky;top:0;background:#fff;padding:8px 0;z-index:2}
+.overview-card details::-webkit-scrollbar{width:7px}
+.overview-card details::-webkit-scrollbar-track{background:#edf3f8;border-radius:8px}
+.overview-card details::-webkit-scrollbar-thumb{background:#9bb8d2;border-radius:8px}
+@media(max-width:600px){.overview-card details{max-height:360px}}
 </style>
 </head>
 <body>
