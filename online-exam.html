@@ -795,6 +795,11 @@ Instructions
 </div>
 
 <div class="notice">आपके सभी परीक्षा परिणाम यहाँ attempt-wise सुरक्षित रहेंगे। किसी भी पुराने result को View, Download या Print कर सकते हैं।</div>
+<section class="admin-section" id="studentPendingTimers" style="margin:14px 0;border:1px solid #f3d28b;background:#fffaf0">
+<h3>⏳ Pending Answer Key / Result Countdown</h3>
+<p>Exam submit करने के बाद आप पढ़ाई जारी रख सकते हैं। यहाँ वापस आकर Answer Key और Result का live countdown देख सकते हैं।</p>
+<div id="studentPendingTimerList">Login करने के बाद pending countdown यहाँ दिखाई देगा।</div>
+</section>
 <section class="admin-section" style="margin:14px 0">
 <h3>📊 My Result History</h3>
 <p>हर attempt का result अलग सुरक्षित रहेगा।</p>
@@ -2058,7 +2063,24 @@ function getExamKeyPublishTime(schedule,paper){let d=schedule?.[paper]?.keyDate,
 function getExamResultPublishTime(schedule,paper){let d=schedule?.[paper]?.resultDate,t=schedule?.[paper]?.resultTime;if(!d||!t)return 0;let stamp=new Date(d+'T'+t+':00').getTime();return Number.isFinite(stamp)?stamp:0;}
 function checkExamResult(){let roll=examStudent.roll||JSON.parse(localStorage.getItem('pvExamActive')||'{}').roll;let result=JSON.parse(localStorage.getItem('pvResult_'+examPaper+'_'+roll)||'null');if(!result){alert('Result record nahi mila.');return;}Promise.resolve(pvCloudGetSchedule()).then(s=>{let sch=s||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');let at=result.autoPublish?result.resultPublishAt:getExamResultPublishTime(sch,examPaper),keyAt=result.autoPublish?result.keyPublishAt:getExamKeyPublishTime(sch,examPaper);if((at&&Date.now()<at)||(keyAt&&Date.now()<keyAt)){pvShowPendingResult(result,keyAt,at);return;}pvRenderResult(result);});}
 function showExamResult(result){pvRenderResult(result);}
+function pvStudentPendingCountdownStart(){
+ const host=document.getElementById("studentPendingTimerList");if(!host)return;
+ if(window.pvStudentPendingTimer)clearInterval(window.pvStudentPendingTimer);
+ async function update(){
+  let roll=(document.getElementById("studentRoll")?.textContent||"").trim();
+  try{const session=await pvGetStudentSession();if(session?.user?.email){const profile=pvLoadExamProfile(session.user.email);roll=profile.roll||roll;}}catch(e){}
+  if(!roll||roll==="Not Logged In"){host.innerHTML="Student login करने के बाद countdown यहाँ दिखेगा।";return;}
+  const items=[];for(const paper of ["gs","csat"]){try{const latest=JSON.parse(localStorage.getItem("pvResult_"+paper+"_"+roll)||"null");if(latest)items.push(latest);for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith("pvResultHistory_"+paper+"_"+roll+"_")){const r=JSON.parse(localStorage.getItem(k)||"null");if(r)items.push(r);}}}catch(e){}}
+  const uniq=[...new Map(items.map(r=>[(r.paper||"")+"|"+(r.submittedAt||""),r])).values()].filter(r=>Number(r.resultPublishAt)>Date.now()||Number(r.keyPublishAt)>Date.now()).sort((a,b)=>Number(b.submittedAt||0)-Number(a.submittedAt||0));
+  if(!uniq.length){host.innerHTML="अभी कोई pending Answer Key या Result countdown नहीं है।";return;}
+  const fmt=t=>{const sec=Math.max(0,Math.ceil((Number(t)-Date.now())/1000)),h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s=sec%60;return [h,m,s].map(x=>String(x).padStart(2,"0")).join(":");};
+  host.innerHTML=uniq.map(r=>{const keyAt=Number(r.keyPublishAt||0),resultAt=Number(r.resultPublishAt||0),paper=(r.paper||"").toUpperCase(),attempt=r.attemptNumber||1;return `<div style="background:#fff;border:1px solid #f3d28b;border-radius:10px;padding:12px;margin:8px 0"><strong>${paper} · Attempt ${attempt}</strong><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"><div><small>📘 Answer Key</small><div style="font-size:22px;font-weight:700;color:#075b93">${keyAt&&Date.now()<keyAt?fmt(keyAt):"PUBLISHED"}</div></div><div><small>🏆 Result</small><div style="font-size:22px;font-weight:700;color:#075b93">${resultAt&&Date.now()<resultAt?fmt(resultAt):"PUBLISHED"}</div></div></div><small>Submitted: ${r.submittedAt?new Date(r.submittedAt).toLocaleString("en-IN"):"—"}</small></div>`;}).join("");
+ }
+ update();window.pvStudentPendingTimer=setInterval(update,1000);
+}
+
 async function pvLoadStudentResultHistory(){
+ try{pvStudentPendingCountdownStart();}catch(e){}
  const body=document.getElementById("studentResultHistory");const status=document.getElementById("studentResultHistoryStatus");if(!body)return;
  const session=await pvGetStudentSession();if(!session?.user){body.innerHTML='<tr><td colspan="5">Student login करें ताकि आपके results दिखाई दें।</td></tr>';if(status)status.textContent="";return;}
  const user=session.user;let rows=[];
