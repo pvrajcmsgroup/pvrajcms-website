@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="PV Education UPPCS Mission Selection preparation course">
+<title>UPPCS Mission Selection | PV Education</title>
+<style>
+:root{--navy:#06172a;--blue:#087bd8;--cyan:#18c4e8;--ink:#10213b;--muted:#607087;--bg:#f4f8fc;--line:#dce7f1}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}a{text-decoration:none;color:inherit}
+header{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;border-bottom:1px solid #24435f}.nav{max-width:1200px;margin:auto;min-height:70px;padding:10px 20px;display:flex;align-items:center;gap:20px}.brand{font-weight:900;letter-spacing:.5px}.brand span{color:#42d4f2}.links{margin-left:auto;display:flex;gap:22px;font-size:14px;font-weight:700}.links a:hover{color:#43d5f2}.menu{display:none;background:transparent;border:1px solid #56718a;color:white;border-radius:8px;padding:8px 12px}
+.hero{background:linear-gradient(115deg,#06172a,#0b3456 60%,#087a9a);color:#fff}.hero-inner{max-width:1200px;margin:auto;padding:45px 24px 40px}.eyebrow{display:inline-block;color:#8eeaff;background:#0e4963;border:1px solid #267b9a;padding:7px 13px;border-radius:30px;font-size:12px;letter-spacing:1px;font-weight:800}.hero h1{font-size:clamp(34px,5vw,54px);line-height:1.08;margin:16px 0 10px}.hero p{color:#d5e7f6;line-height:1.7;max-width:850px}.buttons{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:10px;font-weight:800;border:1px solid transparent}.primary{background:var(--blue);color:white}.outline{border-color:#8aa8c4;color:white}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px}.stat{background:#ffffff12;border:1px solid #ffffff25;border-radius:12px;padding:15px}.stat strong{display:block;font-size:22px;margin-bottom:5px}.stat span{font-size:13px;color:#d5e7f6}
+.section{max-width:1200px;margin:auto;padding:42px 22px}.section-title{margin:0 0 8px;font-size:28px}.section-intro{color:var(--muted);margin:0 0 24px;line-height:1.6}.phase-label{display:inline-block;background:#e5f4ff;color:#087bd8;padding:6px 11px;border-radius:20px;font-size:12px;font-weight:800;margin-bottom:12px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:21px;box-shadow:0 6px 20px #0b345608}.card h3{margin:0 0 9px;font-size:18px}.card p{color:var(--muted);line-height:1.65;margin:0}.icon{font-size:28px;margin-bottom:10px}
+.subject-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.subject{background:#fff;border:1px solid var(--line);border-radius:11px;padding:13px;font-size:14px}.subject strong{display:block;margin-bottom:5px}.subject span{color:var(--muted);font-size:12px}
+.tint{background:#eaf4fc;border-top:1px solid #d8e8f5;border-bottom:1px solid #d8e8f5}.revision-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.rev{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}.rev strong{display:block;margin-bottom:5px}.rev span{color:var(--muted);font-size:13px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}th,td{text-align:left;padding:14px;border-bottom:1px solid var(--line);font-size:14px}th{background:#e5f4ff;color:#12324d}tr:last-child td{border-bottom:0}
+.rule{background:linear-gradient(100deg,#06172a,#075ca5);color:#fff;border-radius:16px;padding:25px}.rule h2{margin-top:0}.rule p{line-height:1.7;color:#d7eaff;margin-bottom:0}
+footer{background:#06172a;color:#fff;padding:22px 5%;font-size:13px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}footer a{color:#7dd3fc;text-decoration:none}footer a:hover{text-decoration:underline}
+@media(max-width:900px){.grid3{grid-template-columns:repeat(2,1fr)}.subject-grid{grid-template-columns:repeat(3,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.nav{min-height:62px;padding:9px 14px}.menu{display:block;margin-left:auto}.links{display:none;position:absolute;top:62px;left:0;right:0;background:var(--navy);padding:16px 22px;flex-direction:column;border-top:1px solid #29455e}.links.open{display:flex}.hero-inner{padding:30px 17px}.hero h1{font-size:36px}.section{padding:34px 15px}.grid3,.revision-grid{grid-template-columns:1fr}.subject-grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.section-title{font-size:24px}table{display:block;overflow-x:auto;white-space:nowrap}}
+
+/* Mobile-first refinements */
+@media(max-width:600px){
+  body{font-size:15px}
+  .brand{font-size:14px;white-space:nowrap}
+  .hero h1{font-size:clamp(30px,9vw,38px);line-height:1.12}
+  .hero p{font-size:15px}
+  .buttons{display:grid;grid-template-columns:1fr;gap:10px}
+  .btn{width:100%;padding:13px 15px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .stat{padding:12px 10px}
+  .stat strong{font-size:19px}
+  .stat span{font-size:12px;line-height:1.4}
+  .section{padding:28px 14px}
+  .section-title{font-size:22px;line-height:1.25}
+  .section-intro{font-size:14px}
+  .card{padding:17px}
+  .subject-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .subject{padding:11px;font-size:13px;line-height:1.4;overflow-wrap:anywhere}
+  .revision-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .rev{padding:13px}
+  .rule{padding:19px}
+  table{min-width:560px}
+  footer{padding:20px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:9px;font-size:12px}
+  footer span{line-height:1.5}
+}
+@media(max-width:360px){
+  .stats{grid-template-columns:1fr}
+  .subject-grid,.revision-grid{grid-template-columns:1fr}
+  .nav{gap:8px}
+  .brand{font-size:12px}
+}
+
+</style>
+</head>
+<body>
+<header><nav class="nav"><a class="brand" href="pv-education.html">PV EDUCATION <span>| UPPCS</span></a><button class="menu" onclick="document.querySelector('.links').classList.toggle('open')" aria-label="Menu">☰</button><div class="links"><a href="#overview">Overview</a><a href="#foundation">Foundation</a><a href="#subjects">Subjects</a><a href="#deep-study">Deep Study</a><a href="#tests">Tests</a></div></nav></header>
+<section class="hero"><div class="hero-inner"><span class="eyebrow">PV Education • UPPCS Mission</span><h1>Mission Selection</h1><p>एक व्यवस्थित तैयारी यात्रा — Foundation से Deep Study, Revision और Test Series तक। अपने लक्ष्य को छोटे daily targets में बाँटिए और लगातार आगे बढ़िए।</p><div class="buttons"><a class="btn primary" href="#foundation">अपनी तैयारी शुरू करें →</a><a class="btn outline" href="#plan">पूरा Course Plan देखें</a></div><div class="stats"><div class="stat"><strong>60–70 Days</strong><span>Foundation Phase</span></div><div class="stat"><strong>16 Areas</strong><span>Complete Preparation Map</span></div><div class="stat"><strong>4 Phases</strong><span>Foundation • Deep Study • Revision • Tests</span></div><div class="stat"><strong>2027</strong><span>Target Examination</span></div></div></div></section>
+<section class="section" id="foundation"><span class="phase-label">Phase 01</span><h2 class="section-title">Phase 1 — Foundation Course</h2><p class="section-intro">लगभग 60–70 दिन • Basic understanding और syllabus mapping</p><div class="grid3"><div class="card"><div class="icon">📘</div><h3>Basic Concept Classes</h3><p>हर विषय के मूल concepts को सरल भाषा में समझना और syllabus की मजबूत नींव बनाना।</p></div><div class="card"><div class="icon">📝</div><h3>Short Notes</h3><p>प्रत्येक class के compact notes, महत्वपूर्ण तथ्य और revision points तैयार करना।</p></div><div class="card"><div class="icon">🎯</div><h3>Practice & Homework</h3><p>Topic के बाद MCQs, homework और छोटे revision tasks से सीखने की जाँच।</p></div></div></section>
+<section class="section" id="subjects"><h2 class="section-title">Foundation Subjects</h2><p class="section-intro">आपके निर्धारित Study Plan के अनुसार विषयवार अध्ययन</p><div class="subject-grid"><div class="subject"><strong>🏛️ History</strong><span>Ancient • Medieval • Modern</span></div><div class="subject"><strong>🌍 Geography</strong><span>Physical • India • World</span></div><div class="subject"><strong>⚖️ Polity</strong><span>Constitution & Governance</span></div><div class="subject"><strong>💹 Economy</strong><span>Basic to Indian Economy</span></div><div class="subject"><strong>🌱 Environment</strong><span>Ecology & Issues</span></div><div class="subject"><strong>🔬 Science & Technology</strong><span>General Science + Applied</span></div><div class="subject"><strong>👥 Indian Society</strong><span>Social Issues & Structure</span></div><div class="subject"><strong>🌐 International Relations</strong><span>India & World</span></div><div class="subject"><strong>🛡️ Internal Security</strong><span>Security Challenges</span></div><div class="subject"><strong>🚨 Disaster Management</strong><span>Preparedness & Response</span></div><div class="subject"><strong>🧭 Ethics</strong><span>Values & Case Studies</span></div><div class="subject"><strong>उत्तर प्रदेश विशेष</strong><span>UP History • Geography • Economy</span></div><div class="subject"><strong>📰 Current Affairs</strong><span>Exam-oriented updates</span></div><div class="subject"><strong>✍️ General Hindi</strong><span>Grammar • Writing • Literature</span></div><div class="subject"><strong>🖋️ Essay</strong><span>Structure & Practice</span></div><div class="subject"><strong>🧠 CSAT</strong><span>Maths • Reasoning • Comprehension</span></div></div></section>
+<section class="section tint" id="deep-study"><span class="phase-label">Phase 02</span><h2 class="section-title">Phase 2 — Deep Study</h2><p class="section-intro">Foundation के बाद विषयों का विस्तृत और परीक्षा-केंद्रित अध्ययन</p><div class="grid3"><div class="card"><div class="icon">📚</div><h3>Detailed Study</h3><p>Standard sources के आधार पर concepts, facts और syllabus के प्रत्येक महत्वपूर्ण हिस्से का विस्तार।</p></div><div class="card"><div class="icon">📌</div><h3>PYQ Integration</h3><p>Previous Year Questions के माध्यम से प्रश्नों की प्रकृति और महत्वपूर्ण topics की पहचान।</p></div><div class="card"><div class="icon">✍️</div><h3>Mains Answer Writing</h3><p>उत्तर की संरचना, introduction, body, conclusion, examples और नियमित answer practice।</p></div></div></section>
+<section class="section" id="revision"><span class="phase-label">Phase 03</span><h2 class="section-title">Phase 3 — Revision Plan</h2><p class="section-intro">बार-बार दोहराव और कमजोर विषयों पर विशेष ध्यान</p><div class="revision-grid"><div class="rev"><strong>Revision 1</strong><span>Detailed Notes</span></div><div class="rev"><strong>Revision 2</strong><span>Short Notes</span></div><div class="rev"><strong>Revision 3</strong><span>Facts & PYQs</span></div><div class="rev"><strong>Weak Areas</strong><span>Targeted Practice</span></div><div class="rev"><strong>Rapid Review</strong><span>Important Topics</span></div><div class="rev"><strong>Final Revision</strong><span>Exam Readiness</span></div></div></section>
+<section class="section tint" id="tests"><span class="phase-label">Phase 04</span><h2 class="section-title">Phase 4 — Test Series</h2><p class="section-intro">Knowledge को exam performance में बदलने का चरण</p><table><thead><tr><th>Test</th><th>उद्देश्य</th><th>Frequency</th></tr></thead><tbody><tr><td>Daily Quiz</td><td>आज पढ़े Topic की जाँच</td><td>Daily</td></tr><tr><td>Topic Test</td><td>Chapter-wise तैयारी</td><td>Topic Complete होने पर</td></tr><tr><td>Subject Test</td><td>पूरे Subject का मूल्यांकन</td><td>Subject Complete होने पर</td></tr><tr><td>Prelims Mock</td><td>Speed, accuracy और exam practice</td><td>Revision Phase</td></tr><tr><td>Mains Test</td><td>Answer writing एवं समय प्रबंधन</td><td>Deep Study + Revision</td></tr></tbody></table></section>
+<section class="section" id="plan"><div class="rule"><h2>📅 हमारा Study Rule</h2><p><strong>आपके व्यक्तिगत Study Plan में जो Topic अगला होगा, वही वेबसाइट पर अगली Class बनेगी।</strong><br>आपकी पढ़ाई, Notes, MCQs, Homework और Revision को एक ही क्रम में Course के रूप में व्यवस्थित किया जाएगा। कोई अलग syllabus या अलग planning नहीं होगी।</p></div></section>
+<footer><span>© 2026 PV Education · A Unit of PVrajCMS Group</span><span><a href="index.html">Main Website</a> · <a href="contact.html">Contact</a></span></footer>
+</body></html>
