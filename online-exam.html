@@ -2300,9 +2300,62 @@ async function beginExam(){const session=await pvGetStudentSession();if(!session
 let examOneMinuteAlertShown=false;
 function updateExamTimer(){let left=Math.max(0,Math.floor((examEndAt-Date.now())/1000));document.getElementById('examTimer').textContent=[Math.floor(left/3600),Math.floor(left%3600/60),left%60].map(x=>String(x).padStart(2,'0')).join(':');let count=Object.keys(examAnswers).filter(i=>examAnswers[i]).length;let countEl=document.getElementById('examAttemptCount');if(countEl)countEl.textContent='Attempted: '+count+' / '+examQuestions.length;if(left<=60&&left>0&&!examOneMinuteAlertShown){examOneMinuteAlertShown=true;alert('⚠️ केवल 1 मिनट बचा है! कृपया अपना पेपर Submit करने के लिए तैयार रहें।');}if(left<=0)submitExam(true);}
 function formatExamQuestionText(value){
- const normalized=String(value??'').replace(/<br\s*\/?\s*>/gi,'\n').replace(/\r\n?/g,'\n');
- const safe=escapeHtml(normalized);
- return safe.replace(/\*\*(.+?)\*\*/gs,'<strong>$1</strong>').replace(/\n/g,'<br>');
+ // प्रश्न के स्रोत में मौजूद line breaks/markup को पहले सामान्य रूप दें।
+ let raw=String(value??'')
+  .replace(/<br\s*\/?\s*>/gi,'\n')
+  .replace(/&#x0*a0;|&#160;|&#x0*20;|&#32;/gi,' ')
+  .replace(/\r\n?/g,'\n')
+  .replace(/\*\*/g,'')
+  .replace(/[ \t]+/g,' ')
+  .trim();
+ if(!raw)return '';
+ const instructionRe=/(नीचे दिए गए कूट से सही उत्तर चुनिए|नीचे दिये गये कूट से सही उत्तर चुनिए|कूट की सहायता से सही उत्तर चुनिए|सही विकल्प चुनिए)[।.]?/i;
+ const instructionMatch=instructionRe.exec(raw);
+ const instruction=instructionMatch?raw.slice(instructionMatch.index).trim().replace(/[।.]?$/,'।'):'';
+ let body=instructionMatch?raw.slice(0,instructionMatch.index).trim():raw;
+ // Numbered statements: only split when the question is clearly statement-based,
+ // so years, decimals, question numbers and ordinary prose are not broken apart.
+ const numbered=/((?:^|\s)([1-9]\d?)\.[ \t]+)/g;
+ const marks=[...body.matchAll(numbered)];
+ const statementQuestion=marks.length>=2 && (/(कथन|निम्नलिखित कथनों|कौन-सा\/से|कौन सा\/से|सही है\/हैं|सही हैं)/i.test(body) || !!instructionMatch);
+ if(statementQuestion){
+  // Use the exact marker position while retaining any heading before statement 1.
+  const firstMarker=marks[0].index + (marks[0][0].startsWith(' ')?1:0);
+  const heading=body.slice(0,firstMarker).trim();
+  const statements=[];
+  for(let i=0;i<marks.length;i++){
+   const m=marks[i];
+   const contentStart=m.index+m[0].length;
+   const contentEnd=i+1<marks.length?marks[i+1].index:body.length;
+   const content=body.slice(contentStart,contentEnd).trim();
+   if(content)statements.push(m[2]+'. '+content);
+  }
+  if(heading && statements.length>=2){
+   const rows=[{text:heading,bold:true},...statements.map(text=>({text,bold:true}))];
+   if(instruction)rows.push({text:instruction,bold:true});
+   return rows.map(row=>'<strong>'+formatExamInline(row.text)+'</strong>').join('<br>');
+  }
+ }
+ // Matching/list questions: preserve their own structure and give each list/code
+ // its own line when the source contains recognizable list labels.
+ const lines=body.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+ const hasMatchingLabels=/(सूची\s*[-–—]?(?:I|II|1|2)|स्तम्भ\s*[-–—]?(?:I|II|1|2)|कूट\s*[:：-])/i.test(body);
+ if(hasMatchingLabels && lines.length>1){
+  const out=lines.map(line=>'<strong>'+formatExamInline(line)+'</strong>');
+  if(instruction)out.push('<strong>'+formatExamInline(instruction)+'</strong>');
+  return out.join('<br>');
+ }
+ // सामान्य/अनुच्छेद आधारित प्रश्नों में मूल पैराग्राफ संरचना बनी रहती है।
+ let result=body.split(/\n+/).map(line=>formatExamInline(line.trim())).filter(Boolean).join('<br>');
+ if(instruction)result+=(result?'<br>':'')+'<strong>'+formatExamInline(instruction)+'</strong>';
+ return result;
+}
+function formatExamInline(value){
+ // Escape first; only then allow the small **bold** markup used in question CSVs.
+ return String(value??'').split(/(\*\*[^*]+\*\*)/g).map(part=>{
+  if(part.startsWith('**')&&part.endsWith('**'))return '<strong>'+escapeHtml(part.slice(2,-2))+'</strong>';
+  return escapeHtml(part);
+ }).join('');
 }
 function renderExamQuestion(){let q=examQuestions[examIndex];examVisited.add(examIndex);let imageUrl=pvFindExamImage(q.image);document.getElementById('examQuestionArea').innerHTML='<strong>Question '+(examIndex+1)+' / '+examQuestions.length+'</strong><p>'+formatExamQuestionText(q.q)+'</p>'+(imageUrl?'<div class="pv-question-image-wrap"><img class="pv-question-image" src="'+imageUrl+'" alt="Question diagram" loading="lazy"></div>':'');let letters=['A','B','C','D'];document.getElementById('examOptions').innerHTML=q.opts.slice(0,4).map((o,i)=>'<label style="display:block;background:#f5f9fc;border:1px solid #dce7f1;border-radius:10px;padding:12px;margin:8px 0;cursor:pointer"><input type="radio" name="examOption" value="'+letters[i]+'" '+(examAnswers[examIndex]===letters[i]?'checked':'')+' onchange="examAnswers[examIndex]=this.value;saveExamProgress()"> <strong>'+letters[i]+'.</strong> '+escapeHtml(o)+'</label>').join('');renderPalette();}
 function renderPalette(){document.getElementById('examPalette').innerHTML=examQuestions.map((q,i)=>{let cls=examAnswers[i]?'palette-answered':examReview.has(i)?'palette-review':examVisited.has(i)?'palette-unanswered':'palette-unvisited';if(i===examIndex)cls+=' palette-current';return '<button class="'+cls+'" aria-label="Question '+(i+1)+'" onclick="examIndex='+i+';examVisited.add('+i+');renderExamQuestion();saveExamProgress()">'+(i+1)+(examReview.has(i)?' ★':'')+'</button>';}).join('');}
