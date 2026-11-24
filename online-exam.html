@@ -899,7 +899,7 @@ onclick="document.querySelector('.navlinks').classList.toggle('open')">
 </div>
 
 <div class="card-actions">
-<button class="btn primary" onclick="openExam('gs')">
+<button class="btn primary" type="button" onclick="window.location.href='login.html?redirect='+encodeURIComponent('online-exam.html')+'&paper=gs'">
 Login & Start Examination →
 </button>
 <button class="btn secondary" onclick="showInstructions('GS Paper-I')">
@@ -944,7 +944,7 @@ CSAT पेपर के लिए अलग Login/Start विकल्प ह�
 </div>
 
 <div class="card-actions">
-<button class="btn primary" onclick="openExam('csat')">
+<button class="btn primary" type="button" onclick="window.location.href='login.html?redirect='+encodeURIComponent('online-exam.html')+'&paper=csat'">
 Login & Start Examination →
 </button>
 <button class="btn secondary" onclick="showInstructions('CSAT Paper-II')">
