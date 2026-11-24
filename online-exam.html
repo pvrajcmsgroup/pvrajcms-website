@@ -899,7 +899,7 @@ onclick="document.querySelector('.navlinks').classList.toggle('open')">
 </div>
 
 <div class="card-actions">
-<button class="btn primary" onclick="openExam('gs')">
+<button class="btn primary" type="button" onclick="window.location.href='login.html?redirect='+encodeURIComponent('online-exam.html')+'&paper=gs'">
 Login & Start Examination →
 </button>
 <button class="btn secondary" onclick="showInstructions('GS Paper-I')">
@@ -944,7 +944,7 @@ CSAT पेपर के लिए अलग Login/Start विकल्प ह�
 </div>
 
 <div class="card-actions">
-<button class="btn primary" onclick="openExam('csat')">
+<button class="btn primary" type="button" onclick="window.location.href='login.html?redirect='+encodeURIComponent('online-exam.html')+'&paper=csat'">
 Login & Start Examination →
 </button>
 <button class="btn secondary" onclick="showInstructions('CSAT Paper-II')">
@@ -2307,10 +2307,7 @@ function renderExamQuestion(){
  // CSV में <br>, <br/> या वास्तविक newline को सुरक्षित line break में बदलें।
  // बाकी question text escape रहता है, इसलिए HTML injection नहीं होता।
  const questionParts=String(q.q||'').split(/<br\\s*\\/?\\s*>|\\r?\\n/i);
- const questionHtml=questionParts.map(part=>{
-  const safe=escapeHtml(part.trim());
-  return safe.replace(/\\*\\*(.+?)\\*\\*/g,'<strong>$1</strong>');
- }).join('<br>');
+ const questionHtml=questionParts.map(part=>escapeHtml(part.trim())).join('<br>');
 
  document.getElementById('examQuestionArea').innerHTML=
   '<strong>Question '+(examIndex+1)+' / '+examQuestions.length+'</strong>'+
