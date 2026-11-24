@@ -619,189 +619,6 @@ flex-direction:column
 }
 </style>
 
-
-<style id="pv-exam-gap-final-fix">
-/* Final fix: prevent grid rows from stretching and keep options directly under question */
-#examModal #examPanel:not(.hidden) {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) 290px !important;
-  grid-template-rows: auto max-content max-content auto !important;
-  grid-template-areas:
-    "head head"
-    "question palette"
-    "options palette"
-    "controls controls" !important;
-  align-content: start !important;
-  align-items: start !important;
-  justify-content: stretch !important;
-  gap: 8px 10px !important;
-  min-height: 0 !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-}
-#examModal #examQuestionArea {
-  grid-area: question !important;
-  align-self: start !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  margin: 0 !important;
-  overflow: visible !important;
-}
-#examModal #examQuestionArea .exam-question-image-wrap {
-  display: block !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  margin: 8px auto 0 !important;
-  text-align: center !important;
-}
-#examModal #examQuestionArea .exam-question-image {
-  display: block !important;
-  width: auto !important;
-  height: auto !important;
-  max-width: 100% !important;
-  max-height: min(38vh, 320px) !important;
-  object-fit: contain !important;
-  margin: 0 auto !important;
-}
-#examModal #examOptions {
-  grid-area: options !important;
-  align-self: start !important;
-  height: max-content !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 7px !important;
-  overflow: visible !important;
-}
-#examModal #examOptions label {
-  flex: 0 0 auto !important;
-  margin: 0 !important;
-}
-#examModal #examPaletteWrap {
-  grid-area: palette !important;
-  align-self: start !important;
-}
-#examModal .exam-controls {
-  grid-area: controls !important;
-  align-self: end !important;
-}
-@media (max-width: 800px) {
-  #examModal #examPanel:not(.hidden) {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    justify-content: flex-start !important;
-    gap: 8px !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-  }
-  #examModal #examQuestionArea,
-  #examModal #examOptions {
-    width: 100% !important;
-    height: auto !important;
-    max-height: none !important;
-    min-height: 0 !important;
-    overflow: visible !important;
-    flex: 0 0 auto !important;
-  }
-  #examModal #examOptions { gap: 7px !important; }
-  #examModal #examQuestionArea .exam-question-image {
-    max-height: min(36vh, 280px) !important;
-    max-width: 100% !important;
-  }
-  #examModal .exam-controls {
-    position: sticky !important;
-    bottom: 0 !important;
-    z-index: 30 !important;
-    background: #f5f7fb !important;
-  }
-}
-</style>
-
-
-<style id="pv-mobile-image-scroll-fix">
-/* Mobile CBT: one continuous vertical scroll so the full diagram and options remain reachable */
-@media (max-width: 800px) {
-  #examModal,
-  #examModal .modal-box {
-    height: 100dvh !important;
-    max-height: 100dvh !important;
-    overflow: hidden !important;
-  }
-  #examModal .modal-box {
-    display: flex !important;
-    flex-direction: column !important;
-    min-height: 0 !important;
-  }
-  #examModal #examPanel:not(.hidden) {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    justify-content: flex-start !important;
-    flex: 1 1 auto !important;
-    width: 100% !important;
-    min-height: 0 !important;
-    height: auto !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    overscroll-behavior-y: contain !important;
-    -webkit-overflow-scrolling: touch !important;
-    gap: 8px !important;
-  }
-  #examModal #examQuestionArea {
-    flex: 0 0 auto !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    overflow: visible !important;
-  }
-  #examModal #examQuestionArea .exam-question-image-wrap {
-    display: block !important;
-    width: 100% !important;
-    height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-    margin: 8px auto 2px !important;
-  }
-  #examModal #examQuestionArea .exam-question-image {
-    display: block !important;
-    width: auto !important;
-    height: auto !important;
-    max-width: 100% !important;
-    max-height: none !important;
-    object-fit: contain !important;
-    margin: 0 auto !important;
-  }
-  #examModal #examOptions {
-    flex: 0 0 auto !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    overflow: visible !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 6px !important;
-  }
-  #examModal #examOptions label {
-    flex: 0 0 auto !important;
-    min-height: 38px !important;
-  }
-  #examModal .exam-controls {
-    position: sticky !important;
-    bottom: 0 !important;
-    flex: 0 0 auto !important;
-    z-index: 30 !important;
-    background: #f5f7fb !important;
-  }
-}
-</style>
-
 </head>
 
 <body>
@@ -1302,8 +1119,7 @@ Category-wise Merit List में संबंधित Category के वि�
 <!-- GS UPLOAD -->
 <div class="admin-section">
 <h4>GS Paper-I</h4>
-<label>Online Questions CSV/TXT (Question | Option A | Option B | Option C | Option D | Image filename)</label><input type="file" id="gsQuestionsFile" accept=".csv,.txt"><button class="btn primary" onclick="saveExamFile('gsQuestionsFile','gsQuestions')">Upload Online GS Questions</button>
-<label style="margin-top:12px">Question Diagrams / Images (एक ZIP या कई image files चुनें)</label><input type="file" id="gsImagesFile" accept=".zip,image/*" multiple><button class="btn secondary" onclick="saveExamImages('gsImagesFile','gsImages')">Upload GS Images / ZIP</button>
+<label>Online Questions CSV/TXT (Question | Option A | Option B | Option C | Option D)</label><input type="file" id="gsQuestionsFile" accept=".csv,.txt"><button class="btn primary" onclick="saveExamFile('gsQuestionsFile','gsQuestions')">Upload Online GS Questions</button>
 
 <label>Question Paper (PDF/CSV/TXT)
 <input type="file" id="gsPaperFile" accept=".pdf,.csv,.txt">
@@ -1329,8 +1145,7 @@ Upload / Replace GS Answer Key
 <!-- CSAT UPLOAD -->
 <div class="admin-section">
 <h4>CSAT Paper-II</h4>
-<label>Online Questions CSV/TXT (Question | Option A | Option B | Option C | Option D | Image filename)</label><input type="file" id="csatQuestionsFile" accept=".csv,.txt"><button class="btn primary" onclick="saveExamFile('csatQuestionsFile','csatQuestions')">Upload Online CSAT Questions</button>
-<label style="margin-top:12px">Question Diagrams / Images (एक ZIP या कई image files चुनें)</label><input type="file" id="csatImagesFile" accept=".zip,image/*" multiple><button class="btn secondary" onclick="saveExamImages('csatImagesFile','csatImages')">Upload CSAT Images / ZIP</button>
+<label>Online Questions CSV/TXT (Question | Option A | Option B | Option C | Option D)</label><input type="file" id="csatQuestionsFile" accept=".csv,.txt"><button class="btn primary" onclick="saveExamFile('csatQuestionsFile','csatQuestions')">Upload Online CSAT Questions</button>
 
 <label>Question Paper (PDF/CSV/TXT)
 <input type="file" id="csatPaperFile" accept=".pdf,.csv,.txt">
@@ -1443,15 +1258,7 @@ Login
 </div>
 </div>
 
-<style>
-.exam-question-image-wrap{margin:14px 0 18px;text-align:center;max-width:100%;}
-.exam-question-image{display:inline-block;max-width:100%;width:auto;height:auto;max-height:210px;object-fit:contain;border:1px solid #dce7f1;border-radius:10px;background:#fff;padding:4px;}
-.exam-question-image-wrap{margin:8px 0 4px!important;}
-#examModal #examQuestionArea{max-height:42%!important;}
-@media(max-width:600px){.exam-question-image{max-height:155px;padding:3px}#examModal #examQuestionArea{max-height:38%!important}}
-</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script>
 /* SUPABASE CLOUD CONFIG */
 const PV_SUPABASE_URL="https://dtkafclesecmrxalohbm.supabase.co";
@@ -1589,404 +1396,7 @@ function pvPrintRecoveredResult(index){
   const r=row.result||{};
   const w=window.open("","_blank");
   if(!w){alert("Popup blocked. Please allow popups to print.");return;}
-  w.document.write(`<html><head><title>Exam Result</title><style>body{font-family:Arial;padding:24px;color:#10213b}h1{color:#075b93}table{width:100%;border-collapse:collapse}td{padding:10px;border:1px solid #ddd}</style></head><body><h1>PV Education — Exam Result</h1><table><tr><td>Student</td><td>${pvRecoveryEscape(row.student_name||r.student?.name||"—")}</td></tr><tr><td>Roll Number</td><td>${pvRecoveryEscape(row.roll_number||r.student?.roll||"—")}</td></tr><tr><td>Paper</td><td>${pvRecoveryEscape(row.paper||r.paper||"—")}</td></tr><tr><td>Correct</td><td>${pvRecoveryEscape(String(r.correct??"—"))}</td></tr><tr><td>Wrong</td><td>${pvRecoveryEscape(String(r.wrong??"—"))}</td></tr><tr><td>Unattempted</td><td>${pvRecoveryEscape(String(r.unattempted??"—"))}</td></tr><tr><td>Marks</td><td>${pvRecoveryEscape(String(r.total??"—"))}</td></tr><tr><td>Percentage</td><td>${pvRecoveryEscape(String(r.percentage??"—"))}%</td></tr><tr><td>Duration</td><td>${pvRecoveryEscape(pvRecoveryDuration(r))}</td></tr><tr><td>Submitted</td><td>${pvRecoveryEscape(row.created_at?new Date(row.created_at).toLocaleString("en-IN"):(r.submittedAt||"—"))}</td></tr></table><script>window.onload=()=>window.print()<\/script>
-<style id="pv-exam-center-final-layout">
-/* PV EDUCATION — consistent CBT / examination-centre layout */
-#examModal{
-  background:#e9eef5!important;
-  padding:0!important;
-  overflow:hidden!important;
-}
-#examModal .modal-box{
-  width:100vw!important;
-  max-width:100vw!important;
-  height:100vh!important;
-  height:100dvh!important;
-  max-height:100vh!important;
-  max-height:100dvh!important;
-  margin:0!important;
-  padding:10px 12px!important;
-  border-radius:0!important;
-  display:flex!important;
-  flex-direction:column!important;
-  overflow:hidden!important;
-  background:#f5f7fb!important;
-}
-#examModal #examPanel:not(.hidden){
-  display:grid!important;
-  flex:1 1 auto!important;
-  min-height:0!important;
-  width:100%!important;
-  grid-template-columns:minmax(0,1fr) 290px!important;
-  grid-template-rows:auto auto auto auto!important;
-  grid-template-areas:
-    "head head"
-    "question palette"
-    "options palette"
-    "controls controls"!important;
-  align-content:start!important;
-  align-items:start!important;
-  gap:8px 10px!important;
-  padding:0!important;
-  overflow-y:auto!important;
-  overflow-x:hidden!important;
-  overscroll-behavior:contain!important;
-  scrollbar-width:thin!important;
-}
-#examModal #examPanel>div:first-child{
-  grid-area:head!important;
-  position:sticky!important;
-  top:0!important;
-  z-index:20!important;
-  display:flex!important;
-  flex-direction:row!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  gap:12px!important;
-  width:100%!important;
-  min-height:60px!important;
-  padding:10px 14px!important;
-  margin:0!important;
-  border-radius:10px!important;
-  background:#073b78!important;
-  color:#fff!important;
-}
-#examModal #examPaperTitle{
-  flex:1 1 auto!important;
-  min-width:0!important;
-  margin:0!important;
-  color:#fff!important;
-  font-size:clamp(17px,2vw,23px)!important;
-  line-height:1.25!important;
-  overflow-wrap:anywhere!important;
-}
-#examModal #examLiveStats{
-  flex:0 0 auto!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:flex-end!important;
-  gap:8px!important;
-  margin-left:auto!important;
-}
-#examModal #examTimer{
-  flex:0 0 auto!important;
-  white-space:nowrap!important;
-  color:#fff!important;
-  background:#c62828!important;
-  border-radius:8px!important;
-  padding:7px 11px!important;
-  font-size:clamp(17px,2vw,23px)!important;
-  font-weight:800!important;
-}
-#examModal #examAttemptCount{
-  white-space:nowrap!important;
-}
-#examModal #examQuestionArea{
-  grid-area:question!important;
-  align-self:start!important;
-  width:100%!important;
-  min-width:0!important;
-  min-height:0!important;
-  max-height:none!important;
-  height:auto!important;
-  margin:0!important;
-  padding:14px!important;
-  overflow:visible!important;
-  overflow-wrap:anywhere!important;
-  background:#fff!important;
-  border:1px solid #c9d9ea!important;
-  border-radius:10px!important;
-  font-size:16px!important;
-  line-height:1.5!important;
-}
-#examModal #examQuestionArea>strong{
-  display:block!important;
-  margin:-14px -14px 10px!important;
-  padding:9px 12px!important;
-  border-radius:10px 10px 0 0!important;
-  background:#e7f0ff!important;
-  color:#092d65!important;
-  font-size:15px!important;
-  line-height:1.35!important;
-}
-#examModal #examQuestionArea>p{
-  margin:0 0 10px!important;
-  font-size:clamp(15px,1.5vw,18px)!important;
-  line-height:1.5!important;
-  font-weight:600!important;
-}
-#examModal .exam-question-image-wrap{
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  margin:12px auto 2px!important;
-  padding:0!important;
-  text-align:center!important;
-  overflow:visible!important;
-}
-#examModal .exam-question-image{
-  display:block!important;
-  width:auto!important;
-  height:auto!important;
-  max-width:100%!important;
-  max-height:min(38vh,320px)!important;
-  object-fit:contain!important;
-  object-position:center!important;
-  margin:0 auto!important;
-  padding:0!important;
-  border:0!important;
-  border-radius:4px!important;
-  background:#fff!important;
-}
-#examModal #examOptions{
-  grid-area:options!important;
-  align-self:start!important;
-  display:flex!important;
-  flex-direction:column!important;
-  width:100%!important;
-  min-width:0!important;
-  min-height:0!important;
-  height:auto!important;
-  max-height:none!important;
-  gap:7px!important;
-  margin:0!important;
-  padding:0!important;
-  overflow:visible!important;
-  overscroll-behavior:initial!important;
-}
-#examModal #examOptions label{
-  display:flex!important;
-  align-items:flex-start!important;
-  justify-content:flex-start!important;
-  width:100%!important;
-  max-width:100%!important;
-  min-height:46px!important;
-  height:auto!important;
-  margin:0!important;
-  padding:11px 13px!important;
-  gap:9px!important;
-  border:1px solid #c9d9ea!important;
-  border-radius:9px!important;
-  background:#fff!important;
-  color:#10213b!important;
-  font-size:15px!important;
-  line-height:1.45!important;
-  text-align:left!important;
-  white-space:normal!important;
-  overflow:visible!important;
-  overflow-wrap:anywhere!important;
-  cursor:pointer!important;
-}
-#examModal #examOptions label:has(input:checked){
-  background:#e5f0ff!important;
-  border:2px solid #1674df!important;
-}
-#examModal #examOptions input[type=radio]{
-  position:static!important;
-  flex:0 0 18px!important;
-  width:18px!important;
-  height:18px!important;
-  margin:2px 0 0!important;
-  transform:none!important;
-  accent-color:#086bd6!important;
-}
-#examModal #examPaletteWrap{
-  grid-area:palette!important;
-  position:sticky!important;
-  top:70px!important;
-  align-self:start!important;
-  display:flex!important;
-  flex-direction:column!important;
-  width:100%!important;
-  height:min(68vh,calc(100dvh - 170px))!important;
-  max-height:calc(100dvh - 170px)!important;
-  min-height:150px!important;
-  margin:0!important;
-  padding:0!important;
-  overflow:hidden!important;
-  background:#fff!important;
-  border:1px solid #c9d9ea!important;
-  border-radius:10px!important;
-}
-#examModal #examPaletteWrap>h4{
-  flex:0 0 auto!important;
-  margin:0!important;
-  padding:12px!important;
-  border-radius:9px 9px 0 0!important;
-  background:#075b93!important;
-  color:#fff!important;
-  font-size:16px!important;
-}
-#examModal #examPalette{
-  flex:1 1 auto!important;
-  min-height:0!important;
-  height:auto!important;
-  max-height:none!important;
-  display:grid!important;
-  grid-template-columns:repeat(5,minmax(0,1fr))!important;
-  align-content:start!important;
-  gap:7px!important;
-  padding:10px!important;
-  overflow-y:auto!important;
-  overflow-x:hidden!important;
-  scrollbar-width:thin!important;
-}
-#examModal #examPalette button{
-  width:100%!important;
-  min-width:0!important;
-  min-height:38px!important;
-  padding:6px 2px!important;
-  border-radius:7px!important;
-  font-size:13px!important;
-}
-#examModal .exam-controls{
-  grid-area:controls!important;
-  position:sticky!important;
-  bottom:0!important;
-  z-index:25!important;
-  display:flex!important;
-  flex:0 0 auto!important;
-  align-items:center!important;
-  flex-wrap:wrap!important;
-  gap:8px!important;
-  width:100%!important;
-  margin:0!important;
-  padding:9px 0 2px!important;
-  border-top:1px solid #cbd8e6!important;
-  background:#f5f7fb!important;
-}
-#examModal .exam-controls button{
-  min-height:42px!important;
-  padding:9px 13px!important;
-  border-radius:8px!important;
-  font-size:13px!important;
-}
-#examModal .exam-controls .exam-submit{
-  margin-left:auto!important;
-  background:#c62828!important;
-  color:#fff!important;
-}
-#examModal .palette-toggle{display:none!important}
-#examModal .hidden{display:none!important}
-#examModal #examLoginPanel.hidden,
-#examModal #examPanel.hidden,
-#examModal #examResultPanel.hidden{display:none!important}
-#examModal #examResultPanel{
-  flex:0 1 auto!important;
-  width:min(100%,760px)!important;
-  max-height:calc(100dvh - 24px)!important;
-  overflow-y:auto!important;
-  margin:auto!important;
-}
-
-/* Compact phone / tablet CBT layout: one continuous vertical question flow */
-@media(max-width:800px){
-  #examModal .modal-box{
-    padding:6px 8px!important;
-  }
-  #examModal #examPanel:not(.hidden){
-    display:flex!important;
-    flex-direction:column!important;
-    align-items:stretch!important;
-    gap:7px!important;
-    padding:0!important;
-    overflow-y:auto!important;
-    overflow-x:hidden!important;
-  }
-  #examModal #examPanel>div:first-child{
-    position:sticky!important;
-    top:0!important;
-    flex:0 0 auto!important;
-    min-height:50px!important;
-    padding:8px 9px!important;
-    gap:7px!important;
-  }
-  #examModal #examPaperTitle{font-size:15px!important}
-  #examModal #examLiveStats{gap:5px!important}
-  #examModal #examAttemptCount{font-size:11px!important;padding:5px 6px!important}
-  #examModal #examTimer{font-size:15px!important;padding:6px 7px!important}
-  #examModal #examQuestionArea{
-    flex:0 0 auto!important;
-    width:100%!important;
-    max-height:none!important;
-    min-height:0!important;
-    height:auto!important;
-    padding:10px!important;
-    overflow:visible!important;
-    font-size:14px!important;
-  }
-  #examModal #examQuestionArea>strong{
-    margin:-10px -10px 8px!important;
-    padding:7px 9px!important;
-    font-size:13px!important;
-  }
-  #examModal #examQuestionArea>p{
-    font-size:14px!important;
-    margin:0 0 8px!important;
-  }
-  #examModal .exam-question-image-wrap{margin:8px auto 0!important}
-  #examModal .exam-question-image{
-    max-height:min(34vh,240px)!important;
-    max-width:100%!important;
-  }
-  #examModal #examOptions{
-    flex:0 0 auto!important;
-    width:100%!important;
-    max-height:none!important;
-    overflow:visible!important;
-    gap:6px!important;
-  }
-  #examModal #examOptions label{
-    min-height:40px!important;
-    padding:8px 9px!important;
-    font-size:13px!important;
-  }
-  #examModal .exam-controls{
-    position:sticky!important;
-    bottom:0!important;
-    flex:0 0 auto!important;
-    gap:5px!important;
-    padding:6px 0!important;
-  }
-  #examModal .exam-controls button{
-    flex:1 1 calc(33.333% - 5px)!important;
-    min-height:38px!important;
-    padding:6px!important;
-    font-size:11px!important;
-  }
-  #examModal .exam-controls .palette-toggle{display:inline-flex!important}
-  #examModal .exam-controls .exam-submit{
-    flex:1 1 100%!important;
-    margin:0!important;
-    order:10!important;
-  }
-  #examModal #examPaletteWrap{
-    position:static!important;
-    display:none!important;
-    width:100%!important;
-    height:30dvh!important;
-    max-height:30dvh!important;
-    min-height:110px!important;
-  }
-  #examModal #examPaletteWrap.palette-open{display:flex!important}
-  #examModal #examPalette{
-    grid-template-columns:repeat(8,minmax(0,1fr))!important;
-    gap:4px!important;
-    padding:5px!important;
-  }
-}
-@media(max-width:420px){
-  #examModal .modal-box{padding:4px 6px!important}
-  #examModal #examPanel>div:first-child{align-items:flex-start!important}
-  #examModal #examPaperTitle{font-size:13px!important}
-  #examModal #examTimer{font-size:13px!important}
-  #examModal #examQuestionArea{font-size:13px!important}
-  #examModal .exam-question-image{max-height:30vh!important}
-  #examModal #examOptions label{font-size:12px!important;padding:7px!important}
-}
-</style>
-
-</body></html>`);
+  w.document.write(`<html><head><title>Exam Result</title><style>body{font-family:Arial;padding:24px;color:#10213b}h1{color:#075b93}table{width:100%;border-collapse:collapse}td{padding:10px;border:1px solid #ddd}</style></head><body><h1>PV Education — Exam Result</h1><table><tr><td>Student</td><td>${pvRecoveryEscape(row.student_name||r.student?.name||"—")}</td></tr><tr><td>Roll Number</td><td>${pvRecoveryEscape(row.roll_number||r.student?.roll||"—")}</td></tr><tr><td>Paper</td><td>${pvRecoveryEscape(row.paper||r.paper||"—")}</td></tr><tr><td>Correct</td><td>${pvRecoveryEscape(String(r.correct??"—"))}</td></tr><tr><td>Wrong</td><td>${pvRecoveryEscape(String(r.wrong??"—"))}</td></tr><tr><td>Unattempted</td><td>${pvRecoveryEscape(String(r.unattempted??"—"))}</td></tr><tr><td>Marks</td><td>${pvRecoveryEscape(String(r.total??"—"))}</td></tr><tr><td>Percentage</td><td>${pvRecoveryEscape(String(r.percentage??"—"))}%</td></tr><tr><td>Duration</td><td>${pvRecoveryEscape(pvRecoveryDuration(r))}</td></tr><tr><td>Submitted</td><td>${pvRecoveryEscape(row.created_at?new Date(row.created_at).toLocaleString("en-IN"):(r.submittedAt||"—"))}</td></tr></table><script>window.onload=()=>window.print()<\/script></body></html>`);
   w.document.close();
 }
 
@@ -2339,34 +1749,6 @@ status.textContent="❌ फ़ाइल सेव नहीं हुई: "+(err
 
 }
 
-/* QUESTION IMAGE BUNDLE SUPPORT */
-async function saveExamImages(inputId,key){
- const input=document.getElementById(inputId), files=Array.from(input?.files||[]);
- const status=document.getElementById(key.startsWith('gs')?'gsUploadStatus':'csatUploadStatus');
- if(!files.length){if(status)status.textContent='कृपया ZIP या image files चुनें।';return;}
- if(!window.JSZip){if(status)status.textContent='ZIP library load नहीं हुई। Internet connection जाँचें।';return;}
- try{
-  if(status)status.textContent='Images तैयार की जा रही हैं…';
-  const zip=new JSZip(); let count=0;
-  for(const file of files){
-   if(file.name.toLowerCase().endsWith('.zip')){
-    const source=await JSZip.loadAsync(file);
-    const entries=Object.values(source.files).filter(x=>!x.dir && /\.(png|jpe?g|gif|webp|svg)$/i.test(x.name));
-    for(const entry of entries){const data=await entry.async('uint8array');zip.file(entry.name,data);count++;}
-   }else if(file.type.startsWith('image/') || /\.(png|jpe?g|gif|webp|svg)$/i.test(file.name)){
-    zip.file(file.name,file);count++;
-   }
-  }
-  if(!count)throw new Error('ZIP में कोई समर्थित image नहीं मिली।');
-  const blob=await zip.generateAsync({type:'blob'});
-  if(blob.size>25*1024*1024)throw new Error('Images ZIP 25 MB से बड़ी है।');
-  const bundle=new File([blob],key+'_images.zip',{type:'application/zip'});
-  await pvSaveFileRecord(key,bundle); if(pvSupabase)await pvCloudFileSave(key,bundle);
-  if(status)status.textContent='✅ '+count+' images ZIP में सुरक्षित हो गईं।';
-  input.value=''; await renderUploadedFiles();
- }catch(err){console.error(err);if(status)status.textContent='❌ Images सेव नहीं हुईं: '+(err.message||err);}
-}
-
 /* SAFE HTML */
 
 function escapeHtml(value){
@@ -2392,9 +1774,7 @@ const map=[
 ["gsPaper","gsPaperDownload","Uploaded Question Paper"],
 ["gsKey","gsKeyDownload","Uploaded Answer Key"],
 ["csatPaper","csatPaperDownload","Uploaded Question Paper"],
-["csatKey","csatKeyDownload","Uploaded Answer Key"],
-["gsImages","gsImagesDownload","Uploaded GS Question Images"],
-["csatImages","csatImagesDownload","Uploaded CSAT Question Images"]
+["csatKey","csatKeyDownload","Uploaded Answer Key"]
 
 ];
 
@@ -2558,7 +1938,7 @@ a.remove();
 
 
 /* ONLINE EXAM ENGINE - local prototype */
-let examPaper='gs', examQuestions=[], examKey={}, examAnswers={}, examReview=new Set(), examVisited=new Set(), examIndex=0, examEndAt=0, examStartedAt=0, examTimer=null, examStudent={}, examImageUrls={};
+let examPaper='gs', examQuestions=[], examKey={}, examAnswers={}, examReview=new Set(), examVisited=new Set(), examIndex=0, examEndAt=0, examStartedAt=0, examTimer=null, examStudent={};
 
 (async function pvExamPageAuthCheck(){const session=await pvGetStudentSession();if(session){const email=session.user.email||'Logged in student';const n=document.getElementById('studentName');const r=document.getElementById('studentRoll');if(n)n.textContent=session.user.user_metadata?.full_name||session.user.user_metadata?.name||email;if(r)r.textContent='Account verified';}else{const n=document.getElementById('studentName');const r=document.getElementById('studentRoll');if(n)n.textContent='Login Required';if(r)r.textContent='Not Logged In';}})();
 
@@ -2576,7 +1956,7 @@ function parseDelimited(text){
  const lines=text.replace(/\r/g,'').split('\n').filter(x=>x.trim());
  return lines.map(line=>{let out=[],cur='',q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c==='"'){if(q&&line[i+1]==='"'){cur+='"';i++;}else q=!q;}else if((c===','||c==='|'||c==='\t')&&!q){out.push(cur.trim());cur='';}else cur+=c;}out.push(cur.trim());return out;});
 }
-function parseQuestions(text){let rows=parseDelimited(text);if(rows.length&&/(question|प्रश्न)/i.test(rows[0][0]||''))rows.shift();return rows.map((r,i)=>({q:r[0]||'',opts:r.slice(1,5),image:(r[5]||'').trim(),n:i+1})).filter(x=>x.q&&x.opts.length>=4);}
+function parseQuestions(text){let rows=parseDelimited(text);if(rows.length&&/(question|प्रश्न)/i.test(rows[0][0]||''))rows.shift();return rows.map((r,i)=>({q:r[0]||'',opts:r.slice(1,5),n:i+1})).filter(x=>x.q&&x.opts.length>=4);}
 function parseKey(text){let rows=parseDelimited(text),key={};if(rows.length===1&&rows[0].length>=50){rows[0].forEach((a,i)=>key[i+1]=a.toUpperCase().replace(/[^ABCD]/g,''));return key;}rows.forEach(r=>{let n=parseInt(r[0]);let a=(r[1]||r[0]).toUpperCase().replace(/[^ABCD]/g,'');if(n&&a)key[n]=a;});return key;}
 async function pvGetStudentSession(){if(!pvSupabase)return null;try{const {data,error}=await pvSupabase.auth.getSession();if(error)throw error;return data?.session||null;}catch(e){console.warn('Student auth check:',e.message);return null;}}
 async function pvExamProfileKey(email){return "pvExamProfile_"+String(email||"").trim().toLowerCase();}
@@ -2585,21 +1965,7 @@ function pvSaveExamProfile(email,profile){try{localStorage.setItem(pvExamProfile
 function pvPrefillExamProfile(user){const email=user?.email||"";const saved=pvLoadExamProfile(email);const meta=user?.user_metadata||{};const fields={examStudentName:saved.name||meta.full_name||meta.name||meta.student_name||"",examFatherName:saved.fatherName||meta.father_name||"",examStudentRoll:saved.roll||"",examStudentDob:saved.dob||"",examStudentGender:saved.gender||"",examStudentCategory:saved.category||"",examStudentCentre:saved.centre||""};Object.entries(fields).forEach(([id,value])=>{const el=document.getElementById(id);if(el)el.value=value;});if(Object.values(saved).some(v=>String(v||"").trim()))document.getElementById("examProfileSaved").style.display="block";}
 async function pvCheckExistingResult(paper,roll){if(!roll)return null;let r=null;try{r=JSON.parse(localStorage.getItem('pvResult_'+paper+'_'+roll)||'null');}catch(e){}if(!r&&pvSupabase){try{const {data,error}=await pvSupabase.from('exam_results').select('result').eq('paper',paper).eq('roll_number',roll).limit(1);if(!error&&data?.length)r=data[0].result;}catch(e){console.warn('Existing result lookup:',e.message);}}return r;}
 async function pvPrepareExamLogin(){const session=await pvGetStudentSession();const status=document.getElementById('examAuthStatus');const start=document.getElementById('startExamButton');if(!session){status.innerHTML='आप Login नहीं हैं। परीक्षा देने के लिए पहले Common PVrajCMS Group Account से Login करें। <br><a class="btn primary" style="margin-top:10px" href="login.html?redirect='+encodeURIComponent('online-exam.html')+'">Login / Register</a>';start.disabled=true;return null;}const user=session.user;const profileName=user.user_metadata?.full_name||user.user_metadata?.name||user.user_metadata?.student_name||'';pvPrefillExamProfile(user);if(!document.getElementById('examStudentName').value)document.getElementById('examStudentName').value=profileName;status.textContent='Logged in: '+(user.email||'PVrajCMS Student Account')+' — आपकी पहचान verified है।';status.className='notice';start.disabled=false;return session;}
-async function loadExamImages(paper){
- examImageUrls={};
- if(!window.JSZip)return;
- const rec=await pvGetFileRecord(paper+'Images'); if(!rec?.blob)return;
- try{
-  const zip=await JSZip.loadAsync(rec.blob);
-  for(const entry of Object.values(zip.files)){
-   if(entry.dir || !/\.(png|jpe?g|gif|webp|svg)$/i.test(entry.name))continue;
-   const blob=await entry.async('blob');
-   const name=entry.name.split('/').pop().toLowerCase();
-   examImageUrls[name]=URL.createObjectURL(blob);
-  }
- }catch(e){console.warn('Question image ZIP could not be read:',e);}
-}
-async function beginExam(){const session=await pvGetStudentSession();if(!session){alert('पहले PVrajCMS Group Account से Login करें।');window.location.href='login.html?redirect='+encodeURIComponent('online-exam.html');return;}let schedule=await pvCloudGetSchedule()||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');let gate=pvScheduleGate(schedule,examPaper);if(gate.configured&&!gate.allowed){alert(gate.early?'Exam abhi start nahi hua hai. Scheduled time ka wait karein.':'Exam start window close ho chuki hai.');return;}let name=document.getElementById('examStudentName').value.trim(),fatherName=document.getElementById('examFatherName').value.trim(),roll=document.getElementById('examStudentRoll').value.trim(),dob=document.getElementById('examStudentDob').value,gender=document.getElementById('examStudentGender').value,category=document.getElementById('examStudentCategory').value,centre=document.getElementById('examStudentCentre').value.trim();if(!name||!fatherName||!roll||!dob||!gender||!category||!centre){alert('कृपया सभी Student Details भरें।');return;}pvSaveExamProfile(session.user.email,{name,fatherName,roll,dob,gender,category,centre});let qrec=await pvGetFileRecord(examPaper+'Questions');let krec=await pvGetFileRecord(examPaper+'Key');if(!qrec){alert('Admin ne online questions CSV/TXT upload nahi kiya hai. PDF se online questions automatically nahi ban sakte.');return;}let text=await pvReadTextBlob(qrec.blob);examQuestions=parseQuestions(text);await loadExamImages(examPaper);if(!examQuestions.length){alert('Question file format sahi nahi hai. Format: Question,Option A,Option B,Option C,Option D');return;}examKey=krec?parseKey(await pvReadTextBlob(krec.blob)):{};examStudent={name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id};localStorage.setItem('pvExamActive',JSON.stringify({paper:examPaper,name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id}));examAnswers={};examReview=new Set();examVisited=new Set([0]);examIndex=0;examOneMinuteAlertShown=false;let mins=parseInt(schedule[examPaper]?.duration||120,10);examStartedAt=Date.now();let scheduledStart=schedule[examPaper]?.date&&schedule[examPaper]?.start?new Date(schedule[examPaper].date+'T'+schedule[examPaper].start+':00').getTime():0;examEndAt=scheduledStart?Math.min(Date.now()+mins*60000,scheduledStart+mins*60000):Date.now()+mins*60000;let saved=null;try{saved=JSON.parse(localStorage.getItem('pvExam_'+examPaper+'_'+roll)||'null');}catch(e){}if(saved&&saved.questionsCount===examQuestions.length&&saved.student&&saved.student.name===name&&saved.endAt>Date.now()){if(confirm('Is roll number ki exam progress mili hai. Kya aap wahi exam resume karna chahte hain?')){examAnswers=saved.answers||{};examReview=new Set(saved.review||[]);examVisited=new Set(saved.visited||[]);examIndex=Math.min(saved.index||0,examQuestions.length-1);examVisited.add(examIndex);examEndAt=saved.endAt;examStartedAt=saved.startedAt||examStartedAt;examOneMinuteAlertShown=(examEndAt-Date.now())<=60000;}}document.getElementById('examLoginPanel').classList.add('hidden');document.getElementById('examPanel').classList.remove('hidden');document.getElementById('examPaperTitle').textContent=(examPaper==='gs'?'GS Paper-I':'CSAT Paper-II')+' · '+name+' · '+roll;renderExamQuestion();saveExamProgress();examTimer=setInterval(updateExamTimer,1000);}
+async function beginExam(){const session=await pvGetStudentSession();if(!session){alert('पहले PVrajCMS Group Account से Login करें।');window.location.href='login.html?redirect='+encodeURIComponent('online-exam.html');return;}let schedule=await pvCloudGetSchedule()||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');let gate=pvScheduleGate(schedule,examPaper);if(gate.configured&&!gate.allowed){alert(gate.early?'Exam abhi start nahi hua hai. Scheduled time ka wait karein.':'Exam start window close ho chuki hai.');return;}let name=document.getElementById('examStudentName').value.trim(),fatherName=document.getElementById('examFatherName').value.trim(),roll=document.getElementById('examStudentRoll').value.trim(),dob=document.getElementById('examStudentDob').value,gender=document.getElementById('examStudentGender').value,category=document.getElementById('examStudentCategory').value,centre=document.getElementById('examStudentCentre').value.trim();if(!name||!fatherName||!roll||!dob||!gender||!category||!centre){alert('कृपया सभी Student Details भरें।');return;}pvSaveExamProfile(session.user.email,{name,fatherName,roll,dob,gender,category,centre});let qrec=await pvGetFileRecord(examPaper+'Questions');let krec=await pvGetFileRecord(examPaper+'Key');if(!qrec){alert('Admin ne online questions CSV/TXT upload nahi kiya hai. PDF se online questions automatically nahi ban sakte.');return;}let text=await pvReadTextBlob(qrec.blob);examQuestions=parseQuestions(text);if(!examQuestions.length){alert('Question file format sahi nahi hai. Format: Question,Option A,Option B,Option C,Option D');return;}examKey=krec?parseKey(await pvReadTextBlob(krec.blob)):{};examStudent={name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id};localStorage.setItem('pvExamActive',JSON.stringify({paper:examPaper,name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id}));examAnswers={};examReview=new Set();examVisited=new Set([0]);examIndex=0;examOneMinuteAlertShown=false;let mins=parseInt(schedule[examPaper]?.duration||120,10);examStartedAt=Date.now();let scheduledStart=schedule[examPaper]?.date&&schedule[examPaper]?.start?new Date(schedule[examPaper].date+'T'+schedule[examPaper].start+':00').getTime():0;examEndAt=scheduledStart?Math.min(Date.now()+mins*60000,scheduledStart+mins*60000):Date.now()+mins*60000;let saved=null;try{saved=JSON.parse(localStorage.getItem('pvExam_'+examPaper+'_'+roll)||'null');}catch(e){}if(saved&&saved.questionsCount===examQuestions.length&&saved.student&&saved.student.name===name&&saved.endAt>Date.now()){if(confirm('Is roll number ki exam progress mili hai. Kya aap wahi exam resume karna chahte hain?')){examAnswers=saved.answers||{};examReview=new Set(saved.review||[]);examVisited=new Set(saved.visited||[]);examIndex=Math.min(saved.index||0,examQuestions.length-1);examVisited.add(examIndex);examEndAt=saved.endAt;examStartedAt=saved.startedAt||examStartedAt;examOneMinuteAlertShown=(examEndAt-Date.now())<=60000;}}document.getElementById('examLoginPanel').classList.add('hidden');document.getElementById('examPanel').classList.remove('hidden');document.getElementById('examPaperTitle').textContent=(examPaper==='gs'?'GS Paper-I':'CSAT Paper-II')+' · '+name+' · '+roll;renderExamQuestion();saveExamProgress();examTimer=setInterval(updateExamTimer,1000);}
 function pvScheduleGate(schedule,paper){const v=schedule?.[paper]||{};if(!v.date||!v.start)return {configured:false,allowed:true};const start=new Date(v.date+"T"+v.start+":00").getTime();if(!Number.isFinite(start))return {configured:false,allowed:true};const late=Math.max(0,parseInt(v.late||0,10)||0)*60000,now=Date.now();if(now<start)return {configured:true,allowed:false,early:true,start,remaining:start-now};if(now>start+late)return {configured:true,allowed:false,closed:true,start,lateEnd:start+late};return {configured:true,allowed:true,start,lateEnd:start+late};}
 function pvScheduleCountdownStart(paper){if(window.pvScheduleCountdownTimer)clearInterval(window.pvScheduleCountdownTimer);const box=document.getElementById("examScheduleWait");if(!box)return;box.style.display="block";async function update(){let schedule=await pvCloudGetSchedule()||JSON.parse(localStorage.getItem("pvPrelimsSchedule")||"{}");const gate=pvScheduleGate(schedule,paper),v=schedule?.[paper]||{};if(!gate.configured){box.style.display="none";return;}if(gate.early){const sec=Math.max(0,Math.ceil(gate.remaining/1000)),hh=Math.floor(sec/3600),mm=Math.floor(sec%3600/60),ss=sec%60;box.innerHTML="<strong>⏳ परीक्षा अभी शुरू नहीं हुई है</strong><br>निर्धारित प्रारंभ समय: <strong>"+escapeHtml(v.date||"")+" · "+escapeHtml(v.start||"")+"</strong><br>परीक्षा शुरू होने में शेष: <strong style='font-size:20px;color:#075b93'>"+[hh,mm,ss].map(x=>String(x).padStart(2,"0")).join(":")+"</strong><br>समय आने तक Start Exam दबाने पर परीक्षा शुरू नहीं होगी।";}else if(gate.closed){box.innerHTML="<strong>⛔ परीक्षा शुरू करने का समय समाप्त हो गया है।</strong><br>Late Entry की अनुमति समाप्त हो चुकी है।";}else{box.innerHTML="<strong>✅ परीक्षा शुरू करने का समय उपलब्ध है।</strong><br>आप अब Start Exam दबाकर परीक्षा शुरू कर सकते हैं।";}}update();window.pvScheduleCountdownTimer=setInterval(update,1000);}
 function openExam(paper){examPaper=paper;document.getElementById('examHeading').textContent=paper==='gs'?'GS Paper-I Online Examination':'CSAT Paper-II Online Examination';document.getElementById('examLoginPanel').classList.remove('hidden');document.getElementById('examPanel').classList.add('hidden');document.getElementById('examResultPanel').classList.add('hidden');document.querySelector('#examResultPanel .pv-result-actions').innerHTML='<button class="btn secondary" onclick="downloadExamResult()">⬇ Download Result Sheet</button><button class="btn secondary" onclick="downloadExamAnswerKey()">⬇ Download Answer Key</button><button class="btn secondary" onclick="printExamResult()">🖨 Print Result</button><button class="btn primary" onclick="closeExam()">Close</button>';document.getElementById('examModal').classList.add('open');pvPrepareExamLogin();pvScheduleCountdownStart(paper);}
@@ -2624,24 +1990,10 @@ function resetStudentAttempt(){
  alert('Saved attempt reset हो गया। अब Start Exam दबाकर नया attempt शुरू करें।');
 }
 function closeExam(){document.getElementById('examModal').classList.remove('open');if(examTimer)clearInterval(examTimer);examTimer=null;}
-async function loadExamImages(paper){
- examImageUrls={};
- if(!window.JSZip)return;
- const rec=await pvGetFileRecord(paper+'Images'); if(!rec?.blob)return;
- try{
-  const zip=await JSZip.loadAsync(rec.blob);
-  for(const entry of Object.values(zip.files)){
-   if(entry.dir || !/\.(png|jpe?g|gif|webp|svg)$/i.test(entry.name))continue;
-   const blob=await entry.async('blob');
-   const name=entry.name.split('/').pop().toLowerCase();
-   examImageUrls[name]=URL.createObjectURL(blob);
-  }
- }catch(e){console.warn('Question image ZIP could not be read:',e);}
-}
-async function beginExam(){const session=await pvGetStudentSession();if(!session){alert('पहले PVrajCMS Group Account से Login करें।');window.location.href='login.html?redirect='+encodeURIComponent('online-exam.html');return;}let schedule=await pvCloudGetSchedule()||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');let gate=pvScheduleGate(schedule,examPaper);if(gate.configured&&!gate.allowed){alert(gate.early?'Exam abhi start nahi hua hai. Scheduled time ka wait karein.':'Exam start window close ho chuki hai.');return;}let name=document.getElementById('examStudentName').value.trim(),fatherName=document.getElementById('examFatherName').value.trim(),roll=document.getElementById('examStudentRoll').value.trim(),dob=document.getElementById('examStudentDob').value,gender=document.getElementById('examStudentGender').value,category=document.getElementById('examStudentCategory').value,centre=document.getElementById('examStudentCentre').value.trim();if(!name||!fatherName||!roll||!dob||!gender||!category||!centre){alert('कृपया सभी Student Details भरें।');return;}pvSaveExamProfile(session.user.email,{name,fatherName,roll,dob,gender,category,centre});let qrec=await pvGetFileRecord(examPaper+'Questions');let krec=await pvGetFileRecord(examPaper+'Key');if(!qrec){alert('Admin ne online questions CSV/TXT upload nahi kiya hai. PDF se online questions automatically nahi ban sakte.');return;}let text=await pvReadTextBlob(qrec.blob);examQuestions=parseQuestions(text);await loadExamImages(examPaper);if(!examQuestions.length){alert('Question file format sahi nahi hai. Format: Question,Option A,Option B,Option C,Option D');return;}examKey=krec?parseKey(await pvReadTextBlob(krec.blob)):{};examStudent={name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id};localStorage.setItem('pvExamActive',JSON.stringify({paper:examPaper,name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id}));examAnswers={};examReview=new Set();examVisited=new Set([0]);examIndex=0;examOneMinuteAlertShown=false;let mins=parseInt(schedule[examPaper]?.duration||120,10);examStartedAt=Date.now();let scheduledStart=schedule[examPaper]?.date&&schedule[examPaper]?.start?new Date(schedule[examPaper].date+'T'+schedule[examPaper].start+':00').getTime():0;examEndAt=scheduledStart?Math.min(Date.now()+mins*60000,scheduledStart+mins*60000):Date.now()+mins*60000;let saved=null;try{saved=JSON.parse(localStorage.getItem('pvExam_'+examPaper+'_'+roll)||'null');}catch(e){}if(saved&&saved.questionsCount===examQuestions.length&&saved.student&&saved.student.name===name&&saved.endAt>Date.now()){if(confirm('Is roll number ki exam progress mili hai. Kya aap wahi exam resume karna chahte hain?')){examAnswers=saved.answers||{};examReview=new Set(saved.review||[]);examVisited=new Set(saved.visited||[]);examIndex=Math.min(saved.index||0,examQuestions.length-1);examVisited.add(examIndex);examEndAt=saved.endAt;examStartedAt=saved.startedAt||examStartedAt;examOneMinuteAlertShown=(examEndAt-Date.now())<=60000;}}document.getElementById('examLoginPanel').classList.add('hidden');document.getElementById('examPanel').classList.remove('hidden');document.getElementById('examPaperTitle').textContent=(examPaper==='gs'?'GS Paper-I':'CSAT Paper-II')+' · '+name+' · '+roll;renderExamQuestion();saveExamProgress();examTimer=setInterval(updateExamTimer,1000);}
+async function beginExam(){const session=await pvGetStudentSession();if(!session){alert('पहले PVrajCMS Group Account से Login करें।');window.location.href='login.html?redirect='+encodeURIComponent('online-exam.html');return;}let schedule=await pvCloudGetSchedule()||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');let gate=pvScheduleGate(schedule,examPaper);if(gate.configured&&!gate.allowed){alert(gate.early?'Exam abhi start nahi hua hai. Scheduled time ka wait karein.':'Exam start window close ho chuki hai.');return;}let name=document.getElementById('examStudentName').value.trim(),fatherName=document.getElementById('examFatherName').value.trim(),roll=document.getElementById('examStudentRoll').value.trim(),dob=document.getElementById('examStudentDob').value,gender=document.getElementById('examStudentGender').value,category=document.getElementById('examStudentCategory').value,centre=document.getElementById('examStudentCentre').value.trim();if(!name||!fatherName||!roll||!dob||!gender||!category||!centre){alert('कृपया सभी Student Details भरें।');return;}pvSaveExamProfile(session.user.email,{name,fatherName,roll,dob,gender,category,centre});let qrec=await pvGetFileRecord(examPaper+'Questions');let krec=await pvGetFileRecord(examPaper+'Key');if(!qrec){alert('Admin ne online questions CSV/TXT upload nahi kiya hai. PDF se online questions automatically nahi ban sakte.');return;}let text=await pvReadTextBlob(qrec.blob);examQuestions=parseQuestions(text);if(!examQuestions.length){alert('Question file format sahi nahi hai. Format: Question,Option A,Option B,Option C,Option D');return;}examKey=krec?parseKey(await pvReadTextBlob(krec.blob)):{};examStudent={name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id};localStorage.setItem('pvExamActive',JSON.stringify({paper:examPaper,name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id}));examAnswers={};examReview=new Set();examVisited=new Set([0]);examIndex=0;examOneMinuteAlertShown=false;let mins=parseInt(schedule[examPaper]?.duration||120,10);examStartedAt=Date.now();let scheduledStart=schedule[examPaper]?.date&&schedule[examPaper]?.start?new Date(schedule[examPaper].date+'T'+schedule[examPaper].start+':00').getTime():0;examEndAt=scheduledStart?Math.min(Date.now()+mins*60000,scheduledStart+mins*60000):Date.now()+mins*60000;let saved=null;try{saved=JSON.parse(localStorage.getItem('pvExam_'+examPaper+'_'+roll)||'null');}catch(e){}if(saved&&saved.questionsCount===examQuestions.length&&saved.student&&saved.student.name===name&&saved.endAt>Date.now()){if(confirm('Is roll number ki exam progress mili hai. Kya aap wahi exam resume karna chahte hain?')){examAnswers=saved.answers||{};examReview=new Set(saved.review||[]);examVisited=new Set(saved.visited||[]);examIndex=Math.min(saved.index||0,examQuestions.length-1);examVisited.add(examIndex);examEndAt=saved.endAt;examStartedAt=saved.startedAt||examStartedAt;examOneMinuteAlertShown=(examEndAt-Date.now())<=60000;}}document.getElementById('examLoginPanel').classList.add('hidden');document.getElementById('examPanel').classList.remove('hidden');document.getElementById('examPaperTitle').textContent=(examPaper==='gs'?'GS Paper-I':'CSAT Paper-II')+' · '+name+' · '+roll;renderExamQuestion();saveExamProgress();examTimer=setInterval(updateExamTimer,1000);}
 let examOneMinuteAlertShown=false;
 function updateExamTimer(){let left=Math.max(0,Math.floor((examEndAt-Date.now())/1000));document.getElementById('examTimer').textContent=[Math.floor(left/3600),Math.floor(left%3600/60),left%60].map(x=>String(x).padStart(2,'0')).join(':');let count=Object.keys(examAnswers).filter(i=>examAnswers[i]).length;let countEl=document.getElementById('examAttemptCount');if(countEl)countEl.textContent='Attempted: '+count+' / '+examQuestions.length;if(left<=60&&left>0&&!examOneMinuteAlertShown){examOneMinuteAlertShown=true;alert('⚠️ केवल 1 मिनट बचा है! कृपया अपना पेपर Submit करने के लिए तैयार रहें।');}if(left<=0)submitExam(true);}
-function renderExamQuestion(){let q=examQuestions[examIndex];examVisited.add(examIndex);let imageName=(q.image||'').split('/').pop().toLowerCase();let imageUrl=imageName?examImageUrls[imageName]:'';let imageHtml=imageUrl?'<div class=\"exam-question-image-wrap\"><img class=\"exam-question-image\" src=\"'+escapeHtml(imageUrl)+'\" alt=\"Question diagram\" loading=\"lazy\"></div>':'';document.getElementById('examQuestionArea').innerHTML='<strong>Question '+(examIndex+1)+' / '+examQuestions.length+'</strong><p>'+escapeHtml(q.q)+'</p>'+imageHtml;let letters=['A','B','C','D'];document.getElementById('examOptions').innerHTML=q.opts.slice(0,4).map((o,i)=>'<label style="display:block;background:#f5f9fc;border:1px solid #dce7f1;border-radius:10px;padding:12px;margin:8px 0;cursor:pointer"><input type="radio" name="examOption" value="'+letters[i]+'" '+(examAnswers[examIndex]===letters[i]?'checked':'')+' onchange="examAnswers[examIndex]=this.value;saveExamProgress()"> <strong>'+letters[i]+'.</strong> '+escapeHtml(o)+'</label>').join('');renderPalette();}
+function renderExamQuestion(){let q=examQuestions[examIndex];examVisited.add(examIndex);document.getElementById('examQuestionArea').innerHTML='<strong>Question '+(examIndex+1)+' / '+examQuestions.length+'</strong><p>'+escapeHtml(q.q)+'</p>';let letters=['A','B','C','D'];document.getElementById('examOptions').innerHTML=q.opts.slice(0,4).map((o,i)=>'<label style="display:block;background:#f5f9fc;border:1px solid #dce7f1;border-radius:10px;padding:12px;margin:8px 0;cursor:pointer"><input type="radio" name="examOption" value="'+letters[i]+'" '+(examAnswers[examIndex]===letters[i]?'checked':'')+' onchange="examAnswers[examIndex]=this.value;saveExamProgress()"> <strong>'+letters[i]+'.</strong> '+escapeHtml(o)+'</label>').join('');renderPalette();}
 function renderPalette(){document.getElementById('examPalette').innerHTML=examQuestions.map((q,i)=>{let cls=examAnswers[i]?'palette-answered':examReview.has(i)?'palette-review':examVisited.has(i)?'palette-unanswered':'palette-unvisited';if(i===examIndex)cls+=' palette-current';return '<button class="'+cls+'" aria-label="Question '+(i+1)+'" onclick="examIndex='+i+';examVisited.add('+i+');renderExamQuestion();saveExamProgress()">'+(i+1)+(examReview.has(i)?' ★':'')+'</button>';}).join('');}
 function toggleExamPalette(){const w=document.getElementById('examPaletteWrap');w.classList.toggle('palette-open');if(w.classList.contains('palette-open'))renderPalette();}
 function examPrev(){if(examIndex>0){examIndex--;examVisited.add(examIndex);renderExamQuestion();saveExamProgress();}}function examNext(){if(examIndex<examQuestions.length-1){examIndex++;examVisited.add(examIndex);renderExamQuestion();saveExamProgress();}}function examClearResponse(){delete examAnswers[examIndex];renderExamQuestion();saveExamProgress();}function examMarkReview(){if(examReview.has(examIndex))examReview.delete(examIndex);else examReview.add(examIndex);renderPalette();saveExamProgress();document.querySelector('.exam-controls button[onclick=\"examMarkReview()\"]')?.classList.toggle('primary',examReview.has(examIndex));}
@@ -2779,7 +2131,7 @@ async function restoreExamAfterReload(){try{pvLoadStudentResultHistory();}catch(
   const qrec=await pvGetFileRecord(active.paper+'Questions');
   const krec=await pvGetFileRecord(active.paper+'Key');
   if(!qrec)return;
-  examPaper=active.paper;examQuestions=parseQuestions(await qrec.blob.text());await loadExamImages(examPaper);examKey=krec?parseKey(await pvReadTextBlob(krec.blob)):{};
+  examPaper=active.paper;examQuestions=parseQuestions(await qrec.blob.text());examKey=krec?parseKey(await pvReadTextBlob(krec.blob)):{};
   examStudent=saved.student;examAnswers=saved.answers||{};examReview=new Set(saved.review||[]);examVisited=new Set(saved.visited||[]);examIndex=Math.min(saved.index||0,examQuestions.length-1);examVisited.add(examIndex);examEndAt=saved.endAt;
   document.getElementById('examLoginPanel').classList.add('hidden');document.getElementById('examPanel').classList.remove('hidden');document.getElementById('examResultPanel').classList.add('hidden');document.getElementById('examModal').classList.add('open');
   document.getElementById('examPaperTitle').textContent=(examPaper==='gs'?'GS Paper-I':'CSAT Paper-II')+' · '+examStudent.name+' · '+examStudent.roll;
