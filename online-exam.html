@@ -619,6 +619,95 @@ flex-direction:column
 }
 </style>
 
+
+<style id="pv-exam-image-layout-final">
+/* Final question-image layout: compact image, options directly below */
+#examModal #examPanel:not(.hidden){
+  grid-template-rows:auto auto minmax(0,1fr) auto!important;
+  align-content:stretch!important;
+  row-gap:8px!important;
+}
+#examModal #examQuestionArea{
+  min-height:0!important;
+  max-height:36dvh!important;
+  height:auto!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  padding:10px 14px!important;
+}
+#examModal .exam-question-image-wrap{
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  width:100%!important;
+  margin:8px auto 2px!important;
+  padding:0!important;
+}
+#examModal .exam-question-image{
+  display:block!important;
+  width:auto!important;
+  max-width:100%!important;
+  height:auto!important;
+  max-height:clamp(110px,22dvh,190px)!important;
+  object-fit:contain!important;
+  margin:0 auto!important;
+}
+#examModal #examOptions{
+  min-height:0!important;
+  max-height:none!important;
+  overflow-y:auto!important;
+  align-self:stretch!important;
+  gap:7px!important;
+}
+#examModal #examOptions label{
+  flex:0 0 auto!important;
+}
+@media(max-width:800px){
+  #examModal .modal-box{
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+  }
+  #examModal #examPanel:not(.hidden){
+    display:flex!important;
+    flex-direction:column!important;
+    gap:7px!important;
+    min-height:0!important;
+    overflow:visible!important;
+  }
+  #examModal #examQuestionArea{
+    max-height:none!important;
+    min-height:0!important;
+    overflow:visible!important;
+    padding:8px!important;
+  }
+  #examModal .exam-question-image-wrap{
+    margin:6px auto 2px!important;
+  }
+  #examModal .exam-question-image{
+    max-height:min(20dvh,155px)!important;
+  }
+  #examModal #examOptions{
+    display:flex!important;
+    flex-direction:column!important;
+    overflow:visible!important;
+    min-height:0!important;
+    max-height:none!important;
+    gap:6px!important;
+  }
+  #examModal #examOptions label{
+    min-height:38px!important;
+    padding:8px 9px!important;
+    font-size:13px!important;
+  }
+  #examModal .exam-controls{
+    position:sticky!important;
+    bottom:0!important;
+    z-index:20!important;
+    background:#f5f7fb!important;
+  }
+}
+</style>
+
 </head>
 
 <body>
