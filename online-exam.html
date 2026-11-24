@@ -811,6 +811,22 @@ flex-direction:column
 @media(max-width:520px){#examModal .pv-exam-welcome{padding:5px 0}#examModal .pv-exam-stats{gap:5px}#examModal .pv-exam-stats strong{font-size:18px}#examModal .pv-exam-stats span{font-size:10px}#examModal .pv-exam-instructions{font-size:13px}}
 </style>
 
+
+<style id="pv-matching-question-layout">
+#examModal .pv-match-heading{font-weight:700;margin:2px 0 12px;line-height:1.55}
+#examModal .pv-match-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:10px 0}
+#examModal .pv-match-grid section{min-width:0;border:1px solid #d4e0ee;border-radius:9px;background:#fff;overflow:hidden}
+#examModal .pv-match-grid h4{margin:0;padding:9px 11px;background:#e7f0ff;color:#092d65;font-size:15px}
+#examModal .pv-match-item{display:grid;grid-template-columns:27px minmax(0,1fr);gap:7px;padding:8px 10px;border-top:1px solid #edf1f6;line-height:1.5;overflow-wrap:anywhere}
+#examModal .pv-match-item b{color:#092d65}
+#examModal .pv-match-code{margin:12px 0;padding:10px;border:1px solid #d4e0ee;border-radius:9px;background:#fff}
+#examModal .pv-match-code h4{margin:0 0 7px;color:#092d65}
+#examModal .pv-match-code table{width:100%;min-width:0;border-collapse:collapse}
+#examModal .pv-match-code th,#examModal .pv-match-code td{padding:7px 9px;border:1px solid #dce7f1;text-align:left}
+#examModal .pv-match-instruction{margin-top:10px;padding:9px 10px;background:#e7f0ff;border-radius:8px;line-height:1.5}
+@media(max-width:600px){#examModal .pv-match-grid{grid-template-columns:1fr;gap:9px}#examModal .pv-match-grid h4{font-size:14px}}
+</style>
+
 </head>
 
 <body>
@@ -2313,6 +2329,10 @@ function formatExamQuestionText(value){
  const instructionMatch=instructionRe.exec(raw);
  const instruction=instructionMatch?raw.slice(instructionMatch.index).trim().replace(/[।.]?$/,'।'):'';
  let body=instructionMatch?raw.slice(0,instructionMatch.index).trim():raw;
+ // Matching questions (सूची-I / सूची-II): arrange both lists side by side,
+ // then show the answer-code rows in a separate, readable table.
+ const matchingHtml=pvFormatMatchingQuestion(body,instruction);
+ if(matchingHtml)return matchingHtml;
  // Numbered statements: only split when the question is clearly statement-based,
  // so years, decimals, question numbers and ordinary prose are not broken apart.
  const numbered=/((?:^|\s)([1-9]\d?)\.[ \t]+)/g;
@@ -2349,6 +2369,42 @@ function formatExamQuestionText(value){
  let result=body.split(/\n+/).map(line=>formatExamInline(line.trim())).filter(Boolean).join('<br>');
  if(instruction)result+=(result?'<br>':'')+'<strong>'+formatExamInline(instruction)+'</strong>';
  return result;
+}
+function pvFormatMatchingQuestion(body,instruction){
+ const list1=body.search(/सूची\s*[-–—]?\s*I\b/i);
+ const list2=body.search(/सूची\s*[-–—]?\s*II\b/i);
+ if(list1<0||list2<0||list2<=list1)return '';
+ const codeMatch=/\bकूट\s*[:：-]?/i.exec(body);
+ const list1Title=body.slice(list1,list2).trim();
+ const list2End=codeMatch&&codeMatch.index>list2?codeMatch.index:body.length;
+ const list2Title=body.slice(list2,list2End).trim();
+ const heading=body.slice(0,list1).trim();
+ function cleanSection(t){return t.replace(/सूची\s*[-–—]?\s*I{1,2}\b/i,'').replace(/^\s*[(:：-]+|[)\s:：-]+$/g,'').trim();}
+ function extractItems(text,kind){
+  const re=kind==='letter'?/(?:^|\s)([A-D])\s*[.)]\s*/g:/(?:^|\s)([1-4])\s*[.)]\s*/g;
+  const ms=[...text.matchAll(re)],out=[];
+  for(let i=0;i<ms.length;i++){
+   const start=ms[i].index+ms[i][0].length;
+   const end=i+1<ms.length?ms[i+1].index:text.length;
+   let value=text.slice(start,end).replace(/\s+/g,' ').trim();
+   if(value)out.push([ms[i][1],value]);
+  }
+  return out;
+ }
+ const left=extractItems(cleanSection(list1Title),'letter');
+ const right=extractItems(cleanSection(list2Title),'number');
+ if(left.length<2||right.length<2)return '';
+ let html='';
+ if(heading)html+='<div class="pv-match-heading"><strong>'+formatExamInline(heading)+'</strong></div>';
+ html+='<div class="pv-match-grid"><section><h4>सूची – I</h4>'+left.map(([k,v])=>'<div class="pv-match-item"><b>'+k+'.</b><span>'+formatExamInline(v)+'</span></div>').join('')+'</section><section><h4>सूची – II</h4>'+right.map(([k,v])=>'<div class="pv-match-item"><b>'+k+'.</b><span>'+formatExamInline(v)+'</span></div>').join('')+'</section></div>';
+ if(codeMatch){
+  const codeText=body.slice(codeMatch.index+codeMatch[0].length);
+  const rows=[...codeText.matchAll(/\(([a-d])\)\s*([\s\S]*?)(?=\([a-d]\)|$)/gi)];
+  if(rows.length){html+='<div class="pv-match-code"><h4>कूट :</h4><table><tbody>'+rows.map(m=>'<tr><th>('+m[1]+')</th><td>'+formatExamInline(m[2].trim())+'</td></tr>').join('')+'</tbody></table></div>';}
+  else html+='<div class="pv-match-code"><strong>कूट :</strong><div>'+formatExamInline(codeText)+'</div></div>';
+ }
+ if(instruction)html+='<div class="pv-match-instruction"><strong>'+formatExamInline(instruction)+'</strong></div>';
+ return html;
 }
 function formatExamInline(value){
  // Escape first; only then allow the small **bold** markup used in question CSVs.
