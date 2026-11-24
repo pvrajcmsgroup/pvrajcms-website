@@ -722,6 +722,86 @@ flex-direction:column
 }
 </style>
 
+
+<style id="pv-mobile-image-scroll-fix">
+/* Mobile CBT: one continuous vertical scroll so the full diagram and options remain reachable */
+@media (max-width: 800px) {
+  #examModal,
+  #examModal .modal-box {
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
+  }
+  #examModal .modal-box {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
+  }
+  #examModal #examPanel:not(.hidden) {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior-y: contain !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 8px !important;
+  }
+  #examModal #examQuestionArea {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  #examModal #examQuestionArea .exam-question-image-wrap {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 8px auto 2px !important;
+  }
+  #examModal #examQuestionArea .exam-question-image {
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    margin: 0 auto !important;
+  }
+  #examModal #examOptions {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+  #examModal #examOptions label {
+    flex: 0 0 auto !important;
+    min-height: 38px !important;
+  }
+  #examModal .exam-controls {
+    position: sticky !important;
+    bottom: 0 !important;
+    flex: 0 0 auto !important;
+    z-index: 30 !important;
+    background: #f5f7fb !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
