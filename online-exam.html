@@ -787,6 +787,30 @@ flex-direction:column
 }
 </style>
 
+
+<style id="pv-exam-welcome-styles">
+#examModal .pv-exam-welcome{max-width:780px;margin:0 auto;padding:14px 4px 8px;color:#10213b}
+#examModal .pv-exam-brand{background:#102d4d;color:#fff;border-radius:13px;text-align:center;padding:15px 10px}
+#examModal .pv-exam-cap{font-size:29px;line-height:1.2}
+#examModal .pv-exam-brand h1{font-size:23px;margin:7px 0}
+#examModal .pv-exam-brand h2{font-size:14px;margin:0 0 8px}
+#examModal .pv-exam-brand p{margin:0;font-size:13px}
+#examModal .pv-exam-welcome-title{text-align:center;padding:15px 6px 5px}
+#examModal .pv-exam-pill{display:inline-block;background:#dcfce7;color:#087443;border-radius:30px;padding:5px 11px;font-size:12px;font-weight:700}
+#examModal .pv-exam-welcome-title h2{font-size:21px;margin:9px 0 4px}
+#examModal .pv-exam-welcome-title p{font-size:12px;color:#64748b;margin:0}
+#examModal .pv-exam-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:14px 0}
+#examModal .pv-exam-stats>div{text-align:center;background:#f5f8fc;border:1px solid #e2eaf2;border-radius:10px;padding:12px 5px}
+#examModal .pv-exam-stats strong{display:block;font-size:21px;margin-bottom:6px}
+#examModal .pv-exam-stats span{font-size:12px;color:#64748b}
+#examModal .pv-exam-welcome>h3{font-size:17px;margin:14px 0 7px}
+#examModal .pv-exam-instructions{padding-left:24px;line-height:1.8;margin:0;font-size:14px}
+#examModal .pv-exam-note{background:#fff8e8;border:1px solid #f1dfb5;color:#765416;border-radius:10px;padding:10px;margin-top:12px;font-size:12px;line-height:1.5}
+#examModal .pv-exam-start-row{display:flex;justify-content:center;margin:16px 0 6px}
+#examModal .pv-exam-start-row .btn{min-width:230px}
+@media(max-width:520px){#examModal .pv-exam-welcome{padding:5px 0}#examModal .pv-exam-stats{gap:5px}#examModal .pv-exam-stats strong{font-size:18px}#examModal .pv-exam-stats span{font-size:10px}#examModal .pv-exam-instructions{font-size:13px}}
+</style>
+
 </head>
 
 <body>
@@ -1366,7 +1390,37 @@ Upload / Replace CSAT Answer Key
 <div class="modal" id="examModal">
  <div class="modal-box" style="max-width:1000px">
   <button class="close" onclick="closeExam()">✕</button>
-  <div id="examLoginPanel">
+  <section id="examWelcomePanel" class="pv-exam-welcome">
+   <header class="pv-exam-brand">
+    <div class="pv-exam-cap">🎓</div>
+    <h1>PV EDUCATION</h1>
+    <h2>BUILT BY PVRACMS GROUP</h2>
+    <p>Online Examination Portal</p>
+   </header>
+   <div class="pv-exam-welcome-title">
+    <span class="pv-exam-pill">UPPCS PRELIMS 2022</span>
+    <h2 id="examWelcomeTitle">General Studies Paper-I</h2>
+    <p>Question Paper Practice Test</p>
+   </div>
+   <div class="pv-exam-stats">
+    <div><strong id="examWelcomeMarks">200</strong><span>Maximum Marks</span></div>
+    <div><strong id="examWelcomeDuration">2 Hours</strong><span>Duration</span></div>
+    <div><strong id="examWelcomeQuestions">150</strong><span>Questions</span></div>
+   </div>
+   <h3>परीक्षा के निर्देश</h3>
+   <ul class="pv-exam-instructions">
+    <li>सभी प्रश्नों को ध्यानपूर्वक पढ़ें।</li>
+    <li>प्रत्येक प्रश्न में चार विकल्प होंगे।</li>
+    <li>प्रत्येक सही उत्तर के लिए निर्धारित अंक दिए जाएंगे।</li>
+    <li>गलत उत्तर पर 1/3 अंक की कटौती होगी।</li>
+    <li>बिना उत्तर छोड़े गए प्रश्न पर कोई नकारात्मक अंक नहीं होगा।</li>
+    <li>परीक्षा शुरू होने के बाद Timer चालू हो जाएगा।</li>
+    <li>समय समाप्त होने पर परीक्षा स्वतः Submit हो जाएगी।</li>
+   </ul>
+   <div class="pv-exam-note">कृपया परीक्षा शुरू करने से पहले सभी निर्देश पढ़ लें। आगे बढ़ने पर विद्यार्थी Login / विवरण वाला पेज खुलेगा।</div>
+   <div class="pv-exam-start-row"><button class="btn primary" type="button" onclick="continueToExamLogin()">Proceed to Student Login →</button></div>
+  </section>
+  <div id="examLoginPanel" class="hidden">
    <h2 id="examHeading">Online Examination</h2>
    <div id="examAuthStatus" class="notice">आपका PVrajCMS Group account verify किया जा रहा है...</div><div id="examScheduleWait" class="notice" style="display:none;background:#eaf4fc;border-color:#c8e2f8;color:#075b93;font-size:14px"></div>
    <p>एक बार विवरण भरें। इसी PVrajCMS Group Account से अगली परीक्षाओं में आपकी जानकारी स्वतः आएगी; जरूरत हो तो बदल सकते हैं।</p>
@@ -2200,7 +2254,27 @@ async function pvPrepareExamLogin(){const session=await pvGetStudentSession();co
 async function beginExam(){const session=await pvGetStudentSession();if(!session){alert('पहले PVrajCMS Group Account से Login करें।');window.location.href='login.html?redirect='+encodeURIComponent('online-exam.html');return;}let schedule=await pvCloudGetSchedule()||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');let gate=pvScheduleGate(schedule,examPaper);if(gate.configured&&!gate.allowed){alert(gate.early?'Exam abhi start nahi hua hai. Scheduled time ka wait karein.':'Exam start window close ho chuki hai.');return;}let name=document.getElementById('examStudentName').value.trim(),fatherName=document.getElementById('examFatherName').value.trim(),roll=document.getElementById('examStudentRoll').value.trim(),dob=document.getElementById('examStudentDob').value,gender=document.getElementById('examStudentGender').value,category=document.getElementById('examStudentCategory').value,centre=document.getElementById('examStudentCentre').value.trim();if(!name||!fatherName||!roll||!dob||!gender||!category||!centre){alert('कृपया सभी Student Details भरें।');return;}pvSaveExamProfile(session.user.email,{name,fatherName,roll,dob,gender,category,centre});let qrec=await pvGetFileRecord(examPaper+'Questions');let krec=await pvGetFileRecord(examPaper+'Key');if(!qrec){alert('Admin ne online questions CSV/TXT upload nahi kiya hai. PDF se online questions automatically nahi ban sakte.');return;}let text=await pvReadTextBlob(qrec.blob);examQuestions=parseQuestions(text);try{Object.values(pvExamImageUrls).forEach(u=>URL.revokeObjectURL(u));pvExamImageUrls=await pvLoadExamImages(examPaper);}catch(imgErr){console.warn('Question images could not be loaded:',imgErr);pvExamImageUrls={};}if(!examQuestions.length){alert('Question file format sahi nahi hai. Format: Question,Option A,Option B,Option C,Option D');return;}examKey=krec?parseKey(await pvReadTextBlob(krec.blob)):{};examStudent={name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id};localStorage.setItem('pvExamActive',JSON.stringify({paper:examPaper,name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id}));examAnswers={};examReview=new Set();examVisited=new Set([0]);examIndex=0;examOneMinuteAlertShown=false;let mins=parseInt(schedule[examPaper]?.duration||120,10);examStartedAt=Date.now();let scheduledStart=schedule[examPaper]?.date&&schedule[examPaper]?.start?new Date(schedule[examPaper].date+'T'+schedule[examPaper].start+':00').getTime():0;examEndAt=scheduledStart?Math.min(Date.now()+mins*60000,scheduledStart+mins*60000):Date.now()+mins*60000;let saved=null;try{saved=JSON.parse(localStorage.getItem('pvExam_'+examPaper+'_'+roll)||'null');}catch(e){}if(saved&&saved.questionsCount===examQuestions.length&&saved.student&&saved.student.name===name&&saved.endAt>Date.now()){if(confirm('Is roll number ki exam progress mili hai. Kya aap wahi exam resume karna chahte hain?')){examAnswers=saved.answers||{};examReview=new Set(saved.review||[]);examVisited=new Set(saved.visited||[]);examIndex=Math.min(saved.index||0,examQuestions.length-1);examVisited.add(examIndex);examEndAt=saved.endAt;examStartedAt=saved.startedAt||examStartedAt;examOneMinuteAlertShown=(examEndAt-Date.now())<=60000;}}document.getElementById('examLoginPanel').classList.add('hidden');document.getElementById('examPanel').classList.remove('hidden');document.getElementById('examPaperTitle').textContent=(examPaper==='gs'?'GS Paper-I':'CSAT Paper-II')+' · '+name+' · '+roll;renderExamQuestion();saveExamProgress();examTimer=setInterval(updateExamTimer,1000);}
 function pvScheduleGate(schedule,paper){const v=schedule?.[paper]||{};if(!v.date||!v.start)return {configured:false,allowed:true};const start=new Date(v.date+"T"+v.start+":00").getTime();if(!Number.isFinite(start))return {configured:false,allowed:true};const late=Math.max(0,parseInt(v.late||0,10)||0)*60000,now=Date.now();if(now<start)return {configured:true,allowed:false,early:true,start,remaining:start-now};if(now>start+late)return {configured:true,allowed:false,closed:true,start,lateEnd:start+late};return {configured:true,allowed:true,start,lateEnd:start+late};}
 function pvScheduleCountdownStart(paper){if(window.pvScheduleCountdownTimer)clearInterval(window.pvScheduleCountdownTimer);const box=document.getElementById("examScheduleWait");if(!box)return;box.style.display="block";async function update(){let schedule=await pvCloudGetSchedule()||JSON.parse(localStorage.getItem("pvPrelimsSchedule")||"{}");const gate=pvScheduleGate(schedule,paper),v=schedule?.[paper]||{};if(!gate.configured){box.style.display="none";return;}if(gate.early){const sec=Math.max(0,Math.ceil(gate.remaining/1000)),hh=Math.floor(sec/3600),mm=Math.floor(sec%3600/60),ss=sec%60;box.innerHTML="<strong>⏳ परीक्षा अभी शुरू नहीं हुई है</strong><br>निर्धारित प्रारंभ समय: <strong>"+escapeHtml(v.date||"")+" · "+escapeHtml(v.start||"")+"</strong><br>परीक्षा शुरू होने में शेष: <strong style='font-size:20px;color:#075b93'>"+[hh,mm,ss].map(x=>String(x).padStart(2,"0")).join(":")+"</strong><br>समय आने तक Start Exam दबाने पर परीक्षा शुरू नहीं होगी।";}else if(gate.closed){box.innerHTML="<strong>⛔ परीक्षा शुरू करने का समय समाप्त हो गया है।</strong><br>Late Entry की अनुमति समाप्त हो चुकी है।";}else{box.innerHTML="<strong>✅ परीक्षा शुरू करने का समय उपलब्ध है।</strong><br>आप अब Start Exam दबाकर परीक्षा शुरू कर सकते हैं।";}}update();window.pvScheduleCountdownTimer=setInterval(update,1000);}
-function openExam(paper){examPaper=paper;document.getElementById('examHeading').textContent=paper==='gs'?'GS Paper-I Online Examination':'CSAT Paper-II Online Examination';document.getElementById('examLoginPanel').classList.remove('hidden');document.getElementById('examPanel').classList.add('hidden');document.getElementById('examResultPanel').classList.add('hidden');document.querySelector('#examResultPanel .pv-result-actions').innerHTML='<button class="btn secondary" onclick="downloadExamResult()">⬇ Download Result Sheet</button><button class="btn secondary" onclick="downloadExamAnswerKey()">⬇ Download Answer Key</button><button class="btn secondary" onclick="printExamResult()">🖨 Print Result</button><button class="btn primary" onclick="closeExam()">Close</button>';document.getElementById('examModal').classList.add('open');pvPrepareExamLogin();pvScheduleCountdownStart(paper);}
+function openExam(paper){
+ examPaper=paper;
+ const isGS=paper==='gs';
+ document.getElementById('examHeading').textContent=isGS?'GS Paper-I Online Examination':'CSAT Paper-II Online Examination';
+ document.getElementById('examWelcomeTitle').textContent=isGS?'General Studies Paper-I':'CSAT Paper-II';
+ document.getElementById('examWelcomeMarks').textContent='200';
+ document.getElementById('examWelcomeDuration').textContent='2 Hours';
+ document.getElementById('examWelcomeQuestions').textContent=isGS?'150':'100';
+ document.getElementById('examWelcomePanel').classList.remove('hidden');
+ document.getElementById('examLoginPanel').classList.add('hidden');
+ document.getElementById('examPanel').classList.add('hidden');
+ document.getElementById('examResultPanel').classList.add('hidden');
+ document.querySelector('#examResultPanel .pv-result-actions').innerHTML='<button class="btn secondary" onclick="downloadExamResult()">⬇ Download Result Sheet</button><button class="btn secondary" onclick="downloadExamAnswerKey()">⬇ Download Answer Key</button><button class="btn secondary" onclick="printExamResult()">🖨 Print Result</button><button class="btn primary" onclick="closeExam()">Close</button>';
+ document.getElementById('examModal').classList.add('open');
+}
+function continueToExamLogin(){
+ document.getElementById('examWelcomePanel').classList.add('hidden');
+ document.getElementById('examLoginPanel').classList.remove('hidden');
+ pvPrepareExamLogin();
+ pvScheduleCountdownStart(examPaper);
+}
 function examLogout(){
  if(!examStudent||!examStudent.roll){closeExam();return;}
  saveExamProgress();
