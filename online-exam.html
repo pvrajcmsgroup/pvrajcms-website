@@ -637,30 +637,6 @@ flex-direction:column
 }
 </style>
 
-
-<style id="pv-options-scroll-fit-fix">
-/* Final exam viewport layout: keep the answer panel independently scrollable and
-   reserve enough vertical space for all four normal-sized choices. */
-@media (min-width:801px){
- #examModal .modal-box{height:100dvh!important;max-height:100dvh!important;overflow:hidden!important}
- #examModal #examPanel:not(.hidden){
-   height:100dvh!important;min-height:0!important;box-sizing:border-box!important;
-   grid-template-rows:auto minmax(125px,30dvh) minmax(205px,1fr) auto!important;
-   grid-template-areas:"head head" "question palette" "options palette" "controls controls"!important;
-   gap:8px!important;padding:10px!important;
- }
- #examModal #examQuestionArea{min-height:0!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important}
- #examModal #examOptions{min-height:0!important;height:100%!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;
-   gap:6px!important;padding:0 4px 4px 0!important;overscroll-behavior:contain!important;scrollbar-width:thin!important}
- #examModal #examOptions label{box-sizing:border-box!important;flex:0 0 auto!important;min-height:42px!important;padding:8px 10px!important;margin:0!important}
- #examModal .exam-controls{position:relative!important;z-index:5!important;margin:0!important}
-}
-@media (max-width:800px){
- #examModal #examOptions{max-height:38dvh!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;scrollbar-width:thin!important;padding-right:4px!important}
- #examModal #examOptions label{flex:0 0 auto!important;min-height:40px!important;margin:0!important}
-}
-</style>
-
 </head>
 
 <body>
