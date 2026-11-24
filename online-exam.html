@@ -662,9 +662,67 @@ flex-direction:column
 </style>
 
 
-<style id="pv-mobile-options-scroll-corrected">
-/* Mobile layout: reserve real height for the options viewport.
-   Keep the question panel and options panel independently scrollable. */
+<style id="pv-answer-options-own-scrollbar">
+/* Final override: the options box itself scrolls, like the question box.
+   Earlier CSS had set the options row to max-content/overflow:visible. */
+@media (min-width:801px){
+  #examModal .modal-box{
+    display:flex!important;
+    flex-direction:column!important;
+    height:100dvh!important;
+    max-height:100dvh!important;
+    overflow:hidden!important;
+    padding:0!important;
+  }
+  #examModal #examPanel:not(.hidden){
+    display:grid!important;
+    flex:1 1 0!important;
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    grid-template-columns:minmax(0,1fr) 310px!important;
+    grid-template-rows:auto minmax(110px,30%) minmax(0,1fr) auto!important;
+    grid-template-areas:
+      "head head"
+      "question palette"
+      "options palette"
+      "controls controls"!important;
+    gap:8px!important;
+    padding:10px!important;
+  }
+  #examModal #examPanel>div:first-child{grid-area:head!important;min-height:0!important}
+  #examModal #examQuestionArea{
+    grid-area:question!important;
+    min-height:0!important;
+    height:100%!important;
+    max-height:none!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+  }
+  #examModal #examOptions{
+    grid-area:options!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-self:stretch!important;
+    min-height:0!important;
+    height:100%!important;
+    max-height:100%!important;
+    overflow-y:scroll!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain!important;
+    scrollbar-width:auto!important;
+    padding:0 8px 12px 0!important;
+  }
+  #examModal #examOptions label{flex:0 0 auto!important}
+  #examModal .exam-controls{
+    grid-area:controls!important;
+    position:relative!important;
+    min-height:0!important;
+    z-index:4!important;
+  }
+  #examModal #examPaletteWrap{grid-area:palette!important;min-height:0!important}
+}
 @media (max-width:800px){
   #examModal .modal-box{
     display:flex!important;
@@ -672,75 +730,55 @@ flex-direction:column
     height:100dvh!important;
     max-height:100dvh!important;
     overflow:hidden!important;
-    padding:6px!important;
+    padding:5px!important;
   }
   #examModal #examPanel:not(.hidden){
     display:flex!important;
-    flex:1 1 auto!important;
+    flex:1 1 0!important;
     flex-direction:column!important;
-    min-height:0!important;
+    width:100%!important;
     height:100%!important;
+    min-height:0!important;
     overflow:hidden!important;
     gap:6px!important;
     padding:5px!important;
   }
-  #examModal #examPanel>div:first-child{
-    flex:0 0 auto!important;
-  }
+  #examModal #examPanel>div:first-child{flex:0 0 auto!important}
   #examModal #examQuestionArea{
-    flex:0 1 18dvh!important;
+    flex:0 1 25dvh!important;
     min-height:65px!important;
-    max-height:18dvh!important;
+    max-height:25dvh!important;
     overflow-y:auto!important;
     overflow-x:hidden!important;
-    margin:0!important;
   }
   #examModal #examOptions{
     display:flex!important;
     flex:1 1 0!important;
     flex-direction:column!important;
-    min-height:90px!important;
+    min-height:70px!important;
     height:0!important;
     max-height:none!important;
     overflow-y:scroll!important;
     overflow-x:hidden!important;
     overscroll-behavior:contain!important;
-    scrollbar-width:thin!important;
-    padding:0 6px 10px 0!important;
+    scrollbar-width:auto!important;
+    padding:0 8px 12px 0!important;
   }
-  #examModal #examOptions label{
-    flex:0 0 auto!important;
-    width:100%!important;
-    margin:0 0 5px!important;
-  }
+  #examModal #examOptions label{flex:0 0 auto!important}
   #examModal .exam-controls{
     position:relative!important;
     flex:0 0 auto!important;
-    padding:5px 0!important;
-    z-index:3!important;
+    z-index:4!important;
   }
-  /* Palette is compact so it does not squeeze the answer-options viewport. */
   #examModal #examPaletteWrap{
     display:none!important;
     flex:0 0 auto!important;
-    height:16dvh!important;
-    max-height:16dvh!important;
-    min-height:72px!important;
-    overflow:hidden!important;
+    height:20dvh!important;
+    max-height:20dvh!important;
+    min-height:70px!important;
   }
-  #examModal #examPaletteWrap.palette-open{
-    display:flex!important;
-    flex-direction:column!important;
-  }
-  #examModal #examPalette{
-    flex:1 1 auto!important;
-    min-height:0!important;
-    height:auto!important;
-    max-height:none!important;
-    overflow-y:auto!important;
-    overflow-x:hidden!important;
-    grid-template-columns:repeat(8,minmax(0,1fr))!important;
-  }
+  #examModal #examPaletteWrap.palette-open{display:flex!important;flex-direction:column!important}
+  #examModal #examPalette{flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important}
 }
 </style>
 
