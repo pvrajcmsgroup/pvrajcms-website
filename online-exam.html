@@ -619,6 +619,109 @@ flex-direction:column
 }
 </style>
 
+
+<style id="pv-exam-gap-final-fix">
+/* Final fix: prevent grid rows from stretching and keep options directly under question */
+#examModal #examPanel:not(.hidden) {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 290px !important;
+  grid-template-rows: auto max-content max-content auto !important;
+  grid-template-areas:
+    "head head"
+    "question palette"
+    "options palette"
+    "controls controls" !important;
+  align-content: start !important;
+  align-items: start !important;
+  justify-content: stretch !important;
+  gap: 8px 10px !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+#examModal #examQuestionArea {
+  grid-area: question !important;
+  align-self: start !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  overflow: visible !important;
+}
+#examModal #examQuestionArea .exam-question-image-wrap {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 8px auto 0 !important;
+  text-align: center !important;
+}
+#examModal #examQuestionArea .exam-question-image {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: min(38vh, 320px) !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+}
+#examModal #examOptions {
+  grid-area: options !important;
+  align-self: start !important;
+  height: max-content !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 7px !important;
+  overflow: visible !important;
+}
+#examModal #examOptions label {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+}
+#examModal #examPaletteWrap {
+  grid-area: palette !important;
+  align-self: start !important;
+}
+#examModal .exam-controls {
+  grid-area: controls !important;
+  align-self: end !important;
+}
+@media (max-width: 800px) {
+  #examModal #examPanel:not(.hidden) {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+  #examModal #examQuestionArea,
+  #examModal #examOptions {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    flex: 0 0 auto !important;
+  }
+  #examModal #examOptions { gap: 7px !important; }
+  #examModal #examQuestionArea .exam-question-image {
+    max-height: min(36vh, 280px) !important;
+    max-width: 100% !important;
+  }
+  #examModal .exam-controls {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 30 !important;
+    background: #f5f7fb !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
