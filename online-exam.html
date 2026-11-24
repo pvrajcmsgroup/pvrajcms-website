@@ -621,19 +621,43 @@ flex-direction:column
 </style>
 
 <style id="pv-question-image-only">
-.pv-question-image-wrap{display:block;width:100%;max-height:190px;margin:8px 0;text-align:center;overflow:hidden}
-.pv-question-image{display:inline-block;max-width:100%;max-height:180px;width:auto;height:auto;object-fit:contain;vertical-align:middle}
-@media(max-width:800px){.pv-question-image-wrap{max-height:145px;margin:6px 0}.pv-question-image{max-height:135px}}
+.pv-question-image-wrap{display:block;width:100%;margin:10px 0;text-align:center}
+.pv-question-image{display:inline-block;max-width:100%;height:auto;object-fit:contain;vertical-align:middle}
 </style>
 
 
-<style id="pv-show-all-four-options-fix">
-/* Keep all four answer choices visible; allow the exam dialog itself to scroll if needed. */
+<style id="pv-independent-question-options-scroll">
+/* Keep question/image and answer choices in two independent scroll areas. */
 @media (min-width:801px){
- #examModal .modal-box{height:auto!important;max-height:100dvh!important;overflow-y:auto!important;overflow-x:hidden!important}
- #examModal #examPanel:not(.hidden){grid-template-rows:auto auto auto auto!important;min-height:0!important}
- #examModal #examOptions{height:auto!important;max-height:none!important;min-height:max-content!important;overflow:visible!important;align-self:start!important}
- #examModal #examOptions label{flex:0 0 auto!important}
+  #examModal #examPanel:not(.hidden){
+    grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) auto!important;
+    min-height:0!important;
+    height:calc(100dvh - 24px)!important;
+    overflow:hidden!important;
+  }
+  #examModal #examQuestionArea{min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+  #examModal #examOptions{min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+}
+@media (max-width:800px){
+  #examModal .modal-box{height:100dvh!important;max-height:100dvh!important;overflow:hidden!important;padding:4px!important}
+  #examModal #examPanel:not(.hidden){
+    display:flex!important;flex-direction:column!important;
+    height:calc(100dvh - 8px)!important;max-height:calc(100dvh - 8px)!important;
+    min-height:0!important;overflow:hidden!important;gap:6px!important;padding:5px!important;
+  }
+  #examModal #examPanel>div:first-child{flex:0 0 auto!important}
+  #examModal #examQuestionArea{
+    flex:1 1 50%!important;min-height:0!important;height:0!important;max-height:none!important;
+    overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;
+  }
+  #examModal #examOptions{
+    flex:1 1 50%!important;min-height:0!important;height:0!important;max-height:none!important;
+    overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;
+    padding:0 2px 4px!important;
+  }
+  #examModal #examOptions label{flex:0 0 auto!important;min-height:38px!important;margin:3px 0!important}
+  #examModal .exam-controls{position:relative!important;bottom:auto!important;flex:0 0 auto!important;z-index:10!important}
+  #examModal #examPaletteWrap{flex:0 0 auto!important}
 }
 </style>
 
@@ -1426,7 +1450,43 @@ function pvPrintRecoveredResult(index){
   const r=row.result||{};
   const w=window.open("","_blank");
   if(!w){alert("Popup blocked. Please allow popups to print.");return;}
-  w.document.write(`<html><head><title>Exam Result</title><style>body{font-family:Arial;padding:24px;color:#10213b}h1{color:#075b93}table{width:100%;border-collapse:collapse}td{padding:10px;border:1px solid #ddd}</style></head><body><h1>PV Education — Exam Result</h1><table><tr><td>Student</td><td>${pvRecoveryEscape(row.student_name||r.student?.name||"—")}</td></tr><tr><td>Roll Number</td><td>${pvRecoveryEscape(row.roll_number||r.student?.roll||"—")}</td></tr><tr><td>Paper</td><td>${pvRecoveryEscape(row.paper||r.paper||"—")}</td></tr><tr><td>Correct</td><td>${pvRecoveryEscape(String(r.correct??"—"))}</td></tr><tr><td>Wrong</td><td>${pvRecoveryEscape(String(r.wrong??"—"))}</td></tr><tr><td>Unattempted</td><td>${pvRecoveryEscape(String(r.unattempted??"—"))}</td></tr><tr><td>Marks</td><td>${pvRecoveryEscape(String(r.total??"—"))}</td></tr><tr><td>Percentage</td><td>${pvRecoveryEscape(String(r.percentage??"—"))}%</td></tr><tr><td>Duration</td><td>${pvRecoveryEscape(pvRecoveryDuration(r))}</td></tr><tr><td>Submitted</td><td>${pvRecoveryEscape(row.created_at?new Date(row.created_at).toLocaleString("en-IN"):(r.submittedAt||"—"))}</td></tr></table><script>window.onload=()=>window.print()<\/script></body></html>`);
+  w.document.write(`<html><head><title>Exam Result</title><style>body{font-family:Arial;padding:24px;color:#10213b}h1{color:#075b93}table{width:100%;border-collapse:collapse}td{padding:10px;border:1px solid #ddd}</style>
+<style id="pv-independent-question-options-scroll">
+/* Keep question/image and answer choices in two independent scroll areas. */
+@media (min-width:801px){
+  #examModal #examPanel:not(.hidden){
+    grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) auto!important;
+    min-height:0!important;
+    height:calc(100dvh - 24px)!important;
+    overflow:hidden!important;
+  }
+  #examModal #examQuestionArea{min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+  #examModal #examOptions{min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+}
+@media (max-width:800px){
+  #examModal .modal-box{height:100dvh!important;max-height:100dvh!important;overflow:hidden!important;padding:4px!important}
+  #examModal #examPanel:not(.hidden){
+    display:flex!important;flex-direction:column!important;
+    height:calc(100dvh - 8px)!important;max-height:calc(100dvh - 8px)!important;
+    min-height:0!important;overflow:hidden!important;gap:6px!important;padding:5px!important;
+  }
+  #examModal #examPanel>div:first-child{flex:0 0 auto!important}
+  #examModal #examQuestionArea{
+    flex:1 1 50%!important;min-height:0!important;height:0!important;max-height:none!important;
+    overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;
+  }
+  #examModal #examOptions{
+    flex:1 1 50%!important;min-height:0!important;height:0!important;max-height:none!important;
+    overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;
+    padding:0 2px 4px!important;
+  }
+  #examModal #examOptions label{flex:0 0 auto!important;min-height:38px!important;margin:3px 0!important}
+  #examModal .exam-controls{position:relative!important;bottom:auto!important;flex:0 0 auto!important;z-index:10!important}
+  #examModal #examPaletteWrap{flex:0 0 auto!important}
+}
+</style>
+
+</head><body><h1>PV Education — Exam Result</h1><table><tr><td>Student</td><td>${pvRecoveryEscape(row.student_name||r.student?.name||"—")}</td></tr><tr><td>Roll Number</td><td>${pvRecoveryEscape(row.roll_number||r.student?.roll||"—")}</td></tr><tr><td>Paper</td><td>${pvRecoveryEscape(row.paper||r.paper||"—")}</td></tr><tr><td>Correct</td><td>${pvRecoveryEscape(String(r.correct??"—"))}</td></tr><tr><td>Wrong</td><td>${pvRecoveryEscape(String(r.wrong??"—"))}</td></tr><tr><td>Unattempted</td><td>${pvRecoveryEscape(String(r.unattempted??"—"))}</td></tr><tr><td>Marks</td><td>${pvRecoveryEscape(String(r.total??"—"))}</td></tr><tr><td>Percentage</td><td>${pvRecoveryEscape(String(r.percentage??"—"))}%</td></tr><tr><td>Duration</td><td>${pvRecoveryEscape(pvRecoveryDuration(r))}</td></tr><tr><td>Submitted</td><td>${pvRecoveryEscape(row.created_at?new Date(row.created_at).toLocaleString("en-IN"):(r.submittedAt||"—"))}</td></tr></table><script>window.onload=()=>window.print()<\/script></body></html>`);
   w.document.close();
 }
 
@@ -2072,7 +2132,7 @@ function resetStudentAttempt(){
  alert('Saved attempt reset हो गया। अब Start Exam दबाकर नया attempt शुरू करें।');
 }
 function closeExam(){document.getElementById('examModal').classList.remove('open');if(examTimer)clearInterval(examTimer);examTimer=null;}
-async function beginExam(){const session=await pvGetStudentSession();if(!session){alert('पहले PVrajCMS Group Account से Login करें।');window.location.href='login.html?redirect='+encodeURIComponent('online-exam.html');return;}let schedule=await pvCloudGetSchedule()||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');let gate=pvScheduleGate(schedule,examPaper);if(gate.configured&&!gate.allowed){alert(gate.early?'Exam abhi start nahi hua hai. Scheduled time ka wait karein.':'Exam start window close ho chuki hai.');return;}let name=document.getElementById('examStudentName').value.trim(),fatherName=document.getElementById('examFatherName').value.trim(),roll=document.getElementById('examStudentRoll').value.trim(),dob=document.getElementById('examStudentDob').value,gender=document.getElementById('examStudentGender').value,category=document.getElementById('examStudentCategory').value,centre=document.getElementById('examStudentCentre').value.trim();if(!name||!fatherName||!roll||!dob||!gender||!category||!centre){alert('कृपया सभी Student Details भरें।');return;}pvSaveExamProfile(session.user.email,{name,fatherName,roll,dob,gender,category,centre});let qrec=await pvGetFileRecord(examPaper+'Questions');let krec=await pvGetFileRecord(examPaper+'Key');if(!qrec){alert('Admin ne online questions CSV/TXT upload nahi kiya hai. PDF se online questions automatically nahi ban sakte.');return;}let text=await pvReadTextBlob(qrec.blob);examQuestions=parseQuestions(text);try{Object.values(pvExamImageUrls).forEach(u=>URL.revokeObjectURL(u));pvExamImageUrls=await pvLoadExamImages(examPaper);}catch(imgErr){console.warn('Question images could not be loaded:',imgErr);pvExamImageUrls={};}if(!examQuestions.length){alert('Question file format sahi nahi hai. Format: Question,Option A,Option B,Option C,Option D');return;}examKey=krec?parseKey(await pvReadTextBlob(krec.blob)):{};examStudent={name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id};localStorage.setItem('pvExamActive',JSON.stringify({paper:examPaper,name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id}));examAnswers={};examReview=new Set();examVisited=new Set([0]);examIndex=0;examOneMinuteAlertShown=false;let mins=parseInt(schedule[examPaper]?.duration||120,10);examStartedAt=Date.now();let scheduledStart=schedule[examPaper]?.date&&schedule[examPaper]?.start?new Date(schedule[examPaper].date+'T'+schedule[examPaper].start+':00').getTime():0;examEndAt=scheduledStart?Math.min(Date.now()+mins*60000,scheduledStart+mins*60000):Date.now()+mins*60000;let saved=null;try{saved=JSON.parse(localStorage.getItem('pvExam_'+examPaper+'_'+roll)||'null');}catch(e){}if(saved&&saved.questionsCount===examQuestions.length&&saved.student&&saved.student.name===name&&saved.endAt>Date.now()){if(confirm('Is roll number ki exam progress mili hai. Kya aap wahi exam resume karna chahte hain?')){examAnswers=saved.answers||{};examReview=new Set(saved.review||[]);examVisited=new Set(saved.visited||[]);examIndex=Math.min(saved.index||0,examQuestions.length-1);examVisited.add(examIndex);examEndAt=saved.endAt;examStartedAt=saved.startedAt||examStartedAt;examOneMinuteAlertShown=(examEndAt-Date.now())<=60000;}}document.getElementById('examLoginPanel').classList.add('hidden');document.getElementById('examPanel').classList.remove('hidden');document.getElementById('examPaperTitle').textContent=(examPaper==='gs'?'GS Paper-I':'CSAT Paper-II')+' · '+name+' · '+roll;renderExamQuestion();saveExamProgress();examTimer=setInterval(updateExamTimer,1000);}
+async function beginExam(){const session=await pvGetStudentSession();if(!session){alert('पहले PVrajCMS Group Account से Login करें।');window.location.href='login.html?redirect='+encodeURIComponent('online-exam.html');return;}let schedule=await pvCloudGetSchedule()||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');let gate=pvScheduleGate(schedule,examPaper);if(gate.configured&&!gate.allowed){alert(gate.early?'Exam abhi start nahi hua hai. Scheduled time ka wait karein.':'Exam start window close ho chuki hai.');return;}let name=document.getElementById('examStudentName').value.trim(),fatherName=document.getElementById('examFatherName').value.trim(),roll=document.getElementById('examStudentRoll').value.trim(),dob=document.getElementById('examStudentDob').value,gender=document.getElementById('examStudentGender').value,category=document.getElementById('examStudentCategory').value,centre=document.getElementById('examStudentCentre').value.trim();if(!name||!fatherName||!roll||!dob||!gender||!category||!centre){alert('कृपया सभी Student Details भरें।');return;}pvSaveExamProfile(session.user.email,{name,fatherName,roll,dob,gender,category,centre});let qrec=await pvGetFileRecord(examPaper+'Questions');let krec=await pvGetFileRecord(examPaper+'Key');if(!qrec){alert('Admin ne online questions CSV/TXT upload nahi kiya hai. PDF se online questions automatically nahi ban sakte.');return;}let text=await pvReadTextBlob(qrec.blob);examQuestions=parseQuestions(text);if(!examQuestions.length){alert('Question file format sahi nahi hai. Format: Question,Option A,Option B,Option C,Option D');return;}examKey=krec?parseKey(await pvReadTextBlob(krec.blob)):{};examStudent={name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id};localStorage.setItem('pvExamActive',JSON.stringify({paper:examPaper,name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id}));examAnswers={};examReview=new Set();examVisited=new Set([0]);examIndex=0;examOneMinuteAlertShown=false;let mins=parseInt(schedule[examPaper]?.duration||120,10);examStartedAt=Date.now();let scheduledStart=schedule[examPaper]?.date&&schedule[examPaper]?.start?new Date(schedule[examPaper].date+'T'+schedule[examPaper].start+':00').getTime():0;examEndAt=scheduledStart?Math.min(Date.now()+mins*60000,scheduledStart+mins*60000):Date.now()+mins*60000;let saved=null;try{saved=JSON.parse(localStorage.getItem('pvExam_'+examPaper+'_'+roll)||'null');}catch(e){}if(saved&&saved.questionsCount===examQuestions.length&&saved.student&&saved.student.name===name&&saved.endAt>Date.now()){if(confirm('Is roll number ki exam progress mili hai. Kya aap wahi exam resume karna chahte hain?')){examAnswers=saved.answers||{};examReview=new Set(saved.review||[]);examVisited=new Set(saved.visited||[]);examIndex=Math.min(saved.index||0,examQuestions.length-1);examVisited.add(examIndex);examEndAt=saved.endAt;examStartedAt=saved.startedAt||examStartedAt;examOneMinuteAlertShown=(examEndAt-Date.now())<=60000;}}document.getElementById('examLoginPanel').classList.add('hidden');document.getElementById('examPanel').classList.remove('hidden');document.getElementById('examPaperTitle').textContent=(examPaper==='gs'?'GS Paper-I':'CSAT Paper-II')+' · '+name+' · '+roll;renderExamQuestion();saveExamProgress();examTimer=setInterval(updateExamTimer,1000);}
 let examOneMinuteAlertShown=false;
 function updateExamTimer(){let left=Math.max(0,Math.floor((examEndAt-Date.now())/1000));document.getElementById('examTimer').textContent=[Math.floor(left/3600),Math.floor(left%3600/60),left%60].map(x=>String(x).padStart(2,'0')).join(':');let count=Object.keys(examAnswers).filter(i=>examAnswers[i]).length;let countEl=document.getElementById('examAttemptCount');if(countEl)countEl.textContent='Attempted: '+count+' / '+examQuestions.length;if(left<=60&&left>0&&!examOneMinuteAlertShown){examOneMinuteAlertShown=true;alert('⚠️ केवल 1 मिनट बचा है! कृपया अपना पेपर Submit करने के लिए तैयार रहें।');}if(left<=0)submitExam(true);}
 function renderExamQuestion(){let q=examQuestions[examIndex];examVisited.add(examIndex);let imageUrl=pvFindExamImage(q.image);document.getElementById('examQuestionArea').innerHTML='<strong>Question '+(examIndex+1)+' / '+examQuestions.length+'</strong><p>'+escapeHtml(q.q)+'</p>'+(imageUrl?'<div class="pv-question-image-wrap"><img class="pv-question-image" src="'+imageUrl+'" alt="Question diagram" loading="lazy"></div>':'');let letters=['A','B','C','D'];document.getElementById('examOptions').innerHTML=q.opts.slice(0,4).map((o,i)=>'<label style="display:block;background:#f5f9fc;border:1px solid #dce7f1;border-radius:10px;padding:12px;margin:8px 0;cursor:pointer"><input type="radio" name="examOption" value="'+letters[i]+'" '+(examAnswers[examIndex]===letters[i]?'checked':'')+' onchange="examAnswers[examIndex]=this.value;saveExamProgress()"> <strong>'+letters[i]+'.</strong> '+escapeHtml(o)+'</label>').join('');renderPalette();}
@@ -2234,7 +2294,43 @@ renderStudentDashboard().catch(console.error);pvLoadCombinedResults();
 
 function pvDownloadHtmlFile(filename,title,content){
  const css='body{font-family:Arial,sans-serif;background:#f4f8fc;color:#10213b;margin:0;padding:20px}.card{max-width:900px;margin:auto;background:white;border:1px solid #dce7f1;border-radius:16px;padding:20px}.brand{background:linear-gradient(110deg,#06172a,#075b93);color:white;padding:14px;border-radius:12px}.brand small{display:block;color:#a7edff}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}.item{background:#f4f8fc;border:1px solid #dce7f1;border-radius:10px;padding:12px}.item small{display:block;color:#607087}.motivation{background:#eaf6ff;border:1px solid #c8e5ff;padding:14px;border-radius:12px;text-align:center;color:#075985}.answer-question{border:1px solid #dce7f1;border-radius:10px;padding:12px;margin:12px 0}.answer-question ul{padding-left:20px}.answer-status{background:#f4f8fc;padding:8px;border-radius:8px}.answer-sheet h3{background:#075b93;color:white;padding:12px;border-radius:8px}.pv-marksheet-head{display:flex;gap:12px;align-items:center;background:#075b93;color:white;padding:12px;border-radius:10px}.pv-student-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}.pv-student-strip div{border:1px solid #ddd;padding:8px;border-radius:8px}.pv-student-strip small{display:block;color:#52708d}@media(max-width:600px){body{padding:8px}.grid{grid-template-columns:repeat(2,1fr)}}@media print{body{padding:0;background:white}.card{border:0;box-shadow:none}}';
- const html='<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+title+'</title><style>'+css+'</style></head><body><main class="card"><div class="brand"><strong>🎓 PV EDUCATION</strong><small>PVRAJCMS GROUP · IAS / PCS PRELIMS</small></div>'+content+'</main></body></html>';
+ const html='<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+title+'</title><style>'+css+'</style>
+<style id="pv-independent-question-options-scroll">
+/* Keep question/image and answer choices in two independent scroll areas. */
+@media (min-width:801px){
+  #examModal #examPanel:not(.hidden){
+    grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) auto!important;
+    min-height:0!important;
+    height:calc(100dvh - 24px)!important;
+    overflow:hidden!important;
+  }
+  #examModal #examQuestionArea{min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+  #examModal #examOptions{min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+}
+@media (max-width:800px){
+  #examModal .modal-box{height:100dvh!important;max-height:100dvh!important;overflow:hidden!important;padding:4px!important}
+  #examModal #examPanel:not(.hidden){
+    display:flex!important;flex-direction:column!important;
+    height:calc(100dvh - 8px)!important;max-height:calc(100dvh - 8px)!important;
+    min-height:0!important;overflow:hidden!important;gap:6px!important;padding:5px!important;
+  }
+  #examModal #examPanel>div:first-child{flex:0 0 auto!important}
+  #examModal #examQuestionArea{
+    flex:1 1 50%!important;min-height:0!important;height:0!important;max-height:none!important;
+    overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;
+  }
+  #examModal #examOptions{
+    flex:1 1 50%!important;min-height:0!important;height:0!important;max-height:none!important;
+    overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;
+    padding:0 2px 4px!important;
+  }
+  #examModal #examOptions label{flex:0 0 auto!important;min-height:38px!important;margin:3px 0!important}
+  #examModal .exam-controls{position:relative!important;bottom:auto!important;flex:0 0 auto!important;z-index:10!important}
+  #examModal #examPaletteWrap{flex:0 0 auto!important}
+}
+</style>
+
+</head><body><main class="card"><div class="brand"><strong>🎓 PV EDUCATION</strong><small>PVRAJCMS GROUP · IAS / PCS PRELIMS</small></div>'+content+'</main></body></html>';
  const blob=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 function downloadExamResult(){
@@ -2256,7 +2352,43 @@ function printExamResult(){
  const w=window.open('','_blank');
  if(!w){alert('Popup allow karein, phir Print / Save PDF dabayein.');return;}
  const styles=[...document.querySelectorAll('style')].map(x=>x.textContent).join('');
- w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>PV Education Result</title><style>${styles}body{background:#fff!important;padding:20px!important}#examResultPanel{display:block!important;max-height:none!important;overflow:visible!important;margin:auto!important}</style></head><body><div id="examResultPanel">${panel.innerHTML}</div></body></html>`);
+ w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>PV Education Result</title><style>${styles}body{background:#fff!important;padding:20px!important}#examResultPanel{display:block!important;max-height:none!important;overflow:visible!important;margin:auto!important}</style>
+<style id="pv-independent-question-options-scroll">
+/* Keep question/image and answer choices in two independent scroll areas. */
+@media (min-width:801px){
+  #examModal #examPanel:not(.hidden){
+    grid-template-rows:auto minmax(0,1fr) minmax(0,1fr) auto!important;
+    min-height:0!important;
+    height:calc(100dvh - 24px)!important;
+    overflow:hidden!important;
+  }
+  #examModal #examQuestionArea{min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+  #examModal #examOptions{min-height:0!important;max-height:none!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+}
+@media (max-width:800px){
+  #examModal .modal-box{height:100dvh!important;max-height:100dvh!important;overflow:hidden!important;padding:4px!important}
+  #examModal #examPanel:not(.hidden){
+    display:flex!important;flex-direction:column!important;
+    height:calc(100dvh - 8px)!important;max-height:calc(100dvh - 8px)!important;
+    min-height:0!important;overflow:hidden!important;gap:6px!important;padding:5px!important;
+  }
+  #examModal #examPanel>div:first-child{flex:0 0 auto!important}
+  #examModal #examQuestionArea{
+    flex:1 1 50%!important;min-height:0!important;height:0!important;max-height:none!important;
+    overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;
+  }
+  #examModal #examOptions{
+    flex:1 1 50%!important;min-height:0!important;height:0!important;max-height:none!important;
+    overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;
+    padding:0 2px 4px!important;
+  }
+  #examModal #examOptions label{flex:0 0 auto!important;min-height:38px!important;margin:3px 0!important}
+  #examModal .exam-controls{position:relative!important;bottom:auto!important;flex:0 0 auto!important;z-index:10!important}
+  #examModal #examPaletteWrap{flex:0 0 auto!important}
+}
+</style>
+
+</head><body><div id="examResultPanel">${panel.innerHTML}</div></body></html>`);
  w.document.close();w.focus();setTimeout(()=>w.print(),300);
 }
 
