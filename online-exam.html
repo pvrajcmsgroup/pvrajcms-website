@@ -827,6 +827,17 @@ flex-direction:column
 @media(max-width:600px){#examModal .pv-match-grid{grid-template-columns:1fr;gap:9px}#examModal .pv-match-grid h4{font-size:14px}}
 </style>
 
+
+<style id="pv-pdf-exam-mode">
+#examModal #examQuestionArea:has(.pv-pdf-exam-frame){max-height:none!important;height:auto!important;min-height:0!important;overflow:visible!important}
+#examModal .pv-pdf-exam-frame-wrap{width:100%;height:56vh;min-height:300px;max-height:720px;background:#e8edf4;border:1px solid #c9d9ea;border-radius:8px;overflow:hidden}
+#examModal .pv-pdf-exam-frame{display:block;width:100%;height:100%;border:0;background:#fff}
+#examModal .pv-pdf-hint{font-size:12px;color:#52657d;padding:7px 2px;line-height:1.45}
+#examModal .pv-pdf-answer-head{font-weight:800;background:#e7f0ff;color:#092d65;border-radius:8px;padding:10px;margin-bottom:5px}
+#examModal #examOptions label:has(input:checked){background:#dceaff!important;border:2px solid #1674df!important}
+@media(max-width:800px){#examModal #examQuestionArea{max-height:none!important;min-height:0!important;padding:8px!important}#examModal .pv-pdf-exam-frame-wrap{height:52vh;min-height:280px;max-height:none}#examModal #examOptions{max-height:none!important}#examModal .pv-pdf-hint{font-size:11px}}
+</style>
+
 </head>
 
 <body>
@@ -1338,6 +1349,13 @@ Category-wise Merit List में संबंधित Category के वि�
 <label>Question Paper (PDF/CSV/TXT)
 <input type="file" id="gsPaperFile" accept=".pdf,.csv,.txt">
 </label>
+<label>Exam Delivery Mode
+<select id="gsExamMode" style="width:100%;padding:10px;border:1px solid #dce7f1;border-radius:8px">
+<option value="csv">CSV Online Questions</option>
+<option value="pdf">Original PDF + Online A/B/C/D Answers</option>
+</select>
+</label>
+<p class="notice">CSV mode में ऊपर upload किए गए Online Questions चलेंगे। PDF mode में uploaded PDF और Answer Key आवश्यक हैं।</p>
 
 <button class="btn primary" onclick="saveExamFile('gsPaperFile','gsPaper')">
 Upload / Replace GS Paper
@@ -1370,6 +1388,13 @@ Upload / Replace GS Answer Key
 <label>Question Paper (PDF/CSV/TXT)
 <input type="file" id="csatPaperFile" accept=".pdf,.csv,.txt">
 </label>
+<label>Exam Delivery Mode
+<select id="csatExamMode" style="width:100%;padding:10px;border:1px solid #dce7f1;border-radius:8px">
+<option value="csv">CSV Online Questions</option>
+<option value="pdf">Original PDF + Online A/B/C/D Answers</option>
+</select>
+</label>
+<p class="notice">CSV mode में ऊपर upload किए गए Online Questions चलेंगे। PDF mode में uploaded PDF और Answer Key आवश्यक हैं।</p>
 
 <button class="btn primary" onclick="saveExamFile('csatPaperFile','csatPaper')">
 Upload / Replace CSAT Paper
@@ -1721,6 +1746,7 @@ document.getElementById(prefix+"Late").value=v.late||20;
 document.getElementById(k+"AutoPublish").checked=v.autoPublish!==false;
 document.getElementById(k+"KeyDelay").value=v.keyDelay??2;
 document.getElementById(k+"ResultDelay").value=v.resultDelay??5;
+document.getElementById(k+"ExamMode").value=v.mode==="pdf"?"pdf":"csv";
 
 });
 
@@ -1762,7 +1788,8 @@ duration:document.getElementById(prefix+"Duration").value,
 late:document.getElementById(prefix+"Late").value,
 autoPublish:document.getElementById(k+"AutoPublish").checked,
 keyDelay:document.getElementById(k+"KeyDelay").value,
-resultDelay:document.getElementById(k+"ResultDelay").value
+resultDelay:document.getElementById(k+"ResultDelay").value,
+mode:document.getElementById(k+"ExamMode").value
 
 };
 
@@ -2241,6 +2268,7 @@ function pvFindExamImage(filename){
 
 /* ONLINE EXAM ENGINE - local prototype */
 let examPaper='gs', examQuestions=[], examKey={}, examAnswers={}, examReview=new Set(), examVisited=new Set(), examIndex=0, examEndAt=0, examStartedAt=0, examTimer=null, examStudent={};
+let examMode='csv', pvPdfExamUrl='';
 
 (async function pvExamPageAuthCheck(){const session=await pvGetStudentSession();if(session){const email=session.user.email||'Logged in student';const n=document.getElementById('studentName');const r=document.getElementById('studentRoll');if(n)n.textContent=session.user.user_metadata?.full_name||session.user.user_metadata?.name||email;if(r)r.textContent='Account verified';}else{const n=document.getElementById('studentName');const r=document.getElementById('studentRoll');if(n)n.textContent='Login Required';if(r)r.textContent='Not Logged In';}})();
 
@@ -2312,7 +2340,56 @@ function resetStudentAttempt(){
  alert('Saved attempt reset हो गया। अब Start Exam दबाकर नया attempt शुरू करें।');
 }
 function closeExam(){document.getElementById('examModal').classList.remove('open');if(examTimer)clearInterval(examTimer);examTimer=null;}
-async function beginExam(){const session=await pvGetStudentSession();if(!session){alert('पहले PVrajCMS Group Account से Login करें।');window.location.href='login.html?redirect='+encodeURIComponent('online-exam.html');return;}let schedule=await pvCloudGetSchedule()||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');let gate=pvScheduleGate(schedule,examPaper);if(gate.configured&&!gate.allowed){alert(gate.early?'Exam abhi start nahi hua hai. Scheduled time ka wait karein.':'Exam start window close ho chuki hai.');return;}let name=document.getElementById('examStudentName').value.trim(),fatherName=document.getElementById('examFatherName').value.trim(),roll=document.getElementById('examStudentRoll').value.trim(),dob=document.getElementById('examStudentDob').value,gender=document.getElementById('examStudentGender').value,category=document.getElementById('examStudentCategory').value,centre=document.getElementById('examStudentCentre').value.trim();if(!name||!fatherName||!roll||!dob||!gender||!category||!centre){alert('कृपया सभी Student Details भरें।');return;}pvSaveExamProfile(session.user.email,{name,fatherName,roll,dob,gender,category,centre});let qrec=await pvGetFileRecord(examPaper+'Questions');let krec=await pvGetFileRecord(examPaper+'Key');if(!qrec){alert('Admin ne online questions CSV/TXT upload nahi kiya hai. PDF se online questions automatically nahi ban sakte.');return;}let text=await pvReadTextBlob(qrec.blob);examQuestions=parseQuestions(text);try{Object.values(pvExamImageUrls).forEach(u=>URL.revokeObjectURL(u));pvExamImageUrls=await pvLoadExamImages(examPaper);}catch(imgErr){console.warn('Question images could not be loaded:',imgErr);pvExamImageUrls={};}if(!examQuestions.length){alert('Question file format sahi nahi hai. Format: Question,Option A,Option B,Option C,Option D');return;}examKey=krec?parseKey(await pvReadTextBlob(krec.blob)):{};examStudent={name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id};localStorage.setItem('pvExamActive',JSON.stringify({paper:examPaper,name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id}));examAnswers={};examReview=new Set();examVisited=new Set([0]);examIndex=0;examOneMinuteAlertShown=false;let mins=parseInt(schedule[examPaper]?.duration||120,10);examStartedAt=Date.now();let scheduledStart=schedule[examPaper]?.date&&schedule[examPaper]?.start?new Date(schedule[examPaper].date+'T'+schedule[examPaper].start+':00').getTime():0;examEndAt=scheduledStart?Math.min(Date.now()+mins*60000,scheduledStart+mins*60000):Date.now()+mins*60000;let saved=null;try{saved=JSON.parse(localStorage.getItem('pvExam_'+examPaper+'_'+roll)||'null');}catch(e){}if(saved&&saved.questionsCount===examQuestions.length&&saved.student&&saved.student.name===name&&saved.endAt>Date.now()){if(confirm('Is roll number ki exam progress mili hai. Kya aap wahi exam resume karna chahte hain?')){examAnswers=saved.answers||{};examReview=new Set(saved.review||[]);examVisited=new Set(saved.visited||[]);examIndex=Math.min(saved.index||0,examQuestions.length-1);examVisited.add(examIndex);examEndAt=saved.endAt;examStartedAt=saved.startedAt||examStartedAt;examOneMinuteAlertShown=(examEndAt-Date.now())<=60000;}}document.getElementById('examLoginPanel').classList.add('hidden');document.getElementById('examPanel').classList.remove('hidden');document.getElementById('examPaperTitle').textContent=(examPaper==='gs'?'GS Paper-I':'CSAT Paper-II')+' · '+name+' · '+roll;renderExamQuestion();saveExamProgress();examTimer=setInterval(updateExamTimer,1000);}
+async function beginExam(){
+ const session=await pvGetStudentSession();
+ if(!session){alert('पहले PVrajCMS Group Account से Login करें।');window.location.href='login.html?redirect='+encodeURIComponent('online-exam.html');return;}
+ let schedule=await pvCloudGetSchedule()||JSON.parse(localStorage.getItem('pvPrelimsSchedule')||'{}');
+ let gate=pvScheduleGate(schedule,examPaper);
+ if(gate.configured&&!gate.allowed){alert(gate.early?'Exam abhi start nahi hua hai. Scheduled time ka wait karein.':'Exam start window close ho chuki hai.');return;}
+ let name=document.getElementById('examStudentName').value.trim(),fatherName=document.getElementById('examFatherName').value.trim(),roll=document.getElementById('examStudentRoll').value.trim(),dob=document.getElementById('examStudentDob').value,gender=document.getElementById('examStudentGender').value,category=document.getElementById('examStudentCategory').value,centre=document.getElementById('examStudentCentre').value.trim();
+ if(!name||!fatherName||!roll||!dob||!gender||!category||!centre){alert('कृपया सभी Student Details भरें।');return;}
+ pvSaveExamProfile(session.user.email,{name,fatherName,roll,dob,gender,category,centre});
+ const selectedMode=schedule[examPaper]?.mode==='pdf'?'pdf':'csv';
+ const krec=await pvGetFileRecord(examPaper+'Key');
+ if(!krec){alert('Admin ने इस परीक्षा की Answer Key upload नहीं की है। पहले Answer Key upload करें।');return;}
+ examKey=parseKey(await pvReadTextBlob(krec.blob));
+ if(!Object.keys(examKey).length){alert('Answer Key का format सही नहीं है। कृपया Question Number, Answer (A/B/C/D) format में key upload करें।');return;}
+ if(selectedMode==='pdf'){
+   const prec=await pvGetFileRecord(examPaper+'Paper');
+   if(!prec||!prec.blob||!String(prec.name||'').toLowerCase().endsWith('.pdf')){
+     alert('Admin ने PDF mode चुना है, लेकिन इस पेपर की PDF upload नहीं मिली। Admin से PDF upload करवाएँ।');return;
+   }
+   const count=Math.max(...Object.keys(examKey).map(Number).filter(n=>Number.isInteger(n)&&n>0));
+   if(!count||count>300){alert('PDF Answer Key में प्रश्नों की संख्या स्पष्ट नहीं है। कृपया क्रमांक सहित Answer Key upload करें (अधिकतम 300 प्रश्न)।');return;}
+   examQuestions=Array.from({length:count},(_,i)=>({q:'PDF प्रश्न '+(i+1)+' — प्रश्न मूल PDF में देखें।',opts:['विकल्प A','विकल्प B','विकल्प C','विकल्प D'],image:'',n:i+1}));
+   try{if(pvPdfExamUrl)URL.revokeObjectURL(pvPdfExamUrl);}catch(e){}
+   pvPdfExamUrl=URL.createObjectURL(prec.blob);
+   examMode='pdf';
+ }else{
+   const qrec=await pvGetFileRecord(examPaper+'Questions');
+   if(!qrec){alert('Admin ने Online Questions CSV/TXT upload नहीं किया है।');return;}
+   const text=await pvReadTextBlob(qrec.blob);
+   examQuestions=parseQuestions(text);
+   try{Object.values(pvExamImageUrls).forEach(u=>URL.revokeObjectURL(u));pvExamImageUrls=await pvLoadExamImages(examPaper);}catch(imgErr){console.warn('Question images could not be loaded:',imgErr);pvExamImageUrls={};}
+   if(!examQuestions.length){alert('Question file format सही नहीं है। Format: Question,Option A,Option B,Option C,Option D');return;}
+   examMode='csv';
+ }
+ examStudent={name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id};
+ localStorage.setItem('pvExamActive',JSON.stringify({paper:examPaper,mode:examMode,name,fatherName,roll,dob,gender,category,centre,email:session.user.email||'',userId:session.user.id}));
+ examAnswers={};examReview=new Set();examVisited=new Set([0]);examIndex=0;examOneMinuteAlertShown=false;
+ let mins=parseInt(schedule[examPaper]?.duration||120,10);examStartedAt=Date.now();
+ let scheduledStart=schedule[examPaper]?.date&&schedule[examPaper]?.start?new Date(schedule[examPaper].date+'T'+schedule[examPaper].start+':00').getTime():0;
+ examEndAt=scheduledStart?Math.min(Date.now()+mins*60000,scheduledStart+mins*60000):Date.now()+mins*60000;
+ let saved=null;try{saved=JSON.parse(localStorage.getItem('pvExam_'+examPaper+'_'+roll)||'null');}catch(e){}
+ if(saved&&saved.mode===examMode&&saved.questionsCount===examQuestions.length&&saved.student&&saved.student.name===name&&saved.endAt>Date.now()){
+  if(confirm('Is roll number ki exam progress mili hai. Kya aap wahi exam resume karna chahte hain?')){
+   examAnswers=saved.answers||{};examReview=new Set(saved.review||[]);examVisited=new Set(saved.visited||[]);examIndex=Math.min(saved.index||0,examQuestions.length-1);examVisited.add(examIndex);examEndAt=saved.endAt;examStartedAt=saved.startedAt||examStartedAt;examOneMinuteAlertShown=(examEndAt-Date.now())<=60000;
+  }
+ }
+ document.getElementById('examLoginPanel').classList.add('hidden');document.getElementById('examPanel').classList.remove('hidden');
+ document.getElementById('examPaperTitle').textContent=(examPaper==='gs'?'GS Paper-I':'CSAT Paper-II')+' · '+name+' · '+roll+(examMode==='pdf'?' · PDF MODE':'');
+ renderExamQuestion();saveExamProgress();examTimer=setInterval(updateExamTimer,1000);
+}
 let examOneMinuteAlertShown=false;
 function updateExamTimer(){let left=Math.max(0,Math.floor((examEndAt-Date.now())/1000));document.getElementById('examTimer').textContent=[Math.floor(left/3600),Math.floor(left%3600/60),left%60].map(x=>String(x).padStart(2,'0')).join(':');let count=Object.keys(examAnswers).filter(i=>examAnswers[i]).length;let countEl=document.getElementById('examAttemptCount');if(countEl)countEl.textContent='Attempted: '+count+' / '+examQuestions.length;if(left<=60&&left>0&&!examOneMinuteAlertShown){examOneMinuteAlertShown=true;alert('⚠️ केवल 1 मिनट बचा है! कृपया अपना पेपर Submit करने के लिए तैयार रहें।');}if(left<=0)submitExam(true);}
 function formatExamQuestionText(value){
@@ -2413,19 +2490,35 @@ function formatExamInline(value){
   return escapeHtml(part);
  }).join('');
 }
-function renderExamQuestion(){let q=examQuestions[examIndex];examVisited.add(examIndex);let imageUrl=pvFindExamImage(q.image);document.getElementById('examQuestionArea').innerHTML='<strong>Question '+(examIndex+1)+' / '+examQuestions.length+'</strong><p>'+formatExamQuestionText(q.q)+'</p>'+(imageUrl?'<div class="pv-question-image-wrap"><img class="pv-question-image" src="'+imageUrl+'" alt="Question diagram" loading="lazy"></div>':'');let letters=['A','B','C','D'];document.getElementById('examOptions').innerHTML=q.opts.slice(0,4).map((o,i)=>'<label style="display:block;background:#f5f9fc;border:1px solid #dce7f1;border-radius:10px;padding:12px;margin:8px 0;cursor:pointer"><input type="radio" name="examOption" value="'+letters[i]+'" '+(examAnswers[examIndex]===letters[i]?'checked':'')+' onchange="examAnswers[examIndex]=this.value;saveExamProgress()"> <strong>'+letters[i]+'.</strong> '+escapeHtml(o)+'</label>').join('');renderPalette();}
+function renderExamQuestion(){
+  let q=examQuestions[examIndex];examVisited.add(examIndex);
+  const area=document.getElementById('examQuestionArea');
+  const options=document.getElementById('examOptions');
+  let letters=['A','B','C','D'];
+  if(examMode==='pdf'){
+   if(!area.querySelector('.pv-pdf-exam-frame')){
+    area.innerHTML='<strong>Original Question Paper · PDF</strong><div class="pv-pdf-exam-frame-wrap"><iframe class="pv-pdf-exam-frame" title="Original question paper PDF" src="'+pvPdfExamUrl+'#toolbar=1&navpanes=0&view=FitH"></iframe></div><div class="pv-pdf-hint">PDF में प्रश्न पढ़ें। मोबाइल पर PDF को zoom / scroll कर सकते हैं। नीचे प्रश्न संख्या के अनुसार A/B/C/D उत्तर चुनें।</div>';
+   }
+   options.innerHTML='<div class="pv-pdf-answer-head">Question '+(examIndex+1)+' / '+examQuestions.length+' — अपना उत्तर चुनें</div>'+q.opts.map((o,i)=>'<label><input type="radio" name="examOption" value="'+letters[i]+'" '+(examAnswers[examIndex]===letters[i]?'checked':'')+' onchange="examAnswers[examIndex]=this.value;saveExamProgress()"><strong>'+letters[i]+'.</strong> '+o+'</label>').join('');
+  }else{
+   let imageUrl=pvFindExamImage(q.image);
+   area.innerHTML='<strong>Question '+(examIndex+1)+' / '+examQuestions.length+'</strong><p>'+formatExamQuestionText(q.q)+'</p>'+(imageUrl?'<div class="pv-question-image-wrap"><img class="pv-question-image" src="'+imageUrl+'" alt="Question diagram" loading="lazy"></div>':'');
+   options.innerHTML=q.opts.slice(0,4).map((o,i)=>'<label style="display:block;background:#f5f9fc;border:1px solid #dce7f1;border-radius:10px;padding:12px;margin:8px 0;cursor:pointer"><input type="radio" name="examOption" value="'+letters[i]+'" '+(examAnswers[examIndex]===letters[i]?'checked':'')+' onchange="examAnswers[examIndex]=this.value;saveExamProgress()"> <strong>'+letters[i]+'.</strong> '+escapeHtml(o)+'</label>').join('');
+  }
+  renderPalette();
+}
 function renderPalette(){document.getElementById('examPalette').innerHTML=examQuestions.map((q,i)=>{let cls=examAnswers[i]?'palette-answered':examReview.has(i)?'palette-review':examVisited.has(i)?'palette-unanswered':'palette-unvisited';if(i===examIndex)cls+=' palette-current';return '<button class="'+cls+'" aria-label="Question '+(i+1)+'" onclick="examIndex='+i+';examVisited.add('+i+');renderExamQuestion();saveExamProgress()">'+(i+1)+(examReview.has(i)?' ★':'')+'</button>';}).join('');}
 function toggleExamPalette(){const w=document.getElementById('examPaletteWrap');w.classList.toggle('palette-open');if(w.classList.contains('palette-open'))renderPalette();}
 function examPrev(){if(examIndex>0){examIndex--;examVisited.add(examIndex);renderExamQuestion();saveExamProgress();}}function examNext(){if(examIndex<examQuestions.length-1){examIndex++;examVisited.add(examIndex);renderExamQuestion();saveExamProgress();}}function examClearResponse(){delete examAnswers[examIndex];renderExamQuestion();saveExamProgress();}function examMarkReview(){if(examReview.has(examIndex))examReview.delete(examIndex);else examReview.add(examIndex);renderPalette();saveExamProgress();document.querySelector('.exam-controls button[onclick=\"examMarkReview()\"]')?.classList.toggle('primary',examReview.has(examIndex));}
-function saveExamProgress(){try{localStorage.setItem('pvExam_'+examPaper+'_'+examStudent.roll,JSON.stringify({answers:examAnswers,review:[...examReview],visited:[...examVisited],student:examStudent,index:examIndex,endAt:examEndAt,startedAt:examStartedAt,questionsCount:examQuestions.length}));}catch(e){}}
+function saveExamProgress(){try{localStorage.setItem('pvExam_'+examPaper+'_'+examStudent.roll,JSON.stringify({answers:examAnswers,review:[...examReview],visited:[...examVisited],student:examStudent,index:examIndex,endAt:examEndAt,startedAt:examStartedAt,questionsCount:examQuestions.length,mode:examMode}));}catch(e){}}
 function pvAnswerSheetHTML(result){
  const qs=result.questions||[], answers=result.answers||{}, key=result.answerKey||{};
  if(!qs.length)return '<div class="answer-sheet"><h3>Answer Sheet</h3><p>इस Result के साथ प्रश्नों का snapshot उपलब्ध नहीं है।</p></div>';
  return '<section class="answer-sheet"><h3>📄 Answer Sheet</h3>'+qs.map((q,i)=>{
   const chosen=answers[i]||'', correct=key[i+1]||'', bonus=(result.bonusQuestions||[]).includes(i+1);
   const status=bonus&&chosen?'🎁 Bonus Marks':!chosen?'⚪ Unattempted':chosen===correct?'✅ Correct':'❌ Wrong';
-  const opts=(q.opts||[]).map((o,j)=>'<li><strong>'+['A','B','C','D'][j]+'.</strong> '+escapeHtml(o)+(chosen===['A','B','C','D'][j]?' <b>(Your Answer)</b>':'')+(correct===['A','B','C','D'][j]?' <b>(Correct Answer)</b>':'')+'</li>').join('');
-  return '<article class="answer-question"><h4>Question '+(i+1)+'. '+escapeHtml(q.q||'')+'</h4><ul>'+opts+'</ul><div class="answer-status">Your Answer: <b>'+(chosen||'Not Attempted')+'</b> · Correct Answer: <b>'+(correct||'Not Available')+'</b> · '+status+'</div></article>';
+  const opts=(result.mode==='pdf'?[]:(q.opts||[])).map((o,j)=>'<li><strong>'+['A','B','C','D'][j]+'.</strong> '+escapeHtml(o)+(chosen===['A','B','C','D'][j]?' <b>(Your Answer)</b>':'')+(correct===['A','B','C','D'][j]?' <b>(Correct Answer)</b>':'')+'</li>').join('');
+  return '<article class="answer-question"><h4>Question '+(i+1)+(result.mode==='pdf'?' (Original PDF)':' · '+escapeHtml(q.q||''))+'</h4>'+(result.mode==='pdf'?'<p>Original question PDF में देखें।</p>':'<ul>'+opts+'</ul>')+'<div class="answer-status">Your Answer: <b>'+(chosen||'Not Attempted')+'</b> · Correct Answer: <b>'+(correct||'Not Available')+'</b> · '+status+'</div></article>';
  }).join('')+'</section>';
 }
 function pvMotivation(result){
@@ -2461,12 +2554,12 @@ async function submitExam(auto){
  examQuestions.forEach((q,i)=>{let ans=examAnswers[i],isBonus=bonus.includes(i+1);if(!ans){unattempted++;return;}if(isBonus){bonusAttempted++;bonusMarks+=correctMark;total+=correctMark;}else if(ans===examKey[i+1]){correct++;total+=correctMark;}else{wrong++;total+=wrongMark;}});
  let attempted=Object.keys(examAnswers).filter(i=>examAnswers[i]).length,durationSeconds=Math.max(0,Math.floor((Date.now()-examStartedAt)/1000)),durationText=pvFormatDuration(durationSeconds),submittedAt=new Date().toISOString();
  let previousAttempts=0;if(pvSupabase){try{const {count,error}=await pvSupabase.from('exam_attempts').select('id',{count:'exact',head:true}).eq('paper',examPaper).eq('roll_number',examStudent.roll);if(!error)previousAttempts=count||0;}catch(e){console.warn('Attempt count lookup:',e.message);}}
- let result={paper:examPaper,student:examStudent,attemptNumber:previousAttempts+1,correct,wrong,unattempted,bonusQuestions:bonus,bonusAttempted,bonusMarks,total:total.toFixed(3),percentage:(total/200*100).toFixed(2),answers:{...examAnswers},questions:examQuestions.map(q=>({q:q.q,opts:q.opts,n:q.n})),answerKey:{...examKey},durationSeconds,durationText,startedAt:new Date(examStartedAt).toISOString(),submittedAt,autoPublish:schedule[examPaper]?.autoPublish!==false,keyPublishAt:Date.now()+Math.max(0,Number(schedule[examPaper]?.keyDelay??2))*60000,resultPublishAt:Date.now()+(Math.max(0,Number(schedule[examPaper]?.keyDelay??2))+Math.max(0,Number(schedule[examPaper]?.resultDelay??5)))*60000};
+ let result={paper:examPaper,mode:examMode,student:examStudent,attemptNumber:previousAttempts+1,correct,wrong,unattempted,bonusQuestions:bonus,bonusAttempted,bonusMarks,total:total.toFixed(3),percentage:(total/200*100).toFixed(2),answers:{...examAnswers},questions:examQuestions.map(q=>({q:q.q,opts:q.opts,n:q.n})),answerKey:{...examKey},durationSeconds,durationText,startedAt:new Date(examStartedAt).toISOString(),submittedAt,autoPublish:schedule[examPaper]?.autoPublish!==false,keyPublishAt:Date.now()+Math.max(0,Number(schedule[examPaper]?.keyDelay??2))*60000,resultPublishAt:Date.now()+(Math.max(0,Number(schedule[examPaper]?.keyDelay??2))+Math.max(0,Number(schedule[examPaper]?.resultDelay??5)))*60000};
  localStorage.setItem('pvResult_'+examPaper+'_'+examStudent.roll,JSON.stringify(result));localStorage.setItem('pvResultHistory_'+examPaper+'_'+examStudent.roll+'_'+submittedAt,JSON.stringify(result));try{result.resultId=await pvCloudSaveResult(result);await pvCloudSaveAttempt(result);}catch(err){console.warn('Cloud result save failed:',err);}try{pvLoadStudentResultHistory();}catch(e){}
  localStorage.removeItem('pvExamActive');localStorage.removeItem('pvExam_'+examPaper+'_'+examStudent.roll);document.getElementById('examPanel').classList.add('hidden');document.getElementById('examResultPanel').classList.remove('hidden');
  let publishAt=result.autoPublish?result.resultPublishAt:getExamResultPublishTime(schedule,examPaper);let keyAt=result.autoPublish?result.keyPublishAt:getExamKeyPublishTime(schedule,examPaper);if((keyAt&&Date.now()<keyAt)||(publishAt&&Date.now()<publishAt)){pvShowPendingResult(result,keyAt,publishAt);}else{pvRenderResult(result);}
 }
-function pvAnswerKeyHTML(result){const qs=result.questions||[],key=result.answerKey||{};return '<section class="answer-sheet"><h3>📘 Answer Key</h3>'+qs.map((q,i)=>'<article class="answer-question"><h4>Question '+(i+1)+'. '+escapeHtml(q.q||'')+'</h4><ul>'+((q.opts||[]).map((o,j)=>'<li><strong>'+['A','B','C','D'][j]+'.</strong> '+escapeHtml(o)+'</li>').join(''))+'</ul><div class="answer-status">Correct Answer: <strong>'+escapeHtml(key[i+1]||'Not Available')+'</strong></div></article>').join('')+'</section>';}
+function pvAnswerKeyHTML(result){const qs=result.questions||[],key=result.answerKey||{};return '<section class="answer-sheet"><h3>📘 Answer Key</h3>'+qs.map((q,i)=>'<article class="answer-question"><h4>Question '+(i+1)+(result.mode==='pdf'?' (Original PDF)':' · '+escapeHtml(q.q||''))+'</h4>'+(result.mode==='pdf'?'<p>Original question PDF में देखें।</p>':'<ul>'+((q.opts||[]).map((o,j)=>'<li><strong>'+['A','B','C','D'][j]+'.</strong> '+escapeHtml(o)+'</li>').join(''))+'</ul>')+'<div class="answer-status">Correct Answer: <strong>'+escapeHtml(key[i+1]||'Not Available')+'</strong></div></article>').join('')+'</section>'; }
 function pvShowPendingResult(result,keyPublishAt,resultPublishAt){
  const box=document.getElementById('examResultText');
  function fmtCountdown(target){const sec=Math.max(0,Math.ceil((target-Date.now())/1000)),h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s=sec%60;return [h,m,s].map(x=>String(x).padStart(2,'0')).join(':');}
@@ -2548,10 +2641,20 @@ async function restoreExamAfterReload(){try{pvLoadStudentResultHistory();}catch(
   if(!active||!active.paper||!active.roll)return;
   const saved=JSON.parse(localStorage.getItem('pvExam_'+active.paper+'_'+active.roll)||'null');
   if(!saved||!saved.endAt||saved.endAt<=Date.now()||!saved.student)return;
-  const qrec=await pvGetFileRecord(active.paper+'Questions');
   const krec=await pvGetFileRecord(active.paper+'Key');
-  if(!qrec)return;
-  examPaper=active.paper;examQuestions=parseQuestions(await qrec.blob.text());examKey=krec?parseKey(await pvReadTextBlob(krec.blob)):{};
+  if(!krec)return;
+  examPaper=active.paper;examMode=active.mode||saved.mode||'csv';examKey=parseKey(await pvReadTextBlob(krec.blob));
+  if(examMode==='pdf'){
+   const prec=await pvGetFileRecord(active.paper+'Paper');if(!prec||!prec.blob)return;
+   try{if(pvPdfExamUrl)URL.revokeObjectURL(pvPdfExamUrl);}catch(e){}
+   pvPdfExamUrl=URL.createObjectURL(prec.blob);
+   const count=Math.max(...Object.keys(examKey).map(Number).filter(n=>Number.isInteger(n)&&n>0));
+   if(!count)return;
+   examQuestions=Array.from({length:count},(_,i)=>({q:'PDF प्रश्न '+(i+1)+' — प्रश्न मूल PDF में देखें।',opts:['विकल्प A','विकल्प B','विकल्प C','विकल्प D'],image:'',n:i+1}));
+  }else{
+   const qrec=await pvGetFileRecord(active.paper+'Questions');if(!qrec)return;
+   examQuestions=parseQuestions(await pvReadTextBlob(qrec.blob));
+  }
   examStudent=saved.student;examAnswers=saved.answers||{};examReview=new Set(saved.review||[]);examVisited=new Set(saved.visited||[]);examIndex=Math.min(saved.index||0,examQuestions.length-1);examVisited.add(examIndex);examEndAt=saved.endAt;
   document.getElementById('examLoginPanel').classList.add('hidden');document.getElementById('examPanel').classList.remove('hidden');document.getElementById('examResultPanel').classList.add('hidden');document.getElementById('examModal').classList.add('open');
   document.getElementById('examPaperTitle').textContent=(examPaper==='gs'?'GS Paper-I':'CSAT Paper-II')+' · '+examStudent.name+' · '+examStudent.roll;
