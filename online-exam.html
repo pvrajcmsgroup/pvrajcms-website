@@ -1450,7 +1450,65 @@ function pvPrintRecoveredResult(index){
   const r=row.result||{};
   const w=window.open("","_blank");
   if(!w){alert("Popup blocked. Please allow popups to print.");return;}
-  w.document.write(`<html><head><title>Exam Result</title><style>body{font-family:Arial;padding:24px;color:#10213b}h1{color:#075b93}table{width:100%;border-collapse:collapse}td{padding:10px;border:1px solid #ddd}</style></head><body><h1>PV Education — Exam Result</h1><table><tr><td>Student</td><td>${pvRecoveryEscape(row.student_name||r.student?.name||"—")}</td></tr><tr><td>Roll Number</td><td>${pvRecoveryEscape(row.roll_number||r.student?.roll||"—")}</td></tr><tr><td>Paper</td><td>${pvRecoveryEscape(row.paper||r.paper||"—")}</td></tr><tr><td>Correct</td><td>${pvRecoveryEscape(String(r.correct??"—"))}</td></tr><tr><td>Wrong</td><td>${pvRecoveryEscape(String(r.wrong??"—"))}</td></tr><tr><td>Unattempted</td><td>${pvRecoveryEscape(String(r.unattempted??"—"))}</td></tr><tr><td>Marks</td><td>${pvRecoveryEscape(String(r.total??"—"))}</td></tr><tr><td>Percentage</td><td>${pvRecoveryEscape(String(r.percentage??"—"))}%</td></tr><tr><td>Duration</td><td>${pvRecoveryEscape(pvRecoveryDuration(r))}</td></tr><tr><td>Submitted</td><td>${pvRecoveryEscape(row.created_at?new Date(row.created_at).toLocaleString("en-IN"):(r.submittedAt||"—"))}</td></tr></table><script>window.onload=()=>window.print()<\/script></body></html>`);
+  w.document.write(`<html><head><title>Exam Result</title><style>body{font-family:Arial;padding:24px;color:#10213b}h1{color:#075b93}table{width:100%;border-collapse:collapse}td{padding:10px;border:1px solid #ddd}</style></head><body><h1>PV Education — Exam Result</h1><table><tr><td>Student</td><td>${pvRecoveryEscape(row.student_name||r.student?.name||"—")}</td></tr><tr><td>Roll Number</td><td>${pvRecoveryEscape(row.roll_number||r.student?.roll||"—")}</td></tr><tr><td>Paper</td><td>${pvRecoveryEscape(row.paper||r.paper||"—")}</td></tr><tr><td>Correct</td><td>${pvRecoveryEscape(String(r.correct??"—"))}</td></tr><tr><td>Wrong</td><td>${pvRecoveryEscape(String(r.wrong??"—"))}</td></tr><tr><td>Unattempted</td><td>${pvRecoveryEscape(String(r.unattempted??"—"))}</td></tr><tr><td>Marks</td><td>${pvRecoveryEscape(String(r.total??"—"))}</td></tr><tr><td>Percentage</td><td>${pvRecoveryEscape(String(r.percentage??"—"))}%</td></tr><tr><td>Duration</td><td>${pvRecoveryEscape(pvRecoveryDuration(r))}</td></tr><tr><td>Submitted</td><td>${pvRecoveryEscape(row.created_at?new Date(row.created_at).toLocaleString("en-IN"):(r.submittedAt||"—"))}</td></tr></table><script>window.onload=()=>window.print()<\/script>
+<style id="pv-final-exam-option-visibility-fix">
+/* Final fix: keep the exam controls in their own grid row.
+   The answer choices get the remaining space and scroll independently. */
+@media (min-width:801px){
+  #examModal .modal-box{
+    display:flex!important;
+    flex-direction:column!important;
+    width:100vw!important;
+    height:100dvh!important;
+    max-height:100dvh!important;
+    overflow:hidden!important;
+  }
+  #examModal #examPanel:not(.hidden){
+    display:grid!important;
+    flex:1 1 auto!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    grid-template-columns:minmax(0,1fr) 310px!important;
+    grid-template-rows:auto minmax(120px,30%) minmax(0,1fr) auto!important;
+    grid-template-areas:
+      "head head"
+      "question palette"
+      "options palette"
+      "controls controls"!important;
+    gap:10px!important;
+  }
+  #examModal #examQuestionArea{
+    grid-area:question!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:auto!important;
+  }
+  #examModal #examOptions{
+    grid-area:options!important;
+    min-height:0!important;
+    height:auto!important;
+    max-height:none!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    align-self:stretch!important;
+    padding-bottom:8px!important;
+    overscroll-behavior:contain!important;
+  }
+  #examModal #examOptions label{
+    flex:0 0 auto!important;
+    margin:0!important;
+  }
+  #examModal .exam-controls{
+    grid-area:controls!important;
+    position:relative!important;
+    align-self:stretch!important;
+    z-index:2!important;
+    margin:0!important;
+  }
+}
+</style>
+
+</body></html>`);
   w.document.close();
 }
 
