@@ -626,6 +626,17 @@ flex-direction:column
 @media(max-width:800px){.pv-question-image-wrap{max-height:145px;margin:6px 0}.pv-question-image{max-height:135px}}
 </style>
 
+
+<style id="pv-show-all-four-options-fix">
+/* Keep all four answer choices visible; allow the exam dialog itself to scroll if needed. */
+@media (min-width:801px){
+ #examModal .modal-box{height:auto!important;max-height:100dvh!important;overflow-y:auto!important;overflow-x:hidden!important}
+ #examModal #examPanel:not(.hidden){grid-template-rows:auto auto auto auto!important;min-height:0!important}
+ #examModal #examOptions{height:auto!important;max-height:none!important;min-height:max-content!important;overflow:visible!important;align-self:start!important}
+ #examModal #examOptions label{flex:0 0 auto!important}
+}
+</style>
+
 </head>
 
 <body>
