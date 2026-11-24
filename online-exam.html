@@ -621,8 +621,9 @@ flex-direction:column
 </style>
 
 <style id="pv-question-image-only">
-.pv-question-image-wrap{display:block;width:100%;margin:10px 0;text-align:center}
-.pv-question-image{display:inline-block;max-width:100%;height:auto;object-fit:contain;vertical-align:middle}
+.pv-question-image-wrap{display:block;width:100%;max-height:190px;margin:8px 0;text-align:center;overflow:hidden}
+.pv-question-image{display:inline-block;max-width:100%;max-height:180px;width:auto;height:auto;object-fit:contain;vertical-align:middle}
+@media(max-width:800px){.pv-question-image-wrap{max-height:145px;margin:6px 0}.pv-question-image{max-height:135px}}
 </style>
 
 </head>
