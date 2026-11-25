@@ -838,6 +838,139 @@ flex-direction:column
 @media(max-width:800px){#examModal #examQuestionArea{max-height:none!important;min-height:0!important;padding:8px!important}#examModal .pv-pdf-exam-frame-wrap{height:52vh;min-height:280px;max-height:none}#examModal #examOptions{max-height:none!important}#examModal .pv-pdf-hint{font-size:11px}}
 </style>
 
+
+<style id="pv-pdf-right-answer-layout">
+/* PDF exam: large paper on the left, answer choices on the right. */
+#examModal #examPanel.pdf-mode:not(.hidden){
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(285px,330px)!important;
+  grid-template-rows:auto minmax(0,1fr) auto auto!important;
+  grid-template-areas:
+    "head head"
+    "question options"
+    "controls controls"
+    "palette palette"!important;
+  height:calc(100dvh - 20px)!important;
+  min-height:0!important;
+  align-content:stretch!important;
+  gap:10px!important;
+  overflow:hidden!important;
+  padding:12px!important;
+}
+#examModal #examPanel.pdf-mode #examQuestionArea{
+  grid-area:question!important;
+  min-width:0!important;
+  min-height:0!important;
+  height:100%!important;
+  max-height:none!important;
+  overflow:hidden!important;
+  padding:10px!important;
+  display:flex!important;
+  flex-direction:column!important;
+}
+#examModal #examPanel.pdf-mode #examQuestionArea .pv-pdf-exam-frame-wrap{
+  flex:1 1 auto!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+}
+#examModal #examPanel.pdf-mode #examQuestionArea .pv-pdf-exam-frame{
+  width:100%!important;
+  height:100%!important;
+}
+#examModal #examPanel.pdf-mode #examOptions{
+  grid-area:options!important;
+  min-width:0!important;
+  min-height:0!important;
+  height:100%!important;
+  max-height:none!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  align-self:stretch!important;
+  padding:10px!important;
+  background:#eef4fb!important;
+  border:1px solid #c9d9ea!important;
+  border-radius:10px!important;
+}
+#examModal #examPanel.pdf-mode #examOptions .pv-pdf-answer-head{
+  position:sticky!important;
+  top:-10px!important;
+  z-index:2!important;
+  margin:-10px -10px 10px!important;
+  padding:12px!important;
+  border-radius:9px 9px 0 0!important;
+}
+#examModal #examPanel.pdf-mode #examOptions label{
+  min-height:54px!important;
+  padding:14px!important;
+  margin:0 0 9px!important;
+  font-size:15px!important;
+  cursor:pointer!important;
+}
+#examModal #examPanel.pdf-mode .exam-controls{
+  grid-area:controls!important;
+}
+#examModal #examPanel.pdf-mode .palette-toggle{
+  display:inline-flex!important;
+}
+#examModal #examPanel.pdf-mode #examPaletteWrap{
+  grid-area:palette!important;
+  display:none!important;
+  height:30dvh!important;
+  max-height:30dvh!important;
+  min-height:120px!important;
+}
+#examModal #examPanel.pdf-mode #examPaletteWrap.palette-open{
+  display:flex!important;
+}
+#examModal #examPanel.pdf-mode #examPalette{
+  grid-template-columns:repeat(15,minmax(0,1fr))!important;
+  overflow-y:auto!important;
+  min-height:0!important;
+}
+#examModal #examPanel.pdf-mode .pv-pdf-hint{
+  flex:0 0 auto!important;
+}
+@media(max-width:800px){
+  #examModal #examPanel.pdf-mode:not(.hidden){
+    display:flex!important;
+    flex-direction:column!important;
+    height:auto!important;
+    min-height:0!important;
+    overflow:visible!important;
+    padding:6px!important;
+  }
+  #examModal #examPanel.pdf-mode #examQuestionArea{
+    height:62dvh!important;
+    min-height:380px!important;
+    max-height:none!important;
+    flex:0 0 auto!important;
+  }
+  #examModal #examPanel.pdf-mode #examQuestionArea .pv-pdf-exam-frame-wrap{
+    height:100%!important;
+    min-height:0!important;
+  }
+  #examModal #examPanel.pdf-mode #examOptions{
+    height:auto!important;
+    max-height:35dvh!important;
+    min-height:180px!important;
+    flex:0 0 auto!important;
+  }
+  #examModal #examPanel.pdf-mode #examPaletteWrap{
+    height:30dvh!important;
+    max-height:30dvh!important;
+  }
+  #examModal #examPanel.pdf-mode #examPalette{
+    grid-template-columns:repeat(8,minmax(0,1fr))!important;
+  }
+}
+@media(min-width:801px){
+  #examModal #examPanel.pdf-mode .modal-box{overflow:hidden!important}
+  #examModal #examPanel.pdf-mode #examPaletteWrap{max-height:28dvh!important}
+}
+</style>
+
 </head>
 
 <body>
@@ -2492,6 +2625,8 @@ function formatExamInline(value){
 }
 function renderExamQuestion(){
   let q=examQuestions[examIndex];examVisited.add(examIndex);
+  const panel=document.getElementById('examPanel');
+  if(panel)panel.classList.toggle('pdf-mode',examMode==='pdf');
   const area=document.getElementById('examQuestionArea');
   const options=document.getElementById('examOptions');
   let letters=['A','B','C','D'];
@@ -2508,7 +2643,14 @@ function renderExamQuestion(){
   renderPalette();
 }
 function renderPalette(){document.getElementById('examPalette').innerHTML=examQuestions.map((q,i)=>{let cls=examAnswers[i]?'palette-answered':examReview.has(i)?'palette-review':examVisited.has(i)?'palette-unanswered':'palette-unvisited';if(i===examIndex)cls+=' palette-current';return '<button class="'+cls+'" aria-label="Question '+(i+1)+'" onclick="examIndex='+i+';examVisited.add('+i+');renderExamQuestion();saveExamProgress()">'+(i+1)+(examReview.has(i)?' ★':'')+'</button>';}).join('');}
-function toggleExamPalette(){const w=document.getElementById('examPaletteWrap');w.classList.toggle('palette-open');if(w.classList.contains('palette-open'))renderPalette();}
+function toggleExamPalette(){
+ const w=document.getElementById('examPaletteWrap');
+ if(!w)return;
+ w.classList.toggle('palette-open');
+ const btn=document.querySelector('#examModal .palette-toggle');
+ if(btn)btn.setAttribute('aria-expanded',w.classList.contains('palette-open')?'true':'false');
+ if(w.classList.contains('palette-open'))renderPalette();
+}
 function examPrev(){if(examIndex>0){examIndex--;examVisited.add(examIndex);renderExamQuestion();saveExamProgress();}}function examNext(){if(examIndex<examQuestions.length-1){examIndex++;examVisited.add(examIndex);renderExamQuestion();saveExamProgress();}}function examClearResponse(){delete examAnswers[examIndex];renderExamQuestion();saveExamProgress();}function examMarkReview(){if(examReview.has(examIndex))examReview.delete(examIndex);else examReview.add(examIndex);renderPalette();saveExamProgress();document.querySelector('.exam-controls button[onclick=\"examMarkReview()\"]')?.classList.toggle('primary',examReview.has(examIndex));}
 function saveExamProgress(){try{localStorage.setItem('pvExam_'+examPaper+'_'+examStudent.roll,JSON.stringify({answers:examAnswers,review:[...examReview],visited:[...examVisited],student:examStudent,index:examIndex,endAt:examEndAt,startedAt:examStartedAt,questionsCount:examQuestions.length,mode:examMode}));}catch(e){}}
 function pvAnswerSheetHTML(result){
