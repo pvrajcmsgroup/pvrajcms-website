@@ -971,6 +971,192 @@ flex-direction:column
 }
 </style>
 
+
+<style id="pv-pdf-full-width-final-layout">
+/* Final PDF-mode redesign: full-width, taller paper; answers and Next directly underneath. */
+#examModal #examPanel.pdf-mode:not(.hidden){
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:auto minmax(420px,1fr) auto auto!important;
+  grid-template-areas:"head" "question" "options" "controls" "palette"!important;
+  width:100%!important;
+  height:calc(100dvh - 16px)!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  align-content:stretch!important;
+  gap:8px!important;
+  padding:8px 12px!important;
+}
+#examModal #examPanel.pdf-mode #examPanel{}
+#examModal #examPanel.pdf-mode #examQuestionArea{
+  grid-area:question!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  max-height:none!important;
+  display:flex!important;
+  flex-direction:column!important;
+  overflow:hidden!important;
+  margin:0!important;
+  padding:8px!important;
+}
+#examModal #examPanel.pdf-mode #examQuestionArea>strong{
+  flex:0 0 auto!important;
+  margin:-8px -8px 7px!important;
+}
+#examModal #examPanel.pdf-mode .pv-pdf-exam-frame-wrap{
+  flex:1 1 auto!important;
+  width:100%!important;
+  height:62dvh!important;
+  min-height:380px!important;
+  max-height:none!important;
+}
+#examModal #examPanel.pdf-mode .pv-pdf-exam-frame{
+  width:100%!important;
+  height:100%!important;
+}
+#examModal #examPanel.pdf-mode .pv-pdf-hint{
+  flex:0 0 auto!important;
+  padding:5px 2px 0!important;
+}
+#examModal #examPanel.pdf-mode #examOptions{
+  grid-area:options!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  gap:8px!important;
+  width:100%!important;
+  height:auto!important;
+  max-height:none!important;
+  min-height:0!important;
+  overflow:visible!important;
+  padding:9px!important;
+  background:#eef4fb!important;
+  border:1px solid #c9d9ea!important;
+  border-radius:10px!important;
+}
+#examModal #examPanel.pdf-mode .pv-pdf-answer-head{
+  grid-column:1/-1!important;
+  margin:0!important;
+  padding:9px 12px!important;
+}
+#examModal #examPanel.pdf-mode #examOptions label{
+  display:flex!important;
+  align-items:center!important;
+  min-width:0!important;
+  min-height:52px!important;
+  height:auto!important;
+  margin:0!important;
+  padding:11px 13px!important;
+  font-size:15px!important;
+  line-height:1.35!important;
+  border:1px solid #c5d7eb!important;
+  border-radius:9px!important;
+  background:#fff!important;
+  cursor:pointer!important;
+}
+#examModal #examPanel.pdf-mode #examOptions label:has(input:checked){
+  background:#dceaff!important;
+  border:2px solid #1674df!important;
+}
+#examModal #examPanel.pdf-mode #examOptions input[type=radio]{
+  flex:0 0 18px!important;
+  width:18px!important;
+  height:18px!important;
+  margin:0 8px 0 0!important;
+}
+#examModal #examPanel.pdf-mode .pv-pdf-answer-actions{
+  grid-column:1/-1!important;
+  display:flex!important;
+  justify-content:flex-end!important;
+  padding-top:2px!important;
+}
+#examModal #examPanel.pdf-mode .pv-inline-next{
+  min-width:180px!important;
+  min-height:44px!important;
+  font-size:14px!important;
+}
+#examModal #examPanel.pdf-mode .exam-controls{
+  grid-area:controls!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:7px!important;
+  padding:7px 0!important;
+}
+#examModal #examPanel.pdf-mode .exam-controls button[onclick="examNext()"]{
+  display:none!important;
+}
+#examModal #examPanel.pdf-mode .exam-controls .exam-submit{
+  margin-left:auto!important;
+}
+#examModal #examPanel.pdf-mode .palette-toggle{
+  display:inline-flex!important;
+}
+#examModal #examPanel.pdf-mode #examPaletteWrap{
+  grid-area:palette!important;
+  display:none!important;
+  height:28dvh!important;
+  max-height:28dvh!important;
+  min-height:110px!important;
+}
+#examModal #examPanel.pdf-mode #examPaletteWrap.palette-open{
+  display:flex!important;
+}
+#examModal #examPanel.pdf-mode #examPalette{
+  grid-template-columns:repeat(15,minmax(0,1fr))!important;
+  overflow-y:auto!important;
+  min-height:0!important;
+}
+@media(max-width:800px){
+  #examModal #examPanel.pdf-mode:not(.hidden){
+    display:flex!important;
+    flex-direction:column!important;
+    height:auto!important;
+    min-height:100dvh!important;
+    overflow:visible!important;
+    padding:6px!important;
+  }
+  #examModal #examPanel.pdf-mode #examQuestionArea{
+    flex:0 0 auto!important;
+    height:62dvh!important;
+    min-height:360px!important;
+    max-height:none!important;
+  }
+  #examModal #examPanel.pdf-mode .pv-pdf-exam-frame-wrap{
+    height:100%!important;
+    min-height:0!important;
+  }
+  #examModal #examPanel.pdf-mode #examOptions{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:7px!important;
+  }
+  #examModal #examPanel.pdf-mode #examOptions label{
+    min-height:48px!important;
+    padding:9px!important;
+    font-size:13px!important;
+  }
+  #examModal #examPanel.pdf-mode .pv-inline-next{
+    width:100%!important;
+    min-width:0!important;
+  }
+  #examModal #examPanel.pdf-mode .exam-controls{
+    position:sticky!important;
+    bottom:0!important;
+    z-index:20!important;
+    background:#f5f7fb!important;
+  }
+  #examModal #examPanel.pdf-mode #examPalette{
+    grid-template-columns:repeat(8,minmax(0,1fr))!important;
+  }
+}
+@media(max-height:720px) and (min-width:801px){
+  #examModal #examPanel.pdf-mode .pv-pdf-exam-frame-wrap{height:54dvh!important;min-height:320px!important}
+}
+</style>
+
 </head>
 
 <body>
@@ -2634,7 +2820,7 @@ function renderExamQuestion(){
    if(!area.querySelector('.pv-pdf-exam-frame')){
     area.innerHTML='<strong>Original Question Paper · PDF</strong><div class="pv-pdf-exam-frame-wrap"><iframe class="pv-pdf-exam-frame" title="Original question paper PDF" src="'+pvPdfExamUrl+'#toolbar=1&navpanes=0&view=FitH"></iframe></div><div class="pv-pdf-hint">PDF में प्रश्न पढ़ें। मोबाइल पर PDF को zoom / scroll कर सकते हैं। नीचे प्रश्न संख्या के अनुसार A/B/C/D उत्तर चुनें।</div>';
    }
-   options.innerHTML='<div class="pv-pdf-answer-head">Question '+(examIndex+1)+' / '+examQuestions.length+' — अपना उत्तर चुनें</div>'+q.opts.map((o,i)=>'<label><input type="radio" name="examOption" value="'+letters[i]+'" '+(examAnswers[examIndex]===letters[i]?'checked':'')+' onchange="examAnswers[examIndex]=this.value;saveExamProgress()"><strong>'+letters[i]+'.</strong> '+o+'</label>').join('');
+   options.innerHTML='<div class="pv-pdf-answer-head">Question '+(examIndex+1)+' / '+examQuestions.length+' — अपना उत्तर चुनें</div>'+q.opts.map((o,i)=>'<label><input type="radio" name="examOption" value="'+letters[i]+'" '+(examAnswers[examIndex]===letters[i]?'checked':'')+' onchange="examAnswers[examIndex]=this.value;saveExamProgress()"><strong>'+letters[i]+'.</strong> '+o+'</label>').join('')+'<div class="pv-pdf-answer-actions"><button type="button" class="btn primary pv-inline-next" onclick="examNext()">Next Question →</button></div>';
   }else{
    let imageUrl=pvFindExamImage(q.image);
    area.innerHTML='<strong>Question '+(examIndex+1)+' / '+examQuestions.length+'</strong><p>'+formatExamQuestionText(q.q)+'</p>'+(imageUrl?'<div class="pv-question-image-wrap"><img class="pv-question-image" src="'+imageUrl+'" alt="Question diagram" loading="lazy"></div>':'');
