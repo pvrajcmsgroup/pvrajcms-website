@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>IAS PCS Prelims | PV Education</title>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 
 <style>
 :root{
@@ -879,6 +880,7 @@ flex-direction:column
   width:100%!important;
   height:100%!important;
 }
+#examModal #examPanel.pdf-mode #examQuestionArea .pv-pdf-canvas-viewer{flex:1 1 auto;min-height:0;}
 #examModal #examPanel.pdf-mode #examOptions{
   grid-area:options!important;
   min-width:0!important;
@@ -1092,6 +1094,14 @@ flex-direction:column
 }
 </style>
 
+
+<style id="pv-pdfjs-mobile-viewer">
+#examModal .pv-pdf-canvas-viewer{width:100%;height:100%;overflow:auto;background:#dfe5ec;border-radius:7px;padding:8px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+#examModal .pv-pdf-canvas-page{display:block;width:100%;height:auto;max-width:100%;margin:0 auto 10px;background:#fff;box-shadow:0 1px 5px #0002}
+#examModal .pv-pdf-loading{padding:22px 12px;text-align:center;color:#29445f;font-weight:700}
+#examModal .pv-pdf-open-fallback{display:block;margin:12px auto;padding:12px 20px;border-radius:10px;background:#087bd8;color:#fff;text-align:center;font-weight:700}
+@media(max-width:800px){#examModal #examPanel.pdf-mode #examQuestionArea .pv-pdf-canvas-viewer{height:100%;min-height:0;padding:5px}#examModal .pv-pdf-canvas-page{margin-bottom:7px}}
+</style>
 </head>
 
 <body>
@@ -2744,6 +2754,39 @@ function formatExamInline(value){
   return escapeHtml(part);
  }).join('');
 }
+async function pvRenderPdfCanvas(url){
+ const host=document.getElementById('pvPdfCanvasViewer');
+ if(!host)return;
+ host.innerHTML='<div class="pv-pdf-loading">PDF लोड हो रही है…</div>';
+ try{
+  if(!window.pdfjsLib)throw new Error('PDF viewer library unavailable');
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+  const pdf=await pdfjsLib.getDocument({url}).promise;
+  host.innerHTML='';
+  const tasks=[];
+  for(let pageNo=1;pageNo<=pdf.numPages;pageNo++){
+   const canvas=document.createElement('canvas');
+   canvas.className='pv-pdf-canvas-page';
+   canvas.setAttribute('aria-label','PDF page '+pageNo);
+   canvas.dataset.page=String(pageNo);
+   host.appendChild(canvas);
+   tasks.push((async()=>{
+    const page=await pdf.getPage(pageNo);
+    const base=page.getViewport({scale:1});
+    const available=Math.max(260,host.clientWidth-16);
+    const scale=Math.min(1.6,available/base.width);
+    const viewport=page.getViewport({scale:scale*(window.devicePixelRatio||1)});
+    canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);
+    canvas.style.width='100%';canvas.style.height='auto';
+    await page.render({canvasContext:canvas.getContext('2d',{alpha:false}),viewport}).promise;
+   })());
+  }
+  await Promise.all(tasks);
+ }catch(err){
+  console.error('PDF.js render failed:',err);
+  host.innerHTML='<div class="pv-pdf-loading">इस मोबाइल ब्राउज़र में PDF preview लोड नहीं हो पाई। नीचे Open PDF दबाकर पेपर देखें।</div><a class="pv-pdf-open-fallback" href="'+url+'" target="_blank" rel="noopener">Open PDF</a>';
+ }
+}
 function renderExamQuestion(){
   let q=examQuestions[examIndex];examVisited.add(examIndex);
   const panel=document.getElementById('examPanel');
@@ -2752,8 +2795,9 @@ function renderExamQuestion(){
   const options=document.getElementById('examOptions');
   let letters=['A','B','C','D'];
   if(examMode==='pdf'){
-   if(!area.querySelector('.pv-pdf-exam-frame')){
-    area.innerHTML='<div class="pv-pdf-exam-frame-wrap"><iframe class="pv-pdf-exam-frame" title="Original question paper PDF" src="'+pvPdfExamUrl+'#toolbar=1&navpanes=0&view=FitH"></iframe></div><div class="pv-pdf-hint">PDF में प्रश्न पढ़ें। मोबाइल पर PDF को zoom / scroll कर सकते हैं। नीचे प्रश्न संख्या के अनुसार A/B/C/D उत्तर चुनें।</div>';
+   if(!area.querySelector('.pv-pdf-canvas-viewer')){
+    area.innerHTML='<div class="pv-pdf-exam-frame-wrap"><div class="pv-pdf-canvas-viewer" id="pvPdfCanvasViewer"><div class="pv-pdf-loading">PDF लोड हो रही है…</div></div></div>';
+    pvRenderPdfCanvas(pvPdfExamUrl);
    }
    options.innerHTML='<div class="pv-pdf-answer-head">Question '+(examIndex+1)+' / '+examQuestions.length+' — अपना उत्तर चुनें</div>'+q.opts.map((o,i)=>'<label><input type="radio" name="examOption" value="'+letters[i]+'" '+(examAnswers[examIndex]===letters[i]?'checked':'')+' onchange="examAnswers[examIndex]=this.value;saveExamProgress()"><strong>'+letters[i]+'.</strong> '+o+'</label>').join('');
   }else{
