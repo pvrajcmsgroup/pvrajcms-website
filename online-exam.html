@@ -971,6 +971,24 @@ flex-direction:column
 }
 </style>
 
+
+<style id="pv-pdf-viewer-height-final">
+/* Small PDF viewer height increase; preserve the existing exam controls and logic. */
+@media (min-width:801px){
+  #examModal #examPanel.pdf-mode:not(.hidden){
+    height:calc(100dvh - 8px)!important;
+    padding:8px!important;
+    gap:8px!important;
+  }
+}
+@media (max-width:800px){
+  #examModal #examPanel.pdf-mode #examQuestionArea{
+    height:66dvh!important;
+    min-height:400px!important;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -2632,7 +2650,7 @@ function renderExamQuestion(){
   let letters=['A','B','C','D'];
   if(examMode==='pdf'){
    if(!area.querySelector('.pv-pdf-exam-frame')){
-    area.innerHTML='<strong>Original Question Paper · PDF</strong><div class="pv-pdf-exam-frame-wrap"><iframe class="pv-pdf-exam-frame" title="Original question paper PDF" src="'+pvPdfExamUrl+'#toolbar=1&navpanes=0&view=FitH"></iframe></div><div class="pv-pdf-hint">PDF में प्रश्न पढ़ें। मोबाइल पर PDF को zoom / scroll कर सकते हैं। नीचे प्रश्न संख्या के अनुसार A/B/C/D उत्तर चुनें।</div>';
+    area.innerHTML='<div class="pv-pdf-exam-frame-wrap"><iframe class="pv-pdf-exam-frame" title="Original question paper PDF" src="'+pvPdfExamUrl+'#toolbar=1&navpanes=0&view=FitH"></iframe></div><div class="pv-pdf-hint">PDF में प्रश्न पढ़ें। मोबाइल पर PDF को zoom / scroll कर सकते हैं। नीचे प्रश्न संख्या के अनुसार A/B/C/D उत्तर चुनें।</div>';
    }
    options.innerHTML='<div class="pv-pdf-answer-head">Question '+(examIndex+1)+' / '+examQuestions.length+' — अपना उत्तर चुनें</div>'+q.opts.map((o,i)=>'<label><input type="radio" name="examOption" value="'+letters[i]+'" '+(examAnswers[examIndex]===letters[i]?'checked':'')+' onchange="examAnswers[examIndex]=this.value;saveExamProgress()"><strong>'+letters[i]+'.</strong> '+o+'</label>').join('');
   }else{
