@@ -94,6 +94,29 @@ td small{display:block;color:var(--muted);margin-top:4px}
 .toast{position:fixed;bottom:20px;right:20px;background:#10384a;border:1px solid #27708d;border-radius:10px;padding:12px 17px;display:none;z-index:20}
 .toast.show{display:block}
 footer{text-align:center;color:#66859b;font-size:10px;margin-top:24px}
+
+/* HOMEXA AUTHENTICATION */
+#authScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 15% 10%,#10384d 0,transparent 36%),var(--bg)}
+.auth-card{width:min(440px,100%);background:linear-gradient(145deg,#102f45,#091d2c);border:1px solid #24516a;border-radius:20px;padding:28px;box-shadow:0 20px 60px #0005}
+.auth-brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.auth-brand .brand-icon{width:48px;height:48px}
+.auth-card h1{font-size:27px;margin:0 0 8px}
+.auth-copy{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:20px}
+.auth-form{display:grid;gap:13px}
+.auth-form .field input{width:100%;background:#061927;border:1px solid var(--border);color:white;border-radius:9px;padding:12px}
+.auth-form .field label{font-size:12px;color:#b8ccda}
+.auth-form .primary{width:100%;padding:12px}
+.auth-links{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:15px}
+.auth-link{background:none;border:0;color:var(--cyan);padding:4px 0;font-size:12px}
+.auth-message{display:none;margin-top:14px;padding:11px;border-radius:9px;background:#10384a;border:1px solid #27708d;color:#dff6ff;font-size:12px;line-height:1.5}
+.auth-message.show{display:block}
+.auth-error{background:#421f2a;border-color:#874154;color:#ffe1e7}
+.auth-note{font-size:10px;color:#7898ad;line-height:1.5;margin-top:18px}
+.user-email{font-size:11px;color:var(--muted);max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#appShell{display:none}
+#appShell.show{display:grid}
+@media(max-width:650px){.auth-card{padding:22px}.user-email{display:none}}
+
 @media(max-width:1000px){.metrics{grid-template-columns:repeat(2,1fr)}.content-grid{grid-template-columns:1fr}}
 @media(max-width:650px){
  .app{grid-template-columns:1fr}
@@ -117,7 +140,52 @@ footer{text-align:center;color:#66859b;font-size:10px;margin-top:24px}
 </head>
 
 <body>
-<div class="app">
+
+<div id="authScreen">
+  <section class="auth-card">
+    <div class="auth-brand">
+      <div class="brand-icon">H</div>
+      <div><div class="brand-name">HOMEXA</div><div class="brand-sub">SMART FAMILY MANAGEMENT</div></div>
+    </div>
+    <div class="eyebrow">PVRAJCMS GROUP · SECURE ACCOUNT</div>
+    <h1 id="authTitle">Welcome to HOMEXA</h1>
+    <p class="auth-copy" id="authDescription">Sign in to manage your personal and family finances.</p>
+
+    <form class="auth-form" id="loginForm">
+      <div class="field"><label for="loginEmail">Email Address</label><input id="loginEmail" type="email" autocomplete="email" required placeholder="you@example.com"></div>
+      <div class="field"><label for="loginPassword">Password</label><input id="loginPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="Enter your password"></div>
+      <button class="primary" type="submit" id="loginSubmit">Login to HOMEXA</button>
+    </form>
+
+    <form class="auth-form" id="signupForm" style="display:none">
+      <div class="field"><label for="signupName">Full Name</label><input id="signupName" type="text" autocomplete="name" required maxlength="80" placeholder="Your full name"></div>
+      <div class="field"><label for="signupEmail">Email Address</label><input id="signupEmail" type="email" autocomplete="email" required placeholder="you@example.com"></div>
+      <div class="field"><label for="signupPassword">Password</label><input id="signupPassword" type="password" autocomplete="new-password" required minlength="8" placeholder="At least 8 characters"></div>
+      <div class="field"><label for="signupConfirm">Confirm Password</label><input id="signupConfirm" type="password" autocomplete="new-password" required minlength="8" placeholder="Enter password again"></div>
+      <button class="primary" type="submit" id="signupSubmit">Create Account</button>
+    </form>
+
+    <form class="auth-form" id="forgotForm" style="display:none">
+      <div class="field"><label for="forgotEmail">Registered Email Address</label><input id="forgotEmail" type="email" autocomplete="email" required placeholder="you@example.com"></div>
+      <button class="primary" type="submit">Send Password Reset Link</button>
+    </form>
+    <form class="auth-form" id="recoveryForm" style="display:none">
+      <div class="field"><label for="recoveryPassword">New Password</label><input id="recoveryPassword" type="password" autocomplete="new-password" required minlength="8" placeholder="At least 8 characters"></div>
+      <div class="field"><label for="recoveryConfirm">Confirm New Password</label><input id="recoveryConfirm" type="password" autocomplete="new-password" required minlength="8" placeholder="Enter password again"></div>
+      <button class="primary" type="submit">Update Password</button>
+    </form>
+
+    <div class="auth-links">
+      <button class="auth-link" id="showSignup" type="button">Create new account</button>
+      <button class="auth-link" id="showForgot" type="button">Forgot password?</button>
+      <button class="auth-link" id="showLogin" type="button" style="display:none">Back to Login</button>
+    </div>
+    <div class="auth-message" id="authMessage" role="status" aria-live="polite"></div>
+    <div class="auth-note">Your financial records are associated with your signed-in account. Never share your password or verification link with anyone.</div>
+  </section>
+</div>
+
+<div class="app" id="appShell">
 
 <aside class="sidebar">
  <div class="brand">
@@ -154,7 +222,9 @@ footer{text-align:center;color:#66859b;font-size:10px;margin-top:24px}
     <option value="family">👨‍👩‍👧 Family</option>
    </select>
    <button class="small-btn" id="languageBtn">हिंदी</button>
-   <div class="avatar">H</div>
+   <span class="user-email" id="userEmail"></span>
+    <button class="small-btn" id="logoutBtn" type="button">Logout</button>
+    <div class="avatar" id="userAvatar">H</div>
   </div>
  </header>
 
@@ -263,7 +333,7 @@ footer{text-align:center;color:#66859b;font-size:10px;margin-top:24px}
 
  <footer>
   HOMEXA · A PRODUCT BY PVRAJCMS GROUP<br><br>
-  Prototype data is saved in this browser.
+  Your HOMEXA data is securely synced to your account when online.
  </footer>
 </main>
 </div>
@@ -334,364 +404,877 @@ footer{text-align:center;color:#66859b;font-size:10px;margin-top:24px}
 
 <div class="toast" id="toast"></div>
 
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// ==================================
-// HOMEXA ACCOUNT DATA
-// ==================================
+"use strict";
+
+// =====================================================
+// HOMEXA SUPABASE CONFIGURATION
+// Publishable key is intended for browser use.
+// Never place a service-role/secret key in this file.
+// =====================================================
+const SUPABASE_URL = "https://dtkafclesecmrxalohbm.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_BO95M7yNnhsEuCT2qY4GBg_hI-khh8l";
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true
+    }
+  }
+);
 
 const DATA_KEY = "homexa_accounts_v2";
 const OLD_KEY = "homexa_transactions_v1";
 const BUDGET_KEY = "homexa_budgets_v2";
 
-function loadJSON(key,fallback){
- try{
-  const value=JSON.parse(localStorage.getItem(key));
-  return value ?? fallback;
- }catch{return fallback}
+function loadJSON(key, fallback) {
+  try {
+    const value = JSON.parse(localStorage.getItem(key));
+    return value ?? fallback;
+  } catch {
+    return fallback;
+  }
 }
 
-const oldTransactions=loadJSON(OLD_KEY,[]);
-const initialData={
- personal:Array.isArray(oldTransactions)?oldTransactions:[],
- family:[],
- familyName:"My Family",
- members:["You"]
+const oldTransactions = loadJSON(OLD_KEY, []);
+const initialData = {
+  personal: Array.isArray(oldTransactions) ? oldTransactions : [],
+  family: [],
+  familyName: "My Family",
+  members: ["You"]
 };
 
-let data=loadJSON(DATA_KEY,initialData);
-if(!data.personal)data.personal=[];
-if(!data.family)data.family=[];
-if(!Array.isArray(data.members)||!data.members.length)data.members=["You"];
+let data = loadJSON(DATA_KEY, initialData);
+if (!Array.isArray(data.personal)) data.personal = [];
+if (!Array.isArray(data.family)) data.family = [];
+if (!Array.isArray(data.members) || !data.members.length) data.members = ["You"];
 
-let budgets=loadJSON(BUDGET_KEY,{personal:10000,family:20000});
-let mode="personal";
-let language="en";
+let budgets = loadJSON(BUDGET_KEY, { personal: 10000, family: 20000 });
+let mode = "personal";
+let language = "en";
+let currentUser = null;
+let currentFamily = null;
+let familyId = null;
+let familyRows = [];
+let cloudReady = false;
+let activationInProgress = false;
 
-const $=id=>document.getElementById(id);
-const icons={
- Food:"🍲",Groceries:"🛒",Bills:"🧾",Transport:"🚗",
- Shopping:"🛍️",Health:"💊",Education:"📚",Salary:"💼",Other:"✦"
+const $ = id => document.getElementById(id);
+const icons = {
+  Food:"🍲", Groceries:"🛒", Bills:"🧾", Transport:"🚗",
+  Shopping:"🛍️", Health:"💊", Education:"📚", Salary:"💼", Other:"✦"
 };
 
-function saveAll(){
- localStorage.setItem(DATA_KEY,JSON.stringify(data));
- localStorage.setItem(BUDGET_KEY,JSON.stringify(budgets));
+function saveAll() {
+  localStorage.setItem(DATA_KEY, JSON.stringify(data));
+  localStorage.setItem(BUDGET_KEY, JSON.stringify(budgets));
+}
+function currentList() { return data[mode]; }
+function getToday() {
+  const d = new Date(), offset = d.getTimezoneOffset();
+  return new Date(d.getTime() - offset * 60000).toISOString().slice(0,10);
+}
+function monthOf(date) { return String(date || "").slice(0,7); }
+function currentMonth() { return monthOf(getToday()); }
+function firstDayOfMonth() { return currentMonth() + "-01"; }
+function money(value) {
+  return new Intl.NumberFormat("en-IN", {
+    style:"currency", currency:"INR", maximumFractionDigits:0
+  }).format(Number(value) || 0);
+}
+function total(type, list) {
+  return list.filter(t => t.type === type)
+    .reduce((sum, t) => sum + Number(t.amount), 0);
+}
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[c]);
+}
+function toast(message) {
+  $("toast").textContent = message;
+  $("toast").classList.add("show");
+  setTimeout(() => $("toast").classList.remove("show"), 2800);
+}
+function showAuthMessage(message, isError = false) {
+  const el = $("authMessage");
+  el.textContent = message;
+  el.classList.add("show");
+  el.classList.toggle("auth-error", isError);
+}
+function clearAuthMessage() {
+  $("authMessage").textContent = "";
+  $("authMessage").classList.remove("show", "auth-error");
+}
+function setAuthView(view) {
+  clearAuthMessage();
+  $("loginForm").style.display = view === "login" ? "grid" : "none";
+  $("signupForm").style.display = view === "signup" ? "grid" : "none";
+  $("forgotForm").style.display = view === "forgot" ? "grid" : "none";
+  $("recoveryForm").style.display = view === "recovery" ? "grid" : "none";
+  $("showSignup").style.display = view === "login" ? "inline-block" : "none";
+  $("showForgot").style.display = view === "login" ? "inline-block" : "none";
+  $("showLogin").style.display = view === "login" ? "none" : "inline-block";
+  $("authTitle").textContent =
+    view === "signup" ? "Create your account" :
+    view === "forgot" ? "Reset your password" :
+    view === "recovery" ? "Choose a new password" : "Welcome to HOMEXA";
+  $("authDescription").textContent =
+    view === "signup" ? "Create a secure account for your household finances." :
+    view === "forgot" ? "We will email you a secure password reset link." :
+    view === "recovery" ? "Set a new password for your HOMEXA account." :
+    "Sign in to manage your personal and family finances.";
+}
+function showApp() {
+  $("authScreen").style.display = "none";
+  $("appShell").classList.add("show");
+}
+function showAuth() {
+  $("appShell").classList.remove("show");
+  $("authScreen").style.display = "flex";
+  setAuthView("login");
 }
 
-function currentList(){return data[mode]}
-function getToday(){
- const d=new Date(),offset=d.getTimezoneOffset();
- return new Date(d.getTime()-offset*60000).toISOString().slice(0,10);
-}
-function monthOf(date){return date.slice(0,7)}
-function currentMonth(){return monthOf(getToday())}
-function money(value){
- return new Intl.NumberFormat("en-IN",{
-  style:"currency",currency:"INR",maximumFractionDigits:0
- }).format(value||0);
-}
-function total(type,list){
- return list.filter(t=>t.type===type)
-  .reduce((s,t)=>s+Number(t.amount),0);
-}
-function esc(value){
- return String(value).replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- })[c]);
-}
-function toast(message){
- $("toast").textContent=message;
- $("toast").classList.add("show");
- setTimeout(()=>$("toast").classList.remove("show"),2300);
-}
-function scrollToSection(id){
- $(id).scrollIntoView({behavior:"smooth"});
+function authRedirectUrl() {
+  return window.location.origin + window.location.pathname;
 }
 
-// ==================================
-// ACCOUNT SWITCHING
-// ==================================
+// =====================================================
+// AUTHENTICATION
+// =====================================================
+$("showSignup").onclick = () => setAuthView("signup");
+$("showForgot").onclick = () => setAuthView("forgot");
+$("showLogin").onclick = () => setAuthView("login");
 
-$("accountMode").addEventListener("change",e=>{
- mode=e.target.value;
- $("search").value="";
- render();
- toast(mode==="family"?"Family account opened":"Personal account opened");
+$("signupForm").onsubmit = async event => {
+  event.preventDefault();
+  clearAuthMessage();
+  const fullName = $("signupName").value.trim();
+  const email = $("signupEmail").value.trim().toLowerCase();
+  const password = $("signupPassword").value;
+  const confirm = $("signupConfirm").value;
+  if (password.length < 8) return showAuthMessage("Password must be at least 8 characters.", true);
+  if (password !== confirm) return showAuthMessage("Passwords do not match.", true);
+
+  $("signupSubmit").disabled = true;
+  $("signupSubmit").textContent = "Creating account...";
+  try {
+    const { data: result, error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: fullName },
+        emailRedirectTo: authRedirectUrl()
+      }
+    });
+    if (error) throw error;
+
+    if (result.session) {
+      showAuthMessage("Account created. Opening your HOMEXA dashboard...");
+      await activateSession(result.session);
+    } else {
+      showAuthMessage("Registration submitted. Please open the verification email sent to " + email + ". After verifying, return to this page and log in.");
+      setAuthView("login");
+      showAuthMessage("Please verify your email using the link sent to " + email + ", then log in.");
+    }
+  } catch (error) {
+    showAuthMessage(error.message || "Could not create account. Please try again.", true);
+  } finally {
+    $("signupSubmit").disabled = false;
+    $("signupSubmit").textContent = "Create Account";
+  }
+};
+
+$("loginForm").onsubmit = async event => {
+  event.preventDefault();
+  clearAuthMessage();
+  const email = $("loginEmail").value.trim().toLowerCase();
+  const password = $("loginPassword").value;
+  $("loginSubmit").disabled = true;
+  $("loginSubmit").textContent = "Signing in...";
+  try {
+    const { data: result, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    if (result.session) await activateSession(result.session);
+  } catch (error) {
+    showAuthMessage(error.message || "Login failed. Check your email and password.", true);
+  } finally {
+    $("loginSubmit").disabled = false;
+    $("loginSubmit").textContent = "Login to HOMEXA";
+  }
+};
+
+$("forgotForm").onsubmit = async event => {
+  event.preventDefault();
+  clearAuthMessage();
+  const email = $("forgotEmail").value.trim().toLowerCase();
+  try {
+    const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+      redirectTo: authRedirectUrl()
+    });
+    if (error) throw error;
+    showAuthMessage("If this email is registered, a password reset link has been sent.");
+  } catch (error) {
+    showAuthMessage(error.message || "Could not send reset email.", true);
+  }
+};
+
+$("recoveryForm").onsubmit = async event => {
+  event.preventDefault();
+  clearAuthMessage();
+  const password = $("recoveryPassword").value;
+  const confirm = $("recoveryConfirm").value;
+  if (password.length < 8) return showAuthMessage("Password must be at least 8 characters.", true);
+  if (password !== confirm) return showAuthMessage("Passwords do not match.", true);
+  try {
+    const { error } = await supabaseClient.auth.updateUser({ password });
+    if (error) throw error;
+    await supabaseClient.auth.signOut();
+    showAuth();
+    showAuthMessage("Password updated successfully. Please log in with your new password.");
+  } catch (error) {
+    showAuthMessage(error.message || "Could not update password.", true);
+  }
+};
+
+$("logoutBtn").onclick = async () => {
+  const { error } = await supabaseClient.auth.signOut();
+  if (error) {
+    toast(error.message);
+    return;
+  }
+  currentUser = null;
+  cloudReady = false;
+  familyId = null;
+  currentFamily = null;
+  showAuth();
+};
+
+// =====================================================
+// CLOUD DATA + INITIAL ACCOUNT SETUP
+// =====================================================
+async function ensureProfile() {
+  const name = currentUser.user_metadata?.full_name || currentUser.email?.split("@")[0] || "HOMEXA User";
+  const { error } = await supabaseClient
+    .from("homexa_profiles")
+    .upsert({ id: currentUser.id, full_name: name }, { onConflict: "id" });
+  if (error) throw new Error("Profile setup failed: " + error.message);
+}
+
+async function ensureFamily() {
+  const { data: memberships, error: memberError } = await supabaseClient
+    .from("homexa_family_members")
+    .select("family_id,display_name,role")
+    .eq("user_id", currentUser.id)
+    .eq("status", "active")
+    .limit(1);
+
+  if (memberError) throw new Error("Could not load family membership: " + memberError.message);
+
+  if (memberships && memberships.length) {
+    familyId = memberships[0].family_id;
+  } else {
+    const defaultName = (currentUser.user_metadata?.full_name || "My") + "'s Family";
+    const { data: created, error: createError } = await supabaseClient
+      .from("homexa_families")
+      .insert({ name: defaultName, owner_id: currentUser.id })
+      .select("id,name")
+      .single();
+    if (createError) throw new Error("Could not create family account: " + createError.message);
+    familyId = created.id;
+  }
+
+  const { data: family, error: familyError } = await supabaseClient
+    .from("homexa_families")
+    .select("id,name,owner_id")
+    .eq("id", familyId)
+    .single();
+  if (familyError) throw new Error("Could not load family: " + familyError.message);
+  currentFamily = family;
+  data.familyName = family.name;
+}
+
+async function loadFamilyMembers() {
+  const { data: rows, error } = await supabaseClient
+    .from("homexa_family_members")
+    .select("id,family_id,user_id,display_name,role,status")
+    .eq("family_id", familyId)
+    .eq("status", "active")
+    .order("created_at", { ascending: true });
+  if (error) throw new Error("Could not load family members: " + error.message);
+  familyRows = rows || [];
+  data.members = familyRows.map(row => row.display_name);
+  if (!data.members.length) data.members = ["You"];
+}
+
+function mapTransaction(row) {
+  const member = familyRows.find(item => item.id === row.member_id);
+  return {
+    id: row.id,
+    title: row.title,
+    amount: Number(row.amount),
+    type: row.type,
+    category: row.category,
+    date: row.transaction_date,
+    member: member?.display_name || (row.family_id ? "Unassigned" : "You"),
+    memberId: row.member_id,
+    created_by: row.created_by
+  };
+}
+
+async function fetchTransactions() {
+  const [personalResult, familyResult] = await Promise.all([
+    supabaseClient.from("homexa_transactions")
+      .select("*").is("family_id", null)
+      .eq("created_by", currentUser.id)
+      .order("transaction_date", { ascending: false }),
+    supabaseClient.from("homexa_transactions")
+      .select("*").eq("family_id", familyId)
+      .order("transaction_date", { ascending: false })
+  ]);
+  if (personalResult.error) throw new Error("Personal transactions: " + personalResult.error.message);
+  if (familyResult.error) throw new Error("Family transactions: " + familyResult.error.message);
+  data.personal = (personalResult.data || []).map(mapTransaction);
+  data.family = (familyResult.data || []).map(mapTransaction);
+}
+
+async function fetchBudgets() {
+  const month = firstDayOfMonth();
+  const [personalResult, familyResult] = await Promise.all([
+    supabaseClient.from("homexa_budgets").select("id,amount")
+      .is("family_id", null).eq("created_by", currentUser.id)
+      .eq("budget_month", month).maybeSingle(),
+    supabaseClient.from("homexa_budgets").select("id,amount")
+      .eq("family_id", familyId).eq("budget_month", month).maybeSingle()
+  ]);
+  if (personalResult.error) throw new Error("Personal budget: " + personalResult.error.message);
+  if (familyResult.error) throw new Error("Family budget: " + familyResult.error.message);
+  budgets.personal = personalResult.data ? Number(personalResult.data.amount) : (Number(budgets.personal) || 10000);
+  budgets.family = familyResult.data ? Number(familyResult.data.amount) : (Number(budgets.family) || 20000);
+}
+
+async function insertCloudTransaction(item, accountMode) {
+  const familyMember = accountMode === "family"
+    ? familyRows.find(row => row.display_name === item.member)
+    : null;
+  const payload = {
+    created_by: currentUser.id,
+    family_id: accountMode === "family" ? familyId : null,
+    member_id: familyMember?.id || null,
+    title: item.title,
+    amount: item.amount,
+    type: item.type,
+    category: item.category,
+    transaction_date: item.date
+  };
+  const { data: inserted, error } = await supabaseClient
+    .from("homexa_transactions").insert(payload).select("*").single();
+  if (error) throw error;
+  return mapTransaction(inserted);
+}
+
+async function migrateLocalDataOnce() {
+  const migrationKey = "homexa_cloud_migrated_" + currentUser.id;
+  if (localStorage.getItem(migrationKey) === "yes") return;
+
+  const localSnapshot = loadJSON(DATA_KEY, initialData);
+  const localBudgets = loadJSON(BUDGET_KEY, { personal: 10000, family: 20000 });
+  const progressKey = migrationKey + "_items";
+  const migratedItems = new Set(loadJSON(progressKey, []));
+  let imported = 0;
+
+  // Import old local family member names (the authenticated owner is created by the DB trigger).
+  const existingNames = new Set(familyRows.map(row => row.display_name.toLowerCase()));
+  for (const name of (localSnapshot.members || [])) {
+    if (!name || name.toLowerCase() === "you" || existingNames.has(name.toLowerCase())) continue;
+    const { error } = await supabaseClient.from("homexa_family_members").insert({
+      family_id: familyId,
+      display_name: String(name).slice(0, 40),
+      role: "member",
+      status: "active"
+    });
+    if (error) throw new Error("Could not import family member " + name + ": " + error.message);
+    existingNames.add(name.toLowerCase());
+  }
+  await loadFamilyMembers();
+
+  for (const [accountMode, rows] of [["personal", localSnapshot.personal || []], ["family", localSnapshot.family || []]]) {
+    for (const row of rows) {
+      const sourceKey = accountMode + ":" + String(row.id || JSON.stringify(row));
+      if (migratedItems.has(sourceKey)) continue;
+      const item = {
+        title: String(row.title || "Imported transaction").slice(0, 60),
+        amount: Number(row.amount),
+        type: row.type === "income" ? "income" : "expense",
+        category: String(row.category || "Other").slice(0, 40),
+        date: /^\d{4}-\d{2}-\d{2}$/.test(row.date || "") ? row.date : getToday(),
+        member: accountMode === "family" ? (row.member || "You") : "You"
+      };
+      if (!item.amount || item.amount <= 0) continue;
+      await insertCloudTransaction(item, accountMode);
+      migratedItems.add(sourceKey);
+      localStorage.setItem(progressKey, JSON.stringify([...migratedItems]));
+      imported++;
+    }
+  }
+
+  // Seed current-month budgets only if there is no saved cloud budget yet.
+  const month = firstDayOfMonth();
+  for (const accountMode of ["personal", "family"]) {
+    const query = supabaseClient.from("homexa_budgets").select("id")
+      .eq("budget_month", month);
+    const lookup = accountMode === "personal"
+      ? query.is("family_id", null).eq("created_by", currentUser.id)
+      : query.eq("family_id", familyId);
+    const { data: existing, error } = await lookup.maybeSingle();
+    if (error) throw new Error("Budget migration check failed: " + error.message);
+    if (!existing && Number(localBudgets[accountMode]) > 0) {
+      const payload = {
+        created_by: currentUser.id,
+        family_id: accountMode === "family" ? familyId : null,
+        budget_month: month,
+        amount: Number(localBudgets[accountMode])
+      };
+      const { error: insertError } = await supabaseClient.from("homexa_budgets").insert(payload);
+      if (insertError) throw new Error("Budget import failed: " + insertError.message);
+    }
+  }
+
+  localStorage.setItem(migrationKey, "yes");
+  if (imported) toast(imported + " old transaction(s) imported to HOMEXA cloud.");
+}
+
+async function loadCloudData() {
+  await ensureProfile();
+  await ensureFamily();
+  await loadFamilyMembers();
+  await migrateLocalDataOnce();
+  await loadFamilyMembers();
+  await fetchTransactions();
+  await fetchBudgets();
+  saveAll();
+}
+
+async function activateSession(session) {
+  if (!session?.user || activationInProgress) return;
+  if (currentUser?.id === session.user.id && cloudReady) {
+    showApp();
+    return;
+  }
+  activationInProgress = true;
+  currentUser = session.user;
+  cloudReady = false;
+  showApp();
+  $("userEmail").textContent = currentUser.email || "";
+  $("userAvatar").textContent = (currentUser.user_metadata?.full_name || currentUser.email || "H").charAt(0).toUpperCase();
+  try {
+    await loadCloudData();
+    cloudReady = true;
+    render();
+    toast("HOMEXA cloud account connected.");
+  } catch (error) {
+    console.error(error);
+    toast("Cloud setup issue: " + error.message);
+    $("accountSubtitle").textContent = "Cloud connection needs attention: " + error.message;
+  } finally {
+    activationInProgress = false;
+  }
+}
+
+let passwordRecoveryMode = new URLSearchParams(window.location.hash.slice(1)).get("type") === "recovery";
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+  if (event === "PASSWORD_RECOVERY") {
+    passwordRecoveryMode = true;
+    showAuth();
+    setAuthView("recovery");
+    return;
+  }
+  if (session && !passwordRecoveryMode) {
+    // Defer Supabase queries to avoid running them inside the auth callback.
+    setTimeout(() => activateSession(session), 0);
+  } else if (event === "SIGNED_OUT") {
+    currentUser = null;
+    cloudReady = false;
+    familyId = null;
+    currentFamily = null;
+    showAuth();
+  }
 });
 
-function updateAccountHeader(){
- const family=mode==="family";
- $("familyPanel").classList.toggle("show",family);
- $("accountSubtitle").textContent=family
-  ?"Shared household money and family spending."
-  :"Manage your personal income and expenses.";
- $("pageTitle").textContent=family?"Family Overview":"Personal Overview";
- $("transactionDescription").textContent=family
-  ?"Manage your family's shared income and expenses."
-  :"Manage your personal income and expenses.";
- $("memberField").style.display=family?"grid":"none";
- $("budgetDescription").textContent=family
-  ?"Set a spending limit for your whole family."
-  :"Set a spending limit for your personal account.";
- if(family){
-  $("familyNameDisplay").textContent=data.familyName;
-  $("familyInfo").textContent=data.members.length+" family member(s) in this account";
-  $("memberList").innerHTML=data.members.map(m=>
-   `<span class="member-chip">${esc(m)}</span>`).join("");
- }
+(async function boot() {
+  const { data: result, error } = await supabaseClient.auth.getSession();
+  if (error) {
+    showAuth();
+    showAuthMessage("Could not check login session: " + error.message, true);
+    return;
+  }
+  if (passwordRecoveryMode) {
+    showAuth();
+    setAuthView("recovery");
+  } else if (result.session) {
+    await activateSession(result.session);
+  } else {
+    showAuth();
+  }
+})();
+
+// =====================================================
+// ACCOUNT SWITCHING + DASHBOARD
+// =====================================================
+function scrollToSection(id) {
+  $(id).scrollIntoView({ behavior:"smooth" });
 }
-
-// ==================================
-// MAIN DASHBOARD
-// ==================================
-
-function render(){
- const list=currentList();
- const monthList=list.filter(t=>monthOf(t.date)===currentMonth());
- const income=total("income",monthList);
- const expense=total("expense",monthList);
-
- $("balance").textContent=money(total("income",list)-total("expense",list));
- $("monthExpense").textContent=money(expense);
- $("monthIncome").textContent=money(income);
- $("savings").textContent=money(income-expense);
-
- updateAccountHeader();
- renderChart();
- renderCategories(monthList);
- renderBudget(expense);
- renderTransactions();
-}
-
-function renderChart(){
- const now=new Date(),months=[];
- for(let i=5;i>=0;i--){
-  const d=new Date(now.getFullYear(),now.getMonth()-i,1);
-  const key=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
-  months.push({key,label:d.toLocaleDateString("en-IN",{month:"short"})});
- }
- const list=currentList();
- const values=months.map(m=>total("expense",list.filter(t=>monthOf(t.date)===m.key)));
- const max=Math.max(...values,1);
- $("chart").innerHTML=months.map((m,i)=>`
-  <div class="bar-wrap">
-   <div class="bar" title="${money(values[i])}" style="height:${Math.max(3,values[i]/max*130)}px"></div>
-   <span class="bar-label">${m.label}</span>
-  </div>`).join("");
-}
-
-function renderCategories(list){
- const expenses=list.filter(t=>t.type==="expense");
- const sum=total("expense",list),groups={};
- expenses.forEach(t=>groups[t.category]=(groups[t.category]||0)+Number(t.amount));
- const sorted=Object.entries(groups).sort((a,b)=>b[1]-a[1]);
- $("categories").innerHTML=sorted.length?sorted.slice(0,8).map(([name,value])=>`
-  <div class="category-row">
-   <div class="cat-icon">${icons[name]||"✦"}</div>
-   <div><div class="cat-name">${esc(name)}</div>
-    <div class="cat-track"><span style="width:${sum?value/sum*100:0}%"></span></div>
-   </div>
-   <div class="cat-amount">${money(value)}</div>
-  </div>`).join(""):`<div class="empty">No expenses recorded this month.</div>`;
-}
-
-function renderBudget(expense){
- const budget=Number(budgets[mode])||0;
- $("budgetAmount").textContent=money(budget);
- $("budgetInput").value=budget;
- const percentage=budget>0?Math.min(expense/budget*100,100):0;
- $("budgetProgress").style.width=percentage+"%";
- $("budgetProgress").style.background=expense>budget?"#ff7185":"#42c8ff";
- $("budgetStatus").textContent=money(expense)+" spent out of "+money(budget);
-}
-
-function renderTransactions(){
- const query=$("search").value.toLowerCase();
- const list=[...currentList()].filter(t=>
-  (t.title+" "+t.category+" "+t.type+" "+(t.member||"")).toLowerCase().includes(query)
- ).sort((a,b)=>b.date.localeCompare(a.date));
-
- $("transactionRows").innerHTML=list.length?list.map(t=>`
-  <tr>
-   <td><strong>${esc(t.title)}</strong><small>${icons[t.category]||"✦"} ${esc(t.category)}</small></td>
-   <td><span class="tag">${esc(t.category)}</span></td>
-   <td>${mode==="family"?esc(t.member||"Unassigned"):"Personal"}</td>
-   <td>${esc(t.date)}</td>
-   <td class="${t.type}">${t.type==="income"?"Income":"Expense"}</td>
-   <td class="${t.type}"><strong>${t.type==="income"?"+":"−"} ${money(t.amount)}</strong></td>
-   <td>
-    <button class="icon-btn" data-edit="${esc(t.id)}">✎</button>
-    <button class="icon-btn" data-delete="${esc(t.id)}">×</button>
-   </td>
-  </tr>`).join(""):`
-  <tr><td colspan="7" class="empty">No transactions found. Add your first transaction!</td></tr>`;
-}
-
-// ==================================
-// BUDGET
-// ==================================
-
-$("saveBudget").onclick=()=>{
- const value=Number($("budgetInput").value);
- if(!value||value<=0){toast("Please enter a valid budget.");return}
- budgets[mode]=value;
- saveAll();render();toast("Budget updated successfully!");
-};
-
-// ==================================
-// TRANSACTION FORM
-// ==================================
-
-function refreshMemberOptions(selected){
- $("member").innerHTML=data.members.map(m=>
-  `<option value="${esc(m)}">${esc(m)}</option>`).join("");
- if(selected&&data.members.includes(selected))$("member").value=selected;
-}
-
-function openTransaction(item=null){
- $("transactionForm").reset();
- $("editId").value=item?item.id:"";
- $("title").value=item?item.title:"";
- $("amount").value=item?item.amount:"";
- $("type").value=item?item.type:"expense";
- $("category").value=item?item.category:"Food";
- $("date").value=item?item.date:getToday();
- refreshMemberOptions(item?item.member:null);
- $("modalTitle").textContent=item?"Edit Transaction":"Add Transaction";
- $("saveBtn").textContent=item?"Update Transaction":"Save Transaction";
- $("modal").classList.add("show");
-}
-function closeTransaction(){$("modal").classList.remove("show")}
-
-$("addBtn").onclick=()=>openTransaction();
-$("cancelBtn").onclick=closeTransaction;
-$("modal").addEventListener("click",e=>{
- if(e.target===$("modal"))closeTransaction();
-});
-
-$("transactionForm").onsubmit=e=>{
- e.preventDefault();
- const id=$("editId").value;
- const item={
-  id:id||(crypto.randomUUID?crypto.randomUUID():Date.now().toString()),
-  title:$("title").value.trim(),
-  amount:Number($("amount").value),
-  type:$("type").value,
-  category:$("category").value,
-  date:$("date").value,
-  member:mode==="family"?$("member").value:"You"
- };
- if(!item.title||!item.date||item.amount<=0){
-  toast("Please enter valid transaction details.");return;
- }
- const list=currentList();
- if(id){
-  const index=list.findIndex(t=>t.id===id);
-  if(index!==-1)list[index]=item;
- }else list.push(item);
- saveAll();closeTransaction();render();toast("Transaction saved!");
-};
-
-// ==================================
-// EDIT AND DELETE
-// ==================================
-
-$("transactionRows").onclick=e=>{
- const edit=e.target.closest("[data-edit]");
- const del=e.target.closest("[data-delete]");
- if(edit){
-  const item=currentList().find(t=>t.id===edit.dataset.edit);
-  if(item)openTransaction(item);
- }
- if(del){
-  if(!confirm("Delete this transaction?"))return;
-  data[mode]=currentList().filter(t=>t.id!==del.dataset.delete);
-  saveAll();render();toast("Transaction deleted.");
- }
-};
-
-$("search").addEventListener("input",renderTransactions);
-
-// ==================================
-// FAMILY MANAGEMENT
-// ==================================
-
-function openMembers(){
- if(mode!=="family"){
-  $("accountMode").value="family";
-  mode="family";
+$("accountMode").addEventListener("change", event => {
+  mode = event.target.value;
+  $("search").value = "";
   render();
- }
- renderMembers();
- $("membersModal").classList.add("show");
-}
-function closeMembers(){$("membersModal").classList.remove("show")}
+  toast(mode === "family" ? "Family account opened" : "Personal account opened");
+});
 
-function renderMembers(){
- $("manageMembersList").innerHTML=data.members.map((m,i)=>`
-  <div style="display:flex;justify-content:space-between;align-items:center;padding:9px;border-bottom:1px solid #1b4057">
-   <span>${esc(m)}</span>
-   ${data.members.length>1?`<button class="icon-btn" data-remove-member="${i}">Remove</button>`:""}
-  </div>`).join("");
+function updateAccountHeader() {
+  const family = mode === "family";
+  $("familyPanel").classList.toggle("show", family);
+  $("accountSubtitle").textContent = family
+    ? "Shared household money and family spending."
+    : "Manage your personal income and expenses.";
+  $("pageTitle").textContent = family ? "Family Overview" : "Personal Overview";
+  $("transactionDescription").textContent = family
+    ? "Manage your family's shared income and expenses."
+    : "Manage your personal income and expenses.";
+  $("memberField").style.display = family ? "grid" : "none";
+  $("budgetDescription").textContent = family
+    ? "Set a spending limit for your whole family."
+    : "Set a spending limit for your personal account.";
+  if (family) {
+    $("familyNameDisplay").textContent = data.familyName;
+    $("familyInfo").textContent = data.members.length + " family member(s) in this account";
+    $("memberList").innerHTML = data.members.map(name =>
+      `<span class="member-chip">${esc(name)}</span>`).join("");
+    const isOwner = currentFamily && currentFamily.owner_id === currentUser.id;
+    document.querySelector(".family-actions").style.display = isOwner ? "flex" : "none";
+  }
 }
 
-$("addMemberBtn").onclick=()=>{
- const name=$("newMember").value.trim();
- if(!name){toast("Enter a member name.");return}
- if(data.members.some(m=>m.toLowerCase()===name.toLowerCase())){
-  toast("This member already exists.");return;
- }
- data.members.push(name);
- $("newMember").value="";
- saveAll();renderMembers();render();
- toast("Family member added!");
+function render() {
+  if (!currentUser || !cloudReady) return;
+  const list = currentList();
+  const monthList = list.filter(t => monthOf(t.date) === currentMonth());
+  const income = total("income", monthList);
+  const expense = total("expense", monthList);
+
+  $("balance").textContent = money(total("income", list) - total("expense", list));
+  $("monthExpense").textContent = money(expense);
+  $("monthIncome").textContent = money(income);
+  $("savings").textContent = money(income - expense);
+
+  updateAccountHeader();
+  renderChart();
+  renderCategories(monthList);
+  renderBudget(expense);
+  renderTransactions();
+}
+
+function renderChart() {
+  const now = new Date(), months = [];
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const key = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+    months.push({ key, label: d.toLocaleDateString("en-IN", { month:"short" }) });
+  }
+  const list = currentList();
+  const values = months.map(m => total("expense", list.filter(t => monthOf(t.date) === m.key)));
+  const max = Math.max(...values, 1);
+  $("chart").innerHTML = months.map((m, i) => `
+    <div class="bar-wrap">
+      <div class="bar" title="${money(values[i])}" style="height:${Math.max(3, values[i] / max * 130)}px"></div>
+      <span class="bar-label">${m.label}</span>
+    </div>`).join("");
+}
+
+function renderCategories(list) {
+  const expenses = list.filter(t => t.type === "expense");
+  const sum = total("expense", list), groups = {};
+  expenses.forEach(t => groups[t.category] = (groups[t.category] || 0) + Number(t.amount));
+  const sorted = Object.entries(groups).sort((a,b) => b[1] - a[1]);
+  $("categories").innerHTML = sorted.length ? sorted.slice(0,8).map(([name,value]) => `
+    <div class="category-row">
+      <div class="cat-icon">${icons[name] || "✦"}</div>
+      <div><div class="cat-name">${esc(name)}</div>
+        <div class="cat-track"><span style="width:${sum ? value / sum * 100 : 0}%"></span></div>
+      </div>
+      <div class="cat-amount">${money(value)}</div>
+    </div>`).join("") : `<div class="empty">No expenses recorded this month.</div>`;
+}
+
+function renderBudget(expense) {
+  const budget = Number(budgets[mode]) || 0;
+  $("budgetAmount").textContent = money(budget);
+  $("budgetInput").value = budget;
+  const percentage = budget > 0 ? Math.min(expense / budget * 100, 100) : 0;
+  $("budgetProgress").style.width = percentage + "%";
+  $("budgetProgress").style.background = expense > budget ? "#ff7185" : "#42c8ff";
+  $("budgetStatus").textContent = money(expense) + " spent out of " + money(budget);
+}
+
+function renderTransactions() {
+  const query = $("search").value.toLowerCase();
+  const list = [...currentList()].filter(t =>
+    (t.title + " " + t.category + " " + t.type + " " + (t.member || "")).toLowerCase().includes(query)
+  ).sort((a,b) => b.date.localeCompare(a.date));
+
+  $("transactionRows").innerHTML = list.length ? list.map(t => {
+    const canManage = t.created_by === currentUser.id;
+    return `<tr>
+      <td><strong>${esc(t.title)}</strong><small>${icons[t.category] || "✦"} ${esc(t.category)}</small></td>
+      <td><span class="tag">${esc(t.category)}</span></td>
+      <td>${mode === "family" ? esc(t.member || "Unassigned") : "Personal"}</td>
+      <td>${esc(t.date)}</td>
+      <td class="${t.type}">${t.type === "income" ? "Income" : "Expense"}</td>
+      <td class="${t.type}"><strong>${t.type === "income" ? "+" : "−"} ${money(t.amount)}</strong></td>
+      <td>${canManage ? `<button class="icon-btn" data-edit="${esc(t.id)}">✎</button>
+      <button class="icon-btn" data-delete="${esc(t.id)}">×</button>` : `<small>Shared</small>`}</td>
+    </tr>`;
+  }).join("") : `<tr><td colspan="7" class="empty">No transactions found. Add your first transaction!</td></tr>`;
+}
+
+// =====================================================
+// BUDGET CLOUD SAVE
+// =====================================================
+$("saveBudget").onclick = async () => {
+  const value = Number($("budgetInput").value);
+  if (!value || value <= 0) { toast("Please enter a valid budget."); return; }
+  if (!currentUser || !cloudReady) return toast("Please sign in first.");
+
+  const month = firstDayOfMonth();
+  let query = supabaseClient.from("homexa_budgets").select("id").eq("budget_month", month);
+  query = mode === "personal"
+    ? query.is("family_id", null).eq("created_by", currentUser.id)
+    : query.eq("family_id", familyId);
+
+  const { data: existing, error: lookupError } = await query.maybeSingle();
+  if (lookupError) return toast("Could not check budget: " + lookupError.message);
+
+  let result;
+  if (existing) {
+    result = await supabaseClient.from("homexa_budgets").update({ amount:value }).eq("id", existing.id);
+  } else {
+    result = await supabaseClient.from("homexa_budgets").insert({
+      created_by: currentUser.id,
+      family_id: mode === "family" ? familyId : null,
+      budget_month: month,
+      amount: value
+    });
+  }
+  if (result.error) return toast("Budget save failed: " + result.error.message);
+  budgets[mode] = value;
+  saveAll();
+  render();
+  toast("Budget saved to cloud.");
 };
 
-$("manageMembersList").onclick=e=>{
- const btn=e.target.closest("[data-remove-member]");
- if(!btn)return;
- const index=Number(btn.dataset.removeMember);
- const name=data.members[index];
- if(!confirm("Remove "+name+" from the member list? Existing transactions will be kept."))return;
- data.members.splice(index,1);
- if(!data.members.length)data.members.push("You");
- saveAll();renderMembers();render();
- toast("Member removed from list.");
+// =====================================================
+// TRANSACTION FORM + CLOUD CRUD
+// =====================================================
+function refreshMemberOptions(selected) {
+  $("member").innerHTML = familyRows.map(row =>
+    `<option value="${esc(row.display_name)}">${esc(row.display_name)}</option>`).join("");
+  if (selected && data.members.includes(selected)) $("member").value = selected;
+}
+function openTransaction(item = null) {
+  $("transactionForm").reset();
+  $("editId").value = item ? item.id : "";
+  $("title").value = item ? item.title : "";
+  $("amount").value = item ? item.amount : "";
+  $("type").value = item ? item.type : "expense";
+  $("category").value = item ? item.category : "Food";
+  $("date").value = item ? item.date : getToday();
+  refreshMemberOptions(item ? item.member : null);
+  $("modalTitle").textContent = item ? "Edit Transaction" : "Add Transaction";
+  $("saveBtn").textContent = item ? "Update Transaction" : "Save Transaction";
+  $("modal").classList.add("show");
+}
+function closeTransaction() { $("modal").classList.remove("show"); }
+$("addBtn").onclick = () => openTransaction();
+$("cancelBtn").onclick = closeTransaction;
+$("modal").addEventListener("click", event => {
+  if (event.target === $("modal")) closeTransaction();
+});
+
+$("transactionForm").onsubmit = async event => {
+  event.preventDefault();
+  if (!currentUser || !cloudReady) return toast("Please sign in first.");
+  const id = $("editId").value;
+  const item = {
+    title: $("title").value.trim(),
+    amount: Number($("amount").value),
+    type: $("type").value,
+    category: $("category").value,
+    date: $("date").value,
+    member: mode === "family" ? $("member").value : "You"
+  };
+  if (!item.title || !item.date || item.amount <= 0) {
+    toast("Please enter valid transaction details.");
+    return;
+  }
+
+  $("saveBtn").disabled = true;
+  try {
+    if (id) {
+      const oldItem = currentList().find(row => row.id === id);
+      if (!oldItem || oldItem.created_by !== currentUser.id) {
+        toast("You can only edit transactions you created.");
+        return;
+      }
+      const familyMember = mode === "family"
+        ? familyRows.find(row => row.display_name === item.member)
+        : null;
+      const { data: updated, error } = await supabaseClient
+        .from("homexa_transactions")
+        .update({
+          title:item.title, amount:item.amount, type:item.type,
+          category:item.category, transaction_date:item.date,
+          member_id:familyMember?.id || null
+        })
+        .eq("id", id).select("*").single();
+      if (error) throw error;
+      const index = currentList().findIndex(row => row.id === id);
+      currentList()[index] = mapTransaction(updated);
+    } else {
+      const inserted = await insertCloudTransaction(item, mode);
+      currentList().push(inserted);
+    }
+    saveAll();
+    closeTransaction();
+    render();
+    toast("Transaction saved to cloud.");
+  } catch (error) {
+    toast("Transaction save failed: " + error.message);
+  } finally {
+    $("saveBtn").disabled = false;
+  }
 };
 
-function renameFamily(){
- const name=prompt("Enter your family name:",data.familyName);
- if(!name||!name.trim())return;
- data.familyName=name.trim().slice(0,60);
- saveAll();render();
- toast("Family name updated!");
+$("transactionRows").onclick = async event => {
+  const edit = event.target.closest("[data-edit]");
+  const del = event.target.closest("[data-delete]");
+  if (edit) {
+    const item = currentList().find(row => row.id === edit.dataset.edit);
+    if (item) openTransaction(item);
+  }
+  if (del) {
+    const item = currentList().find(row => row.id === del.dataset.delete);
+    if (!item || item.created_by !== currentUser.id) return toast("You can only delete transactions you created.");
+    if (!confirm("Delete this transaction permanently?")) return;
+    const { error } = await supabaseClient.from("homexa_transactions").delete().eq("id", item.id);
+    if (error) return toast("Delete failed: " + error.message);
+    data[mode] = currentList().filter(row => row.id !== item.id);
+    saveAll();
+    render();
+    toast("Transaction deleted from cloud.");
+  }
+};
+$("search").addEventListener("input", renderTransactions);
+
+// =====================================================
+// FAMILY MANAGEMENT
+// =====================================================
+function openMembers() {
+  if (mode !== "family") {
+    $("accountMode").value = "family";
+    mode = "family";
+    render();
+  }
+  $("addMemberBtn").style.display =
+    currentFamily && currentFamily.owner_id === currentUser.id ? "inline-block" : "none";
+  renderMembers();
+  $("membersModal").classList.add("show");
+}
+function closeMembers() { $("membersModal").classList.remove("show"); }
+function renderMembers() {
+  $("manageMembersList").innerHTML = familyRows.map(row => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:9px;border-bottom:1px solid #1b4057">
+      <span>${esc(row.display_name)} ${row.role === "owner" ? '<small class="tag">Owner</small>' : ""}</span>
+      ${row.role !== "owner" ? `<button class="icon-btn" data-remove-member="${esc(row.id)}">Remove</button>` : ""}
+    </div>`).join("");
+}
+$("addMemberBtn").onclick = async () => {
+  const name = $("newMember").value.trim();
+  if (!name) return toast("Enter a member name.");
+  if (familyRows.some(row => row.display_name.toLowerCase() === name.toLowerCase())) {
+    return toast("This member already exists.");
+  }
+  const { error } = await supabaseClient.from("homexa_family_members").insert({
+    family_id: familyId,
+    display_name: name.slice(0,40),
+    role: "member",
+    status: "active"
+  });
+  if (error) return toast("Could not add member: " + error.message);
+  $("newMember").value = "";
+  await loadFamilyMembers();
+  renderMembers();
+  render();
+  toast("Family member saved to cloud.");
+};
+$("manageMembersList").onclick = async event => {
+  const button = event.target.closest("[data-remove-member]");
+  if (!button) return;
+  const row = familyRows.find(item => item.id === button.dataset.removeMember);
+  if (!row || row.role === "owner") return;
+  if (!confirm("Remove " + row.display_name + " from this family? Existing transactions will remain.")) return;
+  const { error } = await supabaseClient.from("homexa_family_members").delete().eq("id", row.id);
+  if (error) return toast("Could not remove member: " + error.message);
+  await loadFamilyMembers();
+  await fetchTransactions();
+  renderMembers();
+  render();
+  toast("Family member removed.");
+};
+function renameFamily() {
+  const name = prompt("Enter your family name:", data.familyName);
+  if (!name || !name.trim()) return;
+  updateFamilyName(name.trim().slice(0,60));
+}
+async function updateFamilyName(name) {
+  const { error } = await supabaseClient.from("homexa_families")
+    .update({ name }).eq("id", familyId);
+  if (error) return toast("Family name update failed: " + error.message);
+  data.familyName = name;
+  currentFamily.name = name;
+  render();
+  toast("Family name updated in cloud.");
 }
 
-// ==================================
+// =====================================================
 // LANGUAGE SWITCH
-// ==================================
-
-$("languageBtn").onclick=()=>{
- language=language==="en"?"hi":"en";
- const hi=language==="hi";
- $("languageBtn").textContent=hi?"English":"हिंदी";
- $("pageTitle").textContent=hi?"डैशबोर्ड":mode==="family"?"Family Overview":"Personal Overview";
- $("labelBalance").textContent=hi?"कुल बैलेंस":"Total Balance";
- $("labelExpense").textContent=hi?"इस महीने का खर्च":"This Month's Expenses";
- $("labelIncome").textContent=hi?"इस महीने की आय":"This Month's Income";
- $("labelSavings").textContent=hi?"मासिक बचत":"Monthly Savings";
- $("chartTitle").textContent=hi?"खर्च की गतिविधि":"Spending Activity";
- $("categoryTitle").textContent=hi?"श्रेणी के अनुसार खर्च":"Spending by Category";
- $("budgetTitle").textContent=hi?"मासिक बजट":"Monthly Budget";
- $("transactionTitle").textContent=hi?"लेन-देन":"Transactions";
+// =====================================================
+$("languageBtn").onclick = () => {
+  language = language === "en" ? "hi" : "en";
+  const hi = language === "hi";
+  $("languageBtn").textContent = hi ? "English" : "हिंदी";
+  $("pageTitle").textContent = hi ? "डैशबोर्ड" : (mode === "family" ? "Family Overview" : "Personal Overview");
+  $("labelBalance").textContent = hi ? "कुल बैलेंस" : "Total Balance";
+  $("labelExpense").textContent = hi ? "इस महीने का खर्च" : "This Month's Expenses";
+  $("labelIncome").textContent = hi ? "इस महीने की आय" : "This Month's Income";
+  $("labelSavings").textContent = hi ? "मासिक बचत" : "Monthly Savings";
+  $("chartTitle").textContent = hi ? "खर्च की गतिविधि" : "Spending Activity";
+  $("categoryTitle").textContent = hi ? "श्रेणी के अनुसार खर्च" : "Spending by Category";
+  $("budgetTitle").textContent = hi ? "मासिक बजट" : "Monthly Budget";
+  $("transactionTitle").textContent = hi ? "लेन-देन" : "Transactions";
+  $("transactionDescription").textContent = hi ? "आय और खर्च का प्रबंधन करें।" : "Manage this account's income and expenses.";
+  $("budgetDescription").textContent = hi ? "अपने खर्च की सीमा तय करें।" : (mode === "family" ? "Set a spending limit for your whole family." : "Set a spending limit for your personal account.");
 };
 
-// ==================================
-// START
-// ==================================
-
-saveAll();
-render();
+// =====================================================
+// STARTUP
+// =====================================================
 </script>
+
 </body>
 </html>
