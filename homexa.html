@@ -1,0 +1,1156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOMEXA | Smart Family Manager</title>
+
+<style>
+:root {
+    --bg:#061522;
+    --sidebar:#081b2a;
+    --card:#0d2638;
+    --card2:#102f45;
+    --cyan:#42c8ff;
+    --text:#f3f8ff;
+    --muted:#91aabd;
+    --border:#1b4057;
+    --green:#42d6a4;
+    --red:#ff7185;
+}
+*{box-sizing:border-box}
+body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{
+    display:grid;
+    grid-template-columns:235px 1fr;
+    min-height:100vh;
+}
+.sidebar{
+    background:var(--sidebar);
+    border-right:1px solid var(--border);
+    padding:25px 16px;
+    display:flex;
+    flex-direction:column;
+}
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:5px 8px 28px;
+}
+.brand-icon{
+    width:43px;height:43px;
+    display:grid;place-items:center;
+    background:linear-gradient(135deg,#70e1ff,#0789c3);
+    border-radius:13px;
+    color:#052337;
+    font-size:25px;
+    font-weight:900;
+}
+.brand-name{font-size:21px;font-weight:900;letter-spacing:1px}
+.brand-sub{font-size:9px;color:var(--muted);letter-spacing:1.5px;margin-top:3px}
+.nav-label{
+    color:#66859b;
+    font-size:10px;
+    letter-spacing:2px;
+    padding:10px;
+}
+.nav{display:grid;gap:7px}
+.nav button{
+    background:transparent;
+    color:var(--muted);
+    border:0;
+    border-radius:10px;
+    padding:12px;
+    text-align:left;
+    font-weight:600;
+}
+.nav button.active,.nav button:hover{
+    background:#10364c;
+    color:var(--cyan);
+}
+.sidebar-bottom{
+    margin-top:auto;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:13px;
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.6;
+}
+.sidebar-bottom strong{color:var(--cyan)}
+main{
+    padding:28px clamp(15px,3vw,38px);
+    max-width:1500px;
+    width:100%;
+    margin:auto;
+}
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:27px;
+}
+.eyebrow{
+    color:var(--cyan);
+    font-size:10px;
+    letter-spacing:2px;
+    font-weight:800;
+}
+h1{font-size:30px;margin:8px 0}
+.subtitle{font-size:13px;color:var(--muted)}
+.top-actions{display:flex;gap:8px;align-items:center}
+.small-btn{
+    background:var(--card);
+    border:1px solid var(--border);
+    color:var(--text);
+    border-radius:9px;
+    padding:9px 12px;
+}
+.avatar{
+    width:38px;height:38px;
+    background:#123b52;
+    color:var(--cyan);
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    font-weight:900;
+}
+.metrics{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:18px;
+}
+.card{
+    background:linear-gradient(145deg,var(--card2),var(--card));
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:17px;
+}
+.metric-label{font-size:12px;color:var(--muted)}
+.metric-value{
+    font-size:25px;
+    font-weight:800;
+    margin:13px 0 5px;
+    overflow-wrap:anywhere;
+}
+.metric-note{font-size:10px;color:var(--muted)}
+.content-grid{
+    display:grid;
+    grid-template-columns:1.4fr .8fr;
+    gap:16px;
+}
+.card-heading{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:18px;
+}
+.card-heading h2{font-size:16px;margin:0}
+.card-heading p{font-size:11px;color:var(--muted);margin:5px 0 0}
+.chart{
+    height:180px;
+    display:flex;
+    align-items:end;
+    gap:12px;
+    padding:10px 5px 0;
+    border-bottom:1px solid var(--border);
+}
+.bar-wrap{
+    flex:1;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:end;
+    align-items:center;
+    gap:8px;
+    min-width:0;
+}
+.bar{
+    width:min(35px,75%);
+    min-height:3px;
+    background:linear-gradient(180deg,#63ddff,#087db6);
+    border-radius:7px 7px 2px 2px;
+}
+.bar-label{font-size:10px;color:var(--muted)}
+.category-list{display:grid;gap:15px}
+.category-row{
+    display:grid;
+    grid-template-columns:32px 1fr auto;
+    gap:9px;
+    align-items:center;
+}
+.cat-icon{
+    width:32px;height:32px;
+    background:#123b52;
+    border-radius:9px;
+    display:grid;
+    place-items:center;
+}
+.cat-name{font-size:12px;font-weight:700}
+.cat-track{
+    height:5px;
+    background:#18384c;
+    border-radius:10px;
+    margin-top:7px;
+    overflow:hidden;
+}
+.cat-track span{
+    display:block;
+    height:100%;
+    background:var(--cyan);
+    border-radius:10px;
+}
+.cat-amount{font-size:11px;font-weight:700}
+.transactions{margin-top:17px}
+.toolbar{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+.search,.filter{
+    background:#071a28;
+    border:1px solid var(--border);
+    color:var(--text);
+    border-radius:8px;
+    padding:9px 10px;
+    outline:none;
+}
+.primary{
+    border:0;
+    border-radius:9px;
+    padding:10px 15px;
+    background:linear-gradient(135deg,#55d7ff,#0b91c8);
+    color:#032033;
+    font-weight:800;
+}
+.table-wrap{overflow-x:auto}
+table{
+    width:100%;
+    min-width:590px;
+    border-collapse:collapse;
+}
+th{
+    text-align:left;
+    color:#7898ad;
+    font-size:10px;
+    letter-spacing:1px;
+    padding:12px 8px;
+    border-bottom:1px solid var(--border);
+}
+td{
+    padding:13px 8px;
+    font-size:12px;
+    border-bottom:1px solid #153247;
+}
+td small{display:block;color:var(--muted);margin-top:4px}
+.income{color:var(--green)}
+.expense{color:var(--red)}
+.tag{
+    background:#12364b;
+    color:#83dfff;
+    padding:5px 8px;
+    border-radius:20px;
+    font-size:10px;
+}
+.icon-btn{
+    background:#0a2030;
+    border:1px solid var(--border);
+    color:var(--muted);
+    border-radius:6px;
+    padding:5px 8px;
+}
+.empty{
+    text-align:center;
+    padding:28px;
+    color:var(--muted);
+}
+.budget-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:16px;
+    flex-wrap:wrap;
+}
+.budget-row input{
+    width:125px;
+    padding:8px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    background:#071a28;
+    color:white;
+}
+.modal-bg{
+    position:fixed;
+    inset:0;
+    background:#000b;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+    z-index:10;
+}
+.modal-bg.show{display:flex}
+.modal{
+    width:min(450px,100%);
+    background:#0b2031;
+    border:1px solid #24516a;
+    border-radius:17px;
+    padding:22px;
+}
+.modal h2{font-size:19px;margin:0 0 18px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:grid;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-size:11px;color:var(--muted)}
+.field input,.field select{
+    width:100%;
+    background:#061927;
+    border:1px solid var(--border);
+    color:white;
+    border-radius:8px;
+    padding:11px;
+}
+.modal-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:19px;
+}
+.cancel{
+    background:transparent;
+    border:1px solid var(--border);
+    color:white;
+    padding:10px 13px;
+    border-radius:8px;
+}
+.toast{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#10384a;
+    border:1px solid #27708d;
+    border-radius:10px;
+    padding:12px 17px;
+    display:none;
+    z-index:20;
+}
+.toast.show{display:block}
+footer{
+    text-align:center;
+    color:#66859b;
+    font-size:10px;
+    margin-top:25px;
+}
+@media(max-width:1000px){
+    .metrics{grid-template-columns:repeat(2,1fr)}
+    .content-grid{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+    .app{grid-template-columns:1fr}
+    .sidebar{padding:12px}
+    .brand{padding:4px 5px 12px}
+    .nav-label,.sidebar-bottom{display:none}
+    .nav{display:flex;overflow-x:auto}
+    .nav button{white-space:nowrap;padding:10px}
+    main{padding:19px 12px}
+    h1{font-size:25px}
+    .metrics{gap:8px}
+    .card{padding:13px}
+    .metric-value{font-size:20px}
+    .topbar{align-items:flex-start}
+    .form-grid{grid-template-columns:1fr}
+    .field.full{grid-column:auto}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+        <div class="brand-icon">H</div>
+        <div>
+            <div class="brand-name">HOMEXA</div>
+            <div class="brand-sub">SMART FAMILY</div>
+        </div>
+    </div>
+
+    <div class="nav-label">WORKSPACE</div>
+
+    <nav class="nav">
+        <button class="active" type="button">▦ Overview</button>
+        <button type="button" onclick="document.getElementById('transactions').scrollIntoView({behavior:'smooth'})">↗ Expenses</button>
+        <button type="button" onclick="document.getElementById('budget').scrollIntoView({behavior:'smooth'})">◷ Budget</button>
+        <button type="button" onclick="showMessage('Grocery Manager will be added in a future update.')">🛒 Grocery</button>
+        <button type="button" onclick="showMessage('Bill Reminders will be added in a future update.')">▤ Bills</button>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <strong>PVRAJCMS GROUP</strong>
+        <br>
+        Your home, organized in one place.
+        <br><br>
+        Smart Family. Better Living.
+    </div>
+
+</aside>
+
+<!-- MAIN DASHBOARD -->
+
+<main>
+
+    <header class="topbar">
+
+        <div>
+            <div class="eyebrow">FAMILY FINANCE</div>
+            <h1 id="pageTitle">Expense Overview</h1>
+            <div class="subtitle">Manage your household money easily.</div>
+        </div>
+
+        <div class="top-actions">
+            <button class="small-btn" id="languageBtn">हिंदी</button>
+            <div class="avatar">H</div>
+        </div>
+
+    </header>
+
+    <!-- SUMMARY CARDS -->
+
+    <section class="metrics">
+
+        <div class="card">
+            <div class="metric-label" id="labelBalance">Total Balance</div>
+            <div class="metric-value" id="balance">₹0</div>
+            <div class="metric-note">Income minus expenses</div>
+        </div>
+
+        <div class="card">
+            <div class="metric-label" id="labelExpense">This Month's Expenses</div>
+            <div class="metric-value" id="monthExpense">₹0</div>
+            <div class="metric-note">Monthly spending</div>
+        </div>
+
+        <div class="card">
+            <div class="metric-label" id="labelIncome">This Month's Income</div>
+            <div class="metric-value income" id="monthIncome">₹0</div>
+            <div class="metric-note">Monthly income entries</div>
+        </div>
+
+        <div class="card">
+            <div class="metric-label" id="labelSavings">Monthly Savings</div>
+            <div class="metric-value" id="savings">₹0</div>
+            <div class="metric-note">Income minus expenses</div>
+        </div>
+
+    </section>
+
+    <!-- CHARTS -->
+
+    <section class="content-grid">
+
+        <div class="card">
+
+            <div class="card-heading">
+                <div>
+                    <h2 id="chartTitle">Spending Activity</h2>
+                    <p>Last 6 months</p>
+                </div>
+                <span class="tag">6 MONTHS</span>
+            </div>
+
+            <div class="chart" id="chart"></div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-heading">
+                <div>
+                    <h2 id="categoryTitle">Spending by Category</h2>
+                    <p>This month's breakdown</p>
+                </div>
+            </div>
+
+            <div class="category-list" id="categories"></div>
+
+        </div>
+
+    </section>
+
+    <!-- BUDGET -->
+
+    <section class="card" id="budget" style="margin-top:17px">
+
+        <div class="card-heading">
+            <div>
+                <h2 id="budgetTitle">Monthly Budget</h2>
+                <p>Set a spending limit for your household.</p>
+            </div>
+            <span class="tag">MONTHLY</span>
+        </div>
+
+        <div class="budget-row">
+            <div>
+                <div class="metric-label">Your monthly limit</div>
+                <div class="metric-value" id="budgetAmount">₹10,000</div>
+            </div>
+
+            <div>
+                <input type="number" id="budgetInput" min="1" placeholder="Enter budget">
+                <button class="primary" id="saveBudget">Save</button>
+            </div>
+        </div>
+
+        <div class="cat-track" style="height:9px;margin-top:15px">
+            <span id="budgetProgress" style="width:0%"></span>
+        </div>
+
+        <div class="metric-note" id="budgetStatus" style="margin-top:9px">
+            Your monthly spending progress.
+        </div>
+
+    </section>
+
+    <!-- TRANSACTIONS -->
+
+    <section class="card transactions" id="transactions">
+
+        <div class="card-heading">
+
+            <div>
+                <h2 id="transactionTitle">Recent Transactions</h2>
+                <p>Manage your income and expenses.</p>
+            </div>
+
+            <div class="toolbar">
+                <input class="search" id="search" placeholder="Search...">
+                <button class="primary" id="addBtn">+ Add New</button>
+            </div>
+
+        </div>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>TRANSACTION</th>
+                        <th>CATEGORY</th>
+                        <th>DATE</th>
+                        <th>TYPE</th>
+                        <th>AMOUNT</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+
+                <tbody id="transactionRows"></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <footer>
+        HOMEXA · A PRODUCT BY PVRAJCMS GROUP
+        <br><br>
+        Your data is currently saved in this browser.
+    </footer>
+
+</main>
+</div>
+
+<!-- ADD TRANSACTION MODAL -->
+
+<div class="modal-bg" id="modal">
+
+    <div class="modal">
+
+        <h2 id="modalTitle">Add Transaction</h2>
+
+        <form id="transactionForm">
+
+            <input type="hidden" id="editId">
+
+            <div class="form-grid">
+
+                <div class="field full">
+                    <label>Transaction Name</label>
+                    <input type="text" id="title" required maxlength="60"
+                           placeholder="Example: Monthly groceries">
+                </div>
+
+                <div class="field">
+                    <label>Amount (₹)</label>
+                    <input type="number" id="amount" required min="0.01"
+                           step="0.01" placeholder="Enter amount">
+                </div>
+
+                <div class="field">
+                    <label>Transaction Type</label>
+                    <select id="type">
+                        <option value="expense">Expense</option>
+                        <option value="income">Income</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Category</label>
+                    <select id="category">
+                        <option>Food</option>
+                        <option>Groceries</option>
+                        <option>Bills</option>
+                        <option>Transport</option>
+                        <option>Shopping</option>
+                        <option>Health</option>
+                        <option>Education</option>
+                        <option>Salary</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Date</label>
+                    <input type="date" id="date" required>
+                </div>
+
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="cancel" id="cancelBtn">Cancel</button>
+                <button type="submit" class="primary" id="saveBtn">Save Transaction</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+// ===================================
+// HOMEXA DATA MANAGEMENT
+// ===================================
+
+const STORAGE_KEY = "homexa_transactions_v1";
+const BUDGET_KEY = "homexa_monthly_budget_v1";
+
+let transactions = [];
+
+try {
+    transactions = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    if (!Array.isArray(transactions)) transactions = [];
+} catch {
+    transactions = [];
+}
+
+let budget = Number(localStorage.getItem(BUDGET_KEY)) || 10000;
+let language = "en";
+
+const $ = id => document.getElementById(id);
+
+const categories = {
+    Food:"🍲",
+    Groceries:"🛒",
+    Bills:"🧾",
+    Transport:"🚗",
+    Shopping:"🛍️",
+    Health:"💊",
+    Education:"📚",
+    Salary:"💼",
+    Other:"✦"
+};
+
+function getToday() {
+    const d = new Date();
+    const offset = d.getTimezoneOffset();
+    return new Date(d.getTime() - offset * 60000)
+        .toISOString().slice(0,10);
+}
+
+function getMonth(date) {
+    return date.slice(0,7);
+}
+
+function currentMonth() {
+    return getMonth(getToday());
+}
+
+function money(value) {
+    return new Intl.NumberFormat("en-IN", {
+        style:"currency",
+        currency:"INR",
+        maximumFractionDigits:0
+    }).format(value || 0);
+}
+
+function saveData() {
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(transactions)
+    );
+
+    render();
+    showMessage("Transaction saved successfully!");
+}
+
+function getTotal(type, list) {
+    return list
+        .filter(t => t.type === type)
+        .reduce((sum,t) => sum + Number(t.amount),0);
+}
+
+// ===================================
+// MAIN RENDER
+// ===================================
+
+function render() {
+
+    const monthTransactions = transactions.filter(
+        t => getMonth(t.date) === currentMonth()
+    );
+
+    const income = getTotal("income",monthTransactions);
+    const expense = getTotal("expense",monthTransactions);
+
+    const totalIncome = getTotal("income",transactions);
+    const totalExpense = getTotal("expense",transactions);
+
+    $("balance").textContent =
+        money(totalIncome-totalExpense);
+
+    $("monthExpense").textContent = money(expense);
+    $("monthIncome").textContent = money(income);
+    $("savings").textContent = money(income-expense);
+
+    renderChart();
+    renderCategories(monthTransactions);
+    renderTransactions();
+    renderBudget(expense);
+}
+
+// ===================================
+// SIX MONTH CHART
+// ===================================
+
+function renderChart() {
+
+    const now = new Date();
+    const months = [];
+
+    for(let i=5;i>=0;i--) {
+
+        const d = new Date(
+            now.getFullYear(),
+            now.getMonth()-i,
+            1
+        );
+
+        const key =
+            d.getFullYear() + "-" +
+            String(d.getMonth()+1).padStart(2,"0");
+
+        months.push({
+            key,
+            label:d.toLocaleDateString("en-IN",{month:"short"})
+        });
+    }
+
+    const values = months.map(m =>
+        transactions
+            .filter(t =>
+                t.type==="expense" &&
+                getMonth(t.date)===m.key
+            )
+            .reduce((s,t)=>s+Number(t.amount),0)
+    );
+
+    const max = Math.max(...values,1);
+
+    $("chart").innerHTML = months.map((m,i)=>`
+
+        <div class="bar-wrap">
+
+            <div class="bar"
+                 title="${money(values[i])}"
+                 style="height:${Math.max(3,values[i]/max*135)}px">
+            </div>
+
+            <span class="bar-label">${m.label}</span>
+
+        </div>
+
+    `).join("");
+}
+
+// ===================================
+// CATEGORY REPORT
+// ===================================
+
+function renderCategories(list) {
+
+    const expenses = list.filter(t=>t.type==="expense");
+
+    const total = getTotal("expense",list);
+    const groups = {};
+
+    expenses.forEach(t=>{
+        groups[t.category] =
+            (groups[t.category]||0)+Number(t.amount);
+    });
+
+    const sorted = Object.entries(groups)
+        .sort((a,b)=>b[1]-a[1]);
+
+    $("categories").innerHTML = sorted.length ?
+
+        sorted.slice(0,7).map(([name,value])=>`
+
+            <div class="category-row">
+
+                <div class="cat-icon">
+                    ${categories[name]||"✦"}
+                </div>
+
+                <div>
+
+                    <div class="cat-name">${name}</div>
+
+                    <div class="cat-track">
+                        <span style="width:${total ? value/total*100 : 0}%"></span>
+                    </div>
+
+                </div>
+
+                <div class="cat-amount">
+                    ${money(value)}
+                </div>
+
+            </div>
+
+        `).join("")
+
+        :
+
+        `<div class="empty">No expenses recorded this month.</div>`;
+}
+
+// ===================================
+// TRANSACTION TABLE
+// ===================================
+
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, char => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#39;"
+    })[char]);
+}
+
+function renderTransactions() {
+
+    const query = $("search").value.toLowerCase();
+
+    const list = [...transactions]
+        .filter(t =>
+            (t.title+" "+t.category+" "+t.type)
+            .toLowerCase().includes(query)
+        )
+        .sort((a,b)=>b.date.localeCompare(a.date));
+
+    $("transactionRows").innerHTML = list.length ?
+
+        list.map(t=>`
+
+            <tr>
+
+                <td>
+                    <strong>${escapeHTML(t.title)}</strong>
+                    <small>${categories[t.category]||"✦"} ${escapeHTML(t.category)}</small>
+                </td>
+
+                <td>
+                    <span class="tag">${escapeHTML(t.category)}</span>
+                </td>
+
+                <td>${escapeHTML(t.date)}</td>
+
+                <td class="${t.type}">
+                    ${t.type==="income"?"Income":"Expense"}
+                </td>
+
+                <td class="${t.type}">
+                    <strong>
+                        ${t.type==="income"?"+":"−"} ${money(t.amount)}
+                    </strong>
+                </td>
+
+                <td>
+                    <button class="icon-btn" data-edit="${escapeHTML(t.id)}">✎</button>
+                    <button class="icon-btn" data-delete="${escapeHTML(t.id)}">×</button>
+                </td>
+
+            </tr>
+
+        `).join("")
+
+        :
+
+        `<tr>
+            <td colspan="6" class="empty">
+                No transactions found. Add your first transaction!
+            </td>
+        </tr>`;
+}
+
+// ===================================
+// BUDGET MANAGEMENT
+// ===================================
+
+function renderBudget(expense) {
+
+    $("budgetAmount").textContent = money(budget);
+    $("budgetInput").value = budget;
+
+    const percentage = budget > 0
+        ? Math.min(expense/budget*100,100)
+        : 0;
+
+    $("budgetProgress").style.width = percentage+"%";
+
+    $("budgetProgress").style.background =
+        expense > budget ? "#ff7185" : "#42c8ff";
+
+    $("budgetStatus").textContent =
+        money(expense)+" spent out of "+money(budget);
+}
+
+$("saveBudget").onclick = () => {
+
+    const value = Number($("budgetInput").value);
+
+    if(!value || value<=0) {
+        showMessage("Please enter a valid budget.");
+        return;
+    }
+
+    budget = value;
+
+    localStorage.setItem(BUDGET_KEY,budget);
+
+    render();
+
+    showMessage("Monthly budget updated!");
+};
+
+// ===================================
+// MODAL MANAGEMENT
+// ===================================
+
+function openModal(item=null) {
+
+    $("transactionForm").reset();
+
+    $("editId").value = item ? item.id : "";
+    $("title").value = item ? item.title : "";
+    $("amount").value = item ? item.amount : "";
+    $("type").value = item ? item.type : "expense";
+    $("category").value = item ? item.category : "Food";
+    $("date").value = item ? item.date : getToday();
+
+    $("modalTitle").textContent =
+        item ? "Edit Transaction" : "Add Transaction";
+
+    $("saveBtn").textContent =
+        item ? "Update Transaction" : "Save Transaction";
+
+    $("modal").classList.add("show");
+}
+
+function closeModal() {
+    $("modal").classList.remove("show");
+}
+
+$("addBtn").onclick = () => openModal();
+
+$("cancelBtn").onclick = closeModal;
+$("modal").addEventListener("click",e=>{
+    if(e.target === $("modal")) closeModal();
+});
+
+// ===================================
+// SAVE / UPDATE TRANSACTION
+// ===================================
+
+$("transactionForm").onsubmit = e => {
+
+    e.preventDefault();
+
+    const id = $("editId").value;
+
+    const item = {
+
+        id: id || (
+            crypto.randomUUID
+            ? crypto.randomUUID()
+            : Date.now().toString()
+        ),
+
+        title:$("title").value.trim(),
+        amount:Number($("amount").value),
+        type:$("type").value,
+        category:$("category").value,
+        date:$("date").value
+
+    };
+
+    if(!item.title || !item.date || item.amount<=0) {
+        showMessage("Please enter valid transaction details.");
+        return;
+    }
+
+    if(id) {
+
+        transactions = transactions.map(t =>
+            t.id===id ? item : t
+        );
+
+    } else {
+
+        transactions.push(item);
+
+    }
+
+    closeModal();
+    saveData();
+};
+
+// ===================================
+// EDIT AND DELETE
+// ===================================
+
+$("transactionRows").onclick = e => {
+
+    const edit = e.target.closest("[data-edit]");
+    const del = e.target.closest("[data-delete]");
+
+    if(edit) {
+
+        const item = transactions.find(
+            t=>t.id===edit.dataset.edit
+        );
+
+        if(item) openModal(item);
+
+    }
+
+    if(del) {
+
+        if(!confirm("Delete this transaction?")) return;
+
+        transactions = transactions.filter(
+            t=>t.id!==del.dataset.delete
+        );
+
+        saveData();
+
+        showMessage("Transaction deleted.");
+    }
+};
+
+// ===================================
+// SEARCH
+// ===================================
+
+$("search").addEventListener("input",renderTransactions);
+
+// ===================================
+// LANGUAGE TOGGLE
+// ===================================
+
+$("languageBtn").onclick = () => {
+
+    language = language==="en" ? "hi" : "en";
+
+    const hindi = language==="hi";
+
+    $("languageBtn").textContent =
+        hindi ? "English" : "हिंदी";
+
+    $("pageTitle").textContent =
+        hindi ? "खर्च का विवरण" : "Expense Overview";
+
+    $("labelBalance").textContent =
+        hindi ? "कुल बैलेंस" : "Total Balance";
+
+    $("labelExpense").textContent =
+        hindi ? "इस महीने का खर्च" : "This Month's Expenses";
+
+    $("labelIncome").textContent =
+        hindi ? "इस महीने की आय" : "This Month's Income";
+
+    $("labelSavings").textContent =
+        hindi ? "मासिक बचत" : "Monthly Savings";
+
+    $("chartTitle").textContent =
+        hindi ? "खर्च की गतिविधि" : "Spending Activity";
+
+    $("categoryTitle").textContent =
+        hindi ? "श्रेणी के अनुसार खर्च" : "Spending by Category";
+
+    $("budgetTitle").textContent =
+        hindi ? "मासिक बजट" : "Monthly Budget";
+
+    $("transactionTitle").textContent =
+        hindi ? "हाल के लेन-देन" : "Recent Transactions";
+
+};
+
+// ===================================
+// TOAST MESSAGE
+// ===================================
+
+function showMessage(message) {
+
+    $("toast").textContent = message;
+
+    $("toast").classList.add("show");
+
+    setTimeout(()=>{
+        $("toast").classList.remove("show");
+    },2300);
+}
+
+// ===================================
+// START APPLICATION
+// ===================================
+
+render();
+
+</script>
+
+</body>
+</html>
