@@ -63,6 +63,14 @@ h1{font-size:29px;margin:7px 0}
 .member-spend-name{font-size:12px;color:#b8d5e6;font-weight:700}
 .member-spend-amount{font-size:20px;font-weight:800;margin-top:8px}
 .member-spend-note{font-size:10px;color:var(--muted);margin-top:4px}
+.member-spend-track{height:6px;background:#18384c;border-radius:10px;margin-top:11px;overflow:hidden}
+.member-spend-track span{display:block;height:100%;background:linear-gradient(90deg,#42c8ff,#42d6a4);border-radius:10px}
+.member-top-category{font-size:10px;color:#9fc4d8;margin-top:9px}
+.report-subhead{font-size:13px;font-weight:700;margin:18px 0 10px}
+.report-category-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px}
+.report-category-item{background:#0a2030;border:1px solid var(--border);border-radius:10px;padding:11px}
+.report-category-item strong{display:block;font-size:12px;margin-bottom:6px}
+.report-category-item span{font-size:14px;font-weight:800;color:var(--cyan)}
 .cat-icon{width:32px;height:32px;background:#123b52;border-radius:9px;display:grid;place-items:center}
 .cat-name{font-size:12px;font-weight:700}
 .cat-track{height:5px;background:#18384c;border-radius:10px;margin-top:7px;overflow:hidden}
@@ -287,13 +295,15 @@ footer{text-align:center;color:#66859b;font-size:10px;margin-top:24px}
   </div>
  </section>
 
- <!-- FAMILY MEMBER SPENDING SUMMARY -->
+ <!-- FAMILY MEMBER SPENDING REPORT -->
  <section class="card" id="memberSpending" style="margin-top:16px;display:none">
   <div class="card-heading">
-   <div><h2>Family Spending by Member</h2><p>This month's expenses grouped by the person selected when the owner recorded the transaction.</p></div>
+   <div><h2>Family Member-wise Expense Report</h2><p>Current month's expenses, grouped by the member selected by the Owner.</p></div>
    <span class="tag" id="memberSpendingTotal">FAMILY TOTAL ₹0</span>
   </div>
   <div class="member-spend-grid" id="memberSpendingRows"></div>
+  <div class="report-subhead">Family spending by category</div>
+  <div class="report-category-grid" id="familyCategoryReport"></div>
  </section>
 
  <!-- BUDGET -->
@@ -1044,26 +1054,41 @@ function renderMemberSpending(monthList) {
   }
   section.style.display = "block";
   const expenses = monthList.filter(t => t.type === "expense");
-  const familyTotal = total("expense", expenses);
+  const familyTotal = expenses.reduce((sum, t) => sum + Number(t.amount || 0), 0);
   $("memberSpendingTotal").textContent = "FAMILY TOTAL " + money(familyTotal);
+
   const members = familyRows.length ? familyRows : data.members.map(name => ({ display_name:name }));
   const cards = members.map(member => {
     const memberExpenses = expenses.filter(t => t.member === member.display_name);
-    const amount = memberExpenses.reduce((sum, t) => sum + Number(t.amount), 0);
+    const amount = memberExpenses.reduce((sum, t) => sum + Number(t.amount || 0), 0);
+    const share = familyTotal ? Math.round(amount / familyTotal * 100) : 0;
+    const categories = {};
+    memberExpenses.forEach(t => categories[t.category] = (categories[t.category] || 0) + Number(t.amount || 0));
+    const topCategory = Object.entries(categories).sort((a,b) => b[1] - a[1])[0];
     return `<div class="member-spend-card">
-      <div class="member-spend-name">${esc(member.display_name)}</div>
+      <div class="member-spend-name">${esc(member.display_name)}${member.role === "owner" ? " · Owner" : ""}</div>
       <div class="member-spend-amount">${money(amount)}</div>
-      <div class="member-spend-note">${memberExpenses.length} expense record(s) this month</div>
+      <div class="member-spend-note">${memberExpenses.length} expense record(s) · ${share}% of family spending</div>
+      <div class="member-spend-track"><span style="width:${share}%"></span></div>
+      <div class="member-top-category">${topCategory ? "Top category: " + esc(topCategory[0]) + " · " + money(topCategory[1]) : "No expenses recorded this month"}</div>
     </div>`;
   });
+
   const unassigned = expenses.filter(t => !members.some(m => m.display_name === t.member));
   if (unassigned.length) {
-    const amount = unassigned.reduce((sum,t) => sum + Number(t.amount),0);
-    cards.push(`<div class="member-spend-card"><div class="member-spend-name">Unassigned</div><div class="member-spend-amount">${money(amount)}</div><div class="member-spend-note">${unassigned.length} expense record(s) this month</div></div>`);
+    const amount = unassigned.reduce((sum,t) => sum + Number(t.amount || 0),0);
+    const share = familyTotal ? Math.round(amount / familyTotal * 100) : 0;
+    cards.push(`<div class="member-spend-card"><div class="member-spend-name">Unassigned</div><div class="member-spend-amount">${money(amount)}</div><div class="member-spend-note">${unassigned.length} expense record(s) · ${share}% of family spending</div><div class="member-spend-track"><span style="width:${share}%"></span></div><div class="member-top-category">Review these transactions and assign a family member</div></div>`);
   }
   $("memberSpendingRows").innerHTML = cards.join("") || `<div class="empty">Add family members to see spending by person.</div>`;
-}
 
+  const categoryTotals = {};
+  expenses.forEach(t => categoryTotals[t.category] = (categoryTotals[t.category] || 0) + Number(t.amount || 0));
+  const sortedCategories = Object.entries(categoryTotals).sort((a,b) => b[1] - a[1]);
+  $("familyCategoryReport").innerHTML = sortedCategories.length
+    ? sortedCategories.map(([name, amount]) => `<div class="report-category-item"><strong>${icons[name] || "✦"} ${esc(name)}</strong><span>${money(amount)}</span><div class="member-spend-note">${familyTotal ? Math.round(amount / familyTotal * 100) : 0}% of family expenses</div></div>`).join("")
+    : `<div class="empty">No family expenses recorded this month.</div>`;
+}
 function renderBudget(expense) {
   const budget = Number(budgets[mode]) || 0;
   $("budgetAmount").textContent = money(budget);
