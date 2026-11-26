@@ -211,6 +211,7 @@ footer{text-align:center;color:#66859b;font-size:10px;margin-top:24px}
   <button class="active" type="button">▦ Overview</button>
   <button type="button" onclick="scrollToSection('transactions')">↗ Transactions</button>
   <button type="button" onclick="scrollToSection('budget')">◷ Budget</button>
+  <button type="button" onclick="scrollToSection('reports')">▤ Reports</button>
   <button type="button" onclick="openMembers()">♙ Family Members</button>
  </nav>
 
@@ -306,6 +307,29 @@ footer{text-align:center;color:#66859b;font-size:10px;margin-top:24px}
   <div class="report-category-grid" id="familyCategoryReport"></div>
  </section>
 
+ <!-- YEARLY REPORTS -->
+ <section class="card" id="reports" style="margin-top:16px">
+  <div class="card-heading">
+   <div><h2>Reports & Export</h2><p>Year-wise income, expenses and savings for the selected account.</p></div>
+   <div class="toolbar">
+    <select class="filter" id="reportYear" aria-label="Report year"></select>
+    <button class="secondary" type="button" id="exportCsvBtn">Export CSV</button>
+    <button class="secondary" type="button" id="backupJsonBtn">Download Backup</button>
+   </div>
+  </div>
+  <div class="metrics" style="margin-bottom:12px">
+   <div class="member-spend-card"><div class="metric-label">Yearly Income</div><div class="member-spend-amount income" id="yearIncome">₹0</div></div>
+   <div class="member-spend-card"><div class="metric-label">Yearly Expenses</div><div class="member-spend-amount expense" id="yearExpense">₹0</div></div>
+   <div class="member-spend-card"><div class="metric-label">Net Savings</div><div class="member-spend-amount" id="yearNet">₹0</div></div>
+  </div>
+  <div class="table-wrap">
+   <table style="min-width:500px">
+    <thead><tr><th>MONTH</th><th>INCOME</th><th>EXPENSE</th><th>NET</th></tr></thead>
+    <tbody id="yearReportRows"></tbody>
+   </table>
+  </div>
+ </section>
+
  <!-- BUDGET -->
  <section class="card" id="budget" style="margin-top:16px">
   <div class="card-heading">
@@ -334,6 +358,9 @@ footer{text-align:center;color:#66859b;font-size:10px;margin-top:24px}
    <div><h2 id="transactionTitle">Transactions</h2><p id="transactionDescription">Manage this account's income and expenses.</p></div>
    <div class="toolbar">
     <input class="search" id="search" placeholder="Search...">
+    <input class="filter" type="month" id="transactionMonthFilter" aria-label="Filter by month">
+    <select class="filter" id="transactionTypeFilter" aria-label="Filter by type"><option value="">All types</option><option value="expense">Expense</option><option value="income">Income</option></select>
+    <select class="filter" id="transactionMemberFilter" aria-label="Filter by family member"><option value="">All members</option></select>
     <button class="primary" id="addBtn">+ Add New</button>
    </div>
   </div>
@@ -963,6 +990,9 @@ function scrollToSection(id) {
 $("accountMode").addEventListener("change", event => {
   mode = event.target.value;
   $("search").value = "";
+  $("transactionMonthFilter").value = "";
+  $("transactionTypeFilter").value = "";
+  $("transactionMemberFilter").value = "";
   render();
   toast(mode === "family" ? "Family account opened" : "Personal account opened");
 });
@@ -992,6 +1022,7 @@ function updateAccountHeader() {
   $("addBtn").title = canManageCurrentAccount() ? "" : "Only the Family Owner can add transactions.";
   $("saveBudget").disabled = !canManageCurrentAccount();
   $("saveBudget").title = canManageCurrentAccount() ? "" : "Only the Family Owner can manage the family budget.";
+  $("addBtn").textContent = mode === "family" ? "+ Add Family Transaction" : "+ Add New";
 }
 
 function render() {
@@ -1011,6 +1042,8 @@ function render() {
   renderCategories(monthList);
   renderMemberSpending(monthList);
   renderBudget(expense);
+  renderYearReport();
+  refreshTransactionMemberFilter();
   renderTransactions();
 }
 
@@ -1099,12 +1132,33 @@ function renderBudget(expense) {
   $("budgetStatus").textContent = money(expense) + " spent out of " + money(budget);
 }
 
-function renderTransactions() {
-  const query = $("search").value.toLowerCase();
-  const list = [...currentList()].filter(t =>
-    (t.title + " " + t.category + " " + t.type + " " + (t.member || "")).toLowerCase().includes(query)
-  ).sort((a,b) => b.date.localeCompare(a.date));
+function refreshTransactionMemberFilter() {
+  const select = $("transactionMemberFilter");
+  if (!select) return;
+  const previous = select.value;
+  const names = mode === "family" ? familyRows.map(row => row.display_name) : [];
+  select.innerHTML = '<option value="">All members</option>' + names.map(name =>
+    `<option value="${esc(name)}">${esc(name)}</option>`).join("");
+  if (names.includes(previous)) select.value = previous;
+  select.style.display = mode === "family" ? "inline-block" : "none";
+}
 
+function getFilteredTransactions() {
+  const query = $("search").value.toLowerCase().trim();
+  const monthFilter = $("transactionMonthFilter").value;
+  const typeFilter = $("transactionTypeFilter").value;
+  const memberFilter = $("transactionMemberFilter").value;
+  return [...currentList()].filter(t => {
+    const matchesSearch = (t.title + " " + t.category + " " + t.type + " " + (t.member || "")).toLowerCase().includes(query);
+    const matchesMonth = !monthFilter || monthOf(t.date) === monthFilter;
+    const matchesType = !typeFilter || t.type === typeFilter;
+    const matchesMember = mode !== "family" || !memberFilter || t.member === memberFilter;
+    return matchesSearch && matchesMonth && matchesType && matchesMember;
+  }).sort((a,b) => b.date.localeCompare(a.date));
+}
+
+function renderTransactions() {
+  const list = getFilteredTransactions();
   $("transactionRows").innerHTML = list.length ? list.map(t => {
     const canManage = mode === "family" ? isFamilyOwner() : t.created_by === currentUser.id;
     return `<tr>
@@ -1114,11 +1168,74 @@ function renderTransactions() {
       <td>${esc(t.date)}</td>
       <td class="${t.type}">${t.type === "income" ? "Income" : "Expense"}</td>
       <td class="${t.type}"><strong>${t.type === "income" ? "+" : "−"} ${money(t.amount)}</strong></td>
-      <td>${canManage ? `<button class="icon-btn" data-edit="${esc(t.id)}">✎</button>
-      <button class="icon-btn" data-delete="${esc(t.id)}">×</button>` : `<small>Shared</small>`}</td>
+      <td>${canManage ? `<button class="icon-btn" data-edit="${esc(t.id)}" aria-label="Edit transaction">✎</button>
+      <button class="icon-btn" data-delete="${esc(t.id)}" aria-label="Delete transaction">×</button>` : `<small>Shared</small>`}</td>
     </tr>`;
-  }).join("") : `<tr><td colspan="7" class="empty">No transactions found. Add your first transaction!</td></tr>`;
+  }).join("") : `<tr><td colspan="7" class="empty">No transactions match these filters.</td></tr>`;
 }
+
+function renderYearReport() {
+  const select = $("reportYear");
+  if (!select) return;
+  const thisYear = new Date().getFullYear();
+  if (!select.options.length) {
+    for (let year = thisYear; year >= thisYear - 8; year--) {
+      const option = document.createElement("option");
+      option.value = String(year); option.textContent = String(year);
+      select.appendChild(option);
+    }
+  }
+  const year = Number(select.value || thisYear);
+  const rows = [];
+  let yearlyIncome = 0, yearlyExpense = 0;
+  for (let month = 1; month <= 12; month++) {
+    const key = `${year}-${String(month).padStart(2,"0")}`;
+    const monthRows = currentList().filter(t => monthOf(t.date) === key);
+    const income = total("income", monthRows);
+    const expense = total("expense", monthRows);
+    yearlyIncome += income; yearlyExpense += expense;
+    rows.push(`<tr><td>${new Date(year,month-1,1).toLocaleDateString("en-IN",{month:"long"})}</td><td class="income">${money(income)}</td><td class="expense">${money(expense)}</td><td>${money(income-expense)}</td></tr>`);
+  }
+  $("yearIncome").textContent = money(yearlyIncome);
+  $("yearExpense").textContent = money(yearlyExpense);
+  $("yearNet").textContent = money(yearlyIncome-yearlyExpense);
+  $("yearReportRows").innerHTML = rows.join("");
+}
+
+function csvCell(value) {
+  let text = String(value ?? "");
+  if (/^[=+@\-\t\r]/.test(text)) text = "'" + text;
+  return '"' + text.replace(/"/g,'""') + '"';
+}
+function downloadTextFile(filename, content, mime) {
+  const blob = new Blob([content], {type:mime});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url; link.download = filename;
+  document.body.appendChild(link); link.click(); link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+$("exportCsvBtn").onclick = () => {
+  const rows = getFilteredTransactions();
+  const headers = ["Transaction","Amount INR","Type","Category","Date","Family Member","Account"];
+  const lines = [headers, ...rows.map(t => [t.title,t.amount,t.type,t.category,t.date,t.member || "",mode])];
+  const csv = "\uFEFF" + lines.map(row => row.map(csvCell).join(",")).join("\r\n");
+  downloadTextFile(`HOMEXA_${mode}_transactions_${getToday()}.csv`, csv, "text/csv;charset=utf-8");
+};
+$("backupJsonBtn").onclick = () => {
+  const backup = {
+    app:"HOMEXA", exported_at:new Date().toISOString(), account_mode:mode,
+    family_name:mode === "family" ? data.familyName : null,
+    transactions:currentList(),
+    budget:budgets[mode],
+    members:mode === "family" ? familyRows.map(row => ({display_name:row.display_name,role:row.role})) : []
+  };
+  downloadTextFile(`HOMEXA_${mode}_backup_${getToday()}.json`, JSON.stringify(backup,null,2), "application/json;charset=utf-8");
+};
+$("reportYear").addEventListener("change", renderYearReport);
+$("transactionMonthFilter").addEventListener("change", renderTransactions);
+$("transactionTypeFilter").addEventListener("change", renderTransactions);
+$("transactionMemberFilter").addEventListener("change", renderTransactions);
 
 // =====================================================
 // BUDGET CLOUD SAVE
@@ -1284,7 +1401,7 @@ function renderMembers() {
   $("manageMembersList").innerHTML = familyRows.map(row => `
     <div style="display:flex;justify-content:space-between;align-items:center;padding:9px;border-bottom:1px solid #1b4057">
       <span>${esc(row.display_name)} ${row.role === "owner" ? '<small class="tag">Family Owner</small>' : '<small class="tag">Member · No login</small>'}</span>
-      ${isFamilyOwner() && row.role !== "owner" ? `<button class="icon-btn" data-remove-member="${esc(row.id)}">Remove</button>` : ""}
+      ${isFamilyOwner() && row.role !== "owner" ? `<span><button class="icon-btn" data-edit-member="${esc(row.id)}">Edit</button> <button class="icon-btn" data-remove-member="${esc(row.id)}">Remove</button></span>` : ""}
     </div>`).join("");
 }
 $("addMemberBtn").onclick = async () => {
@@ -1308,12 +1425,25 @@ $("addMemberBtn").onclick = async () => {
   toast("Family member saved to cloud.");
 };
 $("manageMembersList").onclick = async event => {
-  if (!isFamilyOwner()) return toast("Only the Family Owner can remove family members.");
-  const button = event.target.closest("[data-remove-member]");
-  if (!button) return;
-  const row = familyRows.find(item => item.id === button.dataset.removeMember);
+  if (!isFamilyOwner()) return toast("Only the Family Owner can manage family members.");
+  const editButton = event.target.closest("[data-edit-member]");
+  const removeButton = event.target.closest("[data-remove-member]");
+  if (editButton) {
+    const row = familyRows.find(item => item.id === editButton.dataset.editMember);
+    if (!row || row.role === "owner") return;
+    const nextName = prompt("Edit family member name:", row.display_name);
+    if (!nextName || !nextName.trim()) return;
+    const cleanName = nextName.trim().slice(0,40);
+    if (familyRows.some(item => item.id !== row.id && item.display_name.toLowerCase() === cleanName.toLowerCase())) return toast("This member name already exists.");
+    const { error } = await supabaseClient.from("homexa_family_members").update({display_name:cleanName}).eq("id",row.id);
+    if (error) return toast("Could not update member: " + error.message);
+    await loadFamilyMembers(); await fetchTransactions(); renderMembers(); render();
+    return toast("Family member name updated.");
+  }
+  if (!removeButton) return;
+  const row = familyRows.find(item => item.id === removeButton.dataset.removeMember);
   if (!row || row.role === "owner") return;
-  if (!confirm("Remove " + row.display_name + " from this family? Existing transactions will remain.")) return;
+  if (!confirm("Remove " + row.display_name + " from this family? Existing transactions will remain and may show as Unassigned.")) return;
   const { error } = await supabaseClient.from("homexa_family_members").delete().eq("id", row.id);
   if (error) return toast("Could not remove member: " + error.message);
   await loadFamilyMembers();
