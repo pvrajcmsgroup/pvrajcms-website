@@ -1,101 +1,525 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CMS Soft &amp; Tech | PVRajCMS Group</title>
-<meta name="description" content="Software products and technology solutions from PVRajCMS Group. Discover HOMEXA, our smart family management software.">
+
+<title>CMS Soft & Tech | PVRajCMS Group</title>
+
+<meta name="description" content="Software products and technology solutions by PVRajCMS Group. Explore HOMEXA Smart Family Management Software.">
+
 <link rel="stylesheet" href="style.css">
+
 <style>
-:root{--bg:#061522;--panel:#0d2638;--panel2:#102d42;--line:rgba(64,183,225,.34);--cyan:#42c8ff;--text:#f4f8ff;--muted:#b8cbd9}
-body{background:var(--bg);color:var(--text)}
-.cms-page{width:min(1200px,calc(100% - 36px));margin:0 auto;padding:42px 0 76px}
-.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase}
-h1{font-size:clamp(32px,4vw,48px);line-height:1.12;margin:10px 0 12px;color:#fff}
-.intro{max-width:760px;color:var(--muted);font-size:16px;line-height:1.8;margin:0 0 30px}
-.section-title{font-size:25px;margin:34px 0 16px}
-.product-card{display:grid;grid-template-columns: minmax(0,1.25fr) minmax(240px,.75fr);gap:24px;align-items:center;padding:clamp(20px,4vw,34px);border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#102f45,#081b2a);box-shadow:0 18px 45px rgba(0,0,0,.22)}
-.product-label{display:inline-block;color:#062033;background:var(--cyan);font-size:11px;font-weight:800;letter-spacing:1.4px;padding:7px 10px;border-radius:6px}
-.product-card h2{font-size:clamp(30px,4vw,42px);margin:14px 0 8px;letter-spacing:1px}
-.tagline{color:var(--cyan);font-weight:700;margin:0 0 13px}
-.description{color:var(--muted);line-height:1.75;margin:0 0 18px}
-.features{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;padding:0;list-style:none}
-.features li{border:1px solid rgba(66,200,255,.25);background:rgba(66,200,255,.08);color:#d8f4ff;padding:7px 10px;border-radius:30px;font-size:12px}
-.product-actions{display:flex;flex-wrap:wrap;gap:10px}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:9px;text-decoration:none;font-weight:750;font-size:13px}
-.btn-primary{background:linear-gradient(135deg,#55d7ff,#0b91c8);color:#032033}
-.btn-secondary{border:1px solid #32627c;color:#d8f4ff;background:transparent}
-.logo-tile{min-height:220px;display:grid;place-items:center;border:1px solid rgba(66,200,255,.24);border-radius:16px;background:radial-gradient(circle at 50% 35%,#164c68,#0a2031 65%);padding:20px}
-.logo-mark{width:94px;height:94px;border-radius:25px;background:linear-gradient(145deg,#70e1ff,#0789c3);display:grid;place-items:center;color:#052337;font-size:55px;font-weight:900;box-shadow:0 12px 34px #0aa6dd35}
-.logo-word{font-size:28px;letter-spacing:3px;font-weight:900;margin-top:15px}
-.logo-caption{font-size:10px;letter-spacing:2px;color:#8ddfff;margin-top:5px}
-.note{border-left:3px solid var(--cyan);padding:13px 16px;margin-top:24px;background:rgba(66,200,255,.06);color:var(--muted);line-height:1.7;font-size:13px}
-@media(max-width:760px){.cms-page{padding:30px 0 55px}.product-card{grid-template-columns:1fr}.logo-tile{min-height:180px;grid-row:1}.intro{font-size:15px}}
+
+/* ===== COMPACT HEADER ===== */
+
+.cms-soft-tech-page .site-header {
+    background: #071422;
+    padding: 3px 12px !important;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.cms-soft-tech-page .site-header > .container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.cms-soft-tech-page .site-header .logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    flex: 0 1 auto;
+    min-width: 0;
+    text-decoration: none;
+}
+
+.cms-soft-tech-page .site-header .logo img {
+    display: block;
+    width: min(28vw,360px) !important;
+    min-width: 230px;
+    height: auto !important;
+    max-height: 72px;
+    object-fit: contain;
+}
+
+.cms-soft-tech-page .site-header .logo-text {
+    text-align: left;
+    margin: 0;
+    padding-left: 14px;
+    border-left: 1px solid rgba(255,255,255,.18);
+}
+
+.cms-soft-tech-page .site-header .logo-text p {
+    margin: 0;
+    color: #d6e6f7;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.cms-soft-tech-page .site-header .navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 0 0 auto;
+    flex-wrap: nowrap;
+    gap: 16px;
+    width: auto;
+    margin: 0;
+    padding: 5px 0;
+    border: 0;
+}
+
+.cms-soft-tech-page .site-header .navbar a {
+    white-space: nowrap;
+}
+
+@media(max-width:1000px) {
+    .cms-soft-tech-page .site-header > .container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .cms-soft-tech-page .site-header .logo {
+        justify-content: center;
+    }
+
+    .cms-soft-tech-page .site-header .navbar {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px 20px;
+    }
+}
+
+@media(max-width:600px) {
+    .cms-soft-tech-page .site-header {
+        padding: 10px !important;
+    }
+
+    .cms-soft-tech-page .site-header .logo {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .cms-soft-tech-page .site-header .logo img {
+        width: min(88vw,300px) !important;
+        min-width: 0;
+        max-height: 75px;
+    }
+
+    .cms-soft-tech-page .site-header .logo-text {
+        border-left: 0;
+        padding-left: 0;
+        text-align: center;
+    }
+
+    .cms-soft-tech-page .site-header .logo-text p {
+        white-space: normal;
+        font-size: 11px;
+    }
+
+    .cms-soft-tech-page .site-header .navbar {
+        gap: 10px 15px;
+    }
+}
+
+/* ===== HOMEXA PAGE DESIGN ===== */
+
+:root {
+    --bg: #061522;
+    --panel: #0d2638;
+    --line: rgba(64,183,225,.34);
+    --cyan: #42c8ff;
+    --text: #f4f8ff;
+    --muted: #b8cbd9;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+.cms-page {
+    width: min(1200px,calc(100% - 36px));
+    margin: 0 auto;
+    padding: 42px 0 76px;
+}
+
+.eyebrow {
+    color: var(--cyan);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: clamp(32px,4vw,48px);
+    line-height: 1.12;
+    margin: 10px 0 12px;
+    color: #fff;
+}
+
+.intro {
+    max-width: 760px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.8;
+    margin: 0 0 30px;
+}
+
+.section-title {
+    font-size: 25px;
+    margin: 34px 0 16px;
+}
+
+.product-card {
+    display: grid;
+    grid-template-columns: minmax(0,1.25fr) minmax(240px,.75fr);
+    gap: 24px;
+    align-items: center;
+    padding: clamp(20px,4vw,34px);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: linear-gradient(145deg,#102f45,#081b2a);
+    box-shadow: 0 18px 45px rgba(0,0,0,.22);
+}
+
+.product-label {
+    display: inline-block;
+    color: #062033;
+    background: var(--cyan);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    padding: 7px 10px;
+    border-radius: 6px;
+}
+
+.product-card h2 {
+    font-size: clamp(30px,4vw,42px);
+    margin: 14px 0 8px;
+    letter-spacing: 1px;
+}
+
+.tagline {
+    color: var(--cyan);
+    font-weight: 700;
+    margin: 0 0 13px;
+}
+
+.description {
+    color: var(--muted);
+    line-height: 1.75;
+    margin: 0 0 18px;
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 22px;
+    padding: 0;
+    list-style: none;
+}
+
+.features li {
+    border: 1px solid rgba(66,200,255,.25);
+    background: rgba(66,200,255,.08);
+    color: #d8f4ff;
+    padding: 7px 10px;
+    border-radius: 30px;
+    font-size: 12px;
+}
+
+.product-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 16px;
+    border-radius: 9px;
+    text-decoration: none;
+    font-weight: 750;
+    font-size: 13px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg,#55d7ff,#0b91c8);
+    color: #032033;
+}
+
+.btn-secondary {
+    border: 1px solid #32627c;
+    color: #d8f4ff;
+    background: transparent;
+}
+
+.logo-tile {
+    min-height: 220px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(66,200,255,.24);
+    border-radius: 16px;
+    background: radial-gradient(circle at 50% 35%,#164c68,#0a2031 65%);
+    padding: 20px;
+}
+
+.logo-mark {
+    width: 94px;
+    height: 94px;
+    border-radius: 25px;
+    background: linear-gradient(145deg,#70e1ff,#0789c3);
+    display: grid;
+    place-items: center;
+    color: #052337;
+    font-size: 55px;
+    font-weight: 900;
+    box-shadow: 0 12px 34px #0aa6dd35;
+}
+
+.logo-word {
+    font-size: 28px;
+    letter-spacing: 3px;
+    font-weight: 900;
+    margin-top: 15px;
+}
+
+.logo-caption {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #8ddfff;
+    margin-top: 5px;
+}
+
+.note {
+    border-left: 3px solid var(--cyan);
+    padding: 13px 16px;
+    margin-top: 24px;
+    background: rgba(66,200,255,.06);
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+@media(max-width:760px) {
+    .cms-page {
+        padding: 30px 0 55px;
+    }
+
+    .product-card {
+        grid-template-columns: 1fr;
+    }
+
+    .logo-tile {
+        min-height: 180px;
+        grid-row: 1;
+    }
+
+    .intro {
+        font-size: 15px;
+    }
+}
+
 </style>
 </head>
-<body>
+
+<body class="cms-soft-tech-page">
+
+<!-- ===== HEADER ===== -->
+
 <header class="site-header">
-  <div class="container">
-    <a href="index.html" class="logo" aria-label="PVRajCMS Group Home">
-      <img src="logo.png" alt="PVRajCMS Group Logo">
-      <div class="logo-text"><p>Engineering • Technology • Digital Innovation</p></div>
-    </a>
-    <nav class="navbar" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="services.html">Services</a>
-      <a href="projects.html">Projects</a>
-      <a href="contact.html">Contact</a>
-      <a href="kirana.html">PV MART</a>
-    </nav>
-  </div>
+    <div class="container">
+
+        <a href="index.html" class="logo">
+
+            <img src="logo.png"
+                 alt="PVRajCMS Group Logo">
+
+            <div class="logo-text">
+                <p>Engineering • Technology • Digital Innovation</p>
+            </div>
+
+        </a>
+
+        <nav class="navbar">
+
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="projects.html">Projects</a>
+            <a href="contact.html">Contact</a>
+            <a href="kirana.html">PV MART</a>
+
+        </nav>
+
+    </div>
 </header>
 
+<!-- ===== MAIN CONTENT ===== -->
+
 <main class="cms-page">
-  <span class="eyebrow">CMS SOFT &amp; TECH</span>
-  <h1>Software &amp; Technology</h1>
-  <p class="intro">Practical digital products and technology solutions designed to make everyday tasks simpler. Explore products developed by PVRajCMS Group.</p>
 
-  <h2 class="section-title">Our Software Products</h2>
-  <article class="product-card">
-    <div>
-      <span class="product-label">FLAGSHIP PRODUCT · IN DEVELOPMENT</span>
-      <h2>HOMEXA</h2>
-      <p class="tagline">Smart Family. Better Living.</p>
-      <p class="description">HOMEXA is being developed as a family management platform to help households organize everyday expenses, monthly budgets, grocery lists and bill reminders in one place.</p>
-      <ul class="features">
-        <li>Expense Tracker</li>
-        <li>Monthly Budget</li>
-        <li>Grocery Manager</li>
-        <li>Bill Reminders</li>
-        <li>Hindi + English</li>
-        <li>Web + Mobile vision</li>
-      </ul>
-      <div class="product-actions">
-        <a class="btn btn-primary" href="homexa.html">Explore HOMEXA →</a>
-        <a class="btn btn-secondary" href="services.html">Back to Services</a>
-      </div>
-    </div>
-    <div class="logo-tile" aria-label="HOMEXA product identity">
-      <div style="text-align:center">
-        <div class="logo-mark">H</div>
-        <div class="logo-word">HOMEXA</div>
-        <div class="logo-caption">SMART FAMILY MANAGEMENT</div>
-      </div>
-    </div>
-  </article>
+    <span class="eyebrow">
+        CMS SOFT &amp; TECH
+    </span>
 
-  <div class="note"><strong style="color:#eaf8ff">A product by PVRajCMS Group.</strong> HOMEXA is currently in its early development stage. Features and availability will be introduced gradually as the product is built and tested.</div>
+    <h1>Software &amp; Technology</h1>
+
+    <p class="intro">
+        Practical digital products and technology solutions
+        designed to make everyday tasks simpler.
+        Explore products developed by PVRajCMS Group.
+    </p>
+
+    <h2 class="section-title">
+        Our Software Products
+    </h2>
+
+    <!-- ===== HOMEXA PRODUCT CARD ===== -->
+
+    <article class="product-card">
+
+        <div>
+
+            <span class="product-label">
+                FLAGSHIP PRODUCT · IN DEVELOPMENT
+            </span>
+
+            <h2>HOMEXA</h2>
+
+            <p class="tagline">
+                Smart Family. Better Living.
+            </p>
+
+            <p class="description">
+                HOMEXA is being developed as a family
+                management platform to help households
+                organize everyday expenses, monthly budgets,
+                grocery lists and bill reminders in one place.
+            </p>
+
+            <ul class="features">
+
+                <li>Expense Tracker</li>
+                <li>Monthly Budget</li>
+                <li>Grocery Manager</li>
+                <li>Bill Reminders</li>
+                <li>Hindi + English</li>
+                <li>Web + Mobile vision</li>
+
+            </ul>
+
+            <div class="product-actions">
+
+                <a class="btn btn-primary"
+                   href="homexa.html">
+                    Explore HOMEXA →
+                </a>
+
+                <a class="btn btn-secondary"
+                   href="services.html">
+                    Back to Services
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- HOMEXA LOGO -->
+
+        <div class="logo-tile">
+
+            <div style="text-align:center">
+
+                <div class="logo-mark">
+                    H
+                </div>
+
+                <div class="logo-word">
+                    HOMEXA
+                </div>
+
+                <div class="logo-caption">
+                    SMART FAMILY MANAGEMENT
+                </div>
+
+            </div>
+
+        </div>
+
+    </article>
+
+    <div class="note">
+
+        <strong style="color:#eaf8ff">
+            A product by PVRajCMS Group.
+        </strong>
+
+        HOMEXA is currently in its early development
+        stage. Features and availability will be
+        introduced gradually as the product is
+        built and tested.
+
+    </div>
+
 </main>
 
+<!-- ===== FOOTER ===== -->
+
 <footer class="site-footer">
-  <div class="footer-container">
-    <div class="footer-brand"><strong>PVRajCMS GROUP</strong><p>Engineering • Technology • Digital Innovation</p></div>
-    <div class="footer-links">
-      <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="projects.html">Projects</a><a href="contact.html">Contact</a><a href="kirana.html">PV MART</a>
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <strong>PVRajCMS GROUP</strong>
+
+            <p>
+                Engineering • Technology • Digital Innovation
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="projects.html">Projects</a>
+            <a href="contact.html">Contact</a>
+            <a href="kirana.html">PV MART</a>
+
+        </div>
+
     </div>
-  </div>
-  <div class="footer-bottom"><span>© 2026 PVRajCMS Group. All rights reserved.</span><span>Engineering • Technology • Digital Innovation</span></div>
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 PVRajCMS Group. All rights reserved.
+        </span>
+
+        <span>
+            Engineering • Technology • Digital Innovation
+        </span>
+
+    </div>
+
 </footer>
+
 </body>
 </html>
