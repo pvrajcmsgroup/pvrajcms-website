@@ -7,13 +7,13 @@
 
 <title>CMS Soft & Tech | PVRajCMS Group</title>
 
-<meta name="description" content="Software products and technology solutions by PVRajCMS Group. Explore HOMEXA Smart Family Management Software.">
+<meta name="description" content="Software products and technology solutions by PVRajCMS Group. Discover HOMEXA Smart Family Management Software.">
 
 <link rel="stylesheet" href="style.css">
 
 <style>
 
-/* ===== COMPACT HEADER ===== */
+/* ===== HEADER ===== */
 
 .cms-soft-tech-page .site-header {
     background: #071422;
@@ -49,6 +49,7 @@
     height: auto !important;
     max-height: 72px;
     object-fit: contain;
+    object-position: left center;
 }
 
 .cms-soft-tech-page .site-header .logo-text {
@@ -62,7 +63,9 @@
     margin: 0;
     color: #d6e6f7;
     font-size: 12px;
+    line-height: 1.5;
     white-space: nowrap;
+    letter-spacing: .5px;
 }
 
 .cms-soft-tech-page .site-header .navbar {
@@ -131,11 +134,12 @@
     }
 }
 
-/* ===== HOMEXA PAGE DESIGN ===== */
+/* ===== MAIN THEME ===== */
 
 :root {
     --bg: #061522;
     --panel: #0d2638;
+    --panel2: #102d42;
     --line: rgba(64,183,225,.34);
     --cyan: #42c8ff;
     --text: #f4f8ff;
@@ -181,14 +185,21 @@ h1 {
     margin: 34px 0 16px;
 }
 
+/* ===== HOMEXA COMPACT CARD ===== */
+
 .product-card {
     display: grid;
-    grid-template-columns: minmax(0,1.25fr) minmax(240px,.75fr);
-    gap: 24px;
+    grid-template-columns: minmax(0,1.3fr) minmax(190px,.7fr);
+    gap: 18px;
     align-items: center;
-    padding: clamp(20px,4vw,34px);
+
+    max-width: 950px;
+    margin: 0;
+    padding: 20px;
+
     border: 1px solid var(--line);
-    border-radius: 18px;
+    border-radius: 14px;
+
     background: linear-gradient(145deg,#102f45,#081b2a);
     box-shadow: 0 18px 45px rgba(0,0,0,.22);
 }
@@ -197,36 +208,40 @@ h1 {
     display: inline-block;
     color: #062033;
     background: var(--cyan);
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 800;
-    letter-spacing: 1.4px;
-    padding: 7px 10px;
+    letter-spacing: 1.2px;
+    padding: 6px 9px;
     border-radius: 6px;
 }
 
 .product-card h2 {
-    font-size: clamp(30px,4vw,42px);
-    margin: 14px 0 8px;
+    font-size: 30px;
+    margin: 9px 0 5px;
     letter-spacing: 1px;
 }
 
 .tagline {
     color: var(--cyan);
     font-weight: 700;
-    margin: 0 0 13px;
+    font-size: 13px;
+    margin: 0 0 10px;
 }
 
 .description {
     color: var(--muted);
-    line-height: 1.75;
-    margin: 0 0 18px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0 0 14px;
 }
+
+/* ===== FEATURES ===== */
 
 .features {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin: 0 0 22px;
+    gap: 6px;
+    margin: 0 0 15px;
     padding: 0;
     list-style: none;
 }
@@ -235,26 +250,28 @@ h1 {
     border: 1px solid rgba(66,200,255,.25);
     background: rgba(66,200,255,.08);
     color: #d8f4ff;
-    padding: 7px 10px;
+    padding: 6px 9px;
     border-radius: 30px;
-    font-size: 12px;
+    font-size: 11px;
 }
+
+/* ===== BUTTONS ===== */
 
 .product-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 9px;
 }
 
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 11px 16px;
+    padding: 9px 13px;
     border-radius: 9px;
     text-decoration: none;
     font-weight: 750;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .btn-primary {
@@ -268,65 +285,75 @@ h1 {
     background: transparent;
 }
 
+/* ===== HOMEXA LOGO ===== */
+
 .logo-tile {
-    min-height: 220px;
+    min-height: 155px;
     display: grid;
     place-items: center;
     border: 1px solid rgba(66,200,255,.24);
-    border-radius: 16px;
+    border-radius: 14px;
     background: radial-gradient(circle at 50% 35%,#164c68,#0a2031 65%);
-    padding: 20px;
+    padding: 15px;
 }
 
 .logo-mark {
-    width: 94px;
-    height: 94px;
-    border-radius: 25px;
+    width: 65px;
+    height: 65px;
+    border-radius: 17px;
     background: linear-gradient(145deg,#70e1ff,#0789c3);
     display: grid;
     place-items: center;
     color: #052337;
-    font-size: 55px;
+    font-size: 38px;
     font-weight: 900;
     box-shadow: 0 12px 34px #0aa6dd35;
 }
 
 .logo-word {
-    font-size: 28px;
+    font-size: 21px;
     letter-spacing: 3px;
     font-weight: 900;
-    margin-top: 15px;
+    margin-top: 9px;
 }
 
 .logo-caption {
-    font-size: 10px;
+    font-size: 9px;
     letter-spacing: 2px;
     color: #8ddfff;
     margin-top: 5px;
 }
 
+/* ===== INFORMATION ===== */
+
 .note {
+    max-width: 950px;
     border-left: 3px solid var(--cyan);
     padding: 13px 16px;
-    margin-top: 24px;
+    margin-top: 20px;
     background: rgba(66,200,255,.06);
     color: var(--muted);
     line-height: 1.7;
     font-size: 13px;
 }
 
+/* ===== MOBILE RESPONSIVE ===== */
+
 @media(max-width:760px) {
+
     .cms-page {
         padding: 30px 0 55px;
     }
 
     .product-card {
+        max-width: 100%;
         grid-template-columns: 1fr;
+        padding: 16px;
     }
 
-    .logo-tile {
-        min-height: 180px;
+    .product-card .logo-tile {
         grid-row: 1;
+        min-height: 130px;
     }
 
     .intro {
@@ -342,6 +369,7 @@ h1 {
 <!-- ===== HEADER ===== -->
 
 <header class="site-header">
+
     <div class="container">
 
         <a href="index.html" class="logo">
@@ -355,7 +383,7 @@ h1 {
 
         </a>
 
-        <nav class="navbar">
+        <nav class="navbar" aria-label="Main navigation">
 
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
@@ -367,6 +395,7 @@ h1 {
         </nav>
 
     </div>
+
 </header>
 
 <!-- ===== MAIN CONTENT ===== -->
@@ -389,7 +418,7 @@ h1 {
         Our Software Products
     </h2>
 
-    <!-- ===== HOMEXA PRODUCT CARD ===== -->
+    <!-- ===== HOMEXA PRODUCT ===== -->
 
     <article class="product-card">
 
@@ -439,8 +468,6 @@ h1 {
 
         </div>
 
-        <!-- HOMEXA LOGO -->
-
         <div class="logo-tile">
 
             <div style="text-align:center">
@@ -462,6 +489,8 @@ h1 {
         </div>
 
     </article>
+
+    <!-- ===== PRODUCT INFORMATION ===== -->
 
     <div class="note">
 
