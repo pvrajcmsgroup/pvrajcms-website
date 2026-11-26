@@ -13,7 +13,27 @@
 
 <style>
 
-/* ===== HEADER ===== */
+/* =================================
+   GLOBAL THEME
+================================= */
+
+:root {
+    --bg: #061522;
+    --panel: #0d2638;
+    --cyan: #42c8ff;
+    --text: #f4f8ff;
+    --muted: #b8cbd9;
+    --line: rgba(64,183,225,.34);
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* =================================
+   HEADER
+================================= */
 
 .cms-soft-tech-page .site-header {
     background: #071422;
@@ -29,7 +49,7 @@
     gap: 14px;
     width: 100%;
     max-width: 1400px;
-    margin: 0 auto;
+    margin: auto;
 }
 
 .cms-soft-tech-page .site-header .logo {
@@ -37,23 +57,19 @@
     flex-direction: row;
     align-items: center;
     gap: 14px;
-    flex: 0 1 auto;
     min-width: 0;
     text-decoration: none;
 }
 
 .cms-soft-tech-page .site-header .logo img {
-    display: block;
     width: min(28vw,360px) !important;
     min-width: 230px;
     height: auto !important;
     max-height: 72px;
     object-fit: contain;
-    object-position: left center;
 }
 
 .cms-soft-tech-page .site-header .logo-text {
-    text-align: left;
     margin: 0;
     padding-left: 14px;
     border-left: 1px solid rgba(255,255,255,.18);
@@ -63,16 +79,13 @@
     margin: 0;
     color: #d6e6f7;
     font-size: 12px;
-    line-height: 1.5;
     white-space: nowrap;
-    letter-spacing: .5px;
 }
 
 .cms-soft-tech-page .site-header .navbar {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    flex: 0 0 auto;
     flex-wrap: nowrap;
     gap: 16px;
     width: auto;
@@ -85,107 +98,52 @@
     white-space: nowrap;
 }
 
-@media(max-width:1000px) {
-    .cms-soft-tech-page .site-header > .container {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .cms-soft-tech-page .site-header .logo {
-        justify-content: center;
-    }
-
-    .cms-soft-tech-page .site-header .navbar {
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 12px 20px;
-    }
-}
-
-@media(max-width:600px) {
-    .cms-soft-tech-page .site-header {
-        padding: 10px !important;
-    }
-
-    .cms-soft-tech-page .site-header .logo {
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    .cms-soft-tech-page .site-header .logo img {
-        width: min(88vw,300px) !important;
-        min-width: 0;
-        max-height: 75px;
-    }
-
-    .cms-soft-tech-page .site-header .logo-text {
-        border-left: 0;
-        padding-left: 0;
-        text-align: center;
-    }
-
-    .cms-soft-tech-page .site-header .logo-text p {
-        white-space: normal;
-        font-size: 11px;
-    }
-
-    .cms-soft-tech-page .site-header .navbar {
-        gap: 10px 15px;
-    }
-}
-
-/* ===== MAIN THEME ===== */
-
-:root {
-    --bg: #061522;
-    --panel: #0d2638;
-    --panel2: #102d42;
-    --line: rgba(64,183,225,.34);
-    --cyan: #42c8ff;
-    --text: #f4f8ff;
-    --muted: #b8cbd9;
-}
-
-body {
-    background: var(--bg);
-    color: var(--text);
-}
+/* =================================
+   MAIN CONTENT - COMPACT SPACING
+================================= */
 
 .cms-page {
     width: min(1200px,calc(100% - 36px));
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 42px 0 76px;
+
+    padding-top: 20px !important;
+    padding-bottom: 40px !important;
 }
 
 .eyebrow {
+    display: inline-block;
     color: var(--cyan);
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 2.5px;
     text-transform: uppercase;
+    margin-bottom: 5px;
 }
 
-h1 {
-    font-size: clamp(32px,4vw,48px);
+.cms-page h1 {
+    font-size: clamp(29px,3.5vw,40px);
     line-height: 1.12;
-    margin: 10px 0 12px;
+    margin: 7px 0 8px !important;
     color: #fff;
 }
 
-.intro {
+.cms-page .intro {
     max-width: 760px;
     color: var(--muted);
-    font-size: 16px;
-    line-height: 1.8;
-    margin: 0 0 30px;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 18px !important;
 }
 
-.section-title {
-    font-size: 25px;
-    margin: 34px 0 16px;
+.cms-page .section-title {
+    font-size: 22px;
+    margin: 20px 0 12px !important;
 }
 
-/* ===== HOMEXA COMPACT CARD ===== */
+/* =================================
+   HOMEXA PRODUCT CARD
+================================= */
 
 .product-card {
     display: grid;
@@ -235,7 +193,9 @@ h1 {
     margin: 0 0 14px;
 }
 
-/* ===== FEATURES ===== */
+/* =================================
+   PRODUCT FEATURES
+================================= */
 
 .features {
     display: flex;
@@ -255,7 +215,9 @@ h1 {
     font-size: 11px;
 }
 
-/* ===== BUTTONS ===== */
+/* =================================
+   BUTTONS
+================================= */
 
 .product-actions {
     display: flex;
@@ -285,15 +247,29 @@ h1 {
     background: transparent;
 }
 
-/* ===== HOMEXA LOGO ===== */
+.btn:hover {
+    transform: translateY(-2px);
+    transition: .2s;
+}
+
+/* =================================
+   HOMEXA LOGO
+================================= */
 
 .logo-tile {
     min-height: 155px;
     display: grid;
     place-items: center;
+
     border: 1px solid rgba(66,200,255,.24);
     border-radius: 14px;
-    background: radial-gradient(circle at 50% 35%,#164c68,#0a2031 65%);
+
+    background: radial-gradient(
+        circle at 50% 35%,
+        #164c68,
+        #0a2031 65%
+    );
+
     padding: 15px;
 }
 
@@ -301,12 +277,16 @@ h1 {
     width: 65px;
     height: 65px;
     border-radius: 17px;
+
     background: linear-gradient(145deg,#70e1ff,#0789c3);
+
     display: grid;
     place-items: center;
+
     color: #052337;
     font-size: 38px;
     font-weight: 900;
+
     box-shadow: 0 12px 34px #0aa6dd35;
 }
 
@@ -324,25 +304,56 @@ h1 {
     margin-top: 5px;
 }
 
-/* ===== INFORMATION ===== */
+/* =================================
+   PRODUCT INFORMATION
+================================= */
 
 .note {
     max-width: 950px;
     border-left: 3px solid var(--cyan);
-    padding: 13px 16px;
-    margin-top: 20px;
+    padding: 12px 15px;
+    margin-top: 16px;
+
     background: rgba(66,200,255,.06);
     color: var(--muted);
-    line-height: 1.7;
-    font-size: 13px;
+
+    line-height: 1.6;
+    font-size: 12px;
 }
 
-/* ===== MOBILE RESPONSIVE ===== */
+/* =================================
+   RESPONSIVE DESIGN
+================================= */
+
+@media(max-width:1000px) {
+
+    .cms-soft-tech-page .site-header > .container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .cms-soft-tech-page .site-header .navbar {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px 20px;
+    }
+}
 
 @media(max-width:760px) {
 
     .cms-page {
-        padding: 30px 0 55px;
+        width: calc(100% - 28px);
+        padding-top: 16px !important;
+        padding-bottom: 30px !important;
+    }
+
+    .cms-page h1 {
+        font-size: 29px;
+    }
+
+    .cms-page .section-title {
+        font-size: 20px;
+        margin-top: 17px !important;
     }
 
     .product-card {
@@ -357,7 +368,40 @@ h1 {
     }
 
     .intro {
-        font-size: 15px;
+        font-size: 14px;
+    }
+}
+
+@media(max-width:600px) {
+
+    .cms-soft-tech-page .site-header {
+        padding: 10px !important;
+    }
+
+    .cms-soft-tech-page .site-header .logo {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .cms-soft-tech-page .site-header .logo img {
+        width: min(88vw,300px) !important;
+        min-width: 0;
+        max-height: 75px;
+    }
+
+    .cms-soft-tech-page .site-header .logo-text {
+        border-left: 0;
+        padding-left: 0;
+        text-align: center;
+    }
+
+    .cms-soft-tech-page .site-header .logo-text p {
+        white-space: normal;
+        font-size: 11px;
+    }
+
+    .cms-soft-tech-page .site-header .navbar {
+        gap: 10px 15px;
     }
 }
 
@@ -366,7 +410,9 @@ h1 {
 
 <body class="cms-soft-tech-page">
 
-<!-- ===== HEADER ===== -->
+<!-- =================================
+     HEADER
+================================= -->
 
 <header class="site-header">
 
@@ -378,7 +424,9 @@ h1 {
                  alt="PVRajCMS Group Logo">
 
             <div class="logo-text">
-                <p>Engineering • Technology • Digital Innovation</p>
+                <p>
+                    Engineering • Technology • Digital Innovation
+                </p>
             </div>
 
         </a>
@@ -398,7 +446,9 @@ h1 {
 
 </header>
 
-<!-- ===== MAIN CONTENT ===== -->
+<!-- =================================
+     MAIN CONTENT
+================================= -->
 
 <main class="cms-page">
 
@@ -406,7 +456,9 @@ h1 {
         CMS SOFT &amp; TECH
     </span>
 
-    <h1>Software &amp; Technology</h1>
+    <h1>
+        Software &amp; Technology
+    </h1>
 
     <p class="intro">
         Practical digital products and technology solutions
@@ -418,7 +470,9 @@ h1 {
         Our Software Products
     </h2>
 
-    <!-- ===== HOMEXA PRODUCT ===== -->
+    <!-- =================================
+         HOMEXA PRODUCT CARD
+    ================================= -->
 
     <article class="product-card">
 
@@ -448,7 +502,7 @@ h1 {
                 <li>Grocery Manager</li>
                 <li>Bill Reminders</li>
                 <li>Hindi + English</li>
-                <li>Web + Mobile vision</li>
+                <li>Web + Mobile</li>
 
             </ul>
 
@@ -467,6 +521,8 @@ h1 {
             </div>
 
         </div>
+
+        <!-- HOMEXA BRANDING -->
 
         <div class="logo-tile">
 
@@ -490,7 +546,7 @@ h1 {
 
     </article>
 
-    <!-- ===== PRODUCT INFORMATION ===== -->
+    <!-- PRODUCT INFORMATION -->
 
     <div class="note">
 
@@ -507,7 +563,9 @@ h1 {
 
 </main>
 
-<!-- ===== FOOTER ===== -->
+<!-- =================================
+     FOOTER
+================================= -->
 
 <footer class="site-footer">
 
