@@ -465,6 +465,12 @@ let cloudReady = false;
 let activationInProgress = false;
 
 const $ = id => document.getElementById(id);
+function isFamilyOwner() {
+  return Boolean(currentUser && currentFamily && currentFamily.owner_id === currentUser.id);
+}
+function canManageCurrentAccount() {
+  return mode === "personal" || isFamilyOwner();
+}
 const icons = {
   Food:"🍲", Groceries:"🛒", Bills:"🧾", Transport:"🚗",
   Shopping:"🛍️", Health:"💊", Education:"📚", Salary:"💼", Other:"✦"
@@ -953,12 +959,15 @@ function updateAccountHeader() {
     : "Set a spending limit for your personal account.";
   if (family) {
     $("familyNameDisplay").textContent = data.familyName;
-    $("familyInfo").textContent = data.members.length + " family member(s) in this account";
+    $("familyInfo").textContent = data.members.length + " family member(s) · Owner-managed account · Members do not need separate login";
     $("memberList").innerHTML = data.members.map(name =>
       `<span class="member-chip">${esc(name)}</span>`).join("");
-    const isOwner = currentFamily && currentFamily.owner_id === currentUser.id;
-    document.querySelector(".family-actions").style.display = isOwner ? "flex" : "none";
+    document.querySelector(".family-actions").style.display = isFamilyOwner() ? "flex" : "none";
   }
+  $("addBtn").disabled = !canManageCurrentAccount();
+  $("addBtn").title = canManageCurrentAccount() ? "" : "Only the Family Owner can add transactions.";
+  $("saveBudget").disabled = !canManageCurrentAccount();
+  $("saveBudget").title = canManageCurrentAccount() ? "" : "Only the Family Owner can manage the family budget.";
 }
 
 function render() {
@@ -1029,7 +1038,7 @@ function renderTransactions() {
   ).sort((a,b) => b.date.localeCompare(a.date));
 
   $("transactionRows").innerHTML = list.length ? list.map(t => {
-    const canManage = t.created_by === currentUser.id;
+    const canManage = mode === "family" ? isFamilyOwner() : t.created_by === currentUser.id;
     return `<tr>
       <td><strong>${esc(t.title)}</strong><small>${icons[t.category] || "✦"} ${esc(t.category)}</small></td>
       <td><span class="tag">${esc(t.category)}</span></td>
@@ -1050,6 +1059,7 @@ $("saveBudget").onclick = async () => {
   const value = Number($("budgetInput").value);
   if (!value || value <= 0) { toast("Please enter a valid budget."); return; }
   if (!currentUser || !cloudReady) return toast("Please sign in first.");
+  if (!canManageCurrentAccount()) return toast("Only the Family Owner can manage the family budget.");
 
   const month = firstDayOfMonth();
   let query = supabaseClient.from("homexa_budgets").select("id").eq("budget_month", month);
@@ -1087,6 +1097,7 @@ function refreshMemberOptions(selected) {
   if (selected && data.members.includes(selected)) $("member").value = selected;
 }
 function openTransaction(item = null) {
+  if (!canManageCurrentAccount()) return toast("Only the Family Owner can add or edit family transactions.");
   $("transactionForm").reset();
   $("editId").value = item ? item.id : "";
   $("title").value = item ? item.title : "";
@@ -1109,6 +1120,7 @@ $("modal").addEventListener("click", event => {
 $("transactionForm").onsubmit = async event => {
   event.preventDefault();
   if (!currentUser || !cloudReady) return toast("Please sign in first.");
+  if (!canManageCurrentAccount()) return toast("Only the Family Owner can manage family transactions.");
   const id = $("editId").value;
   const item = {
     title: $("title").value.trim(),
@@ -1169,7 +1181,9 @@ $("transactionRows").onclick = async event => {
   }
   if (del) {
     const item = currentList().find(row => row.id === del.dataset.delete);
-    if (!item || item.created_by !== currentUser.id) return toast("You can only delete transactions you created.");
+    if (!item || (mode === "family" ? !isFamilyOwner() : item.created_by !== currentUser.id)) {
+      return toast(mode === "family" ? "Only the Family Owner can delete family transactions." : "You can only delete transactions you created.");
+    }
     if (!confirm("Delete this transaction permanently?")) return;
     const { error } = await supabaseClient.from("homexa_transactions").delete().eq("id", item.id);
     if (error) return toast("Delete failed: " + error.message);
@@ -1185,13 +1199,13 @@ $("search").addEventListener("input", renderTransactions);
 // FAMILY MANAGEMENT
 // =====================================================
 function openMembers() {
+  if (!isFamilyOwner()) return toast("Only the Family Owner can manage family members.");
   if (mode !== "family") {
     $("accountMode").value = "family";
     mode = "family";
     render();
   }
-  $("addMemberBtn").style.display =
-    currentFamily && currentFamily.owner_id === currentUser.id ? "inline-block" : "none";
+  $("addMemberBtn").style.display = isFamilyOwner() ? "inline-block" : "none";
   renderMembers();
   $("membersModal").classList.add("show");
 }
@@ -1199,11 +1213,12 @@ function closeMembers() { $("membersModal").classList.remove("show"); }
 function renderMembers() {
   $("manageMembersList").innerHTML = familyRows.map(row => `
     <div style="display:flex;justify-content:space-between;align-items:center;padding:9px;border-bottom:1px solid #1b4057">
-      <span>${esc(row.display_name)} ${row.role === "owner" ? '<small class="tag">Owner</small>' : ""}</span>
-      ${row.role !== "owner" ? `<button class="icon-btn" data-remove-member="${esc(row.id)}">Remove</button>` : ""}
+      <span>${esc(row.display_name)} ${row.role === "owner" ? '<small class="tag">Family Owner</small>' : '<small class="tag">Member · No login</small>'}</span>
+      ${isFamilyOwner() && row.role !== "owner" ? `<button class="icon-btn" data-remove-member="${esc(row.id)}">Remove</button>` : ""}
     </div>`).join("");
 }
 $("addMemberBtn").onclick = async () => {
+  if (!isFamilyOwner()) return toast("Only the Family Owner can add family members.");
   const name = $("newMember").value.trim();
   if (!name) return toast("Enter a member name.");
   if (familyRows.some(row => row.display_name.toLowerCase() === name.toLowerCase())) {
@@ -1223,6 +1238,7 @@ $("addMemberBtn").onclick = async () => {
   toast("Family member saved to cloud.");
 };
 $("manageMembersList").onclick = async event => {
+  if (!isFamilyOwner()) return toast("Only the Family Owner can remove family members.");
   const button = event.target.closest("[data-remove-member]");
   if (!button) return;
   const row = familyRows.find(item => item.id === button.dataset.removeMember);
@@ -1237,11 +1253,13 @@ $("manageMembersList").onclick = async event => {
   toast("Family member removed.");
 };
 function renameFamily() {
+  if (!isFamilyOwner()) return toast("Only the Family Owner can rename this family.");
   const name = prompt("Enter your family name:", data.familyName);
   if (!name || !name.trim()) return;
   updateFamilyName(name.trim().slice(0,60));
 }
 async function updateFamilyName(name) {
+  if (!isFamilyOwner()) return toast("Only the Family Owner can rename this family.");
   const { error } = await supabaseClient.from("homexa_families")
     .update({ name }).eq("id", familyId);
   if (error) return toast("Family name update failed: " + error.message);
