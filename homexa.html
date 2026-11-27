@@ -927,7 +927,7 @@ async function activateSession(session) {
   currentUser = session.user;
   cloudReady = false;
   showApp();
-  $("userEmail").textContent = currentUser.email || "";
+  $("userEmail").textContent = currentUser.user_metadata?.full_name || currentUser.email || "HOMEXA User";
   $("userAvatar").textContent = (currentUser.user_metadata?.full_name || currentUser.email || "H").charAt(0).toUpperCase();
   try {
     await loadCloudData();
